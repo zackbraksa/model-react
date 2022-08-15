@@ -3,35 +3,35 @@ html {
     --vxg-s10: 0.5rem; 
 }
 
-._1A6fv {
+._model-react__vxg-basic-form__1A6fv {
     display: flex;
 }
 
-._1XsfQ {}
+._model-react__vxg-basic-form-row__1XsfQ {}
 
-._4fhQf {
+._model-react__vxg-basic-form-vertical__4fhQf {
     flex-direction: column;
 }
 
-._1rSiI {}
+._model-react__vxg-basic-form-horizontal__1rSiI {}
 
 
-._1VHJq {
+._model-react__vxg-basic-field__1VHJq {
     display: flex;
 }
 
-._EfqtC {
+._model-react__vxg-basic-field-vertical__EfqtC {
     flex-direction: column;
 }
 
-._1xNDF {}
+._model-react__vxg-basic-field-horizontal__1xNDF {}
 
 
-._GqmV- {}
+._model-react__vxg-basic-field-line__GqmV- {}
 
-._1J00- {}
+._model-react__vxg-basic-field-choice__1J00- {}
 
-._2G099 {}
+._model-react__vxg-basic-field-toggle__2G099 {}
 
 
 

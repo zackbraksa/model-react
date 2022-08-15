@@ -29,6 +29,7 @@ var BasicFormShape = gubu.Gubu({
   intro: gubu.Skip(String),
   btnTitle: gubu.Skip(String),
   field: gubu.Value({
+    name: gubu.Skip(String),
     title: String,
     kind: gubu.Exact('line', 'toggle', 'choice', 'custom'),
     subkind: gubu.Skip(String),
@@ -40,12 +41,16 @@ var BasicFormShape = gubu.Gubu({
     explainer: gubu.Skip(String),
     orient: 'vertical',
     classes: '',
-    cmp: gubu.Any()
+    cmp: gubu.Any(),
+    value: gubu.Any()
   }, {}),
   submit: Function,
   submitCmp: gubu.Any(),
   orient: 'vertical',
-  classes: ''
+  classes: '',
+  valid: gubu.Skip(Function),
+  onChange: gubu.Skip(Function),
+  onRender: gubu.Skip(Function)
 });
 
 function BasicField(props) {
@@ -57,19 +62,55 @@ function BasicField(props) {
       orient = field.orient,
       kind = field.kind;
   var classes = 'vxg-basic-field vxg-basic-field-' + orient + ' vxg-basic-field-' + kind + ' ' + field.classes;
+  var data = reactRedux.useSelector(function (state) {
+    return state[form.slice][form.name];
+  });
   var value = reactRedux.useSelector(function (state) {
     return state[form.slice][form.name][name];
   });
+  value = null == value ? null == field.value ? '' : field.value : value;
 
   var onChange = function onChange(ev) {
-    store.dispatch({
-      type: form.slice + '/setFormField',
-      payload: {
-        form: form.name,
-        name: name,
-        value: ev.target.value
+    try {
+      var _value = ev.target.value;
+
+      if (false === ev.target.checked) {
+        _value = null;
       }
-    });
+
+      return Promise.resolve(store.dispatch({
+        type: form.slice + '/setFormField',
+        payload: {
+          form: form.name,
+          name: name,
+          value: _value
+        }
+      })).then(function () {
+        var newdata = _extends({}, data);
+
+        newdata[name] = _value;
+        var valid = {
+          ok: true
+        };
+
+        if (form.valid) {
+          valid = form.valid(newdata);
+        }
+
+        if (form.onChange) {
+          form.onChange({
+            field: field,
+            value: _value,
+            data: newdata,
+            meta: {
+              valid: valid
+            }
+          });
+        }
+      });
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 
   return /*#__PURE__*/React__default.createElement("div", {
@@ -78,8 +119,9 @@ function BasicField(props) {
     type: "checkbox",
     id: form.name + '-' + field.name,
     name: field.name,
-    value: value,
-    onChange: onChange
+    value: field.value,
+    onChange: onChange,
+    defaultChecked: 'y' === data[name]
   }) : /*#__PURE__*/React__default.createElement(React.Fragment, null), /*#__PURE__*/React__default.createElement("label", {
     htmlFor: name
   }, title), 'line' === field.kind ? /*#__PURE__*/React__default.createElement("input", {
@@ -108,6 +150,9 @@ function getBasicForm(conf) {
   function BasicForm(props) {
     console.log('BasicForm A', props);
     var form = BasicFormShape(props.form);
+    var data = reactRedux.useSelector(function (state) {
+      return state[form.slice][form.name];
+    });
     var meta = reactRedux.useSelector(function (state) {
       return state[form.slice].form[form.name];
     });
@@ -123,10 +168,26 @@ function getBasicForm(conf) {
     var orient = form.orient;
     var classes = form.classes;
     var fields = Object.entries(form.field).reduce(function (a, entry) {
-      return a.push(_extends({
-        name: entry[0]
-      }, entry[1])), a;
+      return entry[1].name = entry[0], a.push(_extends({}, entry[1])), a;
     }, []);
+    console.log('BasicForm fields', fields);
+    var valid = {
+      ok: true
+    };
+
+    if (form.valid) {
+      valid = form.valid(data);
+    }
+
+    if (form.onRender) {
+      form.onRender({
+        data: data,
+        meta: {
+          valid: valid
+        }
+      });
+    }
+
     return /*#__PURE__*/React__default.createElement("form", {
       name: name,
       onSubmit: submit,

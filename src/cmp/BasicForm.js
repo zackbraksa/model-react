@@ -13,7 +13,7 @@ const BasicFormShape = Gubu({
   intro: Skip(String),
   btnTitle: Skip(String),
   field: Value({
-    // name: String,
+    name: Skip(String),
     title: String,
     kind: Exact('line','toggle','choice','custom'),
     // subtype: Skip(Exact('email')),
@@ -27,12 +27,16 @@ const BasicFormShape = Gubu({
     orient: 'vertical',
     classes: '',
     cmp: Any(),
+    value: Any(),
   },{}),
   submit: Function,
   submitCmp: Any(),
   // orient: Default('vertical', Exact('vertical','horizontal'))
   orient: 'vertical',
   classes: '',
+  valid: Skip(Function),
+  onChange: Skip(Function),
+  onRender: Skip(Function),
 })
 
 
@@ -48,15 +52,34 @@ function BasicField(props) {
         ' vxg-basic-field-'+kind+' '+
         field.classes
 
-  const value = useSelector(state => state[form.slice][form.name][name])
+  const data = useSelector(state => state[form.slice][form.name])
+  let value = useSelector(state => state[form.slice][form.name][name])
+
+  value = null == value ? (null == field.value ? '' : field.value) : value
+
   
-  const onChange = (ev)=>{
-    store.dispatch({
-      // type: form.slice + '/setField_' + form.name,
-      // payload: { name, value: ev.target.value }
+  const onChange = async (ev)=>{
+    let value = ev.target.value
+
+    if(false === ev.target.checked) {
+      value = null
+    }
+
+    await store.dispatch({
       type: form.slice + '/setFormField',
-      payload: { form: form.name, name, value: ev.target.value }
+      payload: { form: form.name, name, value: value }
     })
+
+    let newdata = {...data}
+    newdata[name] = value
+    
+    let valid = {ok:true}
+    if(form.valid) {
+      valid = form.valid(newdata)
+    }
+    if(form.onChange) {
+      form.onChange({field,value,data:newdata,meta:{valid}})
+    }
   }
 
   
@@ -69,8 +92,9 @@ function BasicField(props) {
           type="checkbox"
           id={form.name+'-'+field.name}
           name={field.name}
-          value={value}
+          value={field.value}
           onChange={onChange}
+          defaultChecked={'y'===data[name]}
         /> : <></> }
 
       <label htmlFor={name}>{title}</label>
@@ -119,7 +143,8 @@ function getBasicForm(conf) {
     console.log('BasicForm A', props)
 
     const form = BasicFormShape(props.form)
-    
+
+    const data = useSelector(state => state[form.slice][form.name])
     const meta = useSelector(state => state[form.slice].form[form.name])
     
     const title = form.title
@@ -135,7 +160,17 @@ function getBasicForm(conf) {
 
 
     const fields = Object.entries(form.field)
-          .reduce(((a,entry)=>(a.push({name:entry[0],...entry[1]}),a)),[])
+          .reduce(((a,entry)=>(entry[1].name=entry[0],a.push({...entry[1]}),a)),[])
+
+    console.log('BasicForm fields', fields)
+
+    let valid = {ok:true}
+    if(form.valid) {
+      valid = form.valid(data)
+    }
+    if(form.onRender) {
+      form.onRender({data,meta:{valid}})
+    }
     
     return (
       <form
