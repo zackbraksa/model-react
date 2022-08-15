@@ -103,13 +103,14 @@ function getBasicForm(conf) {
   var store = conf.store;
 
   function BasicForm(props) {
-    console.log('BasicForm', props);
+    console.log('BasicForm A', props);
     var form = BasicFormShape(props.form);
     var meta = useSelector(function (state) {
       return state[form.slice].form[form.name];
     });
     var title = form.title;
     var intro = form.intro;
+    var name = form.name;
 
     var submit = form.submit || function () {
       return null;
@@ -124,6 +125,7 @@ function getBasicForm(conf) {
       }, entry[1])), a;
     }, []);
     return /*#__PURE__*/React.createElement("form", {
+      name: name,
       onSubmit: submit,
       className: 'vxg-basic-form vxg-basic-form-' + orient + ' ' + classes
     }, null != title ? /*#__PURE__*/React.createElement("h2", null, title) : /*#__PURE__*/React.createElement(Fragment, null), null != intro ? /*#__PURE__*/React.createElement("p", {

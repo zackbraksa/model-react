@@ -116,7 +116,7 @@ function getBasicForm(conf) {
   let { store } = conf
   
   function BasicForm(props) {
-    console.log('BasicForm', props)
+    console.log('BasicForm A', props)
 
     const form = BasicFormShape(props.form)
     
@@ -139,6 +139,7 @@ function getBasicForm(conf) {
     
     return (
       <form
+        name={name}
         onSubmit={submit}
         className={'vxg-basic-form vxg-basic-form-'+orient+' '+classes}
       >
