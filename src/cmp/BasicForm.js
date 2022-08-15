@@ -2,7 +2,7 @@ import React, { Fragment, useCallback } from 'react'
 
 import { useSelector } from 'react-redux'
 
-import { Gubu, Skip, Exact, Any, Required } from 'gubu'
+import { Gubu, Skip, Exact, Any, Required, Value } from 'gubu'
 
 
 
@@ -12,10 +12,10 @@ const BasicFormShape = Gubu({
   title: Skip(String),
   intro: Skip(String),
   btnTitle: Skip(String),
-  fields: [{
-    name: String,
+  field: Value({
+    // name: String,
     title: String,
-    kind: Exact('line','toggle','choice'),
+    kind: Exact('line','toggle','choice','custom'),
     // subtype: Skip(Exact('email')),
     subkind: Skip(String),
     placeholder: Skip(String),
@@ -26,7 +26,8 @@ const BasicFormShape = Gubu({
     explainer: Skip(String),
     orient: 'vertical',
     classes: '',
-  }],
+    cmp: Any(),
+  },{}),
   submit: Function,
   submitCmp: Any(),
   // orient: Default('vertical', Exact('vertical','horizontal'))
@@ -51,8 +52,10 @@ function BasicField(props) {
   
   const onChange = (ev)=>{
     store.dispatch({
-      type: form.slice + '/setField_' + form.name,
-      payload: { name, value: ev.target.value }
+      // type: form.slice + '/setField_' + form.name,
+      // payload: { name, value: ev.target.value }
+      type: form.slice + '/setFormField',
+      payload: { form: form.name, name, value: ev.target.value }
     })
   }
 
@@ -102,6 +105,8 @@ function BasicField(props) {
 
         </select> : <></> }
 
+      { 'custom' === field.kind ? field.cmp : <></> }
+
     </div>
   )
 }
@@ -123,11 +128,14 @@ function getBasicForm(conf) {
     const slice = form.slice
     const btnTitle = form.btnTitle
     const blank = form.blank
-    const fields = form.fields || []
     const submit = form.submit || (() => null)
     const submitCmp = form.submitCmp
     const orient = form.orient
     const classes = form.classes
+
+
+    const fields = Object.entries(form.field)
+          .reduce(((a,entry)=>(a.push({name:entry[0],...entry[1]}),a)),[])
     
     return (
       <form
@@ -145,6 +153,7 @@ function getBasicForm(conf) {
                  field={field}
                  form={form}
                  store={store}
+
                />) }
 
         { submitCmp }

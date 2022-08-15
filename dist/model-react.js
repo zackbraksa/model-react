@@ -5,16 +5,32 @@ var React__default = _interopDefault(React);
 var reactRedux = require('react-redux');
 var gubu = require('gubu');
 
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
 var BasicFormShape = gubu.Gubu({
   name: String,
   slice: String,
   title: gubu.Skip(String),
   intro: gubu.Skip(String),
   btnTitle: gubu.Skip(String),
-  fields: [{
-    name: String,
+  field: gubu.Value({
     title: String,
-    kind: gubu.Exact('line', 'toggle', 'choice'),
+    kind: gubu.Exact('line', 'toggle', 'choice', 'custom'),
     subkind: gubu.Skip(String),
     placeholder: gubu.Skip(String),
     items: gubu.Skip([{
@@ -23,8 +39,9 @@ var BasicFormShape = gubu.Gubu({
     }]),
     explainer: gubu.Skip(String),
     orient: 'vertical',
-    classes: ''
-  }],
+    classes: '',
+    cmp: gubu.Any()
+  }, {}),
   submit: Function,
   submitCmp: gubu.Any(),
   orient: 'vertical',
@@ -46,8 +63,9 @@ function BasicField(props) {
 
   var onChange = function onChange(ev) {
     store.dispatch({
-      type: form.slice + '/setField_' + form.name,
+      type: form.slice + '/setFormField',
       payload: {
+        form: form.name,
         name: name,
         value: ev.target.value
       }
@@ -81,7 +99,7 @@ function BasicField(props) {
       key: item.value,
       value: item.value
     }, item.text);
-  })) : /*#__PURE__*/React__default.createElement(React.Fragment, null));
+  })) : /*#__PURE__*/React__default.createElement(React.Fragment, null), 'custom' === field.kind ? field.cmp : /*#__PURE__*/React__default.createElement(React.Fragment, null));
 }
 
 function getBasicForm(conf) {
@@ -95,7 +113,6 @@ function getBasicForm(conf) {
     });
     var title = form.title;
     var intro = form.intro;
-    var fields = form.fields || [];
 
     var submit = form.submit || function () {
       return null;
@@ -104,6 +121,11 @@ function getBasicForm(conf) {
     var submitCmp = form.submitCmp;
     var orient = form.orient;
     var classes = form.classes;
+    var fields = Object.entries(form.field).reduce(function (a, entry) {
+      return a.push(_extends({
+        name: entry[0]
+      }, entry[1])), a;
+    }, []);
     return /*#__PURE__*/React__default.createElement("form", {
       onSubmit: submit,
       className: 'vxg-basic-form vxg-basic-form-' + orient + ' ' + classes
