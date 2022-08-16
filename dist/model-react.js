@@ -74,7 +74,7 @@ function BasicField(props) {
     try {
       var _value = ev.target.value;
 
-      if (false === ev.target.checked) {
+      if ('toggle' === field.kind && false === ev.target.checked) {
         _value = null;
       }
 

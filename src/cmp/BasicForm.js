@@ -55,13 +55,15 @@ function BasicField(props) {
   const data = useSelector(state => state[form.slice][form.name])
   let value = useSelector(state => state[form.slice][form.name][name])
 
+  // console.log('BasicField value', name, value, field.value)
   value = null == value ? (null == field.value ? '' : field.value) : value
 
   
   const onChange = async (ev)=>{
     let value = ev.target.value
 
-    if(false === ev.target.checked) {
+    // console.log('BasicField onChange checked',name,{...ev.target},ev.target.checked)
+    if('toggle' === field.kind && false === ev.target.checked) {
       value = null
     }
 
