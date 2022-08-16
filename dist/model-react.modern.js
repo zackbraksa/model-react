@@ -2,7 +2,24 @@ import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { Gubu, Skip, Value, Exact, Required, Any } from 'gubu';
 
-const BasicFormShape = Gubu({
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+var BasicFormShape = Gubu({
   name: String,
   slice: String,
   title: Skip(String),
@@ -34,55 +51,62 @@ const BasicFormShape = Gubu({
 });
 
 function BasicField(props) {
-  const field = props.field;
-  const form = props.form;
-  const store = props.store;
-  const {
-    name,
-    title,
-    orient,
-    kind
-  } = field;
-  const classes = 'vxg-basic-field vxg-basic-field-' + orient + ' vxg-basic-field-' + kind + ' ' + field.classes;
-  const data = useSelector(state => state[form.slice][form.name]);
-  let value = useSelector(state => state[form.slice][form.name][name]);
+  var field = props.field;
+  var form = props.form;
+  var store = props.store;
+  var name = field.name,
+      title = field.title,
+      orient = field.orient,
+      kind = field.kind;
+  var classes = 'vxg-basic-field vxg-basic-field-' + orient + ' vxg-basic-field-' + kind + ' ' + field.classes;
+  var data = useSelector(function (state) {
+    return state[form.slice][form.name];
+  });
+  var value = useSelector(function (state) {
+    return state[form.slice][form.name][name];
+  });
   value = null == value ? null == field.value ? '' : field.value : value;
 
-  const onChange = async ev => {
-    let value = ev.target.value;
+  var onChange = function onChange(ev) {
+    try {
+      var _value = ev.target.value;
 
-    if ('toggle' === field.kind && false === ev.target.checked) {
-      value = null;
-    }
-
-    await store.dispatch({
-      type: form.slice + '/setFormField',
-      payload: {
-        form: form.name,
-        name,
-        value: value
+      if ('toggle' === field.kind && false === ev.target.checked) {
+        _value = null;
       }
-    });
-    let newdata = { ...data
-    };
-    newdata[name] = value;
-    let valid = {
-      ok: true
-    };
 
-    if (form.valid) {
-      valid = form.valid(newdata);
-    }
+      return Promise.resolve(store.dispatch({
+        type: form.slice + '/setFormField',
+        payload: {
+          form: form.name,
+          name: name,
+          value: _value
+        }
+      })).then(function () {
+        var newdata = _extends({}, data);
 
-    if (form.onChange) {
-      form.onChange({
-        field,
-        value,
-        data: newdata,
-        meta: {
-          valid
+        newdata[name] = _value;
+        var valid = {
+          ok: true
+        };
+
+        if (form.valid) {
+          valid = form.valid(newdata);
+        }
+
+        if (form.onChange) {
+          form.onChange({
+            field: field,
+            value: _value,
+            data: newdata,
+            meta: {
+              valid: valid
+            }
+          });
         }
       });
+    } catch (e) {
+      return Promise.reject(e);
     }
   };
 
@@ -109,35 +133,42 @@ function BasicField(props) {
     placeholder: field.placeholder,
     value: value,
     onChange: onChange
-  }, field.items.map(item => /*#__PURE__*/React.createElement("option", {
-    key: item.value,
-    value: item.value
-  }, item.text))) : /*#__PURE__*/React.createElement(Fragment, null), 'custom' === field.kind ? field.cmp : /*#__PURE__*/React.createElement(Fragment, null));
+  }, field.items.map(function (item) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: item.value,
+      value: item.value
+    }, item.text);
+  })) : /*#__PURE__*/React.createElement(Fragment, null), 'custom' === field.kind ? field.cmp : /*#__PURE__*/React.createElement(Fragment, null));
 }
 
 function getBasicForm(conf) {
-  let {
-    store
-  } = conf;
+  var store = conf.store;
 
   function BasicForm(props) {
     console.log('BasicForm A', props);
-    const form = BasicFormShape(props.form);
-    const data = useSelector(state => state[form.slice][form.name]);
-    const meta = useSelector(state => state[form.slice].form[form.name]);
-    const title = form.title;
-    const intro = form.intro;
-    const name = form.name;
+    var form = BasicFormShape(props.form);
+    var data = useSelector(function (state) {
+      return state[form.slice][form.name];
+    });
+    var meta = useSelector(function (state) {
+      return state[form.slice].form[form.name];
+    });
+    var title = form.title;
+    var intro = form.intro;
+    var name = form.name;
 
-    const submit = form.submit || (() => null);
+    var submit = form.submit || function () {
+      return null;
+    };
 
-    const submitCmp = form.submitCmp;
-    const orient = form.orient;
-    const classes = form.classes;
-    const fields = Object.entries(form.field).reduce((a, entry) => (entry[1].name = entry[0], a.push({ ...entry[1]
-    }), a), []);
+    var submitCmp = form.submitCmp;
+    var orient = form.orient;
+    var classes = form.classes;
+    var fields = Object.entries(form.field).reduce(function (a, entry) {
+      return entry[1].name = entry[0], a.push(_extends({}, entry[1])), a;
+    }, []);
     console.log('BasicForm fields', fields);
-    let valid = {
+    var valid = {
       ok: true
     };
 
@@ -147,9 +178,9 @@ function getBasicForm(conf) {
 
     if (form.onRender) {
       form.onRender({
-        data,
+        data: data,
         meta: {
-          valid
+          valid: valid
         }
       });
     }
@@ -160,18 +191,20 @@ function getBasicForm(conf) {
       className: 'vxg-basic-form vxg-basic-form-' + orient + ' ' + classes
     }, null != title ? /*#__PURE__*/React.createElement("h2", null, title) : /*#__PURE__*/React.createElement(Fragment, null), null != intro ? /*#__PURE__*/React.createElement("p", {
       className: "intro"
-    }, intro) : /*#__PURE__*/React.createElement(Fragment, null), fields.map(field => /*#__PURE__*/React.createElement(BasicField, {
-      key: field.name,
-      field: field,
-      form: form,
-      store: store
-    })), submitCmp);
+    }, intro) : /*#__PURE__*/React.createElement(Fragment, null), fields.map(function (field) {
+      return /*#__PURE__*/React.createElement(BasicField, {
+        key: field.name,
+        field: field,
+        form: form,
+        store: store
+      });
+    }), submitCmp);
   }
 
   return {
-    BasicFormShape,
-    BasicField,
-    BasicForm
+    BasicFormShape: BasicFormShape,
+    BasicField: BasicField,
+    BasicForm: BasicForm
   };
 }
 
