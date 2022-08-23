@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback } from 'react'
+import React, { Fragment, useEffect } from 'react'
 
 import { useSelector } from 'react-redux'
 
@@ -55,7 +55,7 @@ function BasicField(props) {
   const data = useSelector(state => state[form.slice][form.name])
   let value = useSelector(state => state[form.slice][form.name][name])
 
-  // console.log('BasicField value', name, value, field.value)
+  // console.log('BasicField value', name, value, field.value, data[name])
   value = null == value ? (null == field.value ? '' : field.value) : value
 
   
@@ -79,12 +79,19 @@ function BasicField(props) {
     if(form.valid) {
       valid = form.valid(newdata)
     }
+
+    // console.log('FIELD onChange', field)
+    
     if(form.onChange) {
-      form.onChange({field,value,data:newdata,meta:{valid}})
+      form.onChange({
+        field,
+        value,
+        data:newdata,
+        meta:{valid}
+      })
     }
   }
 
-  
   
   return (
     <div className={classes}>
@@ -131,7 +138,7 @@ function BasicField(props) {
 
         </select> : <></> }
 
-      { 'custom' === field.kind ? field.cmp : <></> }
+      { 'custom' === field.kind ? field.cmp({onChange}) : <></> }
 
     </div>
   )
@@ -142,13 +149,15 @@ function getBasicForm(conf) {
   let { store } = conf
   
   function BasicForm(props) {
-    console.log('BasicForm A', props)
+    // console.log('BasicForm A', props)
 
     const form = BasicFormShape(props.form)
 
     const data = useSelector(state => state[form.slice][form.name])
     const meta = useSelector(state => state[form.slice].form[form.name])
-    
+
+
+
     const title = form.title
     const intro = form.intro
     const name = form.name
@@ -161,18 +170,23 @@ function getBasicForm(conf) {
     const classes = form.classes
 
 
+
     const fields = Object.entries(form.field)
           .reduce(((a,entry)=>(entry[1].name=entry[0],a.push({...entry[1]}),a)),[])
 
-    console.log('BasicForm fields', fields)
+    // console.log('BasicForm fields', fields)
+
 
     let valid = {ok:true}
     if(form.valid) {
       valid = form.valid(data)
     }
-    if(form.onRender) {
-      form.onRender({data,meta:{valid}})
-    }
+
+    // if(form.onRender) {
+    //   form.onRender({data,meta:{valid}})
+    // }
+
+    
     
     return (
       <form
@@ -198,8 +212,6 @@ function getBasicForm(conf) {
         
       </form>
     )
-
-    
   }
 
   return {

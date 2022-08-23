@@ -141,14 +141,15 @@ function BasicField(props) {
       key: item.value,
       value: item.value
     }, item.text);
-  })) : /*#__PURE__*/React__default.createElement(React.Fragment, null), 'custom' === field.kind ? field.cmp : /*#__PURE__*/React__default.createElement(React.Fragment, null));
+  })) : /*#__PURE__*/React__default.createElement(React.Fragment, null), 'custom' === field.kind ? field.cmp({
+    onChange: onChange
+  }) : /*#__PURE__*/React__default.createElement(React.Fragment, null));
 }
 
 function getBasicForm(conf) {
   var store = conf.store;
 
   function BasicForm(props) {
-    console.log('BasicForm A', props);
     var form = BasicFormShape(props.form);
     var data = reactRedux.useSelector(function (state) {
       return state[form.slice][form.name];
@@ -170,22 +171,12 @@ function getBasicForm(conf) {
     var fields = Object.entries(form.field).reduce(function (a, entry) {
       return entry[1].name = entry[0], a.push(_extends({}, entry[1])), a;
     }, []);
-    console.log('BasicForm fields', fields);
     var valid = {
       ok: true
     };
 
     if (form.valid) {
       valid = form.valid(data);
-    }
-
-    if (form.onRender) {
-      form.onRender({
-        data: data,
-        meta: {
-          valid: valid
-        }
-      });
     }
 
     return /*#__PURE__*/React__default.createElement("form", {
