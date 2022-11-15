@@ -15,6 +15,9 @@ const BasicFormShape = Gubu({
   field: Value({
     name: Skip(String),
     title: String,
+    link: Skip({
+      target: String,
+    }),
     kind: Exact('line','toggle','choice','custom'),
     // subtype: Skip(Exact('email')),
     subkind: Skip(String),
@@ -45,7 +48,7 @@ function BasicField(props) {
   const field = props.field
   const form = props.form
   const store = props.store
-  
+
   const { name, title, orient, kind } = field
 
   const classes = 'vxg-basic-field vxg-basic-field-'+orient+
@@ -58,7 +61,7 @@ function BasicField(props) {
   // console.log('BasicField value', name, value, field.value, data[name])
   value = null == value ? (null == field.value ? '' : field.value) : value
 
-  
+
   const onChange = async (ev)=>{
     let value = ev.target.value
 
@@ -74,14 +77,14 @@ function BasicField(props) {
 
     let newdata = {...data}
     newdata[name] = value
-    
+
     let valid = {ok:true}
     if(form.valid) {
       valid = form.valid(newdata)
     }
 
     // console.log('FIELD onChange', field)
-    
+
     if(form.onChange) {
       form.onChange({
         field,
@@ -92,7 +95,7 @@ function BasicField(props) {
     }
   }
 
-  
+
   return (
     <div className={classes}>
 
@@ -106,7 +109,14 @@ function BasicField(props) {
           defaultChecked={'y'===data[name]}
         /> : <></> }
 
-      <label htmlFor={name}>{title}</label>
+      {
+        field.link ?
+          <a href={field.link.target} rel={'noopener noreferrer'} target={'_blank'}>
+          <label htmlFor={name}>{title}</label>
+        </a>
+          :
+          <label htmlFor={name}>{title}</label>
+      }
 
       { 'line' === field.kind ?
         <input
@@ -147,7 +157,7 @@ function BasicField(props) {
 
 function getBasicForm(conf) {
   let { store } = conf
-  
+
   function BasicForm(props) {
     // console.log('BasicForm A', props)
 
@@ -186,8 +196,8 @@ function getBasicForm(conf) {
     //   form.onRender({data,meta:{valid}})
     // }
 
-    
-    
+
+
     return (
       <form
         name={name}
@@ -209,7 +219,7 @@ function getBasicForm(conf) {
                />) }
 
         { submitCmp }
-        
+
       </form>
     )
   }
@@ -225,4 +235,3 @@ function getBasicForm(conf) {
 export {
   getBasicForm
 }
-
