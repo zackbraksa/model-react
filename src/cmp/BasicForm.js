@@ -110,7 +110,7 @@ function BasicField(props) {
           defaultChecked={'y'===data[name]}
         /> : <></> }
 
-      <label htmlFor={name}>
+      <label htmlFor={form.name+'-'+field.name}>
         {title}
       {
         field.link ?

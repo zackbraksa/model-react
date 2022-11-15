@@ -117,7 +117,7 @@ function BasicField(props) {
     onChange: onChange,
     defaultChecked: 'y' === data[name]
   }) : /*#__PURE__*/React.createElement(Fragment, null), /*#__PURE__*/React.createElement("label", {
-    htmlFor: name
+    htmlFor: form.name + '-' + field.name
   }, title, field.link ? /*#__PURE__*/React.createElement("a", {
     href: field.link.target,
     rel: 'noopener noreferrer',
