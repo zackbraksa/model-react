@@ -17,6 +17,7 @@ const BasicFormShape = Gubu({
     title: String,
     link: Skip({
       target: String,
+      text: String,
     }),
     kind: Exact('line','toggle','choice','custom'),
     // subtype: Skip(Exact('email')),
@@ -109,14 +110,18 @@ function BasicField(props) {
           defaultChecked={'y'===data[name]}
         /> : <></> }
 
+      <label htmlFor={name}>
+        {title}
       {
         field.link ?
           <a href={field.link.target} rel={'noopener noreferrer'} target={'_blank'}>
-          <label htmlFor={name}>{title}</label>
+            {' '}
+            {field.link.text}
         </a>
           :
-          <label htmlFor={name}>{title}</label>
+          <></>
       }
+      </label>
 
       { 'line' === field.kind ?
         <input

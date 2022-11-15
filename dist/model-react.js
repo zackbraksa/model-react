@@ -30,7 +30,8 @@ var BasicFormShape = gubu.Gubu({
     name: gubu.Skip(String),
     title: String,
     link: gubu.Skip({
-      target: String
+      target: String,
+      text: String
     }),
     kind: gubu.Exact('line', 'toggle', 'choice', 'custom'),
     subkind: gubu.Skip(String),
@@ -118,15 +119,13 @@ function BasicField(props) {
     value: field.value,
     onChange: onChange,
     defaultChecked: 'y' === data[name]
-  }) : /*#__PURE__*/React__default.createElement(React.Fragment, null), field.link ? /*#__PURE__*/React__default.createElement("a", {
+  }) : /*#__PURE__*/React__default.createElement(React.Fragment, null), /*#__PURE__*/React__default.createElement("label", {
+    htmlFor: name
+  }, title, field.link ? /*#__PURE__*/React__default.createElement("a", {
     href: field.link.target,
     rel: 'noopener noreferrer',
     target: '_blank'
-  }, /*#__PURE__*/React__default.createElement("label", {
-    htmlFor: name
-  }, title)) : /*#__PURE__*/React__default.createElement("label", {
-    htmlFor: name
-  }, title), 'line' === field.kind ? /*#__PURE__*/React__default.createElement("input", {
+  }, ' ', field.link.text) : /*#__PURE__*/React__default.createElement(React.Fragment, null)), 'line' === field.kind ? /*#__PURE__*/React__default.createElement("input", {
     id: form.name + '-' + field.name,
     name: field.name,
     placeholder: field.placeholder,
@@ -167,7 +166,6 @@ function getBasicForm(conf) {
     var submitCmp = form.submitCmp;
     var orient = form.orient;
     var classes = form.classes;
-    console.log('TEST ', title);
     var fields = Object.entries(form.field).reduce(function (a, entry) {
       return entry[1].name = entry[0], a.push(_extends({}, entry[1])), a;
     }, []);
