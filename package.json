@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/model-react",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "license": "MIT",
   "files": [
     "dist"
@@ -19,8 +19,13 @@
     "build": "tsc && vite build",
     "watch": "vite build -w",
     "preview": "vite preview",
+    "test": "echo no-test",
     "clean": "rm -rf dist node_modules yarn.lock package-lock.json",
-    "reset": "yarn run clean && yarn install && yarn run build"
+    "reset": "yarn run clean && yarn install && yarn run build",
+    "repo-check": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && [[ '' == `git tag --list v${REPO_VERSION}` ]]",
+    "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
+    "repo-publish": "yarn run repo-check && yarn run clean && yarn install --registry https://registry.npmjs.org && yarn run build && yarn test && yarn run repo-tag && yarn publish --registry https://registry.npmjs.org",
+    "repo-publish-quick": "yarn run repo-check && yarn run build && yarn run repo-tag && yarn publish --registry https://registry.npmjs.org --access=public"    
   },
   "peerDependencies": {
     "react": ">=18",
