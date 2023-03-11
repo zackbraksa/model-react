@@ -1,61 +1,46 @@
 {
   "name": "@voxgig/model-react",
-  "version": "0.0.6",
-  "description": "@voxgig/model-react",
-  "author": "voxgig",
+  "version": "0.1.0",
   "license": "MIT",
-  "repository": "voxgig/model-react",
-  "main": "dist/model-react.js",
-  "module": "dist/model-react.modern.js",
-  "source": "src/model-react.js",
-  "engines": {
-    "node": ">=10"
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/voxgig-model-react.umd.js",
+  "module": "./dist/voxgig-model-react.es.js",
+  "types": "./dist/voxgig-model-react.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/voxgig-model-react.es.js",
+      "require": "./dist/voxgig-model-react.umd.js"
+    }
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
-    "prepare": "run-s build",
-    "test": "run-s test:unit",
-    "test:all": "run-s test:unit test:lint test:build",
-    "test:build": "run-s build",
-    "test:lint": "eslint .",
-    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
-    "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build",
-    "clean": "rm -rf node_modules yarn.lock package-lock.json",
-    "reset": "npm run clean && npm i && npm run build && npm test",
-    "repo-check": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && [[ '' == `git tag --list v${REPO_VERSION}` ]]",
-    "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
-    "repo-publish": "npm run repo-check && npm run clean && npm i --registry https://registry.npmjs.org && npm run repo-publish-quick",
-    "repo-publish-quick": "npm run repo-check && npm run build && npm run repo-tag && npm publish --registry https://registry.npmjs.org --access=public"    
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "watch": "vite build -w",
+    "preview": "vite preview",
+    "clean": "rm -rf dist node_modules yarn.lock package-lock.json",
+    "reset": "yarn run clean && yarn install && yarn run build"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": ">=18",
+    "react-dom": ">=18",
+    "styled-components": ">=5"
   },
   "devDependencies": {
-    "microbundle-crl": "^0.13.11",
-    "babel-eslint": "^10.0.3",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.27.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-config-standard-react": "^12.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.31.10",
-    "eslint-plugin-standard": "^4.1.0",
-    "gh-pages": "^4.0.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1"
-  },
-  "files": [
-    "dist",
-    "src"
-  ]
+    "styled-components": "^5.3.8",
+    "@babel/core": "^7.21.0",
+    "@types/node": "^18.15.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@types/styled-components": "^5.1.26",
+    "@vitejs/plugin-react": "^3.1.0",
+    "acorn-jsx": "^5.3.2",
+    "babel-loader": "^9.1.2",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4",
+    "vite-plugin-dts": "^2.1.0"
+  }
 }
