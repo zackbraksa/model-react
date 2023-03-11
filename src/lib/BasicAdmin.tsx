@@ -1,10 +1,11 @@
 
 import React from 'react'
 
+
 function BasicAdmin() {
 
   return (
-    <div>BasicAdmin Q</div>
+    <div>BasicAdmin 1</div>
   )
 }
 
