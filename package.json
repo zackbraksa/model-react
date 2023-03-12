@@ -25,13 +25,9 @@
     "repo-check": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && [[ '' == `git tag --list v${REPO_VERSION}` ]]",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
     "repo-publish": "yarn run repo-check && yarn run clean && yarn install --registry https://registry.npmjs.org && yarn run build && yarn test && yarn run repo-tag && npm publish --registry https://registry.npmjs.org",
-    "repo-publish-quick": "yarn run repo-check && yarn run build && yarn run repo-tag && npm publish --registry https://registry.npmjs.org --access=public"    
+    "repo-publish-quick": "yarn run repo-check && yarn run build && yarn run repo-tag && npm publish --registry https://registry.npmjs.org --access=public"
   },
   "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18",
-    "styled-components": ">=5",
-    "react-redux": ">=8",
     "@emotion/react": ">=11",
     "@emotion/styled": ">=11",
     "@fontsource/roboto": ">=4",
@@ -39,9 +35,15 @@
     "@mdi/react": ">=1",
     "@mui/icons-material": ">=5",
     "@mui/material": ">=5",
-    "@mui/x-data-grid": ">=5"
+    "@mui/x-data-grid": ">=5",
+    "react": ">=18",
+    "react-dom": ">=18",
+    "react-redux": ">=8",
+    "react-router-dom": ">=6",
+    "styled-components": ">=5"
   },
   "devDependencies": {
+    "react-router-dom": "6.9.0",
     "@babel/core": "7.21.0",
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",

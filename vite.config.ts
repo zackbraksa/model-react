@@ -23,6 +23,7 @@ export default defineConfig({
         'react-dom',
         'styled-components',
         'react-redux',
+        'react-router-dom',
         '@emotion/react',
         '@emotion/styled',
         '@fontsource/roboto',

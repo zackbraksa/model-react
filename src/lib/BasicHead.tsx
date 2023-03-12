@@ -54,8 +54,12 @@ function BasicHead(props: any) {
   
   return (
     <AppBar
-      position="static"
-      sx={{ color: 'black', bgcolor: "white" }}
+      position="fixed"
+      sx={{
+        color: 'black',
+        bgcolor: "white",
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+      }}
     >
       <Toolbar>
         <img src={part.logo.img}

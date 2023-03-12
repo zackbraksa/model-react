@@ -1,10 +1,9 @@
 
 import React from 'react'
 
-import { useSelector, Provider } from 'react-redux'
-
-
 import BasicHead from './BasicHead'
+import BasicSide from './BasicSide'
+import BasicMain from './BasicMain'
 import BasicFoot from './BasicFoot'
 
 
@@ -20,6 +19,14 @@ function BasicAdmin(props: any) {
     frame
   }
 
+  const sideSpec: any = {
+    frame
+  }
+
+  const mainSpec: any = {
+    frame
+  }
+
   const footSpec: any = {
     frame
   }
@@ -27,6 +34,8 @@ function BasicAdmin(props: any) {
   return (
     <div>
       <BasicHead ctx={ctx} spec={headSpec} />
+      <BasicSide ctx={ctx} spec={sideSpec} />
+      <BasicMain ctx={ctx} spec={mainSpec} />
       <BasicFoot ctx={ctx} spec={footSpec} />
     </div>
   )
