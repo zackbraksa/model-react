@@ -7,6 +7,7 @@ import {
   Toolbar,
   TextField,
   Autocomplete,
+  Typography,
 } from "@mui/material"
 
 
@@ -36,10 +37,8 @@ function BasicHead(props: any) {
   const tooldefs = Object.entries(part.tool.def)
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
 
-  // const ents = useSelector((state:any)=>state.main.vxg.ent.pqam.plant)
-  // console.log(ents)
-  
-  // console.log('BasicHead', tooldefs)
+  const user = useSelector((state:any)=>state.main.auth.user)
+  const userName = user.name || user.email
 
   let tooldata: any = {}
   tooldefs.forEach(tooldef=>{
@@ -78,7 +77,12 @@ function BasicHead(props: any) {
             :
           <></>
         )}
-        
+
+        <div style={{flexGrow:1}}></div>
+
+        <Typography variant="h6">
+          { userName }
+        </Typography>
       </Toolbar>
     </AppBar>
   )
