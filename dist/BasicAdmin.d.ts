@@ -1,3 +1,3 @@
 /// <reference types="react" />
-declare function BasicAdmin(): JSX.Element;
+declare function BasicAdmin(props: any): JSX.Element;
 export default BasicAdmin;

@@ -18,7 +18,20 @@ export default defineConfig({
       fileName: (format) => `voxgig-model-react.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'styled-components'],
+      external: [
+        'react',
+        'react-dom',
+        'styled-components',
+        'react-redux',
+        '@emotion/react',
+        '@emotion/styled',
+        '@fontsource/roboto',
+        '@mdi/js',
+        '@mdi/react',
+        '@mui/icons-material',
+        '@mui/material',
+        '@mui/x-data-grid'
+      ],
       output: {
         globals: {
           react: 'React',
