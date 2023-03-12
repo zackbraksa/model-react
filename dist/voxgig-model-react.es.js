@@ -744,7 +744,7 @@ function Vs(e) {
 }
 function Ws(e) {
   const { ctx: t, spec: o } = e;
-  return t().model, /* @__PURE__ */ w("div", { children: "BasicLed" });
+  return t().model, /* @__PURE__ */ w("div", {});
 }
 function Us(e, t) {
   let o = () => /* @__PURE__ */ w("div", { children: "NONE" });

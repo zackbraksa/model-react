@@ -8,7 +8,7 @@ function BasicLed(props: any) {
   
   
   return (
-    <div>BasicLed</div>
+    <div></div>
   )
 }
 
