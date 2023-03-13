@@ -36,7 +36,6 @@ function BasicMain(props: any) {
   const part = model.app.web.frame[frame].part.main
 
   const views = Object.values(model.app.web.frame.private.view)
-  // console.log('BasicMain', views)
   
   return (
     <div

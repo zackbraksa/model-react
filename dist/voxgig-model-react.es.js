@@ -650,7 +650,7 @@ function ca(e, n) {
   return e.options.kind === "ent" && n[e.name] && (o = (n[e.name].ents || []).map((i) => ({
     label: i[e.options.label.field],
     ent: i
-  }))), console.log("OPTIONS", o), o;
+  }))), o;
 }
 function ua(e) {
   const { ctx: n, spec: o } = e, { model: r, seneca: i } = n(), {
@@ -12986,7 +12986,7 @@ function _m(e) {
         columns: c,
         onSelectionModelChange: (T) => {
           let y = T[0], P = p.find((N) => N.id === y);
-          console.log(P), P && E(P);
+          P && E(P);
         }
       }
     )
@@ -13004,6 +13004,7 @@ function Im(e) {
   return /* @__PURE__ */ Se(
     Hf,
     {
+      fullWidth: !0,
       open: a,
       onClose: s,
       "aria-labelledby": "form-dialog-title",
@@ -13017,7 +13018,8 @@ function Im(e) {
             label: l.headerName,
             value: n[l.field],
             onChange: r
-          }
+          },
+          l.field
         )) }) }) }) }),
         /* @__PURE__ */ Se(Qf, { children: [
           /* @__PURE__ */ R(yo, { onClick: s, color: "secondary", children: "Cancel" }),

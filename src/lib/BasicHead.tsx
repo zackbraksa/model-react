@@ -23,8 +23,6 @@ function resolveOptions(tooldef: any, tooldata:any) {
     }))
   }
 
-  console.log('OPTIONS', options)
-  
   return options
 }
 

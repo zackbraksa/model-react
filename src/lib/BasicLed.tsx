@@ -44,8 +44,7 @@ function BasicLed(props: any) {
   
   let selectRow = (ids:any) => {
     let id = ids[0]
-    let row: any = rows.find(r=>r.id===id)
-    console.log(row)
+    let row: any = rows.find((r:any)=>r.id===id)
 
     if(row) {
       setEditRow(row)
@@ -96,6 +95,7 @@ function Popup(props:any) {
   } = props
   
   return <Dialog
+    fullWidth
     open={open}
     onClose={onCancelChanges}
     aria-labelledby="form-dialog-title">
@@ -105,12 +105,13 @@ function Popup(props:any) {
         <MuiGrid item xs={6}>
           <FormGroup>
             { columns.map((col:any)=>(
-            <TextField
-              margin="normal"
-              name={col.field}
-              label={col.headerName}
-              value={row[col.field]}
-              onChange={onChange}
+              <TextField
+                key={col.field}
+                margin="normal"
+                name={col.field}
+                label={col.headerName}
+                value={row[col.field]}
+                onChange={onChange}
               />
             ))}
           </FormGroup>
