@@ -17,8 +17,13 @@ function resolveOptions(tooldef: any, tooldata:any) {
   
   if('ent' === tooldef.options.kind && tooldata[tooldef.name]) {
     let ents = tooldata[tooldef.name].ents || []
-    options = ents.map((ent:any)=>ent[tooldef.options.label.field])
+    options = ents.map((ent:any)=>({
+      label: ent[tooldef.options.label.field],
+      ent
+    }))
   }
+
+  console.log('OPTIONS', options)
   
   return options
 }
@@ -27,7 +32,7 @@ function resolveOptions(tooldef: any, tooldata:any) {
 
 function BasicHead(props: any) {
   const { ctx, spec } = props
-  const model = ctx().model
+  const { model, seneca } = ctx()
   
   const {
     frame,
@@ -40,14 +45,26 @@ function BasicHead(props: any) {
   const user = useSelector((state:any)=>state.main.auth.user)
   const userName = user.name || user.email
 
+  let valuemap:any = {}
   let tooldata: any = {}
   tooldefs.forEach(tooldef=>{
     if('autocomplete'===tooldef.kind) {
       if('ent' === tooldef.options.kind) {
-        let canon = tooldef.options.ent.split('/')
+        let canon = tooldef.options.ent
         tooldata[tooldef.name] = {
-          ents: useSelector((state:any)=>state.main.vxg.ent[canon[0]][canon[1]])
+          ents: useSelector((state:any)=>state.main.vxg.ent.list.main[canon])
         }
+
+        let selected = useSelector((state:any)=>
+          state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected)
+
+        if(selected) {
+          valuemap[tooldef.name] = {
+            label: selected[tooldef.options.label.field],
+            ent: selected
+          }
+        }
+
       }
     }
   }) 
@@ -69,6 +86,7 @@ function BasicHead(props: any) {
 
           'autocomplete' === tooldef.kind ?
           <Autocomplete
+            value={valuemap[tooldef.name]}
             key={tooldef.name}
             options={resolveOptions(tooldef,tooldata)}
             size='small'
@@ -76,6 +94,14 @@ function BasicHead(props: any) {
               width: '20rem',
             }}
             renderInput={(params) => <TextField {...params} label={tooldef.title} />}
+            onChange={(event:any,newval:any)=>{
+              seneca.act('aim:app,set:state', {
+                section: 'vxg.cmp.BasicHead.tool.'+tooldef.name+'.selected',
+                content: newval.ent,
+              })
+            }}
+            isOptionEqualToValue={(opt:any,val:any)=>
+              (opt===val)||(null!=opt&&null!=val&&opt.ent?.id===val.ent?.id)}
           />
 
             :

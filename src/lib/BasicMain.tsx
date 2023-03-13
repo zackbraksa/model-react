@@ -56,7 +56,7 @@ function BasicMain(props: any) {
               return <Route
                 key={view.name}
                 path={'/view/'+view.name}
-                element={<Cmp ctx={ctx} spec={view?.content?.spec||{}}/>}
+                element={<Cmp ctx={ctx} spec={view}/>}
               />
             })}
         </Route>
