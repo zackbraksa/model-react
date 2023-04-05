@@ -13043,7 +13043,7 @@ function Mm(e) {
     {
       style: {
         width: "100%",
-        minHeight: "100vh",
+        height: "100vh",
         paddingTop: "4rem",
         paddingLeft: "16rem",
         paddingBottom: "1rem"
