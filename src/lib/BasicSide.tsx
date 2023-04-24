@@ -36,6 +36,8 @@ import {
   KeyOutlined,
   AssignmentTurnedInOutlined,
   TextSnippetOutlined,  
+  HighlightAlt,
+  Map as MapIcon,
 
 } from "@mui/icons-material"
 
@@ -46,6 +48,8 @@ const iconmap: any = {
   'key': KeyOutlined,
   'done': AssignmentTurnedInOutlined,
   'docs': TextSnippetOutlined,
+  'hightlight': HighlightAlt,
+  'map': MapIcon,
 }
 
 function makeIcon(name: string) {
