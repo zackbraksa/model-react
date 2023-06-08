@@ -78,7 +78,7 @@ function BasicHead(props: any) {
     >
       <Toolbar>
         <img src={part.logo.img}
-          style={{width:'10rem', marginRight: '1rem'}} />
+          style={{width:'4rem', marginRight: '1rem'}} />
 
         { tooldefs.map(tooldef=>
 

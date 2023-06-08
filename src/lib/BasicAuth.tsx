@@ -38,10 +38,10 @@ function BasicAuth(props: any) {
 
     { /* <ThemeProvider theme={theme}> */ }
     return (
-        <Container component="main" maxWidth="xs" >
-            <CssBaseline />
-            <Box
-                sx={{
+    <Container component="main" maxWidth="xs" >
+      <CssBaseline />
+      <Box
+        sx={{
                     marginTop: 8,
                     display: 'flex',
                     flexDirection: 'column',

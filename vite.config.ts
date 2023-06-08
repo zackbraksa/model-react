@@ -11,13 +11,17 @@ export default defineConfig({
     }),
   ],
   build: {
+    minify: false,
+    target: 'es6',
     lib: {
       entry: path.resolve(__dirname, 'src/lib/index.ts'),
       name: 'VoxgigModelReact',
       formats: ['es', 'umd'],
       fileName: (format) => `voxgig-model-react.${format}.js`,
     },
+    emptyOutDir: false,
     rollupOptions: {
+      treeshake: false,
       external: [
         'react',
         'react-dom',
@@ -45,10 +49,3 @@ export default defineConfig({
 });
 
 
-// import { defineConfig } from 'vite'
-// import react from '@vitejs/plugin-react'
-
-// // https://vitejs.dev/config/
-// export default defineConfig({
-//   plugins: [react()],
-// })
