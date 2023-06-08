@@ -23,7 +23,7 @@ import React__default, { createElement, isValidElement, Children, cloneElement, 
 import { useSelector } from "react-redux";
 import { AppBar, Toolbar, Autocomplete, TextField as TextField$1, Typography as Typography$1, Drawer, Box as Box$2, List as List$1, ListItem, ListItemButton, ListItemIcon, ListItemText, Container as Container$2, Grid as Grid$2 } from "@mui/material";
 import { useNavigate, Routes, Route } from "react-router-dom";
-import { FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined } from "@mui/icons-material";
+import { FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1 } from "@mui/icons-material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
@@ -1104,7 +1104,9 @@ const iconmap = {
   "factory": FactoryOutlined,
   "key": KeyOutlined,
   "done": AssignmentTurnedInOutlined,
-  "docs": TextSnippetOutlined
+  "docs": TextSnippetOutlined,
+  "hightlight": HighlightAlt,
+  "map": Map$1
 };
 function makeIcon(name) {
   let Icon = iconmap[name];

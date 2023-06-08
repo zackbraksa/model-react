@@ -1115,7 +1115,9 @@ var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
     "factory": iconsMaterial.FactoryOutlined,
     "key": iconsMaterial.KeyOutlined,
     "done": iconsMaterial.AssignmentTurnedInOutlined,
-    "docs": iconsMaterial.TextSnippetOutlined
+    "docs": iconsMaterial.TextSnippetOutlined,
+    "hightlight": iconsMaterial.HighlightAlt,
+    "map": iconsMaterial.Map
   };
   function makeIcon(name) {
     let Icon = iconmap[name];
