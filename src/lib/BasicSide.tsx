@@ -1,11 +1,13 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
 import {
   AppBar,
   Box,
+  Button,
+  ButtonGroup,
   Container,
   CssBaseline,
   Divider,
@@ -17,6 +19,9 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
+  Stack,
+  ToggleButtonGroup,
+  ToggleButton,
   Typography,
 } from "@mui/material"
 
@@ -40,6 +45,7 @@ import {
   Map as MapIcon,
 
 } from "@mui/icons-material"
+import { userInfo } from 'os'
 
 
 
@@ -62,6 +68,8 @@ function BasicSide(props: any) {
   const model = ctx().model
 
   const navigate = useNavigate()
+
+  const [show, setShow] = useState([])
   
   const { frame } = spec
   
@@ -70,7 +78,10 @@ function BasicSide(props: any) {
   const viewmap = model.app.web.frame[frame].view
   const viewdefs = Object.entries(viewmap)
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
-  
+
+  const sectiondefs = Object.entries(part.section)
+    .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
+
   let drawerWidth = '16rem'
 
 
@@ -80,17 +91,33 @@ function BasicSide(props: any) {
       navigate('/view/'+view.name)
     }
   }
+
+  function makeCmp(section: any, ctx: any) {
+    let cmp: any = ()=><div>NONE</div>
   
-  return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-      }}
-    >
-      <Toolbar />
+    if('custom' === section.kind) {
+      cmp = ctx().cmp[section.cmp]
+    }
+    else if('navmenu' === section.kind) {
+      cmp = DefaultNavMenu
+    }
+  
+    return cmp 
+  }
+  
+
+  function toggle(sectionNumber: any) {
+    return function(_event: any) {
+      setShow((show: any) => {
+        const temp = show.map((_ : Boolean) => false)
+        temp[sectionNumber] = true
+        return temp
+      })
+    }
+  }
+
+  const DefaultNavMenu = () => {
+    return (
       <Box sx={{ overflow: 'auto' }}>
         <List>
           {viewdefs.map((view:any) => (
@@ -107,6 +134,35 @@ function BasicSide(props: any) {
           ))}
         </List>
       </Box>
+    )
+  }
+
+  return (
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+      }}
+    >
+      <Toolbar />
+      <Box sx= {{ display: 'flex' }}>              
+        <ButtonGroup size="large" aria-label="large button group">
+          {sectiondefs.map((section: any, sectionNumber: number) => (
+            <Button key={section.name} onClick={toggle(sectionNumber)}>
+              { makeIcon(section.button.icon) }
+              <span>{ section.button.text }</span>
+            </Button>
+          ))}
+        </ButtonGroup>
+      </Box>
+      {sectiondefs.map((section: any, sectionNumber: number) => {
+        const Cmp:any = makeCmp(section, ctx)
+        return (
+          show[sectionNumber] && <Cmp ctx={ctx} spec={spec}/>
+        )
+      })}
     </Drawer>
     )
 }
