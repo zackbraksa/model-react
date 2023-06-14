@@ -106,6 +106,7 @@ function BasicSide(props: any) {
     const orderedViews = Object.keys(viewOrder).map((viewName) => (
       (viewdefs.filter((viewdef: any) => viewdef.name === viewName))[0]
     ))
+    // remove not prevously valid views
     return orderedViews.filter((view) => view !== undefined)
   }
   
@@ -122,7 +123,7 @@ function BasicSide(props: any) {
 
 
   const DefaultNavMenu = (props: any) => {
-    const { viewOrder } = props
+    const { viewdefs, viewOrder } = props
     return (
       <Box sx={{ overflow: 'auto' }}>
         <List>
@@ -143,7 +144,8 @@ function BasicSide(props: any) {
     )
   }
 
-  const SectionButtons = ({ sections }: any) => {
+  const SectionButtons = (props: any) => {
+    const { sections } = props
     if(sections.length === 1) {
       return null
     }
@@ -178,7 +180,7 @@ function BasicSide(props: any) {
         const showCurrentSection = showViewsData[sectionNumber]
         if(section.view) {
           return (
-            showCurrentSection && <Cmp ctx={ctx} spec={spec} viewOrder={section.view}/>
+            showCurrentSection && <Cmp ctx={ctx} spec={spec} viewOrder={section.view} viewdefs={viewdefs}/>
           )
         }
         return (
