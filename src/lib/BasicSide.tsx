@@ -1,11 +1,13 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
 import {
   AppBar,
   Box,
+  Button,
+  ButtonGroup,
   Container,
   CssBaseline,
   Divider,
@@ -62,6 +64,9 @@ function BasicSide(props: any) {
   const model = ctx().model
 
   const navigate = useNavigate()
+
+  // show first section view by default
+  const [showViewsData, setShowViewsData] = useState([true])
   
   const { frame } = spec
   
@@ -70,7 +75,10 @@ function BasicSide(props: any) {
   const viewmap = model.app.web.frame[frame].view
   const viewdefs = Object.entries(viewmap)
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
-  
+
+  const sectiondefs = Object.entries(part.section)
+    .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
+
   let drawerWidth = '16rem'
 
 
@@ -80,7 +88,69 @@ function BasicSide(props: any) {
       navigate('/view/'+view.name)
     }
   }
+
+  function sortViews(viewdefs: any, viewOrder: any) {
+    const orderedViews = Object.keys(viewOrder).map((viewName) => (
+      (viewdefs.filter((viewdef: any) => viewdef.name === viewName))[0]
+    ))
+    // remove not prevously valid views
+    return orderedViews.filter((view) => view !== undefined)
+  }
   
+
+  function toggle(sectionNumber: any) {
+    return function(_event: any) {
+      setShowViewsData((showViewsData: any) => {
+        const temp = showViewsData.map((_ : Boolean) => false)
+        temp[sectionNumber] = true
+        return temp
+      })
+    }
+  }
+
+
+  const DefaultNavMenu = (props: any) => {
+    const { viewdefs, viewOrder } = props
+    return (
+      <Box sx={{ overflow: 'auto' }}>
+        <List>
+          {sortViews(viewdefs, viewOrder).map((view:any) => (
+                <ListItem key={view.name} disablePadding>
+                  <ListItemButton
+                    onClick={selectView(view)}
+                  >
+                    <ListItemIcon>
+                      { makeIcon(view.icon) }
+                    </ListItemIcon>
+                    <ListItemText primary={view.title} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+        </List>
+      </Box>
+    )
+  }
+
+  const SectionButtons = (props: any) => {
+    const { sections } = props
+    if(sections.length === 1) {
+      return null
+    }
+
+    return (
+      <Box sx= {{ display: 'flex' }}>              
+        <ButtonGroup size="large" aria-label="large button group">
+          {sections.map((section: any, sectionNumber: number) => (
+            <Button key={section.name} onClick={toggle(sectionNumber)}>
+              { makeIcon(section.button.icon) }
+              <span>{ section.button.text }</span>
+            </Button>
+          ))}
+        </ButtonGroup>
+      </Box>
+    )
+  }
+
   return (
     <Drawer
       variant="permanent"
@@ -91,22 +161,21 @@ function BasicSide(props: any) {
       }}
     >
       <Toolbar />
-      <Box sx={{ overflow: 'auto' }}>
-        <List>
-          {viewdefs.map((view:any) => (
-            <ListItem key={view.name} disablePadding>
-              <ListItemButton
-                onClick={selectView(view)}
-              >
-                <ListItemIcon>
-                  { makeIcon(view.icon) }
-                </ListItemIcon>
-                <ListItemText primary={view.title} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
+      <SectionButtons sections={ sectiondefs }/>
+      {sectiondefs.map((section: any, sectionNumber: number) => {
+        const showCurrentSection = showViewsData[sectionNumber]
+        if('navmenu' === section.kind) {
+          return (
+            showCurrentSection && <DefaultNavMenu viewOrder={section.view} viewdefs={viewdefs}/>
+          )
+        }
+
+        const Cmp:any = ctx().cmp[section.cmp]
+        return (
+          showCurrentSection && <Cmp ctx={ctx} spec={spec}/>
+        )
+        })
+      }
     </Drawer>
     )
 }
