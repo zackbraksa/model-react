@@ -89,14 +89,6 @@ function BasicSide(props: any) {
     }
   }
 
-  function makeCmp(section: any, ctx: any) {
-    let cmp: any = ()=><div>NONE</div>
-  
-    if('custom' === section.kind) {
-      return cmp = ctx().cmp[section.cmp]
-    }
-  }
-
   function sortViews(viewdefs: any, viewOrder: any) {
     const orderedViews = Object.keys(viewOrder).map((viewName) => (
       (viewdefs.filter((viewdef: any) => viewdef.name === viewName))[0]
@@ -178,7 +170,7 @@ function BasicSide(props: any) {
           )
         }
 
-        const Cmp:any = makeCmp(section, ctx)
+        const Cmp:any = ctx().cmp[section.cmp]
         return (
           showCurrentSection && <Cmp ctx={ctx} spec={spec}/>
         )
