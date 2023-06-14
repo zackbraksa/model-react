@@ -65,7 +65,8 @@ function BasicSide(props: any) {
 
   const navigate = useNavigate()
 
-  const [show, setShow] = useState([])
+  // show first section view by default
+  const [showViewsData, setShowViewsData] = useState([true])
   
   const { frame } = spec
   
@@ -100,35 +101,63 @@ function BasicSide(props: any) {
   
     return cmp 
   }
+
+  function sortViews(viewdefs: any, viewOrder: any) {
+    const orderedViews = Object.keys(viewOrder).map((viewName) => (
+      (viewdefs.filter((viewdef: any) => viewdef.name === viewName))[0]
+    ))
+    return orderedViews.filter((view) => view !== undefined)
+  }
   
 
   function toggle(sectionNumber: any) {
     return function(_event: any) {
-      setShow((show: any) => {
-        const temp = show.map((_ : Boolean) => false)
+      setShowViewsData((showViewsData: any) => {
+        const temp = showViewsData.map((_ : Boolean) => false)
         temp[sectionNumber] = true
         return temp
       })
     }
   }
 
-  const DefaultNavMenu = () => {
+
+  const DefaultNavMenu = (props: any) => {
+    const { viewOrder } = props
     return (
       <Box sx={{ overflow: 'auto' }}>
         <List>
-          {viewdefs.map((view:any) => (
-            <ListItem key={view.name} disablePadding>
-              <ListItemButton
-                onClick={selectView(view)}
-              >
-                <ListItemIcon>
-                  { makeIcon(view.icon) }
-                </ListItemIcon>
-                <ListItemText primary={view.title} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {sortViews(viewdefs, viewOrder).map((view:any) => (
+                <ListItem key={view.name} disablePadding>
+                  <ListItemButton
+                    onClick={selectView(view)}
+                  >
+                    <ListItemIcon>
+                      { makeIcon(view.icon) }
+                    </ListItemIcon>
+                    <ListItemText primary={view.title} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
         </List>
+      </Box>
+    )
+  }
+
+  const SectionButtons = ({ sections }: any) => {
+    if(sections.length === 1) {
+      return null
+    }
+
+    return (
+      <Box sx= {{ display: 'flex' }}>              
+        <ButtonGroup size="large" aria-label="large button group">
+          {sections.map((section: any, sectionNumber: number) => (
+            <Button key={section.name} onClick={toggle(sectionNumber)}>
+              { makeIcon(section.button.icon) }
+              <span>{ section.button.text }</span>
+            </Button>
+          ))}
+        </ButtonGroup>
       </Box>
     )
   }
@@ -143,20 +172,17 @@ function BasicSide(props: any) {
       }}
     >
       <Toolbar />
-      <Box sx= {{ display: 'flex' }}>              
-        <ButtonGroup size="large" aria-label="large button group">
-          {sectiondefs.map((section: any, sectionNumber: number) => (
-            <Button key={section.name} onClick={toggle(sectionNumber)}>
-              { makeIcon(section.button.icon) }
-              <span>{ section.button.text }</span>
-            </Button>
-          ))}
-        </ButtonGroup>
-      </Box>
+      <SectionButtons sections={ sectiondefs }/>
       {sectiondefs.map((section: any, sectionNumber: number) => {
         const Cmp:any = makeCmp(section, ctx)
+        const showCurrentSection = showViewsData[sectionNumber]
+        if(section.view) {
+          return (
+            showCurrentSection && <Cmp ctx={ctx} spec={spec} viewOrder={section.view}/>
+          )
+        }
         return (
-          show[sectionNumber] && <Cmp ctx={ctx} spec={spec}/>
+          showCurrentSection && <Cmp ctx={ctx} spec={spec}/>
         )
       })}
     </Drawer>
