@@ -93,13 +93,8 @@ function BasicSide(props: any) {
     let cmp: any = ()=><div>NONE</div>
   
     if('custom' === section.kind) {
-      cmp = ctx().cmp[section.cmp]
+      return cmp = ctx().cmp[section.cmp]
     }
-    else if('navmenu' === section.kind) {
-      cmp = DefaultNavMenu
-    }
-  
-    return cmp 
   }
 
   function sortViews(viewdefs: any, viewOrder: any) {
@@ -176,17 +171,19 @@ function BasicSide(props: any) {
       <Toolbar />
       <SectionButtons sections={ sectiondefs }/>
       {sectiondefs.map((section: any, sectionNumber: number) => {
-        const Cmp:any = makeCmp(section, ctx)
         const showCurrentSection = showViewsData[sectionNumber]
-        if(section.view) {
+        if('navmenu' === section.kind) {
           return (
-            showCurrentSection && <Cmp ctx={ctx} spec={spec} viewOrder={section.view} viewdefs={viewdefs}/>
+            showCurrentSection && <DefaultNavMenu viewOrder={section.view} viewdefs={viewdefs}/>
           )
         }
+
+        const Cmp:any = makeCmp(section, ctx)
         return (
           showCurrentSection && <Cmp ctx={ctx} spec={spec}/>
         )
-      })}
+        })
+      }
     </Drawer>
     )
 }
