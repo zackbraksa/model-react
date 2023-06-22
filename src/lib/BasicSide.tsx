@@ -138,14 +138,18 @@ function BasicSide(props: any) {
     }
 
     return (
-      <Box sx= {{ display: 'flex' }}>              
+      <Box sx= {{ display: 'flex' }}>
         <ButtonGroup size="large" aria-label="large button group">
-          {sections.map((section: any, sectionNumber: number) => (
-            <Button key={section.name} onClick={toggle(sectionNumber)}>
+          {sections.map((section: any, sectionNumber: number) => {
+            return <Button key={section.name} onClick={ (event)=>{
+              toggle(sectionNumber)(event)
+              selectView(section)(event)
+              }
+              }>
               { makeIcon(section.button.icon) }
               <span>{ section.button.text }</span>
             </Button>
-          ))}
+          })}
         </ButtonGroup>
       </Box>
     )
