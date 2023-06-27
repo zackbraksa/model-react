@@ -76,7 +76,7 @@ function BasicSide(props: any) {
   const viewdefs = Object.entries(viewmap)
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
 
-  const sectiondefs = Object.entries(part.section)
+  const sectiondefs = Object.entries(part.section || [])
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
 
   let drawerWidth = '16rem'
