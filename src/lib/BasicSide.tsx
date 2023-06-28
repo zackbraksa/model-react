@@ -134,7 +134,7 @@ function BasicSide(props: any) {
   const SectionButtons = (props: any) => {
     const { sections } = props
     if(sections.length === 1) {
-      return null;
+      return null
     }
 
     return (
