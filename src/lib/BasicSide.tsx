@@ -79,7 +79,7 @@ function BasicSide(props: any) {
   const sectiondefs = Object.entries(part.section || [])
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
 
-  let drawerWidth = '16rem';
+  let drawerWidth = '16rem'
 
 
   function selectView(view:any) {
