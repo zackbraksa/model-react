@@ -76,7 +76,7 @@ function BasicSide(props: any) {
   const viewdefs = Object.entries(viewmap)
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
 
-  const sectiondefs = Object.entries(part.section)
+  const sectiondefs = Object.entries(part.section || [])
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
 
   let drawerWidth = '16rem'
@@ -138,14 +138,20 @@ function BasicSide(props: any) {
     }
 
     return (
-      <Box sx= {{ display: 'flex' }}>              
+      <Box sx= {{ display: 'flex' }}>
         <ButtonGroup size="large" aria-label="large button group">
-          {sections.map((section: any, sectionNumber: number) => (
-            <Button key={section.name} onClick={toggle(sectionNumber)}>
-              { makeIcon(section.button.icon) }
-              <span>{ section.button.text }</span>
-            </Button>
-          ))}
+          {
+            sections.map((section: any, sectionNumber: number) => (
+              <Button key={section.name} onClick={ (event)=>{
+                toggle(sectionNumber)(event)
+                selectView(section)(event)
+              }}>
+                <div>
+                  { makeIcon(section.button.icon) }
+                  <span className="iconText">{ section.button.text }</span>
+                </div>
+              </Button>
+            ))}
         </ButtonGroup>
       </Box>
     )
