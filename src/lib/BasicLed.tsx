@@ -21,20 +21,21 @@ function BasicLed(props: any) {
   const { ctx, spec } = props
   const { model, seneca, custom } = ctx()
 
+  // console.log('spec',spec)
+  
   const def = spec.content.def
   const { ent, cols } = def
 
   const cmpstate = useSelector((state:any)=>state.main.vxg.cmp)
   
-  const entstate = useSelector((state:any)=>state.main.vxg.ent.meta.main[def.ent].state)
-  const entlist = useSelector((state:any)=>state.main.vxg.ent.list.main[def.ent])
+  const entstate = useSelector((state:any)=>state.main.vxg.ent.meta.main[ent].state)
+  const entlist = useSelector((state:any)=>state.main.vxg.ent.list.main[ent])
 
+  // console.log('entlist',entlist)
+  
   if('none'===entstate) {
     let q = custom.BasicLed.query(spec,cmpstate)
-    seneca.act('aim:web,on:entity,list:entity,debounce$:true', {
-      canon: def.ent,
-      q,
-    })
+    seneca.entity(def.ent).list$(q)
   }
 
   
