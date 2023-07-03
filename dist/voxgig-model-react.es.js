@@ -1123,7 +1123,7 @@ function BasicSide(props) {
   const part = model.app.web.frame[frame].part.side;
   const viewmap = model.app.web.frame[frame].view;
   const viewdefs = Object.entries(viewmap).map((entry) => (entry[1].name = entry[0], entry[1]));
-  const sectiondefs = Object.entries(part.section || {}).map((entry) => (entry[1].name = entry[0], entry[1]));
+  const sectiondefs = Object.entries(part.section || []).map((entry) => (entry[1].name = entry[0], entry[1]));
   let drawerWidth = "16rem";
   function selectView(view) {
     return function(_event) {
@@ -1161,10 +1161,13 @@ function BasicSide(props) {
     if (sections.length === 1) {
       return null;
     }
-    return /* @__PURE__ */ jsx(Box$2, { sx: { display: "flex" }, children: /* @__PURE__ */ jsx(ButtonGroup, { size: "large", "aria-label": "large button group", children: sections.map((section, sectionNumber) => /* @__PURE__ */ jsxs(Button$1, { onClick: toggle(sectionNumber), children: [
+    return /* @__PURE__ */ jsx(Box$2, { sx: { display: "flex" }, children: /* @__PURE__ */ jsx(ButtonGroup, { size: "large", "aria-label": "large button group", children: sections.map((section, sectionNumber) => /* @__PURE__ */ jsx(Button$1, { onClick: (event) => {
+      toggle(sectionNumber)(event);
+      selectView(section)(event);
+    }, children: /* @__PURE__ */ jsxs("div", { children: [
       makeIcon(section.button.icon),
-      /* @__PURE__ */ jsx("span", { children: section.button.text })
-    ] }, section.name)) }) });
+      /* @__PURE__ */ jsx("span", { className: "iconText", children: section.button.text })
+    ] }) }, section.name)) }) });
   };
   return /* @__PURE__ */ jsxs(
     Drawer,
