@@ -84,7 +84,9 @@ function BasicHead(props: any) {
 
           'autocomplete' === tooldef.kind ?
           <Autocomplete
-            value={valuemap[tooldef.name]}
+            freeSolo = { true }
+            forcePopupIcon={ true }
+            value={valuemap[tooldef.name] || tooldef.defaultvalue || ''}
             key={tooldef.name}
             options={resolveOptions(tooldef,tooldata)}
             size='small'

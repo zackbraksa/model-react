@@ -19,9 +19,9 @@ var __spreadValues = (a, b) => {
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 import * as React from "react";
-import React__default, { createElement, isValidElement, Children, cloneElement, useState } from "react";
+import React__default, { useState, createElement, isValidElement, Children, cloneElement } from "react";
 import { useSelector } from "react-redux";
-import { AppBar, Toolbar, Autocomplete, TextField as TextField$1, Typography as Typography$1, Drawer, Box as Box$2, List as List$1, ListItem, ListItemButton, ListItemIcon, ListItemText, Container as Container$2, Grid as Grid$2 } from "@mui/material";
+import { AppBar, Toolbar, Autocomplete, TextField as TextField$1, Typography as Typography$1, Box as Box$2, List as List$1, ListItem, ListItemButton, ListItemIcon, ListItemText, ButtonGroup, Button as Button$1, Drawer, Container as Container$2, Grid as Grid$2 } from "@mui/material";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import { FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1 } from "@mui/icons-material";
 import * as ReactDOM from "react-dom";
@@ -1073,7 +1073,9 @@ function BasicHead(props) {
           (tooldef) => "autocomplete" === tooldef.kind ? /* @__PURE__ */ jsx(
             Autocomplete,
             {
-              value: valuemap[tooldef.name],
+              freeSolo: true,
+              forcePopupIcon: true,
+              value: valuemap[tooldef.name] || tooldef.defaultvalue || "",
               options: resolveOptions(tooldef, tooldata),
               size: "small",
               sx: {
@@ -1116,16 +1118,57 @@ function BasicSide(props) {
   const { ctx, spec } = props;
   const model = ctx().model;
   const navigate = useNavigate();
+  const [showViewsData, setShowViewsData] = useState([true]);
   const { frame } = spec;
   const part = model.app.web.frame[frame].part.side;
   const viewmap = model.app.web.frame[frame].view;
   const viewdefs = Object.entries(viewmap).map((entry) => (entry[1].name = entry[0], entry[1]));
+  const sectiondefs = Object.entries(part.section || []).map((entry) => (entry[1].name = entry[0], entry[1]));
   let drawerWidth = "16rem";
   function selectView(view) {
     return function(_event) {
       navigate("/view/" + view.name);
     };
   }
+  function sortViews(viewdefs2, viewOrder) {
+    const orderedViews = Object.keys(viewOrder).map((viewName) => viewdefs2.filter((viewdef) => viewdef.name === viewName)[0]);
+    return orderedViews.filter((view) => view !== void 0);
+  }
+  function toggle(sectionNumber) {
+    return function(_event) {
+      setShowViewsData((showViewsData2) => {
+        const temp = showViewsData2.map((_2) => false);
+        temp[sectionNumber] = true;
+        return temp;
+      });
+    };
+  }
+  const DefaultNavMenu = (props2) => {
+    const { viewdefs: viewdefs2, viewOrder } = props2;
+    return /* @__PURE__ */ jsx(Box$2, { sx: { overflow: "auto" }, children: /* @__PURE__ */ jsx(List$1, { children: sortViews(viewdefs2, viewOrder).map((view) => /* @__PURE__ */ jsx(ListItem, { disablePadding: true, children: /* @__PURE__ */ jsxs(
+      ListItemButton,
+      {
+        onClick: selectView(view),
+        children: [
+          /* @__PURE__ */ jsx(ListItemIcon, { children: makeIcon(view.icon) }),
+          /* @__PURE__ */ jsx(ListItemText, { primary: view.title })
+        ]
+      }
+    ) }, view.name)) }) });
+  };
+  const SectionButtons = (props2) => {
+    const { sections } = props2;
+    if (sections.length === 1) {
+      return null;
+    }
+    return /* @__PURE__ */ jsx(Box$2, { sx: { display: "flex" }, children: /* @__PURE__ */ jsx(ButtonGroup, { size: "large", "aria-label": "large button group", children: sections.map((section, sectionNumber) => /* @__PURE__ */ jsx(Button$1, { onClick: (event) => {
+      toggle(sectionNumber)(event);
+      selectView(section)(event);
+    }, children: /* @__PURE__ */ jsxs("div", { children: [
+      makeIcon(section.button.icon),
+      /* @__PURE__ */ jsx("span", { className: "iconText", children: section.button.text })
+    ] }) }, section.name)) }) });
+  };
   return /* @__PURE__ */ jsxs(
     Drawer,
     {
@@ -1137,16 +1180,15 @@ function BasicSide(props) {
       },
       children: [
         /* @__PURE__ */ jsx(Toolbar, {}),
-        /* @__PURE__ */ jsx(Box$2, { sx: { overflow: "auto" }, children: /* @__PURE__ */ jsx(List$1, { children: viewdefs.map((view) => /* @__PURE__ */ jsx(ListItem, { disablePadding: true, children: /* @__PURE__ */ jsxs(
-          ListItemButton,
-          {
-            onClick: selectView(view),
-            children: [
-              /* @__PURE__ */ jsx(ListItemIcon, { children: makeIcon(view.icon) }),
-              /* @__PURE__ */ jsx(ListItemText, { primary: view.title })
-            ]
+        /* @__PURE__ */ jsx(SectionButtons, { sections: sectiondefs }),
+        sectiondefs.map((section, sectionNumber) => {
+          const showCurrentSection = showViewsData[sectionNumber];
+          if ("navmenu" === section.kind) {
+            return showCurrentSection && /* @__PURE__ */ jsx(DefaultNavMenu, { viewOrder: section.view, viewdefs });
           }
-        ) }, view.name)) }) })
+          const Cmp = ctx().cmp[section.cmp];
+          return showCurrentSection && /* @__PURE__ */ jsx(Cmp, { ctx, spec });
+        })
       ]
     }
   );
@@ -28483,14 +28525,11 @@ function BasicLed(props) {
   const def = spec.content.def;
   const { ent, cols } = def;
   const cmpstate = useSelector((state) => state.main.vxg.cmp);
-  const entstate = useSelector((state) => state.main.vxg.ent.meta.main[def.ent].state);
-  const entlist = useSelector((state) => state.main.vxg.ent.list.main[def.ent]);
+  const entstate = useSelector((state) => state.main.vxg.ent.meta.main[ent].state);
+  const entlist = useSelector((state) => state.main.vxg.ent.list.main[ent]);
   if ("none" === entstate) {
     let q = custom.BasicLed.query(spec, cmpstate);
-    seneca.act("aim:web,on:entity,list:entity,debounce$:true", {
-      canon: def.ent,
-      q
-    });
+    seneca.entity(def.ent).list$(q);
   }
   const rows = entlist;
   let [editRow, setEditRow] = useState();
