@@ -72,24 +72,6 @@ function BasicLed(props: any) {
   const rows = entlist
   console.log('rows: ', rows)
   console.log('cols: ', cols)
-  
-  let [editRow, setEditRow] = useState()
-  
-  let selectRow = (ids:any) => {
-    let id = ids[0]
-    let row: any = rows.find((r:any)=>r.id===id)
-
-    if(row) {
-      setEditRow(row)
-    }
-  }
-  
-  const open=()=>{}
-  const processValueChange=()=>{}
-  const applyChanges=()=>{}
-  const cancelChanges=()=>{
-    setEditRow(undefined)
-  }
 
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: ({ } as any),
@@ -171,7 +153,6 @@ function BasicLed(props: any) {
       <DataGrid
         rows={rows}
         columns={cols}
-        onSelectionModelChange={selectRow}
         onRowClick={ (params) => {
           let selitem = { ...params.row }
           console.log('item: ', selitem)
@@ -194,52 +175,6 @@ function BasicLed(props: any) {
       
     </div>
   )
-}
-
-
-function Popup(props:any) {
-  let {
-    row,
-    columns,
-    onChange,
-    onApplyChanges,
-    onCancelChanges,
-    open
-  } = props
-  
-  return <Dialog
-    fullWidth
-    open={open}
-    onClose={onCancelChanges}
-    aria-labelledby="form-dialog-title">
-    <DialogTitle id="form-dialog-title">Edit Details</DialogTitle>
-    <DialogContent>
-      <MuiGrid container spacing={3}>
-        <MuiGrid item xs={6}>
-          <FormGroup>
-            { columns.map((col:any)=>(
-              <TextField
-                key={col.field}
-                margin="normal"
-                name={col.field}
-                label={col.headerName}
-                value={row[col.field]}
-                onChange={onChange}
-              />
-            ))}
-          </FormGroup>
-        </MuiGrid>
-      </MuiGrid>
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={onCancelChanges} color="secondary">
-        Cancel
-      </Button>
-      <Button onClick={onApplyChanges} color="primary">
-        Save
-      </Button>
-    </DialogActions>
-  </Dialog>
 }
 
 
