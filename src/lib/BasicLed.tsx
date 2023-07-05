@@ -33,12 +33,33 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 
-function fieldStyle(field: any) {
-  return {
-    flexBasis: (100*field.size/12) + '%',
-    padding: '0em 1em 1em 0em',
+function fields (spec: any) {
+  console.log('layout: ', spec.content.def.cols)
+  
+  try {
+    let fds = []
+    let fns = spec.content.def.list.layout.order.replace(/\s+/g, '').split(/,/)
+    for(let fn of fns) {
+      let fd = { ...spec.content.def.cols.find((f: any)=> f.field == fn), } || {}
+      // console.log('fd: ', fd)
+      
+      // fd.name = fn
+      // fd.title = fd.title ? fd.title : fd.name
+      
+      // fd = { ...fd, ...(spec.edit.layout.field[fn] || {} ) }
+      
+      fds.push(fd)
+    }
+    // console.log('fds: ', fds)
+    return fds
   }
+  catch(err) {
+   // console.log(err)
+  }
+  
+  return spec.content.def.cols
 }
+
 
 function BasicLed(props: any) {
   const { ctx, spec } = props
@@ -77,8 +98,7 @@ function BasicLed(props: any) {
     defaultValues: ({ } as any),
   })
 
-  const itemFields: any = cols.map((field: any) => field)
-
+  const itemFields: any = fields(spec)
   const sideOpen = true
   const divStyle = {
     'paddingLeft': sideOpen ? '11.5em' : '0em',
