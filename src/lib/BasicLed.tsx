@@ -119,34 +119,29 @@ function BasicLed(props: any) {
               })
             }
           
-            <br/>
-            <BasicButton variant="outlined"
-              sx = {{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                margin: 0,
-              }}
-              size="large"
-              onClick={ () => { setShowTable(false) } }
-            >
-              Cancel
-            </BasicButton> 
-          
-            <BasicButton type="submit" variant="outlined"
-              sx = {{
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                margin: 0,
-              }}
-              size="large"
-              onClick={ ()=> {
-                console.log('item: ', item)
-              } }
-            >
-              SAVE
-            </BasicButton> 
+            <Grid item xs={12}>
+              <Grid container justifyContent="space-between" alignItems="center" marginTop={2}>
+                <Grid item>
+                  <BasicButton variant="outlined"
+                    size="large"
+                    onClick={ () => { setShowTable(false) } }
+                  >
+                    Cancel
+                  </BasicButton> 
+                </Grid>
+                <Grid item>
+                  <BasicButton type="submit" variant="outlined"
+                    size="large"
+                    onClick={ ()=> {
+                      console.log('item: ', item)
+                    } }
+                  >
+                    SAVE
+                  </BasicButton>
+            
+                </Grid>
+              </Grid>
+            </Grid>
           
           </Grid>
         </form> :
