@@ -131,6 +131,7 @@ function BasicLed(props: any) {
                     key={ field.field }
                     label={ field.headerName }
                     fullWidth
+                    disabled={ !field.edit }
                     { ... register( field.field ) }
           
                   />
