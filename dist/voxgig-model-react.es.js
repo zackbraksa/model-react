@@ -18,6 +18,38 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+var __async = (__this, __arguments, generator) => {
+  return new Promise((resolve, reject) => {
+    var fulfilled = (value) => {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var rejected = (value) => {
+      try {
+        step(generator.throw(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+    step((generator = generator.apply(__this, __arguments)).next());
+  });
+};
 import * as React from "react";
 import React__default, { useState, createElement, isValidElement, Children, cloneElement } from "react";
 import { useSelector } from "react-redux";
@@ -157,28 +189,28 @@ function requireReactJsxRuntime_development() {
         return null;
       }
       var ReactSharedInternals = React2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-      function error(format2) {
+      function error(format) {
         {
           {
             for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
               args[_key2 - 1] = arguments[_key2];
             }
-            printWarning("error", format2, args);
+            printWarning("error", format, args);
           }
         }
       }
-      function printWarning(level, format2, args) {
+      function printWarning(level, format, args) {
         {
           var ReactDebugCurrentFrame2 = ReactSharedInternals.ReactDebugCurrentFrame;
           var stack = ReactDebugCurrentFrame2.getStackAddendum();
           if (stack !== "") {
-            format2 += "%s";
+            format += "%s";
             args = args.concat([stack]);
           }
           var argsWithFormat = args.map(function(item) {
             return String(item);
           });
-          argsWithFormat.unshift("Warning: " + format2);
+          argsWithFormat.unshift("Warning: " + format);
           Function.prototype.apply.call(console[level], console, argsWithFormat);
         }
       }
@@ -2252,11 +2284,11 @@ function chainPropTypes(propType1, propType2) {
     return propType1(...args) || propType2(...args);
   };
 }
-function isPlainObject(item) {
+function isPlainObject$1(item) {
   return item !== null && typeof item === "object" && item.constructor === Object;
 }
 function deepClone(source) {
-  if (!isPlainObject(source)) {
+  if (!isPlainObject$1(source)) {
     return source;
   }
   const output = {};
@@ -2268,16 +2300,16 @@ function deepClone(source) {
 function deepmerge(target, source, options = {
   clone: true
 }) {
-  const output = options.clone ? _extends({}, target) : target;
-  if (isPlainObject(target) && isPlainObject(source)) {
+  const output = options.clone ? __spreadValues({}, target) : target;
+  if (isPlainObject$1(target) && isPlainObject$1(source)) {
     Object.keys(source).forEach((key) => {
       if (key === "__proto__") {
         return;
       }
-      if (isPlainObject(source[key]) && key in target && isPlainObject(target[key])) {
+      if (isPlainObject$1(source[key]) && key in target && isPlainObject$1(target[key])) {
         output[key] = deepmerge(target[key], source[key], options);
       } else if (options.clone) {
-        output[key] = isPlainObject(source[key]) ? deepClone(source[key]) : source[key];
+        output[key] = isPlainObject$1(source[key]) ? deepClone(source[key]) : source[key];
       } else {
         output[key] = source[key];
       }
@@ -2344,7 +2376,7 @@ function exactProp(propTypes2) {
   if (process.env.NODE_ENV === "production") {
     return propTypes2;
   }
-  return _extends({}, propTypes2, {
+  return __spreadProps(__spreadValues({}, propTypes2), {
     [specialProperty]: (props) => {
       const unsupportedProps = Object.keys(props).filter((prop) => !propTypes2.hasOwnProperty(prop));
       if (unsupportedProps.length > 0) {
@@ -2790,7 +2822,7 @@ function requirePropFactory(componentNameInError, Component) {
   if (process.env.NODE_ENV === "production") {
     return () => null;
   }
-  const prevPropTypes = Component ? _extends({}, Component.propTypes) : null;
+  const prevPropTypes = Component ? __spreadValues({}, Component.propTypes) : null;
   const requireProp = (requiredProp) => (props, propName, componentName, location, propFullName, ...args) => {
     const propFullNameSafe = propFullName || propName;
     const defaultTypeChecker = prevPropTypes == null ? void 0 : prevPropTypes[propFullNameSafe];
@@ -2827,7 +2859,7 @@ function useGlobalId(idOverride) {
   }, [defaultId]);
   return id;
 }
-const maybeReactUseId = React["useId"];
+const maybeReactUseId = React["useId".toString()];
 function useId(idOverride) {
   if (maybeReactUseId !== void 0) {
     const reactId = maybeReactUseId();
@@ -3124,10 +3156,10 @@ validator.isRequired = requiredInteger;
 validatorNoop.isRequired = validatorNoop;
 const integerPropType = process.env.NODE_ENV === "production" ? validatorNoop : validator;
 function resolveProps(defaultProps2, props) {
-  const output = _extends({}, props);
+  const output = __spreadValues({}, props);
   Object.keys(defaultProps2).forEach((propName) => {
     if (propName.toString().match(/^(components|slots)$/)) {
-      output[propName] = _extends({}, defaultProps2[propName], output[propName]);
+      output[propName] = __spreadValues(__spreadValues({}, defaultProps2[propName]), output[propName]);
     } else if (propName.toString().match(/^(componentsProps|slotProps)$/)) {
       const defaultSlotProps = defaultProps2[propName] || {};
       const slotProps = props[propName];
@@ -3137,7 +3169,7 @@ function resolveProps(defaultProps2, props) {
       } else if (!defaultSlotProps || !Object.keys(defaultSlotProps)) {
         output[propName] = slotProps;
       } else {
-        output[propName] = _extends({}, slotProps);
+        output[propName] = __spreadValues({}, slotProps);
         Object.keys(defaultSlotProps).forEach((slotPropName) => {
           output[propName][slotPropName] = resolveProps(defaultSlotProps[slotPropName], slotProps[slotPropName]);
         });
@@ -3148,7 +3180,7 @@ function resolveProps(defaultProps2, props) {
   });
   return output;
 }
-function composeClasses(slots, getUtilityClass, classes) {
+function composeClasses(slots, getUtilityClass, classes = void 0) {
   const output = {};
   Object.keys(slots).forEach(
     // `Objet.keys(slots)` can't be wider than `T` because we infer `T` from `slots`.
@@ -3156,7 +3188,10 @@ function composeClasses(slots, getUtilityClass, classes) {
     (slot) => {
       output[slot] = slots[slot].reduce((acc, key) => {
         if (key) {
-          acc.push(getUtilityClass(key));
+          const utilityClass = getUtilityClass(key);
+          if (utilityClass !== "") {
+            acc.push(utilityClass);
+          }
           if (classes && classes[key]) {
             acc.push(classes[key]);
           }
@@ -6397,7 +6432,7 @@ function isElement(node2) {
   var OwnElement = getWindow(node2).Element;
   return node2 instanceof OwnElement || node2 instanceof Element;
 }
-function isHTMLElement$1(node2) {
+function isHTMLElement$2(node2) {
   var OwnElement = getWindow(node2).HTMLElement;
   return node2 instanceof OwnElement || node2 instanceof HTMLElement;
 }
@@ -6414,7 +6449,7 @@ function applyStyles(_ref) {
     var style2 = state.styles[name] || {};
     var attributes = state.attributes[name] || {};
     var element = state.elements[name];
-    if (!isHTMLElement$1(element) || !getNodeName(element)) {
+    if (!isHTMLElement$2(element) || !getNodeName(element)) {
       return;
     }
     Object.assign(element.style, style2);
@@ -6456,7 +6491,7 @@ function effect$2(_ref2) {
         style3[property] = "";
         return style3;
       }, {});
-      if (!isHTMLElement$1(element) || !getNodeName(element)) {
+      if (!isHTMLElement$2(element) || !getNodeName(element)) {
         return;
       }
       Object.assign(element.style, style2);
@@ -6482,7 +6517,7 @@ var min = Math.min;
 var round$1 = Math.round;
 function getUAString() {
   var uaData = navigator.userAgentData;
-  if (uaData != null && uaData.brands) {
+  if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
     return uaData.brands.map(function(item) {
       return item.brand + "/" + item.version;
     }).join(" ");
@@ -6502,7 +6537,7 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy) {
   var clientRect = element.getBoundingClientRect();
   var scaleX = 1;
   var scaleY = 1;
-  if (includeScale && isHTMLElement$1(element)) {
+  if (includeScale && isHTMLElement$2(element)) {
     scaleX = element.offsetWidth > 0 ? round$1(clientRect.width) / element.offsetWidth || 1 : 1;
     scaleY = element.offsetHeight > 0 ? round$1(clientRect.height) / element.offsetHeight || 1 : 1;
   }
@@ -6583,7 +6618,7 @@ function getParentNode(element) {
   );
 }
 function getTrueOffsetParent(element) {
-  if (!isHTMLElement$1(element) || // https://github.com/popperjs/popper-core/issues/837
+  if (!isHTMLElement$2(element) || // https://github.com/popperjs/popper-core/issues/837
   getComputedStyle(element).position === "fixed") {
     return null;
   }
@@ -6592,7 +6627,7 @@ function getTrueOffsetParent(element) {
 function getContainingBlock(element) {
   var isFirefox = /firefox/i.test(getUAString());
   var isIE = /Trident/i.test(getUAString());
-  if (isIE && isHTMLElement$1(element)) {
+  if (isIE && isHTMLElement$2(element)) {
     var elementCss = getComputedStyle(element);
     if (elementCss.position === "fixed") {
       return null;
@@ -6602,7 +6637,7 @@ function getContainingBlock(element) {
   if (isShadowRoot(currentNode)) {
     currentNode = currentNode.host;
   }
-  while (isHTMLElement$1(currentNode) && ["html", "body"].indexOf(getNodeName(currentNode)) < 0) {
+  while (isHTMLElement$2(currentNode) && ["html", "body"].indexOf(getNodeName(currentNode)) < 0) {
     var css = getComputedStyle(currentNode);
     if (css.transform !== "none" || css.perspective !== "none" || css.contain === "paint" || ["transform", "perspective"].indexOf(css.willChange) !== -1 || isFirefox && css.willChange === "filter" || isFirefox && css.filter && css.filter !== "none") {
       return currentNode;
@@ -6696,15 +6731,7 @@ function effect$1(_ref2) {
       return;
     }
   }
-  if (process.env.NODE_ENV !== "production") {
-    if (!isHTMLElement$1(arrowElement)) {
-      console.error(['Popper: "arrow" element must be an HTMLElement (not an SVGElement).', "To use an SVG arrow, wrap it in an HTMLElement that will be used as", "the arrow."].join(" "));
-    }
-  }
   if (!contains(state.elements.popper, arrowElement)) {
-    if (process.env.NODE_ENV !== "production") {
-      console.error(['Popper: "arrow" modifier\'s `element` must be a child of the popper', "element."].join(" "));
-    }
     return;
   }
   state.elements.arrow = arrowElement;
@@ -6727,9 +6754,8 @@ var unsetSides = {
   bottom: "auto",
   left: "auto"
 };
-function roundOffsetsByDPR(_ref) {
+function roundOffsetsByDPR(_ref, win) {
   var x = _ref.x, y = _ref.y;
-  var win = window;
   var dpr = win.devicePixelRatio || 1;
   return {
     x: round$1(x * dpr) / dpr || 0,
@@ -6791,7 +6817,7 @@ function mapToStyles(_ref2) {
   var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
     x,
     y
-  }) : {
+  }, getWindow(popper2)) : {
     x,
     y
   };
@@ -6806,14 +6832,6 @@ function mapToStyles(_ref2) {
 function computeStyles(_ref5) {
   var state = _ref5.state, options = _ref5.options;
   var _options$gpuAccelerat = options.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
-  if (process.env.NODE_ENV !== "production") {
-    var transitionProperty = getComputedStyle(state.elements.popper).transitionProperty || "";
-    if (adaptive && ["transform", "top", "right", "bottom", "left"].some(function(property) {
-      return transitionProperty.indexOf(property) >= 0;
-    })) {
-      console.warn(["Popper: Detected CSS transitions on at least one of the following", 'CSS properties: "transform", "top", "right", "bottom", "left".', "\n\n", 'Disable the "computeStyles" modifier\'s `adaptive` option to allow', "for smooth transitions, or remove these properties from the CSS", "transition declaration on the popper element if only transitioning", "opacity or background-color for example.", "\n\n", "We recommend using the popper element as a wrapper around an inner", "element that can have any CSS property transitioned for animations."].join(" "));
-    }
-  }
   var commonStyles = {
     placement: getBasePlacement(state.placement),
     variation: getVariation(state.placement),
@@ -6968,7 +6986,7 @@ function getScrollParent(node2) {
   if (["html", "body", "#document"].indexOf(getNodeName(node2)) >= 0) {
     return node2.ownerDocument.body;
   }
-  if (isHTMLElement$1(node2) && isScrollParent(node2)) {
+  if (isHTMLElement$2(node2) && isScrollParent(node2)) {
     return node2;
   }
   return getScrollParent(getParentNode(node2));
@@ -7014,7 +7032,7 @@ function getClientRectFromMixedType(element, clippingParent, strategy) {
 function getClippingParents(element) {
   var clippingParents2 = listScrollParents(getParentNode(element));
   var canEscapeClipping = ["absolute", "fixed"].indexOf(getComputedStyle(element).position) >= 0;
-  var clipperElement = canEscapeClipping && isHTMLElement$1(element) ? getOffsetParent(element) : element;
+  var clipperElement = canEscapeClipping && isHTMLElement$2(element) ? getOffsetParent(element) : element;
   if (!isElement(clipperElement)) {
     return [];
   }
@@ -7143,9 +7161,6 @@ function computeAutoPlacement(state, options) {
   });
   if (allowedPlacements.length === 0) {
     allowedPlacements = placements$1;
-    if (process.env.NODE_ENV !== "production") {
-      console.error(["Popper: The `allowedAutoPlacements` option did not allow any", "placements. Ensure the `placement` option matches the variation", "of the allowed placements.", 'For example, "auto" cannot be used to allow "bottom-start".', 'Use "auto-start" instead.'].join(" "));
-    }
   }
   var overflows = allowedPlacements.reduce(function(acc, placement2) {
     acc[placement2] = detectOverflow(state, {
@@ -7470,7 +7485,7 @@ function getHTMLElementScroll(element) {
   };
 }
 function getNodeScroll(node2) {
-  if (node2 === getWindow(node2) || !isHTMLElement$1(node2)) {
+  if (node2 === getWindow(node2) || !isHTMLElement$2(node2)) {
     return getWindowScroll(node2);
   } else {
     return getHTMLElementScroll(node2);
@@ -7486,8 +7501,8 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
   if (isFixed === void 0) {
     isFixed = false;
   }
-  var isOffsetParentAnElement = isHTMLElement$1(offsetParent);
-  var offsetParentIsScaled = isHTMLElement$1(offsetParent) && isElementScaled(offsetParent);
+  var isOffsetParentAnElement = isHTMLElement$2(offsetParent);
+  var offsetParentIsScaled = isHTMLElement$2(offsetParent) && isElementScaled(offsetParent);
   var documentElement = getDocumentElement(offsetParent);
   var rect = getBoundingClientRect(elementOrVirtualElement, offsetParentIsScaled, isFixed);
   var scroll = {
@@ -7503,7 +7518,7 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
     isScrollParent(documentElement)) {
       scroll = getNodeScroll(offsetParent);
     }
-    if (isHTMLElement$1(offsetParent)) {
+    if (isHTMLElement$2(offsetParent)) {
       offsets = getBoundingClientRect(offsetParent, true);
       offsets.x += offsetParent.clientLeft;
       offsets.y += offsetParent.clientTop;
@@ -7567,86 +7582,6 @@ function debounce(fn2) {
     return pending;
   };
 }
-function format(str) {
-  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
-  }
-  return [].concat(args).reduce(function(p, c) {
-    return p.replace(/%s/, c);
-  }, str);
-}
-var INVALID_MODIFIER_ERROR = 'Popper: modifier "%s" provided an invalid %s property, expected %s but got %s';
-var MISSING_DEPENDENCY_ERROR = 'Popper: modifier "%s" requires "%s", but "%s" modifier is not available';
-var VALID_PROPERTIES = ["name", "enabled", "phase", "fn", "effect", "requires", "options"];
-function validateModifiers(modifiers) {
-  modifiers.forEach(function(modifier) {
-    [].concat(Object.keys(modifier), VALID_PROPERTIES).filter(function(value, index2, self2) {
-      return self2.indexOf(value) === index2;
-    }).forEach(function(key) {
-      switch (key) {
-        case "name":
-          if (typeof modifier.name !== "string") {
-            console.error(format(INVALID_MODIFIER_ERROR, String(modifier.name), '"name"', '"string"', '"' + String(modifier.name) + '"'));
-          }
-          break;
-        case "enabled":
-          if (typeof modifier.enabled !== "boolean") {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"enabled"', '"boolean"', '"' + String(modifier.enabled) + '"'));
-          }
-          break;
-        case "phase":
-          if (modifierPhases.indexOf(modifier.phase) < 0) {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"phase"', "either " + modifierPhases.join(", "), '"' + String(modifier.phase) + '"'));
-          }
-          break;
-        case "fn":
-          if (typeof modifier.fn !== "function") {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"fn"', '"function"', '"' + String(modifier.fn) + '"'));
-          }
-          break;
-        case "effect":
-          if (modifier.effect != null && typeof modifier.effect !== "function") {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"effect"', '"function"', '"' + String(modifier.fn) + '"'));
-          }
-          break;
-        case "requires":
-          if (modifier.requires != null && !Array.isArray(modifier.requires)) {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"requires"', '"array"', '"' + String(modifier.requires) + '"'));
-          }
-          break;
-        case "requiresIfExists":
-          if (!Array.isArray(modifier.requiresIfExists)) {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"requiresIfExists"', '"array"', '"' + String(modifier.requiresIfExists) + '"'));
-          }
-          break;
-        case "options":
-        case "data":
-          break;
-        default:
-          console.error('PopperJS: an invalid property has been provided to the "' + modifier.name + '" modifier, valid properties are ' + VALID_PROPERTIES.map(function(s) {
-            return '"' + s + '"';
-          }).join(", ") + '; but "' + key + '" was provided.');
-      }
-      modifier.requires && modifier.requires.forEach(function(requirement) {
-        if (modifiers.find(function(mod) {
-          return mod.name === requirement;
-        }) == null) {
-          console.error(format(MISSING_DEPENDENCY_ERROR, String(modifier.name), requirement, requirement));
-        }
-      });
-    });
-  });
-}
-function uniqueBy(arr, fn2) {
-  var identifiers = /* @__PURE__ */ new Set();
-  return arr.filter(function(item) {
-    var identifier2 = fn2(item);
-    if (!identifiers.has(identifier2)) {
-      identifiers.add(identifier2);
-      return true;
-    }
-  });
-}
 function mergeByName(modifiers) {
   var merged = modifiers.reduce(function(merged2, current) {
     var existing = merged2[current.name];
@@ -7660,8 +7595,6 @@ function mergeByName(modifiers) {
     return merged[key];
   });
 }
-var INVALID_ELEMENT_ERROR = "Popper: Invalid reference or popper argument provided. They must be either a DOM element or virtual element.";
-var INFINITE_LOOP_ERROR = "Popper: An infinite loop in the modifiers cycle has been detected! The cycle has been interrupted to prevent a browser crash.";
 var DEFAULT_OPTIONS = {
   placement: "bottom",
   modifiers: [],
@@ -7679,15 +7612,15 @@ function popperGenerator(generatorOptions) {
   if (generatorOptions === void 0) {
     generatorOptions = {};
   }
-  var _generatorOptions = generatorOptions, _generatorOptions$def = _generatorOptions.defaultModifiers, defaultModifiers2 = _generatorOptions$def === void 0 ? [] : _generatorOptions$def, _generatorOptions$def2 = _generatorOptions.defaultOptions, defaultOptions = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
+  var _generatorOptions = generatorOptions, _generatorOptions$def = _generatorOptions.defaultModifiers, defaultModifiers2 = _generatorOptions$def === void 0 ? [] : _generatorOptions$def, _generatorOptions$def2 = _generatorOptions.defaultOptions, defaultOptions2 = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
   return function createPopper2(reference2, popper2, options) {
     if (options === void 0) {
-      options = defaultOptions;
+      options = defaultOptions2;
     }
     var state = {
       placement: "bottom",
       orderedModifiers: [],
-      options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions),
+      options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions2),
       modifiersData: {},
       elements: {
         reference: reference2,
@@ -7703,7 +7636,7 @@ function popperGenerator(generatorOptions) {
       setOptions: function setOptions(setOptionsAction) {
         var options2 = typeof setOptionsAction === "function" ? setOptionsAction(state.options) : setOptionsAction;
         cleanupModifierEffects();
-        state.options = Object.assign({}, defaultOptions, state.options, options2);
+        state.options = Object.assign({}, defaultOptions2, state.options, options2);
         state.scrollParents = {
           reference: isElement(reference2) ? listScrollParents(reference2) : reference2.contextElement ? listScrollParents(reference2.contextElement) : [],
           popper: listScrollParents(popper2)
@@ -7712,28 +7645,6 @@ function popperGenerator(generatorOptions) {
         state.orderedModifiers = orderedModifiers.filter(function(m) {
           return m.enabled;
         });
-        if (process.env.NODE_ENV !== "production") {
-          var modifiers = uniqueBy([].concat(orderedModifiers, state.options.modifiers), function(_ref) {
-            var name = _ref.name;
-            return name;
-          });
-          validateModifiers(modifiers);
-          if (getBasePlacement(state.options.placement) === auto) {
-            var flipModifier = state.orderedModifiers.find(function(_ref2) {
-              var name = _ref2.name;
-              return name === "flip";
-            });
-            if (!flipModifier) {
-              console.error(['Popper: "auto" placements require the "flip" modifier be', "present and enabled to work."].join(" "));
-            }
-          }
-          var _getComputedStyle = getComputedStyle(popper2), marginTop = _getComputedStyle.marginTop, marginRight = _getComputedStyle.marginRight, marginBottom = _getComputedStyle.marginBottom, marginLeft = _getComputedStyle.marginLeft;
-          if ([marginTop, marginRight, marginBottom, marginLeft].some(function(margin2) {
-            return parseFloat(margin2);
-          })) {
-            console.warn(['Popper: CSS "margin" styles cannot be used to apply padding', "between the popper and its reference element or boundary.", "To replicate margin, use the `offset` modifier, as well as", "the `padding` option in the `preventOverflow` and `flip`", "modifiers."].join(" "));
-          }
-        }
         runModifierEffects();
         return instance.update();
       },
@@ -7748,9 +7659,6 @@ function popperGenerator(generatorOptions) {
         }
         var _state$elements = state.elements, reference3 = _state$elements.reference, popper3 = _state$elements.popper;
         if (!areValidElements(reference3, popper3)) {
-          if (process.env.NODE_ENV !== "production") {
-            console.error(INVALID_ELEMENT_ERROR);
-          }
           return;
         }
         state.rects = {
@@ -7762,15 +7670,7 @@ function popperGenerator(generatorOptions) {
         state.orderedModifiers.forEach(function(modifier) {
           return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
         });
-        var __debug_loops__ = 0;
         for (var index2 = 0; index2 < state.orderedModifiers.length; index2++) {
-          if (process.env.NODE_ENV !== "production") {
-            __debug_loops__ += 1;
-            if (__debug_loops__ > 100) {
-              console.error(INFINITE_LOOP_ERROR);
-              break;
-            }
-          }
           if (state.reset === true) {
             state.reset = false;
             index2 = -1;
@@ -7801,9 +7701,6 @@ function popperGenerator(generatorOptions) {
       }
     };
     if (!areValidElements(reference2, popper2)) {
-      if (process.env.NODE_ENV !== "production") {
-        console.error(INVALID_ELEMENT_ERROR);
-      }
       return instance;
     }
     instance.setOptions(options).then(function(state2) {
@@ -7812,8 +7709,8 @@ function popperGenerator(generatorOptions) {
       }
     });
     function runModifierEffects() {
-      state.orderedModifiers.forEach(function(_ref3) {
-        var name = _ref3.name, _ref3$options = _ref3.options, options2 = _ref3$options === void 0 ? {} : _ref3$options, effect2 = _ref3.effect;
+      state.orderedModifiers.forEach(function(_ref) {
+        var name = _ref.name, _ref$options = _ref.options, options2 = _ref$options === void 0 ? {} : _ref$options, effect2 = _ref.effect;
         if (typeof effect2 === "function") {
           var cleanupFn = effect2({
             state,
@@ -7915,7 +7812,7 @@ function getPopperUnstyledUtilityClass(slot) {
   return generateUtilityClass("MuiPopperUnstyled", slot);
 }
 const popperUnstyledClasses = generateUtilityClasses("MuiPopperUnstyled", ["root"]);
-const _excluded$15 = ["anchorEl", "children", "component", "direction", "disablePortal", "modifiers", "open", "ownerState", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps"], _excluded2$6 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
+const _excluded$15 = ["anchorEl", "children", "component", "direction", "disablePortal", "modifiers", "open", "ownerState", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps"], _excluded2$5 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
 function flipPlacement(placement, direction) {
   if (direction === "ltr") {
     return placement;
@@ -7936,11 +7833,11 @@ function flipPlacement(placement, direction) {
 function resolveAnchorEl$1(anchorEl) {
   return typeof anchorEl === "function" ? anchorEl() : anchorEl;
 }
-function isHTMLElement(element) {
+function isHTMLElement$1(element) {
   return element.nodeType !== void 0;
 }
 function isVirtualElement(element) {
-  return !isHTMLElement(element);
+  return !isHTMLElement$1(element);
 }
 const useUtilityClasses$F = () => {
   const slots = {
@@ -7997,7 +7894,7 @@ const PopperTooltip = /* @__PURE__ */ React.forwardRef(function PopperTooltip2(p
       setPlacement(data.placement);
     };
     if (process.env.NODE_ENV !== "production") {
-      if (resolvedAnchorElement && isHTMLElement(resolvedAnchorElement) && resolvedAnchorElement.nodeType === 1) {
+      if (resolvedAnchorElement && isHTMLElement$1(resolvedAnchorElement) && resolvedAnchorElement.nodeType === 1) {
         const box = resolvedAnchorElement.getBoundingClientRect();
         if (process.env.NODE_ENV !== "test" && box.top === 0 && box.left === 0 && box.right === 0 && box.bottom === 0) {
           console.warn(["MUI: The `anchorEl` prop provided to the component is invalid.", "The anchor element should be part of the document layout.", "Make sure the element is present in the document or that it's not display none."].join("\n"));
@@ -8081,7 +7978,7 @@ const PopperUnstyled = /* @__PURE__ */ React.forwardRef(function PopperUnstyled2
     transition = false,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded2$6);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded2$5);
   const [exited, setExited] = React.useState(true);
   const handleEnter = () => {
     setExited(false);
@@ -8097,7 +7994,7 @@ const PopperUnstyled = /* @__PURE__ */ React.forwardRef(function PopperUnstyled2
     container = containerProp;
   } else if (anchorEl) {
     const resolvedAnchorEl = resolveAnchorEl$1(anchorEl);
-    container = resolvedAnchorEl && isHTMLElement(resolvedAnchorEl) ? ownerDocument(resolvedAnchorEl).body : ownerDocument(null).body;
+    container = resolvedAnchorEl && isHTMLElement$1(resolvedAnchorEl) ? ownerDocument(resolvedAnchorEl).body : ownerDocument(null).body;
   }
   const display2 = !open && keepMounted && (!transition || exited) ? "none" : void 0;
   const transitionProps = transition ? {
@@ -8148,7 +8045,7 @@ process.env.NODE_ENV !== "production" ? PopperUnstyled.propTypes = {
   anchorEl: chainPropTypes(propTypesExports.oneOfType([HTMLElementType, propTypesExports.object, propTypesExports.func]), (props) => {
     if (props.open) {
       const resolvedAnchorEl = resolveAnchorEl$1(props.anchorEl);
-      if (resolvedAnchorEl && isHTMLElement(resolvedAnchorEl) && resolvedAnchorEl.nodeType === 1) {
+      if (resolvedAnchorEl && isHTMLElement$1(resolvedAnchorEl) && resolvedAnchorEl.nodeType === 1) {
         const box = resolvedAnchorEl.getBoundingClientRect();
         if (process.env.NODE_ENV !== "test" && box.top === 0 && box.left === 0 && box.right === 0 && box.bottom === 0) {
           return new Error(["MUI: The `anchorEl` prop provided to the component is invalid.", "The anchor element should be part of the document layout.", "Make sure the element is present in the document or that it's not display none."].join("\n"));
@@ -13186,7 +13083,7 @@ var StyleSheet = /* @__PURE__ */ function() {
   _proto.hydrate = function hydrate(nodes) {
     nodes.forEach(this._insertTag);
   };
-  _proto.insert = function insert(rule) {
+  _proto.insert = function insert2(rule) {
     if (this.ctr % (this.isSpeedy ? 65e3 : 1) === 0) {
       this._insertTag(createStyleElement(this));
     }
@@ -13242,6 +13139,7 @@ var KEYFRAMES = "@keyframes";
 var FONT_FACE = "@font-face";
 var COUNTER_STYLE = "@counter-style";
 var FONT_FEATURE_VALUES = "@font-feature-values";
+var LAYER = "@layer";
 var abs = Math.abs;
 var from = String.fromCharCode;
 var assign = Object.assign;
@@ -13272,7 +13170,7 @@ function strlen(value) {
 function sizeof(value) {
   return value.length;
 }
-function append(value, array) {
+function append$1(value, array) {
   return array.push(value), value;
 }
 function combine(array, callback) {
@@ -13370,13 +13268,13 @@ function tokenizer(children2) {
   while (next())
     switch (token(character)) {
       case 0:
-        append(identifier(position$1 - 1), children2);
+        append$1(identifier(position$1 - 1), children2);
         break;
       case 2:
-        append(delimit(character), children2);
+        append$1(delimit(character), children2);
         break;
       default:
-        append(from(character), children2);
+        append$1(from(character), children2);
     }
   return children2;
 }
@@ -13464,7 +13362,7 @@ function parse(value, root, parent, rule, rules, rulesets, pseudo, points, decla
         switch (peek()) {
           case 42:
           case 47:
-            append(comment(commenter(next(), caret()), root, parent), declarations);
+            append$1(comment(commenter(next(), caret()), root, parent), declarations);
             break;
           default:
             characters2 += "/";
@@ -13480,22 +13378,25 @@ function parse(value, root, parent, rule, rules, rulesets, pseudo, points, decla
           case 125:
             scanning = 0;
           case 59 + offset2:
+            if (ampersand == -1)
+              characters2 = replace(characters2, /\f/g, "");
             if (property > 0 && strlen(characters2) - length2)
-              append(property > 32 ? declaration(characters2 + ";", rule, parent, length2 - 1) : declaration(replace(characters2, " ", "") + ";", rule, parent, length2 - 2), declarations);
+              append$1(property > 32 ? declaration(characters2 + ";", rule, parent, length2 - 1) : declaration(replace(characters2, " ", "") + ";", rule, parent, length2 - 2), declarations);
             break;
           case 59:
             characters2 += ";";
           default:
-            append(reference2 = ruleset(characters2, root, parent, index2, offset2, rules, points, type, props = [], children2 = [], length2), rulesets);
+            append$1(reference2 = ruleset(characters2, root, parent, index2, offset2, rules, points, type, props = [], children2 = [], length2), rulesets);
             if (character2 === 123)
               if (offset2 === 0)
                 parse(characters2, root, reference2, reference2, props, rulesets, length2, points, children2);
               else
                 switch (atrule === 99 && charat(characters2, 3) === 110 ? 100 : atrule) {
                   case 100:
+                  case 108:
                   case 109:
                   case 115:
-                    parse(value, reference2, reference2, rule && append(ruleset(value, reference2, reference2, 0, 0, rules, points, type, rules, props = [], length2), children2), rules, children2, length2, points, rule ? props : children2);
+                    parse(value, reference2, reference2, rule && append$1(ruleset(value, reference2, reference2, 0, 0, rules, points, type, rules, props = [], length2), children2), rules, children2, length2, points, rule ? props : children2);
                     break;
                   default:
                     parse(characters2, reference2, reference2, reference2, [""], children2, 0, points, children2);
@@ -13704,6 +13605,9 @@ function serialize(children2, callback) {
 }
 function stringify(element, index2, children2, callback) {
   switch (element.type) {
+    case LAYER:
+      if (element.children.length)
+        break;
     case IMPORT:
     case DECLARATION:
       return element.return = element.return || element.value;
@@ -13913,8 +13817,8 @@ var createUnsafeSelectorsAlarm = function createUnsafeSelectorsAlarm2(cache2) {
       return;
     var unsafePseudoClasses = element.value.match(/(:first|:nth|:nth-last)-child/g);
     if (unsafePseudoClasses) {
-      var isNested = element.parent === children2[0];
-      var commentContainer = isNested ? children2[0].children : (
+      var isNested = !!element.parent;
+      var commentContainer = isNested ? element.parent.children : (
         // global rule at the root level
         children2
       );
@@ -14181,11 +14085,11 @@ var createCache = function createCache2(options) {
     var stylis = function stylis2(styles2) {
       return serialize(compile(styles2), serializer);
     };
-    _insert = function insert(selector, serialized, sheet, shouldCache) {
+    _insert = function insert2(selector, serialized, sheet, shouldCache) {
       currentSheet = sheet;
       if (process.env.NODE_ENV !== "production" && serialized.map !== void 0) {
         currentSheet = {
-          insert: function insert2(rule) {
+          insert: function insert3(rule) {
             sheet.insert(rule + serialized.map);
           }
         };
@@ -14246,7 +14150,7 @@ process.env.NODE_ENV !== "production" ? StyledEngineProvider.propTypes = {
 function isEmpty$3(obj) {
   return obj === void 0 || obj === null || Object.keys(obj).length === 0;
 }
-function GlobalStyles$1(props) {
+function GlobalStyles$2(props) {
   const {
     styles: styles2,
     defaultTheme: defaultTheme2 = {}
@@ -14256,12 +14160,12 @@ function GlobalStyles$1(props) {
     styles: globalStyles
   });
 }
-process.env.NODE_ENV !== "production" ? GlobalStyles$1.propTypes = {
+process.env.NODE_ENV !== "production" ? GlobalStyles$2.propTypes = {
   defaultTheme: propTypesExports.object,
-  styles: propTypesExports.oneOfType([propTypesExports.string, propTypesExports.object, propTypesExports.func])
+  styles: propTypesExports.oneOfType([propTypesExports.array, propTypesExports.string, propTypesExports.object, propTypesExports.func])
 } : void 0;
 /**
- * @mui/styled-engine v5.11.11
+ * @mui/styled-engine v5.13.2
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -14286,6 +14190,83 @@ const internal_processStyles = (tag, processor) => {
   if (Array.isArray(tag.__emotion_styles)) {
     tag.__emotion_styles = processor(tag.__emotion_styles);
   }
+};
+const _excluded$O = ["values", "unit", "step"];
+const breakpointKeys = ["xs", "sm", "md", "lg", "xl"];
+const sortBreakpointsValues = (values2) => {
+  const breakpointsAsArray = Object.keys(values2).map((key) => ({
+    key,
+    val: values2[key]
+  })) || [];
+  breakpointsAsArray.sort((breakpoint1, breakpoint2) => breakpoint1.val - breakpoint2.val);
+  return breakpointsAsArray.reduce((acc, obj) => {
+    return _extends({}, acc, {
+      [obj.key]: obj.val
+    });
+  }, {});
+};
+function createBreakpoints(breakpoints2) {
+  const {
+    // The breakpoint **start** at this value.
+    // For instance with the first breakpoint xs: [xs, sm).
+    values: values2 = {
+      xs: 0,
+      // phone
+      sm: 600,
+      // tablet
+      md: 900,
+      // small laptop
+      lg: 1200,
+      // desktop
+      xl: 1536
+      // large screen
+    },
+    unit = "px",
+    step = 5
+  } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$O);
+  const sortedValues = sortBreakpointsValues(values2);
+  const keys = Object.keys(sortedValues);
+  function up(key) {
+    const value = typeof values2[key] === "number" ? values2[key] : key;
+    return `@media (min-width:${value}${unit})`;
+  }
+  function down(key) {
+    const value = typeof values2[key] === "number" ? values2[key] : key;
+    return `@media (max-width:${value - step / 100}${unit})`;
+  }
+  function between(start2, end2) {
+    const endIndex = keys.indexOf(end2);
+    return `@media (min-width:${typeof values2[start2] === "number" ? values2[start2] : start2}${unit}) and (max-width:${(endIndex !== -1 && typeof values2[keys[endIndex]] === "number" ? values2[keys[endIndex]] : end2) - step / 100}${unit})`;
+  }
+  function only(key) {
+    if (keys.indexOf(key) + 1 < keys.length) {
+      return between(key, keys[keys.indexOf(key) + 1]);
+    }
+    return up(key);
+  }
+  function not(key) {
+    const keyIndex = keys.indexOf(key);
+    if (keyIndex === 0) {
+      return up(keys[1]);
+    }
+    if (keyIndex === keys.length - 1) {
+      return down(keys[keyIndex]);
+    }
+    return between(key, keys[keys.indexOf(key) + 1]).replace("@media", "@media not all and");
+  }
+  return _extends({
+    keys,
+    values: sortedValues,
+    up,
+    down,
+    between,
+    only,
+    not,
+    unit
+  }, other);
+}
+const shape = {
+  borderRadius: 4
 };
 const responsivePropType = process.env.NODE_ENV !== "production" ? propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string, propTypesExports.object, propTypesExports.array]) : {};
 function merge(acc, item) {
@@ -14500,25 +14481,6 @@ function style$2(options) {
   fn2.filterProps = [prop];
   return fn2;
 }
-function compose(...styles2) {
-  const handlers = styles2.reduce((acc, style2) => {
-    style2.filterProps.forEach((prop) => {
-      acc[prop] = style2;
-    });
-    return acc;
-  }, {});
-  const fn2 = (props) => {
-    return Object.keys(props).reduce((acc, prop) => {
-      if (handlers[prop]) {
-        return merge(acc, handlers[prop](props));
-      }
-      return acc;
-    }, {});
-  };
-  fn2.propTypes = process.env.NODE_ENV !== "production" ? styles2.reduce((acc, style2) => Object.assign(acc, style2.propTypes), {}) : {};
-  fn2.filterProps = styles2.reduce((acc, style2) => acc.concat(style2.filterProps), []);
-  return fn2;
-}
 function memoize(fn2) {
   const cache2 = {};
   return (arg) => {
@@ -14661,6 +14623,47 @@ spacing.propTypes = process.env.NODE_ENV !== "production" ? spacingKeys.reduce((
   return obj;
 }, {}) : {};
 spacing.filterProps = spacingKeys;
+function createSpacing(spacingInput = 8) {
+  if (spacingInput.mui) {
+    return spacingInput;
+  }
+  const transform = createUnarySpacing({
+    spacing: spacingInput
+  });
+  const spacing2 = (...argsInput) => {
+    if (process.env.NODE_ENV !== "production") {
+      if (!(argsInput.length <= 4)) {
+        console.error(`MUI: Too many arguments provided, expected between 0 and 4, got ${argsInput.length}`);
+      }
+    }
+    const args = argsInput.length === 0 ? [1] : argsInput;
+    return args.map((argument) => {
+      const output = transform(argument);
+      return typeof output === "number" ? `${output}px` : output;
+    }).join(" ");
+  };
+  spacing2.mui = true;
+  return spacing2;
+}
+function compose(...styles2) {
+  const handlers = styles2.reduce((acc, style2) => {
+    style2.filterProps.forEach((prop) => {
+      acc[prop] = style2;
+    });
+    return acc;
+  }, {});
+  const fn2 = (props) => {
+    return Object.keys(props).reduce((acc, prop) => {
+      if (handlers[prop]) {
+        return merge(acc, handlers[prop](props));
+      }
+      return acc;
+    }, {});
+  };
+  fn2.propTypes = process.env.NODE_ENV !== "production" ? styles2.reduce((acc, style2) => Object.assign(acc, style2.propTypes), {}) : {};
+  fn2.filterProps = styles2.reduce((acc, style2) => acc.concat(style2.filterProps), []);
+  return fn2;
+}
 function borderTransform(value) {
   if (typeof value !== "number") {
     return value;
@@ -14727,71 +14730,6 @@ borderRadius.propTypes = process.env.NODE_ENV !== "production" ? {
 } : {};
 borderRadius.filterProps = ["borderRadius"];
 const borders = compose(border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor, borderRadius);
-const displayPrint = style$2({
-  prop: "displayPrint",
-  cssProperty: false,
-  transform: (value) => ({
-    "@media print": {
-      display: value
-    }
-  })
-});
-const displayRaw = style$2({
-  prop: "display"
-});
-const overflow = style$2({
-  prop: "overflow"
-});
-const textOverflow = style$2({
-  prop: "textOverflow"
-});
-const visibility = style$2({
-  prop: "visibility"
-});
-const whiteSpace = style$2({
-  prop: "whiteSpace"
-});
-const display = compose(displayPrint, displayRaw, overflow, textOverflow, visibility, whiteSpace);
-const flexBasis = style$2({
-  prop: "flexBasis"
-});
-const flexDirection = style$2({
-  prop: "flexDirection"
-});
-const flexWrap = style$2({
-  prop: "flexWrap"
-});
-const justifyContent = style$2({
-  prop: "justifyContent"
-});
-const alignItems = style$2({
-  prop: "alignItems"
-});
-const alignContent = style$2({
-  prop: "alignContent"
-});
-const order = style$2({
-  prop: "order"
-});
-const flex = style$2({
-  prop: "flex"
-});
-const flexGrow = style$2({
-  prop: "flexGrow"
-});
-const flexShrink = style$2({
-  prop: "flexShrink"
-});
-const alignSelf = style$2({
-  prop: "alignSelf"
-});
-const justifyItems = style$2({
-  prop: "justifyItems"
-});
-const justifySelf = style$2({
-  prop: "justifySelf"
-});
-const flexbox = compose(flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf);
 const gap = (props) => {
   if (props.gap !== void 0 && props.gap !== null) {
     const transformer = createUnaryUnit(props.theme, "spacing", 8, "gap");
@@ -14885,30 +14823,6 @@ const backgroundColor = style$2({
   transform: paletteTransform
 });
 const palette = compose(color, bgcolor, backgroundColor);
-const position = style$2({
-  prop: "position"
-});
-const zIndex$1 = style$2({
-  prop: "zIndex",
-  themeKey: "zIndex"
-});
-const top = style$2({
-  prop: "top"
-});
-const right = style$2({
-  prop: "right"
-});
-const bottom = style$2({
-  prop: "bottom"
-});
-const left = style$2({
-  prop: "left"
-});
-const positions = compose(position, zIndex$1, top, right, bottom, left);
-const boxShadow = style$2({
-  prop: "boxShadow",
-  themeKey: "shadows"
-});
 function sizingTransform(value) {
   return value <= 1 && value !== 0 ? `${value * 100}%` : value;
 }
@@ -14960,40 +14874,6 @@ const boxSizing = style$2({
   prop: "boxSizing"
 });
 const sizing = compose(width, maxWidth, minWidth, height, maxHeight, minHeight, boxSizing);
-const fontFamily = style$2({
-  prop: "fontFamily",
-  themeKey: "typography"
-});
-const fontSize = style$2({
-  prop: "fontSize",
-  themeKey: "typography"
-});
-const fontStyle = style$2({
-  prop: "fontStyle",
-  themeKey: "typography"
-});
-const fontWeight = style$2({
-  prop: "fontWeight",
-  themeKey: "typography"
-});
-const letterSpacing = style$2({
-  prop: "letterSpacing"
-});
-const textTransform = style$2({
-  prop: "textTransform"
-});
-const lineHeight = style$2({
-  prop: "lineHeight"
-});
-const textAlign = style$2({
-  prop: "textAlign"
-});
-const typographyVariant = style$2({
-  prop: "typography",
-  cssProperty: false,
-  themeKey: "typography"
-});
-const typography = compose(typographyVariant, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign, textTransform);
 const defaultSxConfig = {
   // borders
   border: {
@@ -15301,6 +15181,11 @@ function unstable_createStyleFunctionSx() {
     if (val == null) {
       return null;
     }
+    if (themeKey === "typography" && val === "inherit") {
+      return {
+        [prop]: val
+      };
+    }
     const themeMapping = getPath(theme, themeKey) || {};
     if (style2) {
       return style2(props);
@@ -15376,7 +15261,201 @@ function unstable_createStyleFunctionSx() {
 }
 const styleFunctionSx = unstable_createStyleFunctionSx();
 styleFunctionSx.filterProps = ["sx"];
-const _excluded$O = ["sx"];
+const _excluded$N = ["breakpoints", "palette", "spacing", "shape"];
+function createTheme$1(options = {}, ...args) {
+  const {
+    breakpoints: breakpointsInput = {},
+    palette: paletteInput = {},
+    spacing: spacingInput,
+    shape: shapeInput = {}
+  } = options, other = _objectWithoutPropertiesLoose(options, _excluded$N);
+  const breakpoints2 = createBreakpoints(breakpointsInput);
+  const spacing2 = createSpacing(spacingInput);
+  let muiTheme = deepmerge({
+    breakpoints: breakpoints2,
+    direction: "ltr",
+    components: {},
+    // Inject component definitions.
+    palette: _extends({
+      mode: "light"
+    }, paletteInput),
+    spacing: spacing2,
+    shape: _extends({}, shape, shapeInput)
+  }, other);
+  muiTheme = args.reduce((acc, argument) => deepmerge(acc, argument), muiTheme);
+  muiTheme.unstable_sxConfig = _extends({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
+  muiTheme.unstable_sx = function sx(props) {
+    return styleFunctionSx({
+      sx: props,
+      theme: this
+    });
+  };
+  return muiTheme;
+}
+function isObjectEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+function useTheme$3(defaultTheme2 = null) {
+  const contextTheme = React.useContext(ThemeContext$1);
+  return !contextTheme || isObjectEmpty(contextTheme) ? defaultTheme2 : contextTheme;
+}
+const systemDefaultTheme$1 = createTheme$1();
+function useTheme$2(defaultTheme2 = systemDefaultTheme$1) {
+  return useTheme$3(defaultTheme2);
+}
+function GlobalStyles$1({
+  styles: styles2,
+  themeId,
+  defaultTheme: defaultTheme2 = {}
+}) {
+  const upperTheme = useTheme$2(defaultTheme2);
+  const globalStyles = typeof styles2 === "function" ? styles2(themeId ? upperTheme[themeId] || upperTheme : upperTheme) : styles2;
+  return /* @__PURE__ */ jsx(GlobalStyles$2, {
+    styles: globalStyles
+  });
+}
+process.env.NODE_ENV !== "production" ? GlobalStyles$1.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit TypeScript types and run "yarn proptypes"  |
+  // ----------------------------------------------------------------------
+  /**
+   * @ignore
+   */
+  defaultTheme: propTypesExports.object,
+  /**
+   * @ignore
+   */
+  styles: propTypesExports.oneOfType([propTypesExports.array, propTypesExports.func, propTypesExports.number, propTypesExports.object, propTypesExports.string, propTypesExports.bool]),
+  /**
+   * @ignore
+   */
+  themeId: propTypesExports.string
+} : void 0;
+const displayPrint = style$2({
+  prop: "displayPrint",
+  cssProperty: false,
+  transform: (value) => ({
+    "@media print": {
+      display: value
+    }
+  })
+});
+const displayRaw = style$2({
+  prop: "display"
+});
+const overflow = style$2({
+  prop: "overflow"
+});
+const textOverflow = style$2({
+  prop: "textOverflow"
+});
+const visibility = style$2({
+  prop: "visibility"
+});
+const whiteSpace = style$2({
+  prop: "whiteSpace"
+});
+const display = compose(displayPrint, displayRaw, overflow, textOverflow, visibility, whiteSpace);
+const flexBasis = style$2({
+  prop: "flexBasis"
+});
+const flexDirection = style$2({
+  prop: "flexDirection"
+});
+const flexWrap = style$2({
+  prop: "flexWrap"
+});
+const justifyContent = style$2({
+  prop: "justifyContent"
+});
+const alignItems = style$2({
+  prop: "alignItems"
+});
+const alignContent = style$2({
+  prop: "alignContent"
+});
+const order = style$2({
+  prop: "order"
+});
+const flex = style$2({
+  prop: "flex"
+});
+const flexGrow = style$2({
+  prop: "flexGrow"
+});
+const flexShrink = style$2({
+  prop: "flexShrink"
+});
+const alignSelf = style$2({
+  prop: "alignSelf"
+});
+const justifyItems = style$2({
+  prop: "justifyItems"
+});
+const justifySelf = style$2({
+  prop: "justifySelf"
+});
+const flexbox = compose(flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf);
+const position = style$2({
+  prop: "position"
+});
+const zIndex$1 = style$2({
+  prop: "zIndex",
+  themeKey: "zIndex"
+});
+const top = style$2({
+  prop: "top"
+});
+const right = style$2({
+  prop: "right"
+});
+const bottom = style$2({
+  prop: "bottom"
+});
+const left = style$2({
+  prop: "left"
+});
+const positions = compose(position, zIndex$1, top, right, bottom, left);
+const boxShadow = style$2({
+  prop: "boxShadow",
+  themeKey: "shadows"
+});
+const fontFamily = style$2({
+  prop: "fontFamily",
+  themeKey: "typography"
+});
+const fontSize = style$2({
+  prop: "fontSize",
+  themeKey: "typography"
+});
+const fontStyle = style$2({
+  prop: "fontStyle",
+  themeKey: "typography"
+});
+const fontWeight = style$2({
+  prop: "fontWeight",
+  themeKey: "typography"
+});
+const letterSpacing = style$2({
+  prop: "letterSpacing"
+});
+const textTransform = style$2({
+  prop: "textTransform"
+});
+const lineHeight = style$2({
+  prop: "lineHeight"
+});
+const textAlign = style$2({
+  prop: "textAlign"
+});
+const typographyVariant = style$2({
+  prop: "typography",
+  cssProperty: false,
+  themeKey: "typography"
+});
+const typography = compose(typographyVariant, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign, textTransform);
+const _excluded$M = ["sx"];
 const splitProps = (props) => {
   var _props$theme$unstable, _props$theme;
   const result = {
@@ -15396,7 +15475,7 @@ const splitProps = (props) => {
 function extendSxProp(props) {
   const {
     sx: inSx
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$O);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$M);
   const {
     systemProps,
     otherProps
@@ -15407,7 +15486,7 @@ function extendSxProp(props) {
   } else if (typeof inSx === "function") {
     finalSx = (...args) => {
       const result = inSx(...args);
-      if (!isPlainObject(result)) {
+      if (!isPlainObject$1(result)) {
         return systemProps;
       }
       return _extends({}, systemProps, result);
@@ -15459,218 +15538,10 @@ function getThemeValue(prop, value, theme) {
     [prop]: value
   };
 }
-const _excluded$N = ["values", "unit", "step"];
-const breakpointKeys = ["xs", "sm", "md", "lg", "xl"];
-const sortBreakpointsValues = (values2) => {
-  const breakpointsAsArray = Object.keys(values2).map((key) => ({
-    key,
-    val: values2[key]
-  })) || [];
-  breakpointsAsArray.sort((breakpoint1, breakpoint2) => breakpoint1.val - breakpoint2.val);
-  return breakpointsAsArray.reduce((acc, obj) => {
-    return _extends({}, acc, {
-      [obj.key]: obj.val
-    });
-  }, {});
-};
-function createBreakpoints(breakpoints2) {
-  const {
-    // The breakpoint **start** at this value.
-    // For instance with the first breakpoint xs: [xs, sm).
-    values: values2 = {
-      xs: 0,
-      // phone
-      sm: 600,
-      // tablet
-      md: 900,
-      // small laptop
-      lg: 1200,
-      // desktop
-      xl: 1536
-      // large screen
-    },
-    unit = "px",
-    step = 5
-  } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$N);
-  const sortedValues = sortBreakpointsValues(values2);
-  const keys = Object.keys(sortedValues);
-  function up(key) {
-    const value = typeof values2[key] === "number" ? values2[key] : key;
-    return `@media (min-width:${value}${unit})`;
-  }
-  function down(key) {
-    const value = typeof values2[key] === "number" ? values2[key] : key;
-    return `@media (max-width:${value - step / 100}${unit})`;
-  }
-  function between(start2, end2) {
-    const endIndex = keys.indexOf(end2);
-    return `@media (min-width:${typeof values2[start2] === "number" ? values2[start2] : start2}${unit}) and (max-width:${(endIndex !== -1 && typeof values2[keys[endIndex]] === "number" ? values2[keys[endIndex]] : end2) - step / 100}${unit})`;
-  }
-  function only(key) {
-    if (keys.indexOf(key) + 1 < keys.length) {
-      return between(key, keys[keys.indexOf(key) + 1]);
-    }
-    return up(key);
-  }
-  function not(key) {
-    const keyIndex = keys.indexOf(key);
-    if (keyIndex === 0) {
-      return up(keys[1]);
-    }
-    if (keyIndex === keys.length - 1) {
-      return down(keys[keyIndex]);
-    }
-    return between(key, keys[keys.indexOf(key) + 1]).replace("@media", "@media not all and");
-  }
-  return _extends({
-    keys,
-    values: sortedValues,
-    up,
-    down,
-    between,
-    only,
-    not,
-    unit
-  }, other);
-}
-const shape = {
-  borderRadius: 4
-};
-function createSpacing(spacingInput = 8) {
-  if (spacingInput.mui) {
-    return spacingInput;
-  }
-  const transform = createUnarySpacing({
-    spacing: spacingInput
-  });
-  const spacing2 = (...argsInput) => {
-    if (process.env.NODE_ENV !== "production") {
-      if (!(argsInput.length <= 4)) {
-        console.error(`MUI: Too many arguments provided, expected between 0 and 4, got ${argsInput.length}`);
-      }
-    }
-    const args = argsInput.length === 0 ? [1] : argsInput;
-    return args.map((argument) => {
-      const output = transform(argument);
-      return typeof output === "number" ? `${output}px` : output;
-    }).join(" ");
-  };
-  spacing2.mui = true;
-  return spacing2;
-}
-const _excluded$M = ["breakpoints", "palette", "spacing", "shape"];
-function createTheme$1(options = {}, ...args) {
-  const {
-    breakpoints: breakpointsInput = {},
-    palette: paletteInput = {},
-    spacing: spacingInput,
-    shape: shapeInput = {}
-  } = options, other = _objectWithoutPropertiesLoose(options, _excluded$M);
-  const breakpoints2 = createBreakpoints(breakpointsInput);
-  const spacing2 = createSpacing(spacingInput);
-  let muiTheme = deepmerge({
-    breakpoints: breakpoints2,
-    direction: "ltr",
-    components: {},
-    // Inject component definitions.
-    palette: _extends({
-      mode: "light"
-    }, paletteInput),
-    spacing: spacing2,
-    shape: _extends({}, shape, shapeInput)
-  }, other);
-  muiTheme = args.reduce((acc, argument) => deepmerge(acc, argument), muiTheme);
-  muiTheme.unstable_sxConfig = _extends({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
-  muiTheme.unstable_sx = function sx(props) {
-    return styleFunctionSx({
-      sx: props,
-      theme: this
-    });
-  };
-  return muiTheme;
-}
-const ThemeContext = /* @__PURE__ */ React.createContext(null);
-if (process.env.NODE_ENV !== "production") {
-  ThemeContext.displayName = "ThemeContext";
-}
-function useTheme$3() {
-  const theme = React.useContext(ThemeContext);
-  if (process.env.NODE_ENV !== "production") {
-    React.useDebugValue(theme);
-  }
-  return theme;
-}
-const hasSymbol = typeof Symbol === "function" && Symbol.for;
-const nested = hasSymbol ? Symbol.for("mui.nested") : "__THEME_NESTED__";
-function mergeOuterLocalTheme(outerTheme, localTheme) {
-  if (typeof localTheme === "function") {
-    const mergedTheme = localTheme(outerTheme);
-    if (process.env.NODE_ENV !== "production") {
-      if (!mergedTheme) {
-        console.error(["MUI: You should return an object from your theme function, i.e.", "<ThemeProvider theme={() => ({})} />"].join("\n"));
-      }
-    }
-    return mergedTheme;
-  }
-  return _extends({}, outerTheme, localTheme);
-}
-function ThemeProvider$1(props) {
-  const {
-    children: children2,
-    theme: localTheme
-  } = props;
-  const outerTheme = useTheme$3();
-  if (process.env.NODE_ENV !== "production") {
-    if (outerTheme === null && typeof localTheme === "function") {
-      console.error(["MUI: You are providing a theme function prop to the ThemeProvider component:", "<ThemeProvider theme={outerTheme => outerTheme} />", "", "However, no outer theme is present.", "Make sure a theme is already injected higher in the React tree or provide a theme object."].join("\n"));
-    }
-  }
-  const theme = React.useMemo(() => {
-    const output = outerTheme === null ? localTheme : mergeOuterLocalTheme(outerTheme, localTheme);
-    if (output != null) {
-      output[nested] = outerTheme !== null;
-    }
-    return output;
-  }, [localTheme, outerTheme]);
-  return /* @__PURE__ */ jsx(ThemeContext.Provider, {
-    value: theme,
-    children: children2
-  });
-}
-process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = {
-  /**
-   * Your component tree.
-   */
-  children: propTypesExports.node,
-  /**
-   * A theme object. You can provide a function to extend the outer theme.
-   */
-  theme: propTypesExports.oneOfType([propTypesExports.object, propTypesExports.func]).isRequired
-} : void 0;
-if (process.env.NODE_ENV !== "production") {
-  process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
-}
-/**
- * @mui/private-theming v5.11.12
- *
- * @license MIT
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-function isObjectEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
-function useTheme$2(defaultTheme2 = null) {
-  const contextTheme = useTheme$3();
-  return !contextTheme || isObjectEmpty(contextTheme) ? defaultTheme2 : contextTheme;
-}
-const systemDefaultTheme$1 = createTheme$1();
-function useTheme$1(defaultTheme2 = systemDefaultTheme$1) {
-  return useTheme$2(defaultTheme2);
-}
 const _excluded$L = ["className", "component"];
 function createBox(options = {}) {
   const {
+    themeId,
     defaultTheme: defaultTheme2,
     defaultClassName = "MuiBox-root",
     generateClassName
@@ -15679,7 +15550,7 @@ function createBox(options = {}) {
     shouldForwardProp: (prop) => prop !== "theme" && prop !== "sx" && prop !== "as"
   })(styleFunctionSx);
   const Box2 = /* @__PURE__ */ React.forwardRef(function Box3(inProps, ref) {
-    const theme = useTheme$1(defaultTheme2);
+    const theme = useTheme$2(defaultTheme2);
     const _extendSxProp = extendSxProp(inProps), {
       className,
       component = "div"
@@ -15688,7 +15559,7 @@ function createBox(options = {}) {
       as: component,
       ref,
       className: clsx(className, generateClassName ? generateClassName(defaultClassName) : defaultClassName),
-      theme
+      theme: themeId ? theme[themeId] || theme : theme
     }, other));
   });
   return Box2;
@@ -15731,7 +15602,7 @@ function propsToClassKey(props) {
   });
   return classKey;
 }
-const _excluded$J = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"], _excluded2$5 = ["theme"], _excluded3 = ["theme"];
+const _excluded$J = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
 function isEmpty$1(obj) {
   return Object.keys(obj).length === 0;
 }
@@ -15788,16 +15659,26 @@ const systemDefaultTheme = createTheme$1();
 const lowercaseFirstLetter = (string) => {
   return string.charAt(0).toLowerCase() + string.slice(1);
 };
+function resolveTheme({
+  defaultTheme: defaultTheme2,
+  theme,
+  themeId
+}) {
+  return isEmpty$1(theme) ? defaultTheme2 : theme[themeId] || theme;
+}
 function createStyled(input = {}) {
   const {
+    themeId,
     defaultTheme: defaultTheme2 = systemDefaultTheme,
     rootShouldForwardProp: rootShouldForwardProp2 = shouldForwardProp,
     slotShouldForwardProp: slotShouldForwardProp2 = shouldForwardProp
   } = input;
   const systemSx = (props) => {
-    const theme = isEmpty$1(props.theme) ? defaultTheme2 : props.theme;
     return styleFunctionSx(_extends({}, props, {
-      theme
+      theme: resolveTheme(_extends({}, props, {
+        defaultTheme: defaultTheme2,
+        themeId
+      }))
     }));
   };
   systemSx.__mui_systemSx = true;
@@ -15832,19 +15713,22 @@ function createStyled(input = {}) {
     }, options));
     const muiStyledResolver = (styleArg, ...expressions) => {
       const expressionsWithDefaultTheme = expressions ? expressions.map((stylesArg) => {
-        return typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg ? (_ref) => {
-          let {
-            theme: themeInput
-          } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded2$5);
-          return stylesArg(_extends({
-            theme: isEmpty$1(themeInput) ? defaultTheme2 : themeInput
-          }, other));
+        return typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg ? (props) => {
+          return stylesArg(_extends({}, props, {
+            theme: resolveTheme(_extends({}, props, {
+              defaultTheme: defaultTheme2,
+              themeId
+            }))
+          }));
         } : stylesArg;
       }) : [];
       let transformedStyleArg = styleArg;
       if (componentName && overridesResolver) {
         expressionsWithDefaultTheme.push((props) => {
-          const theme = isEmpty$1(props.theme) ? defaultTheme2 : props.theme;
+          const theme = resolveTheme(_extends({}, props, {
+            defaultTheme: defaultTheme2,
+            themeId
+          }));
           const styleOverrides = getStyleOverrides(componentName, theme);
           if (styleOverrides) {
             const resolvedStyleOverrides = {};
@@ -15860,7 +15744,10 @@ function createStyled(input = {}) {
       }
       if (componentName && !skipVariantsResolver) {
         expressionsWithDefaultTheme.push((props) => {
-          const theme = isEmpty$1(props.theme) ? defaultTheme2 : props.theme;
+          const theme = resolveTheme(_extends({}, props, {
+            defaultTheme: defaultTheme2,
+            themeId
+          }));
           return variantsResolver(props, getVariantStyles(componentName, theme), theme, componentName);
         });
       }
@@ -15876,14 +15763,12 @@ function createStyled(input = {}) {
       // component stays as a function. This condition makes sure that we do not interpolate functions
       // which are basically components used as a selectors.
       styleArg.__emotion_real !== styleArg) {
-        transformedStyleArg = (_ref2) => {
-          let {
-            theme: themeInput
-          } = _ref2, other = _objectWithoutPropertiesLoose(_ref2, _excluded3);
-          return styleArg(_extends({
-            theme: isEmpty$1(themeInput) ? defaultTheme2 : themeInput
-          }, other));
-        };
+        transformedStyleArg = (props) => styleArg(_extends({}, props, {
+          theme: resolveTheme(_extends({}, props, {
+            defaultTheme: defaultTheme2,
+            themeId
+          }))
+        }));
       }
       const Component = defaultStyledResolver(transformedStyleArg, ...expressionsWithDefaultTheme);
       if (process.env.NODE_ENV !== "production") {
@@ -15895,6 +15780,9 @@ function createStyled(input = {}) {
           displayName = `Styled(${getDisplayName(tag)})`;
         }
         Component.displayName = displayName;
+      }
+      if (tag.muiName) {
+        Component.muiName = tag.muiName;
       }
       return Component;
     };
@@ -15919,9 +15807,13 @@ function getThemeProps(params) {
 function useThemeProps$1({
   props,
   name,
-  defaultTheme: defaultTheme2
+  defaultTheme: defaultTheme2,
+  themeId
 }) {
-  const theme = useTheme$1(defaultTheme2);
+  let theme = useTheme$2(defaultTheme2);
+  if (themeId) {
+    theme = theme[themeId] || theme;
+  }
   const mergedProps = getThemeProps({
     theme,
     name,
@@ -16152,28 +16044,112 @@ function private_safeEmphasize(color2, coefficient, warning) {
     return color2;
   }
 }
-const EMPTY_THEME = {};
-function InnerThemeProvider(props) {
-  const theme = useTheme$1();
-  return /* @__PURE__ */ jsx(ThemeContext$1.Provider, {
-    value: typeof theme === "object" ? theme : EMPTY_THEME,
-    children: props.children
-  });
+const ThemeContext = /* @__PURE__ */ React.createContext(null);
+if (process.env.NODE_ENV !== "production") {
+  ThemeContext.displayName = "ThemeContext";
 }
-process.env.NODE_ENV !== "production" ? InnerThemeProvider.propTypes = {
-  /**
-   * Your component tree.
-   */
-  children: propTypesExports.node
-} : void 0;
-function ThemeProvider(props) {
+function useTheme$1() {
+  const theme = React.useContext(ThemeContext);
+  if (process.env.NODE_ENV !== "production") {
+    React.useDebugValue(theme);
+  }
+  return theme;
+}
+const hasSymbol = typeof Symbol === "function" && Symbol.for;
+const nested = hasSymbol ? Symbol.for("mui.nested") : "__THEME_NESTED__";
+function mergeOuterLocalTheme(outerTheme, localTheme) {
+  if (typeof localTheme === "function") {
+    const mergedTheme = localTheme(outerTheme);
+    if (process.env.NODE_ENV !== "production") {
+      if (!mergedTheme) {
+        console.error(["MUI: You should return an object from your theme function, i.e.", "<ThemeProvider theme={() => ({})} />"].join("\n"));
+      }
+    }
+    return mergedTheme;
+  }
+  return __spreadValues(__spreadValues({}, outerTheme), localTheme);
+}
+function ThemeProvider$1(props) {
   const {
     children: children2,
     theme: localTheme
   } = props;
-  return /* @__PURE__ */ jsx(ThemeProvider$1, {
+  const outerTheme = useTheme$1();
+  if (process.env.NODE_ENV !== "production") {
+    if (outerTheme === null && typeof localTheme === "function") {
+      console.error(["MUI: You are providing a theme function prop to the ThemeProvider component:", "<ThemeProvider theme={outerTheme => outerTheme} />", "", "However, no outer theme is present.", "Make sure a theme is already injected higher in the React tree or provide a theme object."].join("\n"));
+    }
+  }
+  const theme = React.useMemo(() => {
+    const output = outerTheme === null ? localTheme : mergeOuterLocalTheme(outerTheme, localTheme);
+    if (output != null) {
+      output[nested] = outerTheme !== null;
+    }
+    return output;
+  }, [localTheme, outerTheme]);
+  return /* @__PURE__ */ jsx(ThemeContext.Provider, {
+    value: theme,
+    children: children2
+  });
+}
+process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = {
+  /**
+   * Your component tree.
+   */
+  children: propTypesExports.node,
+  /**
+   * A theme object. You can provide a function to extend the outer theme.
+   */
+  theme: propTypesExports.oneOfType([propTypesExports.object, propTypesExports.func]).isRequired
+} : void 0;
+if (process.env.NODE_ENV !== "production") {
+  process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
+}
+/**
+ * @mui/private-theming v5.13.1
+ *
+ * @license MIT
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+const EMPTY_THEME = {};
+function useThemeScoping(themeId, upperTheme, localTheme, isPrivate = false) {
+  return React.useMemo(() => {
+    const resolvedTheme = themeId ? upperTheme[themeId] || upperTheme : upperTheme;
+    if (typeof localTheme === "function") {
+      const mergedTheme = localTheme(resolvedTheme);
+      const result = themeId ? _extends({}, upperTheme, {
+        [themeId]: mergedTheme
+      }) : mergedTheme;
+      if (isPrivate) {
+        return () => result;
+      }
+      return result;
+    }
+    return themeId ? _extends({}, upperTheme, {
+      [themeId]: localTheme
+    }) : _extends({}, upperTheme, localTheme);
+  }, [themeId, upperTheme, localTheme, isPrivate]);
+}
+function ThemeProvider(props) {
+  const {
+    children: children2,
     theme: localTheme,
-    children: /* @__PURE__ */ jsx(InnerThemeProvider, {
+    themeId
+  } = props;
+  const upperTheme = useTheme$3(EMPTY_THEME);
+  const upperPrivateTheme = useTheme$1() || EMPTY_THEME;
+  if (process.env.NODE_ENV !== "production") {
+    if (upperTheme === null && typeof localTheme === "function" || themeId && upperTheme && !upperTheme[themeId] && typeof localTheme === "function") {
+      console.error(["MUI: You are providing a theme function prop to the ThemeProvider component:", "<ThemeProvider theme={outerTheme => outerTheme} />", "", "However, no outer theme is present.", "Make sure a theme is already injected higher in the React tree or provide a theme object."].join("\n"));
+    }
+  }
+  const engineTheme = useThemeScoping(themeId, upperTheme, localTheme);
+  const privateTheme = useThemeScoping(themeId, upperPrivateTheme, localTheme, true);
+  return /* @__PURE__ */ jsx(ThemeProvider$1, {
+    theme: privateTheme,
+    children: /* @__PURE__ */ jsx(ThemeContext$1.Provider, {
+      value: engineTheme,
       children: children2
     })
   });
@@ -16190,7 +16166,11 @@ process.env.NODE_ENV !== "production" ? ThemeProvider.propTypes = {
   /**
    * A theme object. You can provide a function to extend the outer theme.
    */
-  theme: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]).isRequired
+  theme: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]).isRequired,
+  /**
+   * The design system's unique id for getting the corresponded theme when there are multiple design systems.
+   */
+  themeId: propTypesExports.string
 } : void 0;
 if (process.env.NODE_ENV !== "production") {
   process.env.NODE_ENV !== "production" ? ThemeProvider.propTypes = exactProp(ThemeProvider.propTypes) : void 0;
@@ -16438,6 +16418,13 @@ const _excluded$I = ["colorSchemes", "components", "generateCssVars", "cssVarPre
 const DISABLE_CSS_TRANSITION = "*{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}";
 function createCssVarsProvider(options) {
   const {
+    themeId,
+    /**
+     * This `theme` object needs to follow a certain structure to
+     * be used correctly by the finel `CssVarsProvider`. It should have a
+     * `colorSchemes` key with the light and dark (and any other) palette.
+     * It should also ideally have a vars object created using `prepareCssVars`.
+     */
     theme: defaultTheme2 = {},
     attribute: defaultAttribute = DEFAULT_ATTRIBUTE,
     modeStorageKey: defaultModeStorageKey = DEFAULT_MODE_STORAGE_KEY,
@@ -16445,7 +16432,7 @@ function createCssVarsProvider(options) {
     defaultMode: designSystemMode = "light",
     defaultColorScheme: designSystemColorScheme,
     disableTransitionOnChange: designSystemTransitionOnChange = false,
-    resolveTheme,
+    resolveTheme: resolveTheme2,
     excludeVariablesFromRoot: excludeVariablesFromRoot2
   } = options;
   if (!defaultTheme2.colorSchemes || typeof designSystemColorScheme === "string" && !defaultTheme2.colorSchemes[designSystemColorScheme] || typeof designSystemColorScheme === "object" && !defaultTheme2.colorSchemes[designSystemColorScheme == null ? void 0 : designSystemColorScheme.light] || typeof designSystemColorScheme === "object" && !defaultTheme2.colorSchemes[designSystemColorScheme == null ? void 0 : designSystemColorScheme.dark]) {
@@ -16476,10 +16463,11 @@ function createCssVarsProvider(options) {
     disableStyleSheetGeneration = false
   }) {
     const hasMounted = React.useRef(false);
-    const upperTheme = useTheme$3();
+    const upperTheme = useTheme$1();
     const ctx = React.useContext(ColorSchemeContext);
     const nested2 = !!ctx && !disableNestedContext;
-    const {
+    const scopedTheme = themeProp[themeId];
+    const _ref = scopedTheme || themeProp, {
       colorSchemes = {},
       components = {},
       generateCssVars = () => ({
@@ -16487,7 +16475,7 @@ function createCssVarsProvider(options) {
         css: {}
       }),
       cssVarPrefix
-    } = themeProp, restThemeProp = _objectWithoutPropertiesLoose(themeProp, _excluded$I);
+    } = _ref, restThemeProp = _objectWithoutPropertiesLoose(_ref, _excluded$I);
     const allColorSchemes = Object.keys(colorSchemes);
     const defaultLightColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.light;
     const defaultDarkColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.dark;
@@ -16629,17 +16617,18 @@ function createCssVarsProvider(options) {
     }
     const element = /* @__PURE__ */ jsxs(React.Fragment, {
       children: [shouldGenerateStyleSheet && /* @__PURE__ */ jsxs(React.Fragment, {
-        children: [/* @__PURE__ */ jsx(GlobalStyles$1, {
+        children: [/* @__PURE__ */ jsx(GlobalStyles$2, {
           styles: {
             [colorSchemeSelector]: rootCss
           }
-        }), /* @__PURE__ */ jsx(GlobalStyles$1, {
+        }), /* @__PURE__ */ jsx(GlobalStyles$2, {
           styles: defaultColorSchemeStyleSheet
-        }), /* @__PURE__ */ jsx(GlobalStyles$1, {
+        }), /* @__PURE__ */ jsx(GlobalStyles$2, {
           styles: otherColorSchemesStyleSheet
         })]
       }), /* @__PURE__ */ jsx(ThemeProvider, {
-        theme: resolveTheme ? resolveTheme(theme) : theme,
+        themeId: scopedTheme ? themeId : void 0,
+        theme: resolveTheme2 ? resolveTheme2(theme) : theme,
         children: children2
       })]
     });
@@ -16863,11 +16852,14 @@ function prepareCssVars(theme, parserConfig) {
   const generateCssVars = (colorScheme) => {
     if (!colorScheme) {
       return {
-        css: rootCss,
+        css: _extends({}, rootCss),
         vars: rootVars
       };
     }
-    return colorSchemesMap[colorScheme];
+    return {
+      css: _extends({}, colorSchemesMap[colorScheme].css),
+      vars: colorSchemesMap[colorScheme].vars
+    };
   };
   return {
     vars: themeVars,
@@ -17056,22 +17048,6 @@ function getContainerUtilityClass$1(slot) {
   return generateUtilityClass("MuiContainer", slot);
 }
 const containerClasses$1 = generateUtilityClasses("MuiContainer", ["root", "disableGutters", "fixed", "maxWidthXs", "maxWidthSm", "maxWidthMd", "maxWidthLg", "maxWidthXl"]);
-function isNestedContainer(ownerState) {
-  return ownerState.level > 0 && ownerState.container;
-}
-function createGetSelfSpacing(ownerState) {
-  return function getSelfSpacing(axis) {
-    return `var(--Grid-${axis}Spacing${ownerState.level || ""})`;
-  };
-}
-function createGetParentSpacing(ownerState) {
-  return function getParentSpacing(axis) {
-    if (ownerState.level === 0) {
-      return `var(--Grid-${axis}Spacing)`;
-    }
-    return `var(--Grid-${axis}Spacing${ownerState.level - 1 || ""})`;
-  };
-}
 const filterBreakpointKeys = (breakpointsKeys, responsiveKeys) => breakpointsKeys.filter((key) => responsiveKeys.includes(key));
 const traverseBreakpoints = (breakpoints2, responsive, iterator) => {
   const smallestBreakpoint = breakpoints2.keys[0];
@@ -17109,6 +17085,34 @@ const traverseBreakpoints = (breakpoints2, responsive, iterator) => {
     }, responsive);
   }
 };
+function appendLevel(level) {
+  if (!level) {
+    return "";
+  }
+  return `Level${level}`;
+}
+function isNestedContainer(ownerState) {
+  return ownerState.unstable_level > 0 && ownerState.container;
+}
+function createGetSelfSpacing(ownerState) {
+  return function getSelfSpacing(axis) {
+    return `var(--Grid-${axis}Spacing${appendLevel(ownerState.unstable_level)})`;
+  };
+}
+function createGetParentSpacing(ownerState) {
+  return function getParentSpacing(axis) {
+    if (ownerState.unstable_level === 0) {
+      return `var(--Grid-${axis}Spacing)`;
+    }
+    return `var(--Grid-${axis}Spacing${appendLevel(ownerState.unstable_level - 1)})`;
+  };
+}
+function getParentColumns(ownerState) {
+  if (ownerState.unstable_level === 0) {
+    return `var(--Grid-columns)`;
+  }
+  return `var(--Grid-columns${appendLevel(ownerState.unstable_level - 1)})`;
+}
 const generateGridSizeStyles = ({
   theme,
   ownerState
@@ -17137,7 +17141,7 @@ const generateGridSizeStyles = ({
       style2 = {
         flexGrow: 0,
         flexBasis: "auto",
-        width: `calc(100% * ${value} / var(--Grid-columns)${isNestedContainer(ownerState) ? ` + ${getSelfSpacing("column")}` : ""})`
+        width: `calc(100% * ${value} / ${getParentColumns(ownerState)}${isNestedContainer(ownerState) ? ` + ${getSelfSpacing("column")}` : ""})`
       };
     }
     appendStyle(styles2, style2);
@@ -17158,7 +17162,7 @@ const generateGridOffsetStyles = ({
     }
     if (typeof value === "number") {
       style2 = {
-        marginLeft: value === 0 ? "0px" : `calc(100% * ${value} / var(--Grid-columns))`
+        marginLeft: value === 0 ? "0px" : `calc(100% * ${value} / ${getParentColumns(ownerState)})`
       };
     }
     appendStyle(styles2, style2);
@@ -17172,12 +17176,14 @@ const generateGridColumnsStyles = ({
   if (!ownerState.container) {
     return {};
   }
-  const styles2 = {
+  const styles2 = isNestedContainer(ownerState) ? {
+    [`--Grid-columns${appendLevel(ownerState.unstable_level)}`]: getParentColumns(ownerState)
+  } : {
     "--Grid-columns": 12
   };
   traverseBreakpoints(theme.breakpoints, ownerState.columns, (appendStyle, value) => {
     appendStyle(styles2, {
-      "--Grid-columns": value
+      [`--Grid-columns${appendLevel(ownerState.unstable_level)}`]: value
     });
   });
   return styles2;
@@ -17193,12 +17199,12 @@ const generateGridRowSpacingStyles = ({
   const styles2 = isNestedContainer(ownerState) ? {
     // Set the default spacing as its parent spacing.
     // It will be overridden if spacing props are provided
-    [`--Grid-rowSpacing${ownerState.level || ""}`]: getParentSpacing("row")
+    [`--Grid-rowSpacing${appendLevel(ownerState.unstable_level)}`]: getParentSpacing("row")
   } : {};
   traverseBreakpoints(theme.breakpoints, ownerState.rowSpacing, (appendStyle, value) => {
     var _theme$spacing;
     appendStyle(styles2, {
-      [`--Grid-rowSpacing${ownerState.level || ""}`]: typeof value === "string" ? value : (_theme$spacing = theme.spacing) == null ? void 0 : _theme$spacing.call(theme, value)
+      [`--Grid-rowSpacing${appendLevel(ownerState.unstable_level)}`]: typeof value === "string" ? value : (_theme$spacing = theme.spacing) == null ? void 0 : _theme$spacing.call(theme, value)
     });
   });
   return styles2;
@@ -17214,12 +17220,12 @@ const generateGridColumnSpacingStyles = ({
   const styles2 = isNestedContainer(ownerState) ? {
     // Set the default spacing as its parent spacing.
     // It will be overridden if spacing props are provided
-    [`--Grid-columnSpacing${ownerState.level || ""}`]: getParentSpacing("column")
+    [`--Grid-columnSpacing${appendLevel(ownerState.unstable_level)}`]: getParentSpacing("column")
   } : {};
   traverseBreakpoints(theme.breakpoints, ownerState.columnSpacing, (appendStyle, value) => {
     var _theme$spacing2;
     appendStyle(styles2, {
-      [`--Grid-columnSpacing${ownerState.level || ""}`]: typeof value === "string" ? value : (_theme$spacing2 = theme.spacing) == null ? void 0 : _theme$spacing2.call(theme, value)
+      [`--Grid-columnSpacing${appendLevel(ownerState.unstable_level)}`]: typeof value === "string" ? value : (_theme$spacing2 = theme.spacing) == null ? void 0 : _theme$spacing2.call(theme, value)
     });
   });
   return styles2;
@@ -17301,7 +17307,7 @@ const generateDirectionClasses = (direction) => {
   }
   return [`direction-xs-${String(direction)}`];
 };
-const _excluded$E = ["className", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow"];
+const _excluded$E = ["className", "children", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow", "unstable_level"];
 const defaultTheme$4 = createTheme$1();
 const defaultCreateStyledComponent$1 = styled$1("div", {
   name: "MuiGrid",
@@ -17322,7 +17328,6 @@ function createGrid(options = {}) {
     useThemeProps: useThemeProps2 = useThemePropsDefault$1,
     componentName = "MuiGrid"
   } = options;
-  const NestedContext = /* @__PURE__ */ React.createContext(0);
   const OverflowContext = /* @__PURE__ */ React.createContext(void 0);
   const useUtilityClasses2 = (ownerState, theme) => {
     const {
@@ -17340,13 +17345,13 @@ function createGrid(options = {}) {
   const GridRoot2 = createStyledComponent(generateGridColumnsStyles, generateGridColumnSpacingStyles, generateGridRowSpacingStyles, generateGridSizeStyles, generateGridDirectionStyles, generateGridStyles, generateGridOffsetStyles);
   const Grid3 = /* @__PURE__ */ React.forwardRef(function Grid4(inProps, ref) {
     var _inProps$columns, _inProps$spacing, _ref, _inProps$rowSpacing, _ref2, _inProps$columnSpacin, _ref3, _disableEqualOverflow;
-    const theme = useTheme$1();
+    const theme = useTheme$2();
     const themeProps = useThemeProps2(inProps);
     const props = extendSxProp(themeProps);
-    const level = React.useContext(NestedContext);
     const overflow2 = React.useContext(OverflowContext);
     const {
       className,
+      children: children2,
       columns: columnsProp = 12,
       container = false,
       component = "div",
@@ -17355,7 +17360,8 @@ function createGrid(options = {}) {
       spacing: spacingProp = 0,
       rowSpacing: rowSpacingProp = spacingProp,
       columnSpacing: columnSpacingProp = spacingProp,
-      disableEqualOverflow: themeDisableEqualOverflow
+      disableEqualOverflow: themeDisableEqualOverflow,
+      unstable_level: level = 0
     } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$E);
     let disableEqualOverflow = themeDisableEqualOverflow;
     if (level && themeDisableEqualOverflow !== void 0) {
@@ -17399,13 +17405,17 @@ function createGrid(options = {}) {
       as: component,
       ownerState,
       className: clsx(classes.root, className)
-    }, other));
-    if (container) {
-      result = /* @__PURE__ */ jsx(NestedContext.Provider, {
-        value: level + 1,
-        children: result
-      });
-    }
+    }, other, {
+      children: React.Children.map(children2, (child) => {
+        if (/* @__PURE__ */ React.isValidElement(child) && isMuiElement(child, ["Grid"])) {
+          var _child$props$unstable;
+          return /* @__PURE__ */ React.cloneElement(child, {
+            unstable_level: (_child$props$unstable = child.props.unstable_level) != null ? _child$props$unstable : level + 1
+          });
+        }
+        return child;
+      })
+    }));
     if (disableEqualOverflow !== void 0 && disableEqualOverflow !== (overflow2 != null ? overflow2 : false)) {
       result = /* @__PURE__ */ jsx(OverflowContext.Provider, {
         value: disableEqualOverflow,
@@ -17438,6 +17448,7 @@ function createGrid(options = {}) {
     xs: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
     xsOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number])
   } : void 0;
+  Grid3.muiName = "Grid";
   return Grid3;
 }
 const Grid$1 = createGrid();
@@ -17602,7 +17613,7 @@ const gridClasses$1 = generateUtilityClasses("MuiGrid", [
   ...GRID_SIZES$1.map((size) => `grid-lg-${size}`),
   ...GRID_SIZES$1.map((size) => `grid-xl-${size}`)
 ]);
-const _excluded$D = ["component", "direction", "spacing", "divider", "children", "className"];
+const _excluded$D = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
 const defaultTheme$3 = createTheme$1();
 const defaultCreateStyledComponent = styled$1("div", {
   name: "MuiStack",
@@ -17677,6 +17688,11 @@ const style = ({
       });
     }
     const styleFromPropValue = (propValue, breakpoint) => {
+      if (ownerState.useFlexGap) {
+        return {
+          gap: getValue(transformer, propValue)
+        };
+      }
       return {
         "& > :not(style) + :not(style)": {
           margin: 0,
@@ -17714,11 +17730,13 @@ function createStack(options = {}) {
       spacing: spacing2 = 0,
       divider,
       children: children2,
-      className
+      className,
+      useFlexGap = false
     } = props, other = _objectWithoutPropertiesLoose(props, _excluded$D);
     const ownerState = {
       direction,
-      spacing: spacing2
+      spacing: spacing2,
+      useFlexGap
     };
     const classes = useUtilityClasses2();
     return /* @__PURE__ */ jsx(StackRoot, _extends({
@@ -17772,7 +17790,17 @@ process.env.NODE_ENV !== "production" ? Stack.propTypes = {
   /**
    * The system prop, which allows defining system overrides as well as additional CSS styles.
    */
-  sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+  sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+  /**
+   * If `true`, the CSS flexbox `gap` is used instead of applying `margin` to children.
+   *
+   * While CSS `gap` removes the [known limitations](https://mui.com/joy-ui/react-stack/#limitations),
+   * it is not fully supported in some browsers. We recommend checking https://caniuse.com/?search=flex%20gap before using this flag.
+   *
+   * To enable this flag globally, follow the theme's default props configuration.
+   * @default false
+   */
+  useFlexGap: propTypesExports.bool
 } : void 0;
 function getStackUtilityClass(slot) {
   return generateUtilityClass("MuiStack", slot);
@@ -18324,18 +18352,18 @@ function createTransitions(inputTransitions) {
       delay = 0
     } = options, other = _objectWithoutPropertiesLoose(options, _excluded$A);
     if (process.env.NODE_ENV !== "production") {
-      const isString = (value) => typeof value === "string";
+      const isString2 = (value) => typeof value === "string";
       const isNumber = (value) => !isNaN(parseFloat(value));
-      if (!isString(props) && !Array.isArray(props)) {
+      if (!isString2(props) && !Array.isArray(props)) {
         console.error('MUI: Argument "props" must be a string or Array.');
       }
-      if (!isNumber(durationOption) && !isString(durationOption)) {
+      if (!isNumber(durationOption) && !isString2(durationOption)) {
         console.error(`MUI: Argument "duration" must be a number or a string but found ${durationOption}.`);
       }
-      if (!isString(easingOption)) {
+      if (!isString2(easingOption)) {
         console.error('MUI: Argument "easing" must be a string.');
       }
-      if (!isNumber(delay) && !isString(delay)) {
+      if (!isNumber(delay) && !isString2(delay)) {
         console.error('MUI: Argument "delay" must be a number or a string.');
       }
       if (Object.keys(other).length !== 0) {
@@ -21472,7 +21500,7 @@ const getOverlayAlpha = (elevation) => {
   return (alphaValue / 100).toFixed(2);
 };
 function useTheme() {
-  const theme = useTheme$1(defaultTheme$2);
+  const theme = useTheme$2(defaultTheme$2);
   if (process.env.NODE_ENV !== "production") {
     React.useDebugValue(theme);
   }
@@ -28519,267 +28547,1726 @@ if (process.env.NODE_ENV !== "production") {
     zeroMinWidth: requireProp("item")
   });
 }
-function BasicLed(props) {
-  const { ctx, spec } = props;
-  const { model, seneca, custom } = ctx();
-  const def = spec.content.def;
-  const { ent, cols } = def;
-  const cmpstate = useSelector((state) => state.main.vxg.cmp);
-  const entstate = useSelector((state) => state.main.vxg.ent.meta.main[ent].state);
-  const entlist = useSelector((state) => state.main.vxg.ent.list.main[ent]);
-  if ("none" === entstate) {
-    let q = custom.BasicLed.query(spec, cmpstate);
-    seneca.entity(def.ent).list$(q);
-  }
-  const rows = entlist;
-  let [editRow, setEditRow] = useState();
-  let selectRow = (ids) => {
-    let id = ids[0];
-    let row = rows.find((r2) => r2.id === id);
-    if (row) {
-      setEditRow(row);
-    }
-  };
-  const open = () => {
-  };
-  const processValueChange = () => {
-  };
-  const applyChanges = () => {
-  };
-  const cancelChanges = () => {
-    setEditRow(void 0);
-  };
-  return /* @__PURE__ */ jsxs("div", { style: { height: "calc(100vh - 6rem)", width: "calc(100vw - 18rem)" }, children: [
-    editRow && /* @__PURE__ */ jsx(
-      Popup,
-      {
-        open,
-        row: editRow,
-        columns: cols,
-        onChange: processValueChange,
-        onApplyChanges: applyChanges,
-        onCancelChanges: cancelChanges
+var isCheckBoxInput = (element) => element.type === "checkbox";
+var isDateObject = (value) => value instanceof Date;
+var isNullOrUndefined = (value) => value == null;
+const isObjectType = (value) => typeof value === "object";
+var isObject = (value) => !isNullOrUndefined(value) && !Array.isArray(value) && isObjectType(value) && !isDateObject(value);
+var getEventValue = (event) => isObject(event) && event.target ? isCheckBoxInput(event.target) ? event.target.checked : event.target.value : event;
+var getNodeParentName = (name) => name.substring(0, name.search(/\.\d+(\.|$)/)) || name;
+var isNameInFieldArray = (names, name) => names.has(getNodeParentName(name));
+var isPlainObject = (tempObject) => {
+  const prototypeCopy = tempObject.constructor && tempObject.constructor.prototype;
+  return isObject(prototypeCopy) && prototypeCopy.hasOwnProperty("isPrototypeOf");
+};
+var isWeb = typeof window !== "undefined" && typeof window.HTMLElement !== "undefined" && typeof document !== "undefined";
+function cloneObject(data) {
+  let copy2;
+  const isArray = Array.isArray(data);
+  if (data instanceof Date) {
+    copy2 = new Date(data);
+  } else if (data instanceof Set) {
+    copy2 = new Set(data);
+  } else if (!(isWeb && (data instanceof Blob || data instanceof FileList)) && (isArray || isObject(data))) {
+    copy2 = isArray ? [] : {};
+    if (!isArray && !isPlainObject(data)) {
+      copy2 = data;
+    } else {
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          copy2[key] = cloneObject(data[key]);
+        }
       }
-    ),
-    /* @__PURE__ */ jsx(
-      DataGrid,
-      {
-        rows,
-        columns: cols,
-        onSelectionModelChange: selectRow
+    }
+  } else {
+    return data;
+  }
+  return copy2;
+}
+var compact = (value) => Array.isArray(value) ? value.filter(Boolean) : [];
+var isUndefined = (val) => val === void 0;
+var get = (obj, path, defaultValue) => {
+  if (!path || !isObject(obj)) {
+    return defaultValue;
+  }
+  const result = compact(path.split(/[,[\].]+?/)).reduce((result2, key) => isNullOrUndefined(result2) ? result2 : result2[key], obj);
+  return isUndefined(result) || result === obj ? isUndefined(obj[path]) ? defaultValue : obj[path] : result;
+};
+const EVENTS = {
+  BLUR: "blur",
+  FOCUS_OUT: "focusout",
+  CHANGE: "change"
+};
+const VALIDATION_MODE = {
+  onBlur: "onBlur",
+  onChange: "onChange",
+  onSubmit: "onSubmit",
+  onTouched: "onTouched",
+  all: "all"
+};
+const INPUT_VALIDATION_RULES = {
+  max: "max",
+  min: "min",
+  maxLength: "maxLength",
+  minLength: "minLength",
+  pattern: "pattern",
+  required: "required",
+  validate: "validate"
+};
+const HookFormContext = React__default.createContext(null);
+const useFormContext = () => React__default.useContext(HookFormContext);
+const FormProvider = (props) => {
+  const _a = props, { children: children2 } = _a, data = __objRest(_a, ["children"]);
+  return React__default.createElement(HookFormContext.Provider, { value: data }, children2);
+};
+var getProxyFormState = (formState, control, localProxyFormState, isRoot = true) => {
+  const result = {
+    defaultValues: control._defaultValues
+  };
+  for (const key in formState) {
+    Object.defineProperty(result, key, {
+      get: () => {
+        const _key = key;
+        if (control._proxyFormState[_key] !== VALIDATION_MODE.all) {
+          control._proxyFormState[_key] = !isRoot || VALIDATION_MODE.all;
+        }
+        localProxyFormState && (localProxyFormState[_key] = true);
+        return formState[_key];
       }
-    )
-  ] });
-}
-function Popup(props) {
-  let {
-    row,
-    columns,
-    onChange,
-    onApplyChanges,
-    onCancelChanges,
-    open
-  } = props;
-  return /* @__PURE__ */ jsxs(
-    Dialog,
-    {
-      fullWidth: true,
-      open,
-      onClose: onCancelChanges,
-      "aria-labelledby": "form-dialog-title",
-      children: [
-        /* @__PURE__ */ jsx(DialogTitle, { id: "form-dialog-title", children: "Edit Details" }),
-        /* @__PURE__ */ jsx(DialogContent, { children: /* @__PURE__ */ jsx(Grid, { container: true, spacing: 3, children: /* @__PURE__ */ jsx(Grid, { item: true, xs: 6, children: /* @__PURE__ */ jsx(FormGroup, { children: columns.map((col) => /* @__PURE__ */ jsx(
-          TextField,
-          {
-            margin: "normal",
-            name: col.field,
-            label: col.headerName,
-            value: row[col.field],
-            onChange
-          },
-          col.field
-        )) }) }) }) }),
-        /* @__PURE__ */ jsxs(DialogActions, { children: [
-          /* @__PURE__ */ jsx(Button, { onClick: onCancelChanges, color: "secondary", children: "Cancel" }),
-          /* @__PURE__ */ jsx(Button, { onClick: onApplyChanges, color: "primary", children: "Save" })
-        ] })
-      ]
-    }
-  );
-}
-function makeCmp(view, ctx) {
-  let cmp = () => /* @__PURE__ */ jsx("div", { children: "NONE" });
-  const content = view.content || {};
-  if ("custom" === content.kind) {
-    cmp = ctx().cmp[content.cmp];
-  } else if ("led" === content.kind) {
-    cmp = BasicLed;
-  }
-  return cmp;
-}
-function BasicMain(props) {
-  const { ctx, spec } = props;
-  const { model, content } = ctx();
-  const { frame } = spec;
-  const part = model.app.web.frame[frame].part.main;
-  const views = Object.values(model.app.web.frame.private.view);
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      style: {
-        width: "100%",
-        height: "100vh",
-        paddingTop: "4rem",
-        paddingLeft: "16rem",
-        paddingBottom: "1rem"
-      },
-      children: /* @__PURE__ */ jsx("div", { style: { width: "100%", height: "100%", padding: "1rem" }, children: /* @__PURE__ */ jsx(Routes, { children: /* @__PURE__ */ jsx(Route, { path: "/view", children: views.map((view) => {
-        const Cmp = makeCmp(view, ctx);
-        return /* @__PURE__ */ jsx(
-          Route,
-          {
-            path: "/view/" + view.name,
-            element: /* @__PURE__ */ jsx(Cmp, { ctx, spec: view })
-          },
-          view.name
-        );
-      }) }) }) })
-    }
-  );
-}
-function BasicFoot(props) {
-  const { ctx, spec } = props;
-  const model = ctx().model;
-  const { frame } = spec;
-  const part = model.app.web.frame[frame].part.foot;
-  return /* @__PURE__ */ jsx(
-    Box$2,
-    {
-      sx: {
-        width: "100%",
-        height: "auto",
-        paddingTop: "0.5rem",
-        paddingBottom: "0.5rem",
-        borderTop: "1px solid #CCC"
-      },
-      children: /* @__PURE__ */ jsx(Container$2, { maxWidth: "lg", children: /* @__PURE__ */ jsx(Grid$2, { container: true, direction: "column", children: /* @__PURE__ */ jsx(Grid$2, { item: true, xs: 12, sx: { textAlign: "right" }, children: /* @__PURE__ */ jsx(Typography$1, { color: "#CCC", variant: "body2", children: part.title }) }) }) })
-    }
-  );
-}
-function BasicAdmin(props) {
-  const { ctx, spec } = props;
-  const model = ctx().model;
-  const { frame } = spec;
-  const part = model.app.web.frame[frame].part.admin;
-  const headSpec = {
-    frame
-  };
-  const sideSpec = {
-    frame
-  };
-  const mainSpec = {
-    frame
-  };
-  const footSpec = {
-    frame
-  };
-  return /* @__PURE__ */ jsxs("div", { children: [
-    /* @__PURE__ */ jsx(BasicHead, { ctx, spec: headSpec }),
-    /* @__PURE__ */ jsx(BasicSide, { ctx, spec: sideSpec }),
-    /* @__PURE__ */ jsx(BasicMain, { ctx, spec: mainSpec }),
-    /* @__PURE__ */ jsx(BasicFoot, { ctx, spec: footSpec })
-  ] });
-}
-const html = (theme, enableColorScheme) => _extends({
-  WebkitFontSmoothing: "antialiased",
-  // Antialiasing.
-  MozOsxFontSmoothing: "grayscale",
-  // Antialiasing.
-  // Change from `box-sizing: content-box` so that `width`
-  // is not affected by `padding` or `border`.
-  boxSizing: "border-box",
-  // Fix font resize problem in iOS
-  WebkitTextSizeAdjust: "100%"
-}, enableColorScheme && !theme.vars && {
-  colorScheme: theme.palette.mode
-});
-const body = (theme) => _extends({
-  color: (theme.vars || theme).palette.text.primary
-}, theme.typography.body1, {
-  backgroundColor: (theme.vars || theme).palette.background.default,
-  "@media print": {
-    // Save printer ink.
-    backgroundColor: (theme.vars || theme).palette.common.white
-  }
-});
-const styles = (theme, enableColorScheme = false) => {
-  var _theme$components, _theme$components$Mui;
-  const colorSchemeStyles = {};
-  if (enableColorScheme && theme.colorSchemes) {
-    Object.entries(theme.colorSchemes).forEach(([key, scheme]) => {
-      var _scheme$palette;
-      colorSchemeStyles[theme.getColorSchemeSelector(key).replace(/\s*&/, "")] = {
-        colorScheme: (_scheme$palette = scheme.palette) == null ? void 0 : _scheme$palette.mode
-      };
     });
   }
-  let defaultStyles = _extends({
-    html: html(theme, enableColorScheme),
-    "*, *::before, *::after": {
-      boxSizing: "inherit"
+  return result;
+};
+var isEmptyObject = (value) => isObject(value) && !Object.keys(value).length;
+var shouldRenderFormState = (formStateData, _proxyFormState, updateFormState, isRoot) => {
+  updateFormState(formStateData);
+  const _a = formStateData, { name } = _a, formState = __objRest(_a, ["name"]);
+  return isEmptyObject(formState) || Object.keys(formState).length >= Object.keys(_proxyFormState).length || Object.keys(formState).find((key) => _proxyFormState[key] === (!isRoot || VALIDATION_MODE.all));
+};
+var convertToArrayPayload = (value) => Array.isArray(value) ? value : [value];
+var shouldSubscribeByName = (name, signalName, exact) => exact && signalName ? name === signalName : !name || !signalName || name === signalName || convertToArrayPayload(name).some((currentName) => currentName && (currentName.startsWith(signalName) || signalName.startsWith(currentName)));
+function useSubscribe(props) {
+  const _props = React__default.useRef(props);
+  _props.current = props;
+  React__default.useEffect(() => {
+    const subscription = !props.disabled && _props.current.subject && _props.current.subject.subscribe({
+      next: _props.current.next
+    });
+    return () => {
+      subscription && subscription.unsubscribe();
+    };
+  }, [props.disabled]);
+}
+function useFormState(props) {
+  const methods = useFormContext();
+  const { control = methods.control, disabled, name, exact } = props || {};
+  const [formState, updateFormState] = React__default.useState(control._formState);
+  const _mounted = React__default.useRef(true);
+  const _localProxyFormState = React__default.useRef({
+    isDirty: false,
+    isLoading: false,
+    dirtyFields: false,
+    touchedFields: false,
+    isValidating: false,
+    isValid: false,
+    errors: false
+  });
+  const _name = React__default.useRef(name);
+  _name.current = name;
+  useSubscribe({
+    disabled,
+    next: (value) => _mounted.current && shouldSubscribeByName(_name.current, value.name, exact) && shouldRenderFormState(value, _localProxyFormState.current, control._updateFormState) && updateFormState(__spreadValues(__spreadValues({}, control._formState), value)),
+    subject: control._subjects.state
+  });
+  React__default.useEffect(() => {
+    _mounted.current = true;
+    _localProxyFormState.current.isValid && control._updateValid(true);
+    return () => {
+      _mounted.current = false;
+    };
+  }, [control]);
+  return getProxyFormState(formState, control, _localProxyFormState.current, false);
+}
+var isString = (value) => typeof value === "string";
+var generateWatchOutput = (names, _names, formValues, isGlobal, defaultValue) => {
+  if (isString(names)) {
+    isGlobal && _names.watch.add(names);
+    return get(formValues, names, defaultValue);
+  }
+  if (Array.isArray(names)) {
+    return names.map((fieldName) => (isGlobal && _names.watch.add(fieldName), get(formValues, fieldName)));
+  }
+  isGlobal && (_names.watchAll = true);
+  return formValues;
+};
+function useWatch(props) {
+  const methods = useFormContext();
+  const { control = methods.control, name, defaultValue, disabled, exact } = props || {};
+  const _name = React__default.useRef(name);
+  _name.current = name;
+  useSubscribe({
+    disabled,
+    subject: control._subjects.values,
+    next: (formState) => {
+      if (shouldSubscribeByName(_name.current, formState.name, exact)) {
+        updateValue(cloneObject(generateWatchOutput(_name.current, control._names, formState.values || control._formValues, false, defaultValue)));
+      }
+    }
+  });
+  const [value, updateValue] = React__default.useState(control._getWatch(name, defaultValue));
+  React__default.useEffect(() => control._removeUnmounted());
+  return value;
+}
+var isKey = (value) => /^\w*$/.test(value);
+var stringToPath = (input) => compact(input.replace(/["|']|\]/g, "").split(/\.|\[/));
+function set(object, path, value) {
+  let index2 = -1;
+  const tempPath = isKey(path) ? [path] : stringToPath(path);
+  const length2 = tempPath.length;
+  const lastIndex = length2 - 1;
+  while (++index2 < length2) {
+    const key = tempPath[index2];
+    let newValue = value;
+    if (index2 !== lastIndex) {
+      const objValue = object[key];
+      newValue = isObject(objValue) || Array.isArray(objValue) ? objValue : !isNaN(+tempPath[index2 + 1]) ? [] : {};
+    }
+    object[key] = newValue;
+    object = object[key];
+  }
+  return object;
+}
+function useController(props) {
+  const methods = useFormContext();
+  const { name, control = methods.control, shouldUnregister } = props;
+  const isArrayField = isNameInFieldArray(control._names.array, name);
+  const value = useWatch({
+    control,
+    name,
+    defaultValue: get(control._formValues, name, get(control._defaultValues, name, props.defaultValue)),
+    exact: true
+  });
+  const formState = useFormState({
+    control,
+    name
+  });
+  const _registerProps = React__default.useRef(control.register(name, __spreadProps(__spreadValues({}, props.rules), {
+    value
+  })));
+  _registerProps.current = control.register(name, props.rules);
+  React__default.useEffect(() => {
+    const _shouldUnregisterField = control._options.shouldUnregister || shouldUnregister;
+    const updateMounted = (name2, value2) => {
+      const field = get(control._fields, name2);
+      if (field) {
+        field._f.mount = value2;
+      }
+    };
+    updateMounted(name, true);
+    if (_shouldUnregisterField) {
+      const value2 = cloneObject(get(control._options.defaultValues, name));
+      set(control._defaultValues, name, value2);
+      if (isUndefined(get(control._formValues, name))) {
+        set(control._formValues, name, value2);
+      }
+    }
+    return () => {
+      (isArrayField ? _shouldUnregisterField && !control._state.action : _shouldUnregisterField) ? control.unregister(name) : updateMounted(name, false);
+    };
+  }, [name, control, isArrayField, shouldUnregister]);
+  return {
+    field: {
+      name,
+      value,
+      onChange: React__default.useCallback((event) => _registerProps.current.onChange({
+        target: {
+          value: getEventValue(event),
+          name
+        },
+        type: EVENTS.CHANGE
+      }), [name]),
+      onBlur: React__default.useCallback(() => _registerProps.current.onBlur({
+        target: {
+          value: get(control._formValues, name),
+          name
+        },
+        type: EVENTS.BLUR
+      }), [name, control]),
+      ref: (elm) => {
+        const field = get(control._fields, name);
+        if (field && elm) {
+          field._f.ref = {
+            focus: () => elm.focus(),
+            select: () => elm.select(),
+            setCustomValidity: (message) => elm.setCustomValidity(message),
+            reportValidity: () => elm.reportValidity()
+          };
+        }
+      }
     },
-    "strong, b": {
-      fontWeight: theme.typography.fontWeightBold
-    },
-    body: _extends({
-      margin: 0
-    }, body(theme), {
-      // Add support for document.body.requestFullScreen().
-      // Other elements, if background transparent, are not supported.
-      "&::backdrop": {
-        backgroundColor: (theme.vars || theme).palette.background.default
+    formState,
+    fieldState: Object.defineProperties({}, {
+      invalid: {
+        enumerable: true,
+        get: () => !!get(formState.errors, name)
+      },
+      isDirty: {
+        enumerable: true,
+        get: () => !!get(formState.dirtyFields, name)
+      },
+      isTouched: {
+        enumerable: true,
+        get: () => !!get(formState.touchedFields, name)
+      },
+      error: {
+        enumerable: true,
+        get: () => get(formState.errors, name)
       }
     })
-  }, colorSchemeStyles);
-  const themeOverrides = (_theme$components = theme.components) == null ? void 0 : (_theme$components$Mui = _theme$components.MuiCssBaseline) == null ? void 0 : _theme$components$Mui.styleOverrides;
-  if (themeOverrides) {
-    defaultStyles = [defaultStyles, themeOverrides];
-  }
-  return defaultStyles;
-};
-function CssBaseline(inProps) {
-  const props = useThemeProps({
-    props: inProps,
-    name: "MuiCssBaseline"
-  });
-  const {
-    children: children2,
-    enableColorScheme = false
-  } = props;
-  return /* @__PURE__ */ jsxs(React.Fragment, {
-    children: [/* @__PURE__ */ jsx(GlobalStyles, {
-      styles: (theme) => styles(theme, enableColorScheme)
-    }), children2]
-  });
+  };
 }
-process.env.NODE_ENV !== "production" ? CssBaseline.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
-  /**
-   * You can wrap a node.
-   */
-  children: propTypesExports.node,
-  /**
-   * Enable `color-scheme` CSS property to use `theme.palette.mode`.
-   * For more details, check out https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme
-   * For browser support, check out https://caniuse.com/?search=color-scheme
-   * @default false
-   */
-  enableColorScheme: propTypesExports.bool
-} : void 0;
+const Controller = (props) => props.render(useController(props));
+const POST_REQUEST = "post";
+function Form(props) {
+  const methods = useFormContext();
+  const [mounted, setMounted] = React__default.useState(false);
+  const _a = props, { control = methods.control, onSubmit, children: children2, action, method = POST_REQUEST, headers, encType, onError, render, onSuccess, validateStatus } = _a, rest = __objRest(_a, ["control", "onSubmit", "children", "action", "method", "headers", "encType", "onError", "render", "onSuccess", "validateStatus"]);
+  const submit = (event) => __async(this, null, function* () {
+    let hasError = false;
+    let type = "";
+    yield control.handleSubmit((data) => __async(this, null, function* () {
+      const formData = new FormData();
+      let formDataJson = "";
+      try {
+        formDataJson = JSON.stringify(data);
+      } catch (_a2) {
+      }
+      for (const name of control._names.mount) {
+        formData.append(name, get(data, name));
+      }
+      if (onSubmit) {
+        onSubmit({
+          data,
+          event,
+          method,
+          formData,
+          formDataJson
+        });
+      }
+      if (action) {
+        try {
+          const shouldStringifySubmissionData = [
+            headers && headers["Content-Type"],
+            encType
+          ].some((value) => value && value.includes("json"));
+          const response = yield fetch(action, {
+            method,
+            headers: __spreadValues(__spreadValues({}, headers), encType ? { "Content-Type": encType } : {}),
+            body: shouldStringifySubmissionData ? formDataJson : formData
+          });
+          if (response && (validateStatus ? !validateStatus(response.status) : response.status < 200 || response.status >= 300)) {
+            hasError = true;
+            onError && onError({ response });
+            type = String(response.status);
+          } else {
+            onSuccess && onSuccess({ response });
+          }
+        } catch (error) {
+          hasError = true;
+          onError && onError({ error });
+        }
+      }
+    }))(event);
+    if (hasError && props.control) {
+      props.control._subjects.state.next({
+        isSubmitSuccessful: false
+      });
+      props.control.setError("root.server", {
+        type
+      });
+    }
+  });
+  React__default.useEffect(() => {
+    setMounted(true);
+  }, []);
+  return render ? React__default.createElement(React__default.Fragment, null, render({
+    submit
+  })) : React__default.createElement("form", __spreadValues({ noValidate: mounted, action, method, encType, onSubmit: submit }, rest), children2);
+}
+var appendErrors = (name, validateAllFieldCriteria, errors, type, message) => validateAllFieldCriteria ? __spreadProps(__spreadValues({}, errors[name]), {
+  types: __spreadProps(__spreadValues({}, errors[name] && errors[name].types ? errors[name].types : {}), {
+    [type]: message || true
+  })
+}) : {};
+const focusFieldBy = (fields, callback, fieldsNames) => {
+  for (const key of fieldsNames || Object.keys(fields)) {
+    const field = get(fields, key);
+    if (field) {
+      const _a = field, { _f } = _a, currentField = __objRest(_a, ["_f"]);
+      if (_f && callback(_f.name)) {
+        if (_f.ref.focus) {
+          _f.ref.focus();
+          break;
+        } else if (_f.refs && _f.refs[0].focus) {
+          _f.refs[0].focus();
+          break;
+        }
+      } else if (isObject(currentField)) {
+        focusFieldBy(currentField, callback);
+      }
+    }
+  }
+};
+var generateId = () => {
+  const d = typeof performance === "undefined" ? Date.now() : performance.now() * 1e3;
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r2 = (Math.random() * 16 + d) % 16 | 0;
+    return (c == "x" ? r2 : r2 & 3 | 8).toString(16);
+  });
+};
+var getFocusFieldName = (name, index2, options = {}) => options.shouldFocus || isUndefined(options.shouldFocus) ? options.focusName || `${name}.${isUndefined(options.focusIndex) ? index2 : options.focusIndex}.` : "";
+var getValidationModes = (mode) => ({
+  isOnSubmit: !mode || mode === VALIDATION_MODE.onSubmit,
+  isOnBlur: mode === VALIDATION_MODE.onBlur,
+  isOnChange: mode === VALIDATION_MODE.onChange,
+  isOnAll: mode === VALIDATION_MODE.all,
+  isOnTouch: mode === VALIDATION_MODE.onTouched
+});
+var isWatched = (name, _names, isBlurEvent) => !isBlurEvent && (_names.watchAll || _names.watch.has(name) || [..._names.watch].some((watchName) => name.startsWith(watchName) && /^\.\w+/.test(name.slice(watchName.length))));
+var updateFieldArrayRootError = (errors, error, name) => {
+  const fieldArrayErrors = compact(get(errors, name));
+  set(fieldArrayErrors, "root", error[name]);
+  set(errors, name, fieldArrayErrors);
+  return errors;
+};
+var isBoolean = (value) => typeof value === "boolean";
+var isFileInput = (element) => element.type === "file";
+var isFunction = (value) => typeof value === "function";
+var isHTMLElement = (value) => {
+  if (!isWeb) {
+    return false;
+  }
+  const owner = value ? value.ownerDocument : 0;
+  return value instanceof (owner && owner.defaultView ? owner.defaultView.HTMLElement : HTMLElement);
+};
+var isMessage = (value) => isString(value);
+var isRadioInput = (element) => element.type === "radio";
+var isRegex = (value) => value instanceof RegExp;
+const defaultResult = {
+  value: false,
+  isValid: false
+};
+const validResult = { value: true, isValid: true };
+var getCheckboxValue = (options) => {
+  if (Array.isArray(options)) {
+    if (options.length > 1) {
+      const values2 = options.filter((option) => option && option.checked && !option.disabled).map((option) => option.value);
+      return { value: values2, isValid: !!values2.length };
+    }
+    return options[0].checked && !options[0].disabled ? (
+      // @ts-expect-error expected to work in the browser
+      options[0].attributes && !isUndefined(options[0].attributes.value) ? isUndefined(options[0].value) || options[0].value === "" ? validResult : { value: options[0].value, isValid: true } : validResult
+    ) : defaultResult;
+  }
+  return defaultResult;
+};
+const defaultReturn = {
+  isValid: false,
+  value: null
+};
+var getRadioValue = (options) => Array.isArray(options) ? options.reduce((previous, option) => option && option.checked && !option.disabled ? {
+  isValid: true,
+  value: option.value
+} : previous, defaultReturn) : defaultReturn;
+function getValidateError(result, ref, type = "validate") {
+  if (isMessage(result) || Array.isArray(result) && result.every(isMessage) || isBoolean(result) && !result) {
+    return {
+      type,
+      message: isMessage(result) ? result : "",
+      ref
+    };
+  }
+}
+var getValueAndMessage = (validationData) => isObject(validationData) && !isRegex(validationData) ? validationData : {
+  value: validationData,
+  message: ""
+};
+var validateField = (field, formValues, validateAllFieldCriteria, shouldUseNativeValidation, isFieldArray) => __async(void 0, null, function* () {
+  const { ref, refs, required, maxLength, minLength, min: min2, max: max2, pattern, validate, name, valueAsNumber, mount, disabled } = field._f;
+  const inputValue = get(formValues, name);
+  if (!mount || disabled) {
+    return {};
+  }
+  const inputRef = refs ? refs[0] : ref;
+  const setCustomValidity = (message) => {
+    if (shouldUseNativeValidation && inputRef.reportValidity) {
+      inputRef.setCustomValidity(isBoolean(message) ? "" : message || "");
+      inputRef.reportValidity();
+    }
+  };
+  const error = {};
+  const isRadio = isRadioInput(ref);
+  const isCheckBox = isCheckBoxInput(ref);
+  const isRadioOrCheckbox2 = isRadio || isCheckBox;
+  const isEmpty2 = (valueAsNumber || isFileInput(ref)) && isUndefined(ref.value) && isUndefined(inputValue) || isHTMLElement(ref) && ref.value === "" || inputValue === "" || Array.isArray(inputValue) && !inputValue.length;
+  const appendErrorsCurry = appendErrors.bind(null, name, validateAllFieldCriteria, error);
+  const getMinMaxMessage = (exceedMax, maxLengthMessage, minLengthMessage, maxType = INPUT_VALIDATION_RULES.maxLength, minType = INPUT_VALIDATION_RULES.minLength) => {
+    const message = exceedMax ? maxLengthMessage : minLengthMessage;
+    error[name] = __spreadValues({
+      type: exceedMax ? maxType : minType,
+      message,
+      ref
+    }, appendErrorsCurry(exceedMax ? maxType : minType, message));
+  };
+  if (isFieldArray ? !Array.isArray(inputValue) || !inputValue.length : required && (!isRadioOrCheckbox2 && (isEmpty2 || isNullOrUndefined(inputValue)) || isBoolean(inputValue) && !inputValue || isCheckBox && !getCheckboxValue(refs).isValid || isRadio && !getRadioValue(refs).isValid)) {
+    const { value, message } = isMessage(required) ? { value: !!required, message: required } : getValueAndMessage(required);
+    if (value) {
+      error[name] = __spreadValues({
+        type: INPUT_VALIDATION_RULES.required,
+        message,
+        ref: inputRef
+      }, appendErrorsCurry(INPUT_VALIDATION_RULES.required, message));
+      if (!validateAllFieldCriteria) {
+        setCustomValidity(message);
+        return error;
+      }
+    }
+  }
+  if (!isEmpty2 && (!isNullOrUndefined(min2) || !isNullOrUndefined(max2))) {
+    let exceedMax;
+    let exceedMin;
+    const maxOutput = getValueAndMessage(max2);
+    const minOutput = getValueAndMessage(min2);
+    if (!isNullOrUndefined(inputValue) && !isNaN(inputValue)) {
+      const valueNumber = ref.valueAsNumber || (inputValue ? +inputValue : inputValue);
+      if (!isNullOrUndefined(maxOutput.value)) {
+        exceedMax = valueNumber > maxOutput.value;
+      }
+      if (!isNullOrUndefined(minOutput.value)) {
+        exceedMin = valueNumber < minOutput.value;
+      }
+    } else {
+      const valueDate = ref.valueAsDate || new Date(inputValue);
+      const convertTimeToDate = (time) => new Date(new Date().toDateString() + " " + time);
+      const isTime = ref.type == "time";
+      const isWeek = ref.type == "week";
+      if (isString(maxOutput.value) && inputValue) {
+        exceedMax = isTime ? convertTimeToDate(inputValue) > convertTimeToDate(maxOutput.value) : isWeek ? inputValue > maxOutput.value : valueDate > new Date(maxOutput.value);
+      }
+      if (isString(minOutput.value) && inputValue) {
+        exceedMin = isTime ? convertTimeToDate(inputValue) < convertTimeToDate(minOutput.value) : isWeek ? inputValue < minOutput.value : valueDate < new Date(minOutput.value);
+      }
+    }
+    if (exceedMax || exceedMin) {
+      getMinMaxMessage(!!exceedMax, maxOutput.message, minOutput.message, INPUT_VALIDATION_RULES.max, INPUT_VALIDATION_RULES.min);
+      if (!validateAllFieldCriteria) {
+        setCustomValidity(error[name].message);
+        return error;
+      }
+    }
+  }
+  if ((maxLength || minLength) && !isEmpty2 && (isString(inputValue) || isFieldArray && Array.isArray(inputValue))) {
+    const maxLengthOutput = getValueAndMessage(maxLength);
+    const minLengthOutput = getValueAndMessage(minLength);
+    const exceedMax = !isNullOrUndefined(maxLengthOutput.value) && inputValue.length > +maxLengthOutput.value;
+    const exceedMin = !isNullOrUndefined(minLengthOutput.value) && inputValue.length < +minLengthOutput.value;
+    if (exceedMax || exceedMin) {
+      getMinMaxMessage(exceedMax, maxLengthOutput.message, minLengthOutput.message);
+      if (!validateAllFieldCriteria) {
+        setCustomValidity(error[name].message);
+        return error;
+      }
+    }
+  }
+  if (pattern && !isEmpty2 && isString(inputValue)) {
+    const { value: patternValue, message } = getValueAndMessage(pattern);
+    if (isRegex(patternValue) && !inputValue.match(patternValue)) {
+      error[name] = __spreadValues({
+        type: INPUT_VALIDATION_RULES.pattern,
+        message,
+        ref
+      }, appendErrorsCurry(INPUT_VALIDATION_RULES.pattern, message));
+      if (!validateAllFieldCriteria) {
+        setCustomValidity(message);
+        return error;
+      }
+    }
+  }
+  if (validate) {
+    if (isFunction(validate)) {
+      const result = yield validate(inputValue, formValues);
+      const validateError = getValidateError(result, inputRef);
+      if (validateError) {
+        error[name] = __spreadValues(__spreadValues({}, validateError), appendErrorsCurry(INPUT_VALIDATION_RULES.validate, validateError.message));
+        if (!validateAllFieldCriteria) {
+          setCustomValidity(validateError.message);
+          return error;
+        }
+      }
+    } else if (isObject(validate)) {
+      let validationResult = {};
+      for (const key in validate) {
+        if (!isEmptyObject(validationResult) && !validateAllFieldCriteria) {
+          break;
+        }
+        const validateError = getValidateError(yield validate[key](inputValue, formValues), inputRef, key);
+        if (validateError) {
+          validationResult = __spreadValues(__spreadValues({}, validateError), appendErrorsCurry(key, validateError.message));
+          setCustomValidity(validateError.message);
+          if (validateAllFieldCriteria) {
+            error[name] = validationResult;
+          }
+        }
+      }
+      if (!isEmptyObject(validationResult)) {
+        error[name] = __spreadValues({
+          ref: inputRef
+        }, validationResult);
+        if (!validateAllFieldCriteria) {
+          return error;
+        }
+      }
+    }
+  }
+  setCustomValidity(true);
+  return error;
+});
+function append(data, value) {
+  return [...data, ...convertToArrayPayload(value)];
+}
+var fillEmptyArray = (value) => Array.isArray(value) ? value.map(() => void 0) : void 0;
+function insert(data, index2, value) {
+  return [
+    ...data.slice(0, index2),
+    ...convertToArrayPayload(value),
+    ...data.slice(index2)
+  ];
+}
+var moveArrayAt = (data, from2, to) => {
+  if (!Array.isArray(data)) {
+    return [];
+  }
+  if (isUndefined(data[to])) {
+    data[to] = void 0;
+  }
+  data.splice(to, 0, data.splice(from2, 1)[0]);
+  return data;
+};
+function prepend(data, value) {
+  return [...convertToArrayPayload(value), ...convertToArrayPayload(data)];
+}
+function removeAtIndexes(data, indexes) {
+  let i = 0;
+  const temp = [...data];
+  for (const index2 of indexes) {
+    temp.splice(index2 - i, 1);
+    i++;
+  }
+  return compact(temp).length ? temp : [];
+}
+var removeArrayAt = (data, index2) => isUndefined(index2) ? [] : removeAtIndexes(data, convertToArrayPayload(index2).sort((a, b) => a - b));
+var swapArrayAt = (data, indexA, indexB) => {
+  data[indexA] = [data[indexB], data[indexB] = data[indexA]][0];
+};
+function baseGet(object, updatePath) {
+  const length2 = updatePath.slice(0, -1).length;
+  let index2 = 0;
+  while (index2 < length2) {
+    object = isUndefined(object) ? index2++ : object[updatePath[index2++]];
+  }
+  return object;
+}
+function isEmptyArray(obj) {
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key) && !isUndefined(obj[key])) {
+      return false;
+    }
+  }
+  return true;
+}
+function unset(object, path) {
+  const paths = Array.isArray(path) ? path : isKey(path) ? [path] : stringToPath(path);
+  const childObject = paths.length === 1 ? object : baseGet(object, paths);
+  const index2 = paths.length - 1;
+  const key = paths[index2];
+  if (childObject) {
+    delete childObject[key];
+  }
+  if (index2 !== 0 && (isObject(childObject) && isEmptyObject(childObject) || Array.isArray(childObject) && isEmptyArray(childObject))) {
+    unset(object, paths.slice(0, -1));
+  }
+  return object;
+}
+var updateAt = (fieldValues, index2, value) => {
+  fieldValues[index2] = value;
+  return fieldValues;
+};
+function useFieldArray(props) {
+  const methods = useFormContext();
+  const { control = methods.control, name, keyName = "id", shouldUnregister } = props;
+  const [fields, setFields] = React__default.useState(control._getFieldArray(name));
+  const ids = React__default.useRef(control._getFieldArray(name).map(generateId));
+  const _fieldIds = React__default.useRef(fields);
+  const _name = React__default.useRef(name);
+  const _actioned = React__default.useRef(false);
+  _name.current = name;
+  _fieldIds.current = fields;
+  control._names.array.add(name);
+  props.rules && control.register(name, props.rules);
+  useSubscribe({
+    next: ({ values: values2, name: fieldArrayName }) => {
+      if (fieldArrayName === _name.current || !fieldArrayName) {
+        const fieldValues = get(values2, _name.current);
+        if (Array.isArray(fieldValues)) {
+          setFields(fieldValues);
+          ids.current = fieldValues.map(generateId);
+        }
+      }
+    },
+    subject: control._subjects.array
+  });
+  const updateValues = React__default.useCallback((updatedFieldArrayValues) => {
+    _actioned.current = true;
+    control._updateFieldArray(name, updatedFieldArrayValues);
+  }, [control, name]);
+  const append$12 = (value, options) => {
+    const appendValue = convertToArrayPayload(cloneObject(value));
+    const updatedFieldArrayValues = append(control._getFieldArray(name), appendValue);
+    control._names.focus = getFocusFieldName(name, updatedFieldArrayValues.length - 1, options);
+    ids.current = append(ids.current, appendValue.map(generateId));
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, append, {
+      argA: fillEmptyArray(value)
+    });
+  };
+  const prepend$1 = (value, options) => {
+    const prependValue = convertToArrayPayload(cloneObject(value));
+    const updatedFieldArrayValues = prepend(control._getFieldArray(name), prependValue);
+    control._names.focus = getFocusFieldName(name, 0, options);
+    ids.current = prepend(ids.current, prependValue.map(generateId));
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, prepend, {
+      argA: fillEmptyArray(value)
+    });
+  };
+  const remove = (index2) => {
+    const updatedFieldArrayValues = removeArrayAt(control._getFieldArray(name), index2);
+    ids.current = removeArrayAt(ids.current, index2);
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, removeArrayAt, {
+      argA: index2
+    });
+  };
+  const insert$1 = (index2, value, options) => {
+    const insertValue = convertToArrayPayload(cloneObject(value));
+    const updatedFieldArrayValues = insert(control._getFieldArray(name), index2, insertValue);
+    control._names.focus = getFocusFieldName(name, index2, options);
+    ids.current = insert(ids.current, index2, insertValue.map(generateId));
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, insert, {
+      argA: index2,
+      argB: fillEmptyArray(value)
+    });
+  };
+  const swap = (indexA, indexB) => {
+    const updatedFieldArrayValues = control._getFieldArray(name);
+    swapArrayAt(updatedFieldArrayValues, indexA, indexB);
+    swapArrayAt(ids.current, indexA, indexB);
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, swapArrayAt, {
+      argA: indexA,
+      argB: indexB
+    }, false);
+  };
+  const move = (from2, to) => {
+    const updatedFieldArrayValues = control._getFieldArray(name);
+    moveArrayAt(updatedFieldArrayValues, from2, to);
+    moveArrayAt(ids.current, from2, to);
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, moveArrayAt, {
+      argA: from2,
+      argB: to
+    }, false);
+  };
+  const update = (index2, value) => {
+    const updateValue = cloneObject(value);
+    const updatedFieldArrayValues = updateAt(control._getFieldArray(name), index2, updateValue);
+    ids.current = [...updatedFieldArrayValues].map((item, i) => !item || i === index2 ? generateId() : ids.current[i]);
+    updateValues(updatedFieldArrayValues);
+    setFields([...updatedFieldArrayValues]);
+    control._updateFieldArray(name, updatedFieldArrayValues, updateAt, {
+      argA: index2,
+      argB: updateValue
+    }, true, false);
+  };
+  const replace2 = (value) => {
+    const updatedFieldArrayValues = convertToArrayPayload(cloneObject(value));
+    ids.current = updatedFieldArrayValues.map(generateId);
+    updateValues([...updatedFieldArrayValues]);
+    setFields([...updatedFieldArrayValues]);
+    control._updateFieldArray(name, [...updatedFieldArrayValues], (data) => data, {}, true, false);
+  };
+  React__default.useEffect(() => {
+    control._state.action = false;
+    isWatched(name, control._names) && control._subjects.state.next(__spreadValues({}, control._formState));
+    if (_actioned.current && (!getValidationModes(control._options.mode).isOnSubmit || control._formState.isSubmitted)) {
+      if (control._options.resolver) {
+        control._executeSchema([name]).then((result) => {
+          const error = get(result.errors, name);
+          const existingError = get(control._formState.errors, name);
+          if (existingError ? !error && existingError.type || error && (existingError.type !== error.type || existingError.message !== error.message) : error && error.type) {
+            error ? set(control._formState.errors, name, error) : unset(control._formState.errors, name);
+            control._subjects.state.next({
+              errors: control._formState.errors
+            });
+          }
+        });
+      } else {
+        const field = get(control._fields, name);
+        if (field && field._f) {
+          validateField(field, control._formValues, control._options.criteriaMode === VALIDATION_MODE.all, control._options.shouldUseNativeValidation, true).then((error) => !isEmptyObject(error) && control._subjects.state.next({
+            errors: updateFieldArrayRootError(control._formState.errors, error, name)
+          }));
+        }
+      }
+    }
+    control._subjects.values.next({
+      name,
+      values: __spreadValues({}, control._formValues)
+    });
+    control._names.focus && focusFieldBy(control._fields, (key) => !!key && key.startsWith(control._names.focus || ""));
+    control._names.focus = "";
+    control._updateValid();
+  }, [fields, name, control]);
+  React__default.useEffect(() => {
+    !get(control._formValues, name) && control._updateFieldArray(name);
+    return () => {
+      (control._options.shouldUnregister || shouldUnregister) && control.unregister(name);
+    };
+  }, [name, control, keyName, shouldUnregister]);
+  return {
+    swap: React__default.useCallback(swap, [updateValues, name, control]),
+    move: React__default.useCallback(move, [updateValues, name, control]),
+    prepend: React__default.useCallback(prepend$1, [updateValues, name, control]),
+    append: React__default.useCallback(append$12, [updateValues, name, control]),
+    remove: React__default.useCallback(remove, [updateValues, name, control]),
+    insert: React__default.useCallback(insert$1, [updateValues, name, control]),
+    update: React__default.useCallback(update, [updateValues, name, control]),
+    replace: React__default.useCallback(replace2, [updateValues, name, control]),
+    fields: React__default.useMemo(() => fields.map((field, index2) => __spreadProps(__spreadValues({}, field), {
+      [keyName]: ids.current[index2] || generateId()
+    })), [fields, keyName])
+  };
+}
+function createSubject() {
+  let _observers = [];
+  const next2 = (value) => {
+    for (const observer of _observers) {
+      observer.next && observer.next(value);
+    }
+  };
+  const subscribe = (observer) => {
+    _observers.push(observer);
+    return {
+      unsubscribe: () => {
+        _observers = _observers.filter((o) => o !== observer);
+      }
+    };
+  };
+  const unsubscribe = () => {
+    _observers = [];
+  };
+  return {
+    get observers() {
+      return _observers;
+    },
+    next: next2,
+    subscribe,
+    unsubscribe
+  };
+}
+var isPrimitive = (value) => isNullOrUndefined(value) || !isObjectType(value);
+function deepEqual(object1, object2) {
+  if (isPrimitive(object1) || isPrimitive(object2)) {
+    return object1 === object2;
+  }
+  if (isDateObject(object1) && isDateObject(object2)) {
+    return object1.getTime() === object2.getTime();
+  }
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  for (const key of keys1) {
+    const val1 = object1[key];
+    if (!keys2.includes(key)) {
+      return false;
+    }
+    if (key !== "ref") {
+      const val2 = object2[key];
+      if (isDateObject(val1) && isDateObject(val2) || isObject(val1) && isObject(val2) || Array.isArray(val1) && Array.isArray(val2) ? !deepEqual(val1, val2) : val1 !== val2) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+var isMultipleSelect = (element) => element.type === `select-multiple`;
+var isRadioOrCheckbox = (ref) => isRadioInput(ref) || isCheckBoxInput(ref);
+var live = (ref) => isHTMLElement(ref) && ref.isConnected;
+var objectHasFunction = (data) => {
+  for (const key in data) {
+    if (isFunction(data[key])) {
+      return true;
+    }
+  }
+  return false;
+};
+function markFieldsDirty(data, fields = {}) {
+  const isParentNodeArray = Array.isArray(data);
+  if (isObject(data) || isParentNodeArray) {
+    for (const key in data) {
+      if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
+        fields[key] = Array.isArray(data[key]) ? [] : {};
+        markFieldsDirty(data[key], fields[key]);
+      } else if (!isNullOrUndefined(data[key])) {
+        fields[key] = true;
+      }
+    }
+  }
+  return fields;
+}
+function getDirtyFieldsFromDefaultValues(data, formValues, dirtyFieldsFromValues) {
+  const isParentNodeArray = Array.isArray(data);
+  if (isObject(data) || isParentNodeArray) {
+    for (const key in data) {
+      if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
+        if (isUndefined(formValues) || isPrimitive(dirtyFieldsFromValues[key])) {
+          dirtyFieldsFromValues[key] = Array.isArray(data[key]) ? markFieldsDirty(data[key], []) : __spreadValues({}, markFieldsDirty(data[key]));
+        } else {
+          getDirtyFieldsFromDefaultValues(data[key], isNullOrUndefined(formValues) ? {} : formValues[key], dirtyFieldsFromValues[key]);
+        }
+      } else {
+        dirtyFieldsFromValues[key] = !deepEqual(data[key], formValues[key]);
+      }
+    }
+  }
+  return dirtyFieldsFromValues;
+}
+var getDirtyFields = (defaultValues, formValues) => getDirtyFieldsFromDefaultValues(defaultValues, formValues, markFieldsDirty(formValues));
+var getFieldValueAs = (value, { valueAsNumber, valueAsDate, setValueAs }) => isUndefined(value) ? value : valueAsNumber ? value === "" ? NaN : value ? +value : value : valueAsDate && isString(value) ? new Date(value) : setValueAs ? setValueAs(value) : value;
+function getFieldValue(_f) {
+  const ref = _f.ref;
+  if (_f.refs ? _f.refs.every((ref2) => ref2.disabled) : ref.disabled) {
+    return;
+  }
+  if (isFileInput(ref)) {
+    return ref.files;
+  }
+  if (isRadioInput(ref)) {
+    return getRadioValue(_f.refs).value;
+  }
+  if (isMultipleSelect(ref)) {
+    return [...ref.selectedOptions].map(({ value }) => value);
+  }
+  if (isCheckBoxInput(ref)) {
+    return getCheckboxValue(_f.refs).value;
+  }
+  return getFieldValueAs(isUndefined(ref.value) ? _f.ref.value : ref.value, _f);
+}
+var getResolverOptions = (fieldsNames, _fields, criteriaMode, shouldUseNativeValidation) => {
+  const fields = {};
+  for (const name of fieldsNames) {
+    const field = get(_fields, name);
+    field && set(fields, name, field._f);
+  }
+  return {
+    criteriaMode,
+    names: [...fieldsNames],
+    fields,
+    shouldUseNativeValidation
+  };
+};
+var getRuleValue = (rule) => isUndefined(rule) ? rule : isRegex(rule) ? rule.source : isObject(rule) ? isRegex(rule.value) ? rule.value.source : rule.value : rule;
+var hasValidation = (options) => options.mount && (options.required || options.min || options.max || options.maxLength || options.minLength || options.pattern || options.validate);
+function schemaErrorLookup(errors, _fields, name) {
+  const error = get(errors, name);
+  if (error || isKey(name)) {
+    return {
+      error,
+      name
+    };
+  }
+  const names = name.split(".");
+  while (names.length) {
+    const fieldName = names.join(".");
+    const field = get(_fields, fieldName);
+    const foundError = get(errors, fieldName);
+    if (field && !Array.isArray(field) && name !== fieldName) {
+      return { name };
+    }
+    if (foundError && foundError.type) {
+      return {
+        name: fieldName,
+        error: foundError
+      };
+    }
+    names.pop();
+  }
+  return {
+    name
+  };
+}
+var skipValidation = (isBlurEvent, isTouched, isSubmitted, reValidateMode, mode) => {
+  if (mode.isOnAll) {
+    return false;
+  } else if (!isSubmitted && mode.isOnTouch) {
+    return !(isTouched || isBlurEvent);
+  } else if (isSubmitted ? reValidateMode.isOnBlur : mode.isOnBlur) {
+    return !isBlurEvent;
+  } else if (isSubmitted ? reValidateMode.isOnChange : mode.isOnChange) {
+    return isBlurEvent;
+  }
+  return true;
+};
+var unsetEmptyArray = (ref, name) => !compact(get(ref, name)).length && unset(ref, name);
+const defaultOptions = {
+  mode: VALIDATION_MODE.onSubmit,
+  reValidateMode: VALIDATION_MODE.onChange,
+  shouldFocusError: true
+};
+function createFormControl(props = {}, flushRootRender) {
+  let _options = __spreadValues(__spreadValues({}, defaultOptions), props);
+  let _formState = {
+    submitCount: 0,
+    isDirty: false,
+    isLoading: isFunction(_options.defaultValues),
+    isValidating: false,
+    isSubmitted: false,
+    isSubmitting: false,
+    isSubmitSuccessful: false,
+    isValid: false,
+    touchedFields: {},
+    dirtyFields: {},
+    errors: {}
+  };
+  let _fields = {};
+  let _defaultValues = isObject(_options.defaultValues) || isObject(_options.values) ? cloneObject(_options.defaultValues || _options.values) || {} : {};
+  let _formValues = _options.shouldUnregister ? {} : cloneObject(_defaultValues);
+  let _state = {
+    action: false,
+    mount: false,
+    watch: false
+  };
+  let _names = {
+    mount: /* @__PURE__ */ new Set(),
+    unMount: /* @__PURE__ */ new Set(),
+    array: /* @__PURE__ */ new Set(),
+    watch: /* @__PURE__ */ new Set()
+  };
+  let delayErrorCallback;
+  let timer = 0;
+  const _proxyFormState = {
+    isDirty: false,
+    dirtyFields: false,
+    touchedFields: false,
+    isValidating: false,
+    isValid: false,
+    errors: false
+  };
+  const _subjects = {
+    values: createSubject(),
+    array: createSubject(),
+    state: createSubject()
+  };
+  const shouldCaptureDirtyFields = props.resetOptions && props.resetOptions.keepDirtyValues;
+  const validationModeBeforeSubmit = getValidationModes(_options.mode);
+  const validationModeAfterSubmit = getValidationModes(_options.reValidateMode);
+  const shouldDisplayAllAssociatedErrors = _options.criteriaMode === VALIDATION_MODE.all;
+  const debounce2 = (callback) => (wait) => {
+    clearTimeout(timer);
+    timer = setTimeout(callback, wait);
+  };
+  const _updateValid = (shouldUpdateValid) => __async(this, null, function* () {
+    if (_proxyFormState.isValid || shouldUpdateValid) {
+      const isValid = _options.resolver ? isEmptyObject((yield _executeSchema()).errors) : yield executeBuiltInValidation(_fields, true);
+      if (isValid !== _formState.isValid) {
+        _subjects.state.next({
+          isValid
+        });
+      }
+    }
+  });
+  const _updateIsValidating = (value) => _proxyFormState.isValidating && _subjects.state.next({
+    isValidating: value
+  });
+  const _updateFieldArray = (name, values2 = [], method, args, shouldSetValues = true, shouldUpdateFieldsAndState = true) => {
+    if (args && method) {
+      _state.action = true;
+      if (shouldUpdateFieldsAndState && Array.isArray(get(_fields, name))) {
+        const fieldValues = method(get(_fields, name), args.argA, args.argB);
+        shouldSetValues && set(_fields, name, fieldValues);
+      }
+      if (shouldUpdateFieldsAndState && Array.isArray(get(_formState.errors, name))) {
+        const errors = method(get(_formState.errors, name), args.argA, args.argB);
+        shouldSetValues && set(_formState.errors, name, errors);
+        unsetEmptyArray(_formState.errors, name);
+      }
+      if (_proxyFormState.touchedFields && shouldUpdateFieldsAndState && Array.isArray(get(_formState.touchedFields, name))) {
+        const touchedFields = method(get(_formState.touchedFields, name), args.argA, args.argB);
+        shouldSetValues && set(_formState.touchedFields, name, touchedFields);
+      }
+      if (_proxyFormState.dirtyFields) {
+        _formState.dirtyFields = getDirtyFields(_defaultValues, _formValues);
+      }
+      _subjects.state.next({
+        name,
+        isDirty: _getDirty(name, values2),
+        dirtyFields: _formState.dirtyFields,
+        errors: _formState.errors,
+        isValid: _formState.isValid
+      });
+    } else {
+      set(_formValues, name, values2);
+    }
+  };
+  const updateErrors = (name, error) => {
+    set(_formState.errors, name, error);
+    _subjects.state.next({
+      errors: _formState.errors
+    });
+  };
+  const updateValidAndValue = (name, shouldSkipSetValueAs, value, ref) => {
+    const field = get(_fields, name);
+    if (field) {
+      const defaultValue = get(_formValues, name, isUndefined(value) ? get(_defaultValues, name) : value);
+      isUndefined(defaultValue) || ref && ref.defaultChecked || shouldSkipSetValueAs ? set(_formValues, name, shouldSkipSetValueAs ? defaultValue : getFieldValue(field._f)) : setFieldValue(name, defaultValue);
+      _state.mount && _updateValid();
+    }
+  };
+  const updateTouchAndDirty = (name, fieldValue, isBlurEvent, shouldDirty, shouldRender) => {
+    let shouldUpdateField = false;
+    let isPreviousDirty = false;
+    const output = {
+      name
+    };
+    if (!isBlurEvent || shouldDirty) {
+      if (_proxyFormState.isDirty) {
+        isPreviousDirty = _formState.isDirty;
+        _formState.isDirty = output.isDirty = _getDirty();
+        shouldUpdateField = isPreviousDirty !== output.isDirty;
+      }
+      const isCurrentFieldPristine = deepEqual(get(_defaultValues, name), fieldValue);
+      isPreviousDirty = get(_formState.dirtyFields, name);
+      isCurrentFieldPristine ? unset(_formState.dirtyFields, name) : set(_formState.dirtyFields, name, true);
+      output.dirtyFields = _formState.dirtyFields;
+      shouldUpdateField = shouldUpdateField || _proxyFormState.dirtyFields && isPreviousDirty !== !isCurrentFieldPristine;
+    }
+    if (isBlurEvent) {
+      const isPreviousFieldTouched = get(_formState.touchedFields, name);
+      if (!isPreviousFieldTouched) {
+        set(_formState.touchedFields, name, isBlurEvent);
+        output.touchedFields = _formState.touchedFields;
+        shouldUpdateField = shouldUpdateField || _proxyFormState.touchedFields && isPreviousFieldTouched !== isBlurEvent;
+      }
+    }
+    shouldUpdateField && shouldRender && _subjects.state.next(output);
+    return shouldUpdateField ? output : {};
+  };
+  const shouldRenderByError = (name, isValid, error, fieldState) => {
+    const previousFieldError = get(_formState.errors, name);
+    const shouldUpdateValid = _proxyFormState.isValid && isBoolean(isValid) && _formState.isValid !== isValid;
+    if (props.delayError && error) {
+      delayErrorCallback = debounce2(() => updateErrors(name, error));
+      delayErrorCallback(props.delayError);
+    } else {
+      clearTimeout(timer);
+      delayErrorCallback = null;
+      error ? set(_formState.errors, name, error) : unset(_formState.errors, name);
+    }
+    if ((error ? !deepEqual(previousFieldError, error) : previousFieldError) || !isEmptyObject(fieldState) || shouldUpdateValid) {
+      const updatedFormState = __spreadProps(__spreadValues(__spreadValues({}, fieldState), shouldUpdateValid && isBoolean(isValid) ? { isValid } : {}), {
+        errors: _formState.errors,
+        name
+      });
+      _formState = __spreadValues(__spreadValues({}, _formState), updatedFormState);
+      _subjects.state.next(updatedFormState);
+    }
+    _updateIsValidating(false);
+  };
+  const _executeSchema = (name) => __async(this, null, function* () {
+    return _options.resolver(_formValues, _options.context, getResolverOptions(name || _names.mount, _fields, _options.criteriaMode, _options.shouldUseNativeValidation));
+  });
+  const executeSchemaAndUpdateState = (names) => __async(this, null, function* () {
+    const { errors } = yield _executeSchema();
+    if (names) {
+      for (const name of names) {
+        const error = get(errors, name);
+        error ? set(_formState.errors, name, error) : unset(_formState.errors, name);
+      }
+    } else {
+      _formState.errors = errors;
+    }
+    return errors;
+  });
+  const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields, shouldOnlyCheckValid, context = {
+    valid: true
+  }) {
+    for (const name in fields) {
+      const field = fields[name];
+      if (field) {
+        const _a = field, { _f } = _a, fieldValue = __objRest(_a, ["_f"]);
+        if (_f) {
+          const isFieldArrayRoot = _names.array.has(_f.name);
+          const fieldError = yield validateField(field, _formValues, shouldDisplayAllAssociatedErrors, _options.shouldUseNativeValidation && !shouldOnlyCheckValid, isFieldArrayRoot);
+          if (fieldError[_f.name]) {
+            context.valid = false;
+            if (shouldOnlyCheckValid) {
+              break;
+            }
+          }
+          !shouldOnlyCheckValid && (get(fieldError, _f.name) ? isFieldArrayRoot ? updateFieldArrayRootError(_formState.errors, fieldError, _f.name) : set(_formState.errors, _f.name, fieldError[_f.name]) : unset(_formState.errors, _f.name));
+        }
+        fieldValue && (yield executeBuiltInValidation(fieldValue, shouldOnlyCheckValid, context));
+      }
+    }
+    return context.valid;
+  });
+  const _removeUnmounted = () => {
+    for (const name of _names.unMount) {
+      const field = get(_fields, name);
+      field && (field._f.refs ? field._f.refs.every((ref) => !live(ref)) : !live(field._f.ref)) && unregister(name);
+    }
+    _names.unMount = /* @__PURE__ */ new Set();
+  };
+  const _getDirty = (name, data) => (name && data && set(_formValues, name, data), !deepEqual(getValues(), _defaultValues));
+  const _getWatch = (names, defaultValue, isGlobal) => generateWatchOutput(names, _names, __spreadValues({}, _state.mount ? _formValues : isUndefined(defaultValue) ? _defaultValues : isString(names) ? { [names]: defaultValue } : defaultValue), isGlobal, defaultValue);
+  const _getFieldArray = (name) => compact(get(_state.mount ? _formValues : _defaultValues, name, props.shouldUnregister ? get(_defaultValues, name, []) : []));
+  const setFieldValue = (name, value, options = {}) => {
+    const field = get(_fields, name);
+    let fieldValue = value;
+    if (field) {
+      const fieldReference = field._f;
+      if (fieldReference) {
+        !fieldReference.disabled && set(_formValues, name, getFieldValueAs(value, fieldReference));
+        fieldValue = isHTMLElement(fieldReference.ref) && isNullOrUndefined(value) ? "" : value;
+        if (isMultipleSelect(fieldReference.ref)) {
+          [...fieldReference.ref.options].forEach((optionRef) => optionRef.selected = fieldValue.includes(optionRef.value));
+        } else if (fieldReference.refs) {
+          if (isCheckBoxInput(fieldReference.ref)) {
+            fieldReference.refs.length > 1 ? fieldReference.refs.forEach((checkboxRef) => (!checkboxRef.defaultChecked || !checkboxRef.disabled) && (checkboxRef.checked = Array.isArray(fieldValue) ? !!fieldValue.find((data) => data === checkboxRef.value) : fieldValue === checkboxRef.value)) : fieldReference.refs[0] && (fieldReference.refs[0].checked = !!fieldValue);
+          } else {
+            fieldReference.refs.forEach((radioRef) => radioRef.checked = radioRef.value === fieldValue);
+          }
+        } else if (isFileInput(fieldReference.ref)) {
+          fieldReference.ref.value = "";
+        } else {
+          fieldReference.ref.value = fieldValue;
+          if (!fieldReference.ref.type) {
+            _subjects.values.next({
+              name,
+              values: __spreadValues({}, _formValues)
+            });
+          }
+        }
+      }
+    }
+    (options.shouldDirty || options.shouldTouch) && updateTouchAndDirty(name, fieldValue, options.shouldTouch, options.shouldDirty, true);
+    options.shouldValidate && trigger(name);
+  };
+  const setValues = (name, value, options) => {
+    for (const fieldKey in value) {
+      const fieldValue = value[fieldKey];
+      const fieldName = `${name}.${fieldKey}`;
+      const field = get(_fields, fieldName);
+      (_names.array.has(name) || !isPrimitive(fieldValue) || field && !field._f) && !isDateObject(fieldValue) ? setValues(fieldName, fieldValue, options) : setFieldValue(fieldName, fieldValue, options);
+    }
+  };
+  const setValue = (name, value, options = {}) => {
+    const field = get(_fields, name);
+    const isFieldArray = _names.array.has(name);
+    const cloneValue = cloneObject(value);
+    set(_formValues, name, cloneValue);
+    if (isFieldArray) {
+      _subjects.array.next({
+        name,
+        values: __spreadValues({}, _formValues)
+      });
+      if ((_proxyFormState.isDirty || _proxyFormState.dirtyFields) && options.shouldDirty) {
+        _subjects.state.next({
+          name,
+          dirtyFields: getDirtyFields(_defaultValues, _formValues),
+          isDirty: _getDirty(name, cloneValue)
+        });
+      }
+    } else {
+      field && !field._f && !isNullOrUndefined(cloneValue) ? setValues(name, cloneValue, options) : setFieldValue(name, cloneValue, options);
+    }
+    isWatched(name, _names) && _subjects.state.next(__spreadValues({}, _formState));
+    _subjects.values.next({
+      name,
+      values: __spreadValues({}, _formValues)
+    });
+    !_state.mount && flushRootRender();
+  };
+  const onChange = (event) => __async(this, null, function* () {
+    const target = event.target;
+    let name = target.name;
+    let isFieldValueUpdated = true;
+    const field = get(_fields, name);
+    const getCurrentFieldValue = () => target.type ? getFieldValue(field._f) : getEventValue(event);
+    if (field) {
+      let error;
+      let isValid;
+      const fieldValue = getCurrentFieldValue();
+      const isBlurEvent = event.type === EVENTS.BLUR || event.type === EVENTS.FOCUS_OUT;
+      const shouldSkipValidation = !hasValidation(field._f) && !_options.resolver && !get(_formState.errors, name) && !field._f.deps || skipValidation(isBlurEvent, get(_formState.touchedFields, name), _formState.isSubmitted, validationModeAfterSubmit, validationModeBeforeSubmit);
+      const watched = isWatched(name, _names, isBlurEvent);
+      set(_formValues, name, fieldValue);
+      if (isBlurEvent) {
+        field._f.onBlur && field._f.onBlur(event);
+        delayErrorCallback && delayErrorCallback(0);
+      } else if (field._f.onChange) {
+        field._f.onChange(event);
+      }
+      const fieldState = updateTouchAndDirty(name, fieldValue, isBlurEvent, false);
+      const shouldRender = !isEmptyObject(fieldState) || watched;
+      !isBlurEvent && _subjects.values.next({
+        name,
+        type: event.type,
+        values: __spreadValues({}, _formValues)
+      });
+      if (shouldSkipValidation) {
+        _proxyFormState.isValid && _updateValid();
+        return shouldRender && _subjects.state.next(__spreadValues({ name }, watched ? {} : fieldState));
+      }
+      !isBlurEvent && watched && _subjects.state.next(__spreadValues({}, _formState));
+      _updateIsValidating(true);
+      if (_options.resolver) {
+        const { errors } = yield _executeSchema([name]);
+        const previousErrorLookupResult = schemaErrorLookup(_formState.errors, _fields, name);
+        const errorLookupResult = schemaErrorLookup(errors, _fields, previousErrorLookupResult.name || name);
+        error = errorLookupResult.error;
+        name = errorLookupResult.name;
+        isValid = isEmptyObject(errors);
+      } else {
+        error = (yield validateField(field, _formValues, shouldDisplayAllAssociatedErrors, _options.shouldUseNativeValidation))[name];
+        isFieldValueUpdated = isNaN(fieldValue) || fieldValue === get(_formValues, name, fieldValue);
+        if (isFieldValueUpdated) {
+          if (error) {
+            isValid = false;
+          } else if (_proxyFormState.isValid) {
+            isValid = yield executeBuiltInValidation(_fields, true);
+          }
+        }
+      }
+      if (isFieldValueUpdated) {
+        field._f.deps && trigger(field._f.deps);
+        shouldRenderByError(name, isValid, error, fieldState);
+      }
+    }
+  });
+  const trigger = (_0, ..._1) => __async(this, [_0, ..._1], function* (name, options = {}) {
+    let isValid;
+    let validationResult;
+    const fieldNames = convertToArrayPayload(name);
+    _updateIsValidating(true);
+    if (_options.resolver) {
+      const errors = yield executeSchemaAndUpdateState(isUndefined(name) ? name : fieldNames);
+      isValid = isEmptyObject(errors);
+      validationResult = name ? !fieldNames.some((name2) => get(errors, name2)) : isValid;
+    } else if (name) {
+      validationResult = (yield Promise.all(fieldNames.map((fieldName) => __async(this, null, function* () {
+        const field = get(_fields, fieldName);
+        return yield executeBuiltInValidation(field && field._f ? { [fieldName]: field } : field);
+      })))).every(Boolean);
+      !(!validationResult && !_formState.isValid) && _updateValid();
+    } else {
+      validationResult = isValid = yield executeBuiltInValidation(_fields);
+    }
+    _subjects.state.next(__spreadProps(__spreadValues(__spreadValues({}, !isString(name) || _proxyFormState.isValid && isValid !== _formState.isValid ? {} : { name }), _options.resolver || !name ? { isValid } : {}), {
+      errors: _formState.errors,
+      isValidating: false
+    }));
+    options.shouldFocus && !validationResult && focusFieldBy(_fields, (key) => key && get(_formState.errors, key), name ? fieldNames : _names.mount);
+    return validationResult;
+  });
+  const getValues = (fieldNames) => {
+    const values2 = __spreadValues(__spreadValues({}, _defaultValues), _state.mount ? _formValues : {});
+    return isUndefined(fieldNames) ? values2 : isString(fieldNames) ? get(values2, fieldNames) : fieldNames.map((name) => get(values2, name));
+  };
+  const getFieldState = (name, formState) => ({
+    invalid: !!get((formState || _formState).errors, name),
+    isDirty: !!get((formState || _formState).dirtyFields, name),
+    isTouched: !!get((formState || _formState).touchedFields, name),
+    error: get((formState || _formState).errors, name)
+  });
+  const clearErrors = (name) => {
+    name && convertToArrayPayload(name).forEach((inputName) => unset(_formState.errors, inputName));
+    _subjects.state.next({
+      errors: name ? _formState.errors : {}
+    });
+  };
+  const setError = (name, error, options) => {
+    const ref = (get(_fields, name, { _f: {} })._f || {}).ref;
+    set(_formState.errors, name, __spreadProps(__spreadValues({}, error), {
+      ref
+    }));
+    _subjects.state.next({
+      name,
+      errors: _formState.errors,
+      isValid: false
+    });
+    options && options.shouldFocus && ref && ref.focus && ref.focus();
+  };
+  const watch = (name, defaultValue) => isFunction(name) ? _subjects.values.subscribe({
+    next: (payload) => name(_getWatch(void 0, defaultValue), payload)
+  }) : _getWatch(name, defaultValue, true);
+  const unregister = (name, options = {}) => {
+    for (const fieldName of name ? convertToArrayPayload(name) : _names.mount) {
+      _names.mount.delete(fieldName);
+      _names.array.delete(fieldName);
+      if (!options.keepValue) {
+        unset(_fields, fieldName);
+        unset(_formValues, fieldName);
+      }
+      !options.keepError && unset(_formState.errors, fieldName);
+      !options.keepDirty && unset(_formState.dirtyFields, fieldName);
+      !options.keepTouched && unset(_formState.touchedFields, fieldName);
+      !_options.shouldUnregister && !options.keepDefaultValue && unset(_defaultValues, fieldName);
+    }
+    _subjects.values.next({
+      values: __spreadValues({}, _formValues)
+    });
+    _subjects.state.next(__spreadValues(__spreadValues({}, _formState), !options.keepDirty ? {} : { isDirty: _getDirty() }));
+    !options.keepIsValid && _updateValid();
+  };
+  const register = (name, options = {}) => {
+    let field = get(_fields, name);
+    const disabledIsDefined = isBoolean(options.disabled);
+    set(_fields, name, __spreadProps(__spreadValues({}, field || {}), {
+      _f: __spreadValues(__spreadProps(__spreadValues({}, field && field._f ? field._f : { ref: { name } }), {
+        name,
+        mount: true
+      }), options)
+    }));
+    _names.mount.add(name);
+    if (!isUndefined(options.value)) {
+      set(_formValues, name, options.value);
+    }
+    field ? disabledIsDefined && set(_formValues, name, options.disabled ? void 0 : get(_formValues, name, getFieldValue(field._f))) : updateValidAndValue(name, true, options.value);
+    return __spreadProps(__spreadValues(__spreadValues({}, disabledIsDefined ? { disabled: options.disabled } : {}), _options.progressive ? {
+      required: !!options.required,
+      min: getRuleValue(options.min),
+      max: getRuleValue(options.max),
+      minLength: getRuleValue(options.minLength),
+      maxLength: getRuleValue(options.maxLength),
+      pattern: getRuleValue(options.pattern)
+    } : {}), {
+      name,
+      onChange,
+      onBlur: onChange,
+      ref: (ref) => {
+        if (ref) {
+          register(name, options);
+          field = get(_fields, name);
+          const fieldRef = isUndefined(ref.value) ? ref.querySelectorAll ? ref.querySelectorAll("input,select,textarea")[0] || ref : ref : ref;
+          const radioOrCheckbox = isRadioOrCheckbox(fieldRef);
+          const refs = field._f.refs || [];
+          if (radioOrCheckbox ? refs.find((option) => option === fieldRef) : fieldRef === field._f.ref) {
+            return;
+          }
+          set(_fields, name, {
+            _f: __spreadValues(__spreadValues({}, field._f), radioOrCheckbox ? {
+              refs: [
+                ...refs.filter(live),
+                fieldRef,
+                ...Array.isArray(get(_defaultValues, name)) ? [{}] : []
+              ],
+              ref: { type: fieldRef.type, name }
+            } : { ref: fieldRef })
+          });
+          updateValidAndValue(name, false, void 0, fieldRef);
+        } else {
+          field = get(_fields, name, {});
+          if (field._f) {
+            field._f.mount = false;
+          }
+          (_options.shouldUnregister || options.shouldUnregister) && !(isNameInFieldArray(_names.array, name) && _state.action) && _names.unMount.add(name);
+        }
+      }
+    });
+  };
+  const _focusError = () => _options.shouldFocusError && focusFieldBy(_fields, (key) => key && get(_formState.errors, key), _names.mount);
+  const handleSubmit = (onValid, onInvalid) => (e) => __async(this, null, function* () {
+    if (e) {
+      e.preventDefault && e.preventDefault();
+      e.persist && e.persist();
+    }
+    let fieldValues = cloneObject(_formValues);
+    _subjects.state.next({
+      isSubmitting: true
+    });
+    if (_options.resolver) {
+      const { errors, values: values2 } = yield _executeSchema();
+      _formState.errors = errors;
+      fieldValues = values2;
+    } else {
+      yield executeBuiltInValidation(_fields);
+    }
+    unset(_formState.errors, "root");
+    if (isEmptyObject(_formState.errors)) {
+      _subjects.state.next({
+        errors: {}
+      });
+      yield onValid(fieldValues, e);
+    } else {
+      if (onInvalid) {
+        yield onInvalid(__spreadValues({}, _formState.errors), e);
+      }
+      _focusError();
+      setTimeout(_focusError);
+    }
+    _subjects.state.next({
+      isSubmitted: true,
+      isSubmitting: false,
+      isSubmitSuccessful: isEmptyObject(_formState.errors),
+      submitCount: _formState.submitCount + 1,
+      errors: _formState.errors
+    });
+  });
+  const resetField = (name, options = {}) => {
+    if (get(_fields, name)) {
+      if (isUndefined(options.defaultValue)) {
+        setValue(name, get(_defaultValues, name));
+      } else {
+        setValue(name, options.defaultValue);
+        set(_defaultValues, name, options.defaultValue);
+      }
+      if (!options.keepTouched) {
+        unset(_formState.touchedFields, name);
+      }
+      if (!options.keepDirty) {
+        unset(_formState.dirtyFields, name);
+        _formState.isDirty = options.defaultValue ? _getDirty(name, get(_defaultValues, name)) : _getDirty();
+      }
+      if (!options.keepError) {
+        unset(_formState.errors, name);
+        _proxyFormState.isValid && _updateValid();
+      }
+      _subjects.state.next(__spreadValues({}, _formState));
+    }
+  };
+  const _reset = (formValues, keepStateOptions = {}) => {
+    const updatedValues = formValues || _defaultValues;
+    const cloneUpdatedValues = cloneObject(updatedValues);
+    const values2 = formValues && !isEmptyObject(formValues) ? cloneUpdatedValues : _defaultValues;
+    if (!keepStateOptions.keepDefaultValues) {
+      _defaultValues = updatedValues;
+    }
+    if (!keepStateOptions.keepValues) {
+      if (keepStateOptions.keepDirtyValues || shouldCaptureDirtyFields) {
+        for (const fieldName of _names.mount) {
+          get(_formState.dirtyFields, fieldName) ? set(values2, fieldName, get(_formValues, fieldName)) : setValue(fieldName, get(values2, fieldName));
+        }
+      } else {
+        if (isWeb && isUndefined(formValues)) {
+          for (const name of _names.mount) {
+            const field = get(_fields, name);
+            if (field && field._f) {
+              const fieldReference = Array.isArray(field._f.refs) ? field._f.refs[0] : field._f.ref;
+              if (isHTMLElement(fieldReference)) {
+                const form = fieldReference.closest("form");
+                if (form) {
+                  form.reset();
+                  break;
+                }
+              }
+            }
+          }
+        }
+        _fields = {};
+      }
+      _formValues = props.shouldUnregister ? keepStateOptions.keepDefaultValues ? cloneObject(_defaultValues) : {} : cloneObject(values2);
+      _subjects.array.next({
+        values: __spreadValues({}, values2)
+      });
+      _subjects.values.next({
+        values: __spreadValues({}, values2)
+      });
+    }
+    _names = {
+      mount: /* @__PURE__ */ new Set(),
+      unMount: /* @__PURE__ */ new Set(),
+      array: /* @__PURE__ */ new Set(),
+      watch: /* @__PURE__ */ new Set(),
+      watchAll: false,
+      focus: ""
+    };
+    !_state.mount && flushRootRender();
+    _state.mount = !_proxyFormState.isValid || !!keepStateOptions.keepIsValid;
+    _state.watch = !!props.shouldUnregister;
+    _subjects.state.next({
+      submitCount: keepStateOptions.keepSubmitCount ? _formState.submitCount : 0,
+      isDirty: keepStateOptions.keepDirty ? _formState.isDirty : !!(keepStateOptions.keepDefaultValues && !deepEqual(formValues, _defaultValues)),
+      isSubmitted: keepStateOptions.keepIsSubmitted ? _formState.isSubmitted : false,
+      dirtyFields: keepStateOptions.keepDirtyValues ? _formState.dirtyFields : keepStateOptions.keepDefaultValues && formValues ? getDirtyFields(_defaultValues, formValues) : {},
+      touchedFields: keepStateOptions.keepTouched ? _formState.touchedFields : {},
+      errors: keepStateOptions.keepErrors ? _formState.errors : {},
+      isSubmitting: false,
+      isSubmitSuccessful: false
+    });
+  };
+  const reset = (formValues, keepStateOptions) => _reset(isFunction(formValues) ? formValues(_formValues) : formValues, keepStateOptions);
+  const setFocus = (name, options = {}) => {
+    const field = get(_fields, name);
+    const fieldReference = field && field._f;
+    if (fieldReference) {
+      const fieldRef = fieldReference.refs ? fieldReference.refs[0] : fieldReference.ref;
+      if (fieldRef.focus) {
+        fieldRef.focus();
+        options.shouldSelect && fieldRef.select();
+      }
+    }
+  };
+  const _updateFormState = (updatedFormState) => {
+    _formState = __spreadValues(__spreadValues({}, _formState), updatedFormState);
+  };
+  const _resetDefaultValues = () => isFunction(_options.defaultValues) && _options.defaultValues().then((values2) => {
+    reset(values2, _options.resetOptions);
+    _subjects.state.next({
+      isLoading: false
+    });
+  });
+  return {
+    control: {
+      register,
+      unregister,
+      getFieldState,
+      handleSubmit,
+      setError,
+      _executeSchema,
+      _getWatch,
+      _getDirty,
+      _updateValid,
+      _removeUnmounted,
+      _updateFieldArray,
+      _getFieldArray,
+      _reset,
+      _resetDefaultValues,
+      _updateFormState,
+      _subjects,
+      _proxyFormState,
+      get _fields() {
+        return _fields;
+      },
+      get _formValues() {
+        return _formValues;
+      },
+      get _state() {
+        return _state;
+      },
+      set _state(value) {
+        _state = value;
+      },
+      get _defaultValues() {
+        return _defaultValues;
+      },
+      get _names() {
+        return _names;
+      },
+      set _names(value) {
+        _names = value;
+      },
+      get _formState() {
+        return _formState;
+      },
+      set _formState(value) {
+        _formState = value;
+      },
+      get _options() {
+        return _options;
+      },
+      set _options(value) {
+        _options = __spreadValues(__spreadValues({}, _options), value);
+      }
+    },
+    trigger,
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    getValues,
+    reset,
+    resetField,
+    clearErrors,
+    unregister,
+    setError,
+    setFocus,
+    getFieldState
+  };
+}
+function useForm(props = {}) {
+  const _formControl = React__default.useRef();
+  const _values = React__default.useRef();
+  const [formState, updateFormState] = React__default.useState({
+    isDirty: false,
+    isValidating: false,
+    isLoading: isFunction(props.defaultValues),
+    isSubmitted: false,
+    isSubmitting: false,
+    isSubmitSuccessful: false,
+    isValid: false,
+    submitCount: 0,
+    dirtyFields: {},
+    touchedFields: {},
+    errors: {},
+    defaultValues: isFunction(props.defaultValues) ? void 0 : props.defaultValues
+  });
+  if (!_formControl.current) {
+    _formControl.current = __spreadProps(__spreadValues({}, createFormControl(props, () => updateFormState((formState2) => __spreadValues({}, formState2)))), {
+      formState
+    });
+  }
+  const control = _formControl.current.control;
+  control._options = props;
+  useSubscribe({
+    subject: control._subjects.state,
+    next: (value) => {
+      if (shouldRenderFormState(value, control._proxyFormState, control._updateFormState, true)) {
+        updateFormState(__spreadValues({}, control._formState));
+      }
+    }
+  });
+  React__default.useEffect(() => {
+    if (props.values && !deepEqual(props.values, _values.current)) {
+      control._reset(props.values, control._options.resetOptions);
+      _values.current = props.values;
+    } else {
+      control._resetDefaultValues();
+    }
+  }, [props.values, control]);
+  React__default.useEffect(() => {
+    if (!control._state.mount) {
+      control._updateValid();
+      control._state.mount = true;
+    }
+    if (control._state.watch) {
+      control._state.watch = false;
+      control._subjects.state.next(__spreadValues({}, control._formState));
+    }
+    control._removeUnmounted();
+  });
+  _formControl.current.formState = getProxyFormState(formState, control);
+  return _formControl.current;
+}
 const _excluded$1 = ["defaultProps", "mixins", "overrides", "palette", "props", "styleOverrides"], _excluded2$1 = ["type", "mode"];
 function adaptV4Theme(inputTheme) {
   if (process.env.NODE_ENV !== "production") {
@@ -29291,6 +30778,12 @@ const {
 function experimental_sx() {
   throw new Error(process.env.NODE_ENV !== "production" ? `MUI: The \`experimental_sx\` has been moved to \`theme.unstable_sx\`.For more details, see https://github.com/mui/material-ui/pull/35150.` : formatMuiErrorMessage(20));
 }
+const BasicButton = styled(Button$1, {
+  shouldForwardProp: (prop) => prop !== "theme"
+})(({ theme }) => ({
+  color: theme.palette.primary.main,
+  border: "1px solid " + theme.palette.primary.main
+}));
 const defaultTheme = createTheme();
 const Box = createBox({
   defaultTheme,
@@ -29315,6 +30808,336 @@ process.env.NODE_ENV !== "production" ? Box.propTypes = {
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+} : void 0;
+const Item = styled(Paper)(({ theme }) => __spreadProps(__spreadValues({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff"
+}, theme.typography.body2), {
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary
+}));
+function fieldStyle(field) {
+  return {
+    flexBasis: 100 * field.size / 12 + "%",
+    padding: "0em 1em 1em 0em"
+  };
+}
+function BasicLed(props) {
+  const { ctx, spec } = props;
+  const { model, seneca, custom } = ctx();
+  const [showTable, setShowTable] = useState(false);
+  const [triggerLed, setTriggerLed] = useState(0);
+  const [item, setItem] = useState({});
+  console.log("spec", spec);
+  const def = spec.content.def;
+  const { ent, cols } = def;
+  const cmpstate = useSelector((state) => state.main.vxg.cmp);
+  const entstate = useSelector((state) => state.main.vxg.ent.meta.main[ent].state);
+  const entlist = useSelector((state) => state.main.vxg.ent.list.main[ent]);
+  if ("none" === entstate) {
+    let q = custom.BasicLed.query(spec, cmpstate);
+    seneca.entity(def.ent).list$(q);
+  }
+  const rows = entlist;
+  console.log("rows: ", rows);
+  console.log("cols: ", cols);
+  let [editRow, setEditRow] = useState();
+  let selectRow = (ids) => {
+    let id = ids[0];
+    let row = rows.find((r2) => r2.id === id);
+    if (row) {
+      setEditRow(row);
+    }
+  };
+  const open = () => {
+  };
+  const processValueChange = () => {
+  };
+  const applyChanges = () => {
+  };
+  const cancelChanges = () => {
+    setEditRow(void 0);
+  };
+  const { register, handleSubmit, setValue } = useForm({
+    defaultValues: {}
+  });
+  const itemFields = cols.map((field) => field);
+  const sideOpen = true;
+  const divStyle = {
+    "paddingLeft": sideOpen ? "11.5em" : "0em",
+    "paddingRight": sideOpen ? "1em" : "1em"
+  };
+  return /* @__PURE__ */ jsx("div", { className: "BasicLed", style: divStyle, children: showTable ? /* @__PURE__ */ jsx(
+    "form",
+    {
+      className: "vxg-form-field",
+      onSubmit: handleSubmit((data) => {
+        console.log("data: ", data);
+      }),
+      children: /* @__PURE__ */ jsxs(Box, { display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 2, children: [
+        itemFields.map((field) => {
+          return /* @__PURE__ */ jsx(Box, { gridColumn: "span " + field.size, children: /* @__PURE__ */ jsx(
+            TextField,
+            __spreadValues({
+              label: field.headerName,
+              fullWidth: true
+            }, register(field.field)),
+            field.field
+          ) });
+        }),
+        /* @__PURE__ */ jsx("br", {}),
+        /* @__PURE__ */ jsx(
+          BasicButton,
+          {
+            variant: "outlined",
+            sx: {
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              margin: 0
+            },
+            size: "large",
+            onClick: () => {
+              setShowTable(false);
+            },
+            children: "Cancel"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          BasicButton,
+          {
+            type: "submit",
+            variant: "outlined",
+            sx: {
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              margin: 0
+            },
+            size: "large",
+            onClick: () => {
+              console.log("item: ", item);
+            },
+            children: "SAVE"
+          }
+        )
+      ] })
+    }
+  ) : /* @__PURE__ */ jsx(
+    DataGrid,
+    {
+      rows,
+      columns: cols,
+      onSelectionModelChange: selectRow,
+      onRowClick: (params) => {
+        let selitem = __spreadValues({}, params.row);
+        console.log("item: ", selitem);
+        for (let field of itemFields) {
+          setValue(field.field, selitem[field.field]);
+        }
+        setShowTable(true);
+        setItem(selitem);
+      },
+      checkboxSelection: false
+    }
+  ) });
+}
+function Popup(props) {
+  let {
+    row,
+    columns,
+    onChange,
+    onApplyChanges,
+    onCancelChanges,
+    open
+  } = props;
+  return /* @__PURE__ */ jsxs(
+    Dialog,
+    {
+      fullWidth: true,
+      open,
+      onClose: onCancelChanges,
+      "aria-labelledby": "form-dialog-title",
+      children: [
+        /* @__PURE__ */ jsx(DialogTitle, { id: "form-dialog-title", children: "Edit Details" }),
+        /* @__PURE__ */ jsx(DialogContent, { children: /* @__PURE__ */ jsx(Grid, { container: true, spacing: 3, children: /* @__PURE__ */ jsx(Grid, { item: true, xs: 6, children: /* @__PURE__ */ jsx(FormGroup, { children: columns.map((col) => /* @__PURE__ */ jsx(
+          TextField,
+          {
+            margin: "normal",
+            name: col.field,
+            label: col.headerName,
+            value: row[col.field],
+            onChange
+          },
+          col.field
+        )) }) }) }) }),
+        /* @__PURE__ */ jsxs(DialogActions, { children: [
+          /* @__PURE__ */ jsx(Button, { onClick: onCancelChanges, color: "secondary", children: "Cancel" }),
+          /* @__PURE__ */ jsx(Button, { onClick: onApplyChanges, color: "primary", children: "Save" })
+        ] })
+      ]
+    }
+  );
+}
+function makeCmp(view, ctx) {
+  let cmp = () => /* @__PURE__ */ jsx("div", { children: "NONE" });
+  const content = view.content || {};
+  if ("custom" === content.kind) {
+    cmp = ctx().cmp[content.cmp];
+  } else if ("led" === content.kind) {
+    cmp = BasicLed;
+  }
+  return cmp;
+}
+function BasicMain(props) {
+  const { ctx, spec } = props;
+  const { model, content } = ctx();
+  const { frame } = spec;
+  const part = model.app.web.frame[frame].part.main;
+  const views = Object.values(model.app.web.frame.private.view);
+  return /* @__PURE__ */ jsx("div", { className: "BasicMain", children: /* @__PURE__ */ jsx("div", { style: { width: "100%", height: "100%" }, children: /* @__PURE__ */ jsx(Routes, { children: /* @__PURE__ */ jsx(Route, { path: "/view", children: views.map((view) => {
+    const Cmp = makeCmp(view, ctx);
+    return /* @__PURE__ */ jsx(
+      Route,
+      {
+        path: "/view/" + view.name,
+        element: /* @__PURE__ */ jsx(Cmp, { ctx, spec: view })
+      },
+      view.name
+    );
+  }) }) }) }) });
+}
+function BasicFoot(props) {
+  const { ctx, spec } = props;
+  const model = ctx().model;
+  const { frame } = spec;
+  const part = model.app.web.frame[frame].part.foot;
+  return /* @__PURE__ */ jsx(
+    Box$2,
+    {
+      sx: {
+        width: "100%",
+        height: "auto",
+        paddingTop: "0.5rem",
+        paddingBottom: "0.5rem",
+        borderTop: "1px solid #CCC"
+      },
+      children: /* @__PURE__ */ jsx(Container$2, { maxWidth: "lg", children: /* @__PURE__ */ jsx(Grid$2, { container: true, direction: "column", children: /* @__PURE__ */ jsx(Grid$2, { item: true, xs: 12, sx: { textAlign: "right" }, children: /* @__PURE__ */ jsx(Typography$1, { color: "#CCC", variant: "body2", children: part.title }) }) }) })
+    }
+  );
+}
+function BasicAdmin(props) {
+  const { ctx, spec } = props;
+  const model = ctx().model;
+  const { frame } = spec;
+  const part = model.app.web.frame[frame].part.admin;
+  const headSpec = {
+    frame
+  };
+  const sideSpec = {
+    frame
+  };
+  const mainSpec = {
+    frame
+  };
+  const footSpec = {
+    frame
+  };
+  return /* @__PURE__ */ jsxs("div", { children: [
+    /* @__PURE__ */ jsx(BasicHead, { ctx, spec: headSpec }),
+    /* @__PURE__ */ jsx(BasicSide, { ctx, spec: sideSpec }),
+    /* @__PURE__ */ jsx(BasicMain, { ctx, spec: mainSpec }),
+    /* @__PURE__ */ jsx(BasicFoot, { ctx, spec: footSpec })
+  ] });
+}
+const html = (theme, enableColorScheme) => _extends({
+  WebkitFontSmoothing: "antialiased",
+  // Antialiasing.
+  MozOsxFontSmoothing: "grayscale",
+  // Antialiasing.
+  // Change from `box-sizing: content-box` so that `width`
+  // is not affected by `padding` or `border`.
+  boxSizing: "border-box",
+  // Fix font resize problem in iOS
+  WebkitTextSizeAdjust: "100%"
+}, enableColorScheme && !theme.vars && {
+  colorScheme: theme.palette.mode
+});
+const body = (theme) => _extends({
+  color: (theme.vars || theme).palette.text.primary
+}, theme.typography.body1, {
+  backgroundColor: (theme.vars || theme).palette.background.default,
+  "@media print": {
+    // Save printer ink.
+    backgroundColor: (theme.vars || theme).palette.common.white
+  }
+});
+const styles = (theme, enableColorScheme = false) => {
+  var _theme$components, _theme$components$Mui;
+  const colorSchemeStyles = {};
+  if (enableColorScheme && theme.colorSchemes) {
+    Object.entries(theme.colorSchemes).forEach(([key, scheme]) => {
+      var _scheme$palette;
+      colorSchemeStyles[theme.getColorSchemeSelector(key).replace(/\s*&/, "")] = {
+        colorScheme: (_scheme$palette = scheme.palette) == null ? void 0 : _scheme$palette.mode
+      };
+    });
+  }
+  let defaultStyles = _extends({
+    html: html(theme, enableColorScheme),
+    "*, *::before, *::after": {
+      boxSizing: "inherit"
+    },
+    "strong, b": {
+      fontWeight: theme.typography.fontWeightBold
+    },
+    body: _extends({
+      margin: 0
+    }, body(theme), {
+      // Add support for document.body.requestFullScreen().
+      // Other elements, if background transparent, are not supported.
+      "&::backdrop": {
+        backgroundColor: (theme.vars || theme).palette.background.default
+      }
+    })
+  }, colorSchemeStyles);
+  const themeOverrides = (_theme$components = theme.components) == null ? void 0 : (_theme$components$Mui = _theme$components.MuiCssBaseline) == null ? void 0 : _theme$components$Mui.styleOverrides;
+  if (themeOverrides) {
+    defaultStyles = [defaultStyles, themeOverrides];
+  }
+  return defaultStyles;
+};
+function CssBaseline(inProps) {
+  const props = useThemeProps({
+    props: inProps,
+    name: "MuiCssBaseline"
+  });
+  const {
+    children: children2,
+    enableColorScheme = false
+  } = props;
+  return /* @__PURE__ */ jsxs(React.Fragment, {
+    children: [/* @__PURE__ */ jsx(GlobalStyles, {
+      styles: (theme) => styles(theme, enableColorScheme)
+    }), children2]
+  });
+}
+process.env.NODE_ENV !== "production" ? CssBaseline.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+  /**
+   * You can wrap a node.
+   */
+  children: propTypesExports.node,
+  /**
+   * Enable `color-scheme` CSS property to use `theme.palette.mode`.
+   * For more details, check out https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme
+   * For browser support, check out https://caniuse.com/?search=color-scheme
+   * @default false
+   */
+  enableColorScheme: propTypesExports.bool
 } : void 0;
 const Container = createContainer({
   createStyledComponent: styled("div", {

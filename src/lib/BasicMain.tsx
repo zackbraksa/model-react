@@ -38,16 +38,8 @@ function BasicMain(props: any) {
   const views = Object.values(model.app.web.frame.private.view)
   
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100vh",
-        paddingTop: "4rem",
-        paddingLeft: "16rem",
-        paddingBottom: "1rem",
-      }}
-    >
-      <div style={{width:'100%',height:'100%',padding:'1rem'}}>
+    <div className="BasicMain">
+      <div style={{width:'100%',height:'100%'}}>
         <Routes>
           <Route path="/view">
             { views.map((view:any)=> {

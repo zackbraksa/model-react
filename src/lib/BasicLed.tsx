@@ -3,25 +3,57 @@ import React, {useState} from 'react'
 import { useSelector } from 'react-redux'
 
 
-import TextField from '@mui/material/TextField';
-import FormGroup from '@mui/material/FormGroup';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import MuiGrid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField'
+import FormGroup from '@mui/material/FormGroup'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import MuiGrid from '@mui/material/Grid'
+import { Grid } from '@mui/material'
 
 
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid'
+
+import { useForm } from "react-hook-form"
+
+import BasicButton from './BasicButton'
+
+import { styled } from '@mui/material/styles'
+import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box';
 
 
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}))
+
+
+function fieldStyle(field: any) {
+  return {
+    flexBasis: (100*field.size/12) + '%',
+    padding: '0em 1em 1em 0em',
+  }
+}
 
 function BasicLed(props: any) {
   const { ctx, spec } = props
   const { model, seneca, custom } = ctx()
 
-  // console.log('spec',spec)
+
+
+  const [showTable, setShowTable] = useState(false)
+  const [triggerLed, setTriggerLed] = useState(0)
+
+  const [item, setItem] = useState( ({} as any) )
+
+  console.log('spec',spec)
   
   const def = spec.content.def
   const { ent, cols } = def
@@ -40,6 +72,8 @@ function BasicLed(props: any) {
 
   
   const rows = entlist
+  console.log('rows: ', rows)
+  console.log('cols: ', cols)
   
   let [editRow, setEditRow] = useState()
   
@@ -59,26 +93,186 @@ function BasicLed(props: any) {
     setEditRow(undefined)
   }
 
+  const { register, handleSubmit, setValue } = useForm({
+    defaultValues: ({ } as any),
+  })
+
+  const itemFields: any = cols.map((field: any) => field)
+
+  const sideOpen = true
+  const divStyle = {
+    'paddingLeft': sideOpen ? '11.5em' : '0em',
+    'paddingRight': sideOpen ? '1em' : '1em',
+  }
+
   
   return (
-    <div style={{ height:'calc(100vh - 6rem)', width: 'calc(100vw - 18rem)' }}>
+    <div className="BasicLed" style={ divStyle } >
 
-      { editRow &&
-        <Popup
-          open={open}
-          row={editRow}
-          columns={cols}
-          onChange={processValueChange}
-          onApplyChanges={applyChanges}
-          onCancelChanges={cancelChanges}
-        />      
-      }
-      
+      {
+      showTable ? 
+        
+  
+            <form
+            className="vxg-form-field"
+            onSubmit={handleSubmit( (data)=> {
+              console.log('data: ', data)
+              // handle data
+              // let item = { ...data }
+              // setItem(item)
+         
+             })
+           }
+           >
+          <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+            {
+              itemFields.map((field: any) => {
+                
+                return   <Box gridColumn={'span ' + field.size}>
+
+  <TextField
+                  key={ field.field }
+                  label={ field.headerName }
+                  fullWidth
+                  { ... register( field.field ) }
+          
+                />
+                  </Box>
+                
+                
+              })
+            }
+          
+          <br/>
+          <BasicButton variant="outlined"
+            sx = {{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              margin: 0,
+            }}
+            size="large"
+            onClick={ () => { setShowTable(false) } }
+          >
+           Cancel
+          </BasicButton> 
+          
+          <BasicButton type="submit" variant="outlined"
+            sx = {{
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              margin: 0,
+            }}
+            size="large"
+            onClick={ ()=> {
+              console.log('item: ', item)
+            } }
+          >
+           SAVE
+          </BasicButton> 
+          
+           </Box>
+          </form>
+          
+
+  /*
+        <div style={{
+          border: '1px solid black',
+          padding: 11,
+          height: '100%',
+          width: '100%',
+          display: 'inline-grid',
+        }}>
+         
+          <form
+            className="vxg-form-field"
+            onSubmit={handleSubmit( (data)=> {
+              console.log('data: ', data)
+              // handle data
+              // let item = { ...data }
+              // setItem(item)
+         
+             })
+           }
+           >
+            {
+              itemFields.map((field: any) => {
+                
+                return <TextField
+                  key={ field.field }
+                  label={ field.headerName }
+                  style={ fieldStyle(field) }
+                  { ... register( field.field ) }
+          
+                />
+                
+                
+              })
+            }
+          
+          <br/>
+          <BasicButton variant="outlined"
+            sx = {{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              margin: 0,
+            }}
+            size="large"
+            onClick={ () => { setShowTable(false) } }
+          >
+           Cancel
+          </BasicButton> 
+          
+          <BasicButton type="submit" variant="outlined"
+            sx = {{
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              margin: 0,
+            }}
+            size="large"
+            onClick={ ()=> {
+              console.log('item: ', item)
+            } }
+          >
+           SAVE
+          </BasicButton> 
+          
+           
+          </form>
+         
+
+         
+        </div> 
+   */
+        :
+
+
       <DataGrid
         rows={rows}
         columns={cols}
         onSelectionModelChange={selectRow}
-      />
+        onRowClick={ (params) => {
+          let selitem = { ...params.row }
+          console.log('item: ', selitem)
+
+
+          for(let field of itemFields as any) {
+            setValue(field.field, selitem[field.field])
+          }
+
+          setShowTable(true)
+
+          setItem(selitem)
+
+
+
+        }}
+
+        checkboxSelection={false}
+      /> }
       
     </div>
   )

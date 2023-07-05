@@ -28,6 +28,7 @@
     "repo-publish-quick": "npm run repo-check && npm run build && npm run repo-tag && npm publish --registry https://registry.npmjs.org --access=public"
   },
   "peerDependencies": {
+    "react-hook-form": "^7.43.5",
     "@emotion/react": ">=11",
     "@emotion/styled": ">=11",
     "@fontsource/roboto": ">=4",
