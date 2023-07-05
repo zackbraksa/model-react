@@ -22,8 +22,6 @@ import BasicButton from './BasicButton'
 
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
-import Box from '@mui/material/Box';
-
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -110,146 +108,66 @@ function BasicLed(props: any) {
     <div className="BasicLed" style={ divStyle } >
 
       {
-      showTable ? 
-        
-  
-            <form
-            className="vxg-form-field"
-            onSubmit={handleSubmit( (data)=> {
-              console.log('data: ', data)
-              // handle data
-              // let item = { ...data }
-              // setItem(item)
+      showTable ?
+        <form
+          className="vxg-form-field"
+          onSubmit={handleSubmit( (data)=> {
+            console.log('data: ', data)
+            // handle data
+            // let item = { ...data }
+            // setItem(item)
          
-             })
-           }
-           >
-          <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+          }) }
+        >
+          <Grid container spacing={3} >
             {
               itemFields.map((field: any) => {
                 
-                return   <Box gridColumn={'span ' + field.size}>
+                return ( <Grid item xs={field.size}>
 
-  <TextField
-                  key={ field.field }
-                  label={ field.headerName }
-                  fullWidth
-                  { ... register( field.field ) }
+                  <TextField
+                    key={ field.field }
+                    label={ field.headerName }
+                    fullWidth
+                    { ... register( field.field ) }
           
-                />
-                  </Box>
-                
+                  />
+                </Grid> )
                 
               })
             }
           
-          <br/>
-          <BasicButton variant="outlined"
-            sx = {{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              margin: 0,
-            }}
-            size="large"
-            onClick={ () => { setShowTable(false) } }
-          >
-           Cancel
-          </BasicButton> 
+            <br/>
+            <BasicButton variant="outlined"
+              sx = {{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                margin: 0,
+              }}
+              size="large"
+              onClick={ () => { setShowTable(false) } }
+            >
+              Cancel
+            </BasicButton> 
           
-          <BasicButton type="submit" variant="outlined"
-            sx = {{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              margin: 0,
-            }}
-            size="large"
-            onClick={ ()=> {
-              console.log('item: ', item)
-            } }
-          >
-           SAVE
-          </BasicButton> 
+            <BasicButton type="submit" variant="outlined"
+              sx = {{
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                margin: 0,
+              }}
+              size="large"
+              onClick={ ()=> {
+                console.log('item: ', item)
+              } }
+            >
+              SAVE
+            </BasicButton> 
           
-           </Box>
-          </form>
-          
-
-  /*
-        <div style={{
-          border: '1px solid black',
-          padding: 11,
-          height: '100%',
-          width: '100%',
-          display: 'inline-grid',
-        }}>
-         
-          <form
-            className="vxg-form-field"
-            onSubmit={handleSubmit( (data)=> {
-              console.log('data: ', data)
-              // handle data
-              // let item = { ...data }
-              // setItem(item)
-         
-             })
-           }
-           >
-            {
-              itemFields.map((field: any) => {
-                
-                return <TextField
-                  key={ field.field }
-                  label={ field.headerName }
-                  style={ fieldStyle(field) }
-                  { ... register( field.field ) }
-          
-                />
-                
-                
-              })
-            }
-          
-          <br/>
-          <BasicButton variant="outlined"
-            sx = {{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              margin: 0,
-            }}
-            size="large"
-            onClick={ () => { setShowTable(false) } }
-          >
-           Cancel
-          </BasicButton> 
-          
-          <BasicButton type="submit" variant="outlined"
-            sx = {{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              margin: 0,
-            }}
-            size="large"
-            onClick={ ()=> {
-              console.log('item: ', item)
-            } }
-          >
-           SAVE
-          </BasicButton> 
-          
-           
-          </form>
-         
-
-         
-        </div> 
-   */
-        :
-
-
+          </Grid>
+        </form> :
       <DataGrid
         rows={rows}
         columns={cols}
