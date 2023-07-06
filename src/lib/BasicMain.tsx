@@ -43,12 +43,17 @@ function BasicMain(props: any) {
   
   const sideOpen = vxg.cmp.BasicSide.show
   const divStyle = {
-    'paddingLeft': sideOpen ? '11.5em' : '0em',
-    'paddingRight': sideOpen ? '1em' : '1em',
+    'paddingLeft': sideOpen ? '12.0em' : '0em',
+    'paddingRight': 0,
+  }
+  const mainDiv = {
+    height: 'calc(100vh - 6rem)',
+    width: sideOpen ? 'calc(100vw - 19rem)' : 'calc(100vw - 4rem)',
+    padding: '4.5em ' + (sideOpen ? '4.5em' : '0') + ' 4.5em ' + (sideOpen ? '4.5em' : '0.5em')
   }
   
   return (
-    <div className="BasicMain">
+    <div className="BasicMain" style = { mainDiv }>
       <div style={{width:'100%',height:'100%', ...divStyle }}>
         <Routes>
           <Route path="/view">
