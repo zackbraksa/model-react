@@ -2,14 +2,50 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
+
 import {
-  AppBar,
   Toolbar,
   TextField,
   Autocomplete,
   Typography,
+  IconButton,
 } from "@mui/material"
 
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
+
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles'
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean,
+  drawerWidth?: any,
+}
+
+// TODO: BasicAppBar
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop: any) => prop !== 'open',
+})<AppBarProps>(({ theme, open, drawerWidth }: any) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth})`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}))
+
+function onOpen(seneca: any) {
+  seneca.act('aim:app,set:state', {
+    section: 'vxg.cmp.BasicSide.show',
+    content: true
+  })
+}
 
 
 function resolveOptions(tooldef: any, tooldata:any) {
@@ -25,8 +61,6 @@ function resolveOptions(tooldef: any, tooldata:any) {
 
   return options
 }
-
-
 
 function BasicHead(props: any) {
   const { ctx, spec } = props
@@ -67,16 +101,42 @@ function BasicHead(props: any) {
     }
   }) 
   
+  const sideOpen = true
+  const divStyle = {
+    'paddingLeft': sideOpen ? '11.5em' : '0em',
+    'paddingRight': sideOpen ? '1em' : '1em',
+  }
+  
+  const vxg = useSelector((state: any) => state.main.vxg)
+  const open = vxg.cmp.BasicSide.show
+  
+  let drawerWidth = '16rem'
+  
+  
   return (
     <AppBar
-      position="fixed"
+      //position="fixed"
+      drawerWidth={drawerWidth}
+      open={open}
       sx={{
         color: 'black',
         bgcolor: "white",
-        zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
       <Toolbar>
+      
+        <IconButton
+          aria-label="open drawer"
+          onClick={ () => onOpen(seneca) }
+          edge="start"
+          sx={{
+            marginRight: 2,
+            ...(open && { display: 'none' }),
+          }}
+         >
+           <ChevronRightIcon />
+         </IconButton>
+          
         <img src={part.logo.img}
           style={{width:'4rem', marginRight: '1rem'}} />
 

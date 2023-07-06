@@ -93,15 +93,11 @@ function BasicLed(props: any) {
   })
 
   const itemFields: any = fields(spec)
-  const sideOpen = true
-  const divStyle = {
-    'paddingLeft': sideOpen ? '11.5em' : '0em',
-    'paddingRight': sideOpen ? '1em' : '1em',
-  }
+  
   console.log("CQ!")
   
   return (
-    <div className="BasicLed" style={ divStyle } >
+    <div className="BasicLed">
 
       {
       showTable ?

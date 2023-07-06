@@ -1,6 +1,8 @@
 
 import React from 'react'
 
+import { useSelector } from 'react-redux'
+
 import {
   Routes,
   Route
@@ -33,13 +35,21 @@ function BasicMain(props: any) {
   
   const { frame } = spec
   
+  const vxg = useSelector((state: any) => state.main.vxg)
+  
   const part = model.app.web.frame[frame].part.main
 
   const views = Object.values(model.app.web.frame.private.view)
   
+  const sideOpen = vxg.cmp.BasicSide.show
+  const divStyle = {
+    'paddingLeft': sideOpen ? '11.5em' : '0em',
+    'paddingRight': sideOpen ? '1em' : '1em',
+  }
+  
   return (
     <div className="BasicMain">
-      <div style={{width:'100%',height:'100%'}}>
+      <div style={{width:'100%',height:'100%', ...divStyle }}>
         <Routes>
           <Route path="/view">
             { views.map((view:any)=> {

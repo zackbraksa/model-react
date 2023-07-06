@@ -1,6 +1,14 @@
 
 import React, { useState } from 'react'
 
+import { useSelector } from 'react-redux'
+
+import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles'
+
+// icons
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+
 import { useNavigate } from 'react-router-dom'
 
 import {
@@ -11,16 +19,20 @@ import {
   Container,
   CssBaseline,
   Divider,
-  Drawer,
   Grid,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  //Drawer,
   Toolbar,
   Typography,
+  IconButton,
 } from "@mui/material"
+
+
+import MuiDrawer from '@mui/material/Drawer'
 
 import {
   MoveToInbox as InboxIcon,
@@ -44,6 +56,67 @@ import {
 } from "@mui/icons-material"
 
 
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: theme.spacing(0, 1),
+  minHeight: '43px',
+  border: '2px solid black',
+  // border: '2px solid white',
+  // padding: '10px 10px 10px 10px',
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}))
+
+
+interface DrawerProps {
+  open?: boolean,
+  drawerWidth?: any,
+}
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })<DrawerProps>(
+  ({ theme, open, drawerWidth }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme, drawerWidth),
+      '& .MuiDrawer-paper': openedMixin(theme, drawerWidth),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
+  }),
+)
+
+
+const openedMixin = (theme: Theme, drawerWidth: any): CSSObject => ({
+  // backgroundColor: theme.palette.primary.main,
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+})
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  display: 'none',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+})
+
+
 
 const iconmap: any = {
   'factory': FactoryOutlined,
@@ -59,10 +132,23 @@ function makeIcon(name: string) {
   return <Icon />
 }
 
+function onClose(seneca: any) {
+
+  seneca.act('aim:app,set:state', {
+    section: 'vxg.cmp.BasicSide.show',
+    content: false
+  })
+
+}
+
 function BasicSide(props: any) {
   const { ctx, spec } = props
-  const model = ctx().model
+  const { model, seneca, } = ctx()
 
+  const vxg = useSelector((state: any) => state.main.vxg)
+  const open = vxg.cmp.BasicSide.show
+  
+  
   const navigate = useNavigate()
 
   // show first section view by default
@@ -78,7 +164,7 @@ function BasicSide(props: any) {
 
   const sectiondefs = Object.entries(part.section || [])
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
-
+  
   let drawerWidth = '16rem'
 
 
@@ -160,28 +246,32 @@ function BasicSide(props: any) {
   return (
     <Drawer
       variant="permanent"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-      }}
+      drawerWidth = { drawerWidth }
+      open={ open }
     >
-      <Toolbar />
+      <DrawerHeader>
+        <IconButton onClick={()=>onClose(seneca)}>
+          <ChevronLeftIcon sx={{ color: 'black' }} />
+        </IconButton>
+      </DrawerHeader>
+        
+        
       <SectionButtons sections={ sectiondefs }/>
-      {sectiondefs.map((section: any, sectionNumber: number) => {
-        const showCurrentSection = showViewsData[sectionNumber]
-        if('navmenu' === section.kind) {
-          return (
-            showCurrentSection && <DefaultNavMenu viewOrder={section.view} viewdefs={viewdefs}/>
-          )
-        }
+        {
+          sectiondefs.map((section: any, sectionNumber: number) => {
+            const showCurrentSection = showViewsData[sectionNumber]
+            if('navmenu' === section.kind) {
+              return (
+                showCurrentSection && <DefaultNavMenu viewOrder={section.view} viewdefs={viewdefs}/>
+              )
+            }
 
-        const Cmp:any = ctx().cmp[section.cmp]
-        return (
-          showCurrentSection && <Cmp ctx={ctx} spec={spec}/>
-        )
-        })
-      }
+            const Cmp:any = ctx().cmp[section.cmp]
+            return (
+              showCurrentSection && <Cmp ctx={ctx} spec={spec}/>
+            )
+          })
+        }
     </Drawer>
     )
 }
