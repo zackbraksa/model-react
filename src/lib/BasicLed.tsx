@@ -16,22 +16,12 @@ import { Grid } from '@mui/material'
 
 import { DataGrid } from '@mui/x-data-grid'
 
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 
 import BasicButton from './BasicButton'
 
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
-
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}))
-
 
 function fields (spec: any) {
   console.log('layout: ', spec.content.def.cols)
@@ -94,7 +84,11 @@ function BasicLed(props: any) {
   console.log('rows: ', rows)
   console.log('cols: ', cols)
 
-  const { register, handleSubmit, setValue } = useForm({
+  const {
+    handleSubmit,
+    setValue,
+    control
+  } = useForm({
     defaultValues: ({ } as any),
   })
 
@@ -104,7 +98,7 @@ function BasicLed(props: any) {
     'paddingLeft': sideOpen ? '11.5em' : '0em',
     'paddingRight': sideOpen ? '1em' : '1em',
   }
-
+  console.log("CQ!")
   
   return (
     <div className="BasicLed" style={ divStyle } >
@@ -124,16 +118,27 @@ function BasicLed(props: any) {
           <Grid container spacing={3} >
             {
               itemFields.map((field: any) => {
+                // console.log('register: ', item )
                 
                 return ( <Grid item xs={field.size}>
-
-                  <TextField
-                    key={ field.field }
-                    label={ field.headerName }
-                    fullWidth
-                    disabled={ !field.edit }
-                    { ... register( field.field ) }
+                  <Controller
+                    name={field.field}
+                    control={control}
+                    defaultValue={item[field.field] || ''}
+                    render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+                      <TextField
+                        key={ field.field }
+                        label={ field.headerName }
+                        fullWidth
+                        disabled={ !!!field.edit }
+                        onChange={onChange}
+                        value={value}
+                        onBlur={onBlur}
+                        error={!!error}
+                        helperText={error ? error.message : null}
           
+                      />)}
+                    rules={ field.required ? { required: field.required, validate: (value) => true } : {} }
                   />
                 </Grid> )
                 
@@ -171,7 +176,7 @@ function BasicLed(props: any) {
         columns={cols}
         onRowClick={ (params) => {
           let selitem = { ...params.row }
-          console.log('item: ', selitem)
+          // console.log('item: ', selitem)
 
 
           for(let field of itemFields as any) {
