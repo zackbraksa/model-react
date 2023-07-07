@@ -107,10 +107,10 @@ function BasicLed(props: any) {
         >
           <Grid container spacing={3} >
             {
-              itemFields.map((field: any) => {
+              itemFields.map((field: any, index: any) => {
                 // console.log('register: ', item )
                 
-                return ( <Grid item xs={field.size}>
+                return ( <Grid item xs={field.size} key={index}>
                   <Controller
                     name={field.field}
                     control={control}
