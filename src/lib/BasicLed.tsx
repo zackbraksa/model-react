@@ -24,7 +24,7 @@ import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 
 function fields (spec: any) {
-  console.log('layout: ', spec.content.def.cols)
+  // console.log('layout: ', spec.content.def.cols)
   
   try {
     let fds = []
@@ -61,8 +61,6 @@ function BasicLed(props: any) {
   const [triggerLed, setTriggerLed] = useState(0)
 
   const [item, setItem] = useState( ({} as any) )
-
-  console.log('spec',spec)
   
   const def = spec.content.def
   const { ent, cols } = def
@@ -81,8 +79,6 @@ function BasicLed(props: any) {
 
   
   const rows = entlist
-  console.log('rows: ', rows)
-  console.log('cols: ', cols)
 
   const {
     handleSubmit,
@@ -93,8 +89,6 @@ function BasicLed(props: any) {
   })
 
   const itemFields: any = fields(spec)
-  
-  console.log("CQ!")
   
   return (
     <div className="BasicLed">

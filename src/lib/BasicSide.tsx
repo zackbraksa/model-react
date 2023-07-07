@@ -72,18 +72,18 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 interface DrawerProps {
   open?: boolean,
-  drawerWidth?: any,
+  drawerwidth?: any,
 }
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })<DrawerProps>(
-  ({ theme, open, drawerWidth }) => ({
-    width: drawerWidth,
+  ({ theme, open, drawerwidth }) => ({
+    width: drawerwidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
     ...(open && {
-      ...openedMixin(theme, drawerWidth),
-      '& .MuiDrawer-paper': openedMixin(theme, drawerWidth),
+      ...openedMixin(theme, drawerwidth),
+      '& .MuiDrawer-paper': openedMixin(theme, drawerwidth),
     }),
     ...(!open && {
       ...closedMixin(theme),
@@ -93,9 +93,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 )
 
 
-const openedMixin = (theme: Theme, drawerWidth: any): CSSObject => ({
+const openedMixin = (theme: Theme, drawerwidth: any): CSSObject => ({
   // backgroundColor: theme.palette.primary.main,
-  width: drawerWidth,
+  width: drawerwidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -165,7 +165,7 @@ function BasicSide(props: any) {
   const sectiondefs = Object.entries(part.section || [])
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
   
-  let drawerWidth = '16rem'
+  let drawerwidth = '16rem'
 
 
   function selectView(view:any) {
@@ -246,7 +246,7 @@ function BasicSide(props: any) {
   return (
     <Drawer
       variant="permanent"
-      drawerWidth = { drawerWidth }
+      drawerwidth = { drawerwidth }
       open={ open }
     >
       <DrawerHeader>
@@ -262,15 +262,16 @@ function BasicSide(props: any) {
         {
           sectiondefs.map((section: any, sectionNumber: number) => {
             const showCurrentSection = showViewsData[sectionNumber]
+            console.log('section: ', section)
             if('navmenu' === section.kind) {
               return (
-                showCurrentSection && <DefaultNavMenu viewOrder={section.view} viewdefs={viewdefs}/>
+                showCurrentSection && <DefaultNavMenu key={section.name} viewOrder={section.view} viewdefs={viewdefs}/>
               )
             }
 
             const Cmp:any = ctx().cmp[section.cmp]
             return (
-              showCurrentSection && <Cmp ctx={ctx} spec={spec}/>
+              showCurrentSection && <Cmp key={section.name} ctx={ctx} spec={spec}/>
             )
           })
         }
