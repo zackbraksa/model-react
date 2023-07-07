@@ -137,8 +137,7 @@ function BasicHead(props: any) {
            <ChevronRightIcon />
          </IconButton>
           
-        <img src={part.logo.img}
-          style={{width:'4rem', marginRight: '1rem'}} />
+
 
         { tooldefs.map(tooldef=>
 

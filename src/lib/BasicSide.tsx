@@ -250,6 +250,8 @@ function BasicSide(props: any) {
       open={ open }
     >
       <DrawerHeader>
+        <img src={part.logo.img}
+          style={ { width: '11rem' } } />
         <IconButton onClick={()=>onClose(seneca)}>
           <ChevronLeftIcon sx={{ color: 'black' }} />
         </IconButton>
