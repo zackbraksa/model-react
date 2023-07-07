@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react'
+import React, { useMemo, useRef, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 
@@ -22,6 +22,8 @@ import BasicButton from './BasicButton'
 
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
+
+import { MaterialReactTable } from 'material-react-table'
 
 function fields (spec: any) {
   // console.log('layout: ', spec.content.def.cols)
@@ -71,7 +73,7 @@ function BasicLed(props: any) {
   const entlist = useSelector((state:any)=>state.main.vxg.ent.list.main[ent])
 
   // console.log('entlist',entlist)
-  
+  console.log('entstate: ', entstate)
   if('none'===entstate) {
     let q = custom.BasicLed.query(spec,cmpstate)
     seneca.entity(def.ent).list$(q)
@@ -89,6 +91,41 @@ function BasicLed(props: any) {
   })
 
   const itemFields: any = fields(spec)
+  
+  
+  const columns = useMemo(
+    () =>
+      itemFields.map((field: any) => 
+        ({
+          accessorFn: (row: any) => row[field.field],
+          accessorKey: field.field,
+          header: field.headerName,
+          Header: () => <span>{ field.headerName }</span>,
+          // muiTableHeadCellProps: { sx: { color: 'green' } },
+          Cell: ({ cell }: any) => <span>{cell.getValue()}</span>,
+        })
+      ),
+    [],
+  )
+  
+    //optionally, you can manage any/all of the table state yourself
+  const [rowSelection, setRowSelection] = useState({});
+
+  useEffect(() => {
+    //do something when the row selection changes
+    console.log(rowSelection)
+  }, [rowSelection]);
+  
+    //Or, optionally, you can get a reference to the underlying table instance
+  const tableInstanceRef = useRef(null);
+
+  const someEventHandler = () => {
+    //read the table state during an event from the table instance ref
+    console.log('read ref')
+    // console.log(tableInstanceRef.current.getState().sorting);
+  }
+  let data = rows.slice(0, 10)
+  console.log('data: ', data)
   
   return (
     <div className="BasicLed">
@@ -140,7 +177,9 @@ function BasicLed(props: any) {
                 <Grid item>
                   <BasicButton variant="outlined"
                     size="large"
-                    onClick={ () => { setShowTable(false) } }
+                    onClick={ () => { 
+                      setShowTable(false) 
+                    } }
                   >
                     Cancel
                   </BasicButton> 
@@ -161,6 +200,30 @@ function BasicLed(props: any) {
           
           </Grid>
         </form> :
+        
+            <MaterialReactTable 
+      columns={columns} 
+      data={data}
+            muiTableBodyRowProps={({ row }) => ({
+        //add onClick to row to select upon clicking anywhere in the row
+        onClick: (event: any)=> {
+          let selitem = { ...data[Number(row.id)] }
+          console.log('item: ', item)
+                    for(let field of itemFields as any) {
+            setValue(field.field, selitem[field.field])
+          }
+
+          setShowTable(true)
+
+          setItem(selitem)
+          
+          
+         },
+         sx: { cursor: 'pointer' },
+        }
+      )}
+    />
+        /*
       <DataGrid
         rows={rows}
         columns={cols}
@@ -182,7 +245,10 @@ function BasicLed(props: any) {
         }}
 
         checkboxSelection={false}
-      /> }
+      />
+      
+      */
+      }
       
     </div>
   )

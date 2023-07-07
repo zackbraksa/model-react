@@ -25,7 +25,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  //Drawer,
   Toolbar,
   Typography,
   IconButton,
@@ -62,7 +61,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'space-between',
   padding: theme.spacing(0, 1),
   minHeight: '43px',
-  border: '2px solid black',
+  // border: '2px solid black',
   // border: '2px solid white',
   // padding: '10px 10px 10px 10px',
   // necessary for content to be below app bar
@@ -224,13 +223,16 @@ function BasicSide(props: any) {
     }
 
     return (
-      <Box sx= {{ display: 'flex' }}>
-        <ButtonGroup size="large" aria-label="large button group">
+      <Box sx= {{ display: 'flex', width: '100%' }}>
+        <ButtonGroup sx={{ width: '100%',}}>
           {
             sections.map((section: any, sectionNumber: number) => (
-              <Button key={section.name} onClick={ (event)=>{
-                toggle(sectionNumber)(event)
-                selectView(section)(event)
+              <Button
+                sx={{ padding: '0.5em', width: '100%' }} 
+                key={section.name}
+                onClick={ (event)=>{
+                  toggle(sectionNumber)(event)
+                  selectView(section)(event)
               }}>
                 <div>
                   { makeIcon(section.button.icon) }
