@@ -124,7 +124,7 @@ function BasicLed(props: any) {
     console.log('read ref')
     // console.log(tableInstanceRef.current.getState().sorting);
   }
-  let data = rows.slice(0, 10)
+  let data = rows //.slice(0, 10)
   console.log('data: ', data)
   
   return (
