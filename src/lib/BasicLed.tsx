@@ -1,5 +1,5 @@
 
-import React, { useMemo, useRef, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 
@@ -24,6 +24,8 @@ import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 
 import { MaterialReactTable } from 'material-react-table'
+
+import { useNavigate, useLocation } from 'react-router-dom'
 
 function fields (spec: any) {
   // console.log('layout: ', spec.content.def.cols)
@@ -71,6 +73,8 @@ function BasicLed(props: any) {
   
   const entstate = useSelector((state:any)=>state.main.vxg.ent.meta.main[ent].state)
   const entlist = useSelector((state:any)=>state.main.vxg.ent.list.main[ent])
+  
+  const location = useLocation()
 
   // console.log('entlist',entlist)
   console.log('entstate: ', entstate)
@@ -93,39 +97,28 @@ function BasicLed(props: any) {
   const itemFields: any = fields(spec)
   
   
-  const columns = useMemo(
-    () =>
-      itemFields.map((field: any) => 
-        ({
-          accessorFn: (row: any) => row[field.field],
-          accessorKey: field.field,
-          header: field.headerName,
-          Header: () => <span>{ field.headerName }</span>,
-          // muiTableHeadCellProps: { sx: { color: 'green' } },
-          Cell: ({ cell }: any) => <span>{cell.getValue()}</span>,
-        })
-      ),
-    [],
-  )
+  const columns = 
+    itemFields.map((field: any) => 
+      ({
+        accessorFn: (row: any) => row[field.field],
+        accessorKey: field.field,
+        header: field.headerName,
+        Header: () => <span>{ field.headerName }</span>,
+        // muiTableHeadCellProps: { sx: { color: 'green' } },
+        Cell: ({ cell }: any) => <span>{cell.getValue()}</span>,
+      })
+    )
   
-    //optionally, you can manage any/all of the table state yourself
-  const [rowSelection, setRowSelection] = useState({});
 
   useEffect(() => {
-    //do something when the row selection changes
-    console.log(rowSelection)
-  }, [rowSelection]);
+    setShowTable(false)
+    
+  }, [location.pathname])
   
-    //Or, optionally, you can get a reference to the underlying table instance
-  const tableInstanceRef = useRef(null);
-
-  const someEventHandler = () => {
-    //read the table state during an event from the table instance ref
-    console.log('read ref')
-    // console.log(tableInstanceRef.current.getState().sorting);
-  }
+  
   let data = rows //.slice(0, 10)
   console.log('data: ', data)
+  
   
   return (
     <div className="BasicLed">
@@ -223,7 +216,7 @@ function BasicLed(props: any) {
         }
       )}
     />
-        /*
+       /*
       <DataGrid
         rows={rows}
         columns={cols}
@@ -246,8 +239,9 @@ function BasicLed(props: any) {
 
         checkboxSelection={false}
       />
+       */
       
-      */
+      
       }
       
     </div>
