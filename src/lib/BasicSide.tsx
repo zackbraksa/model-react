@@ -220,7 +220,7 @@ function BasicSide(props: any) {
           sortViews(viewdefs, viewOrder).map((view:any) => (
             <ToggleButton
               value="check"
-              selected={ !!toogleSelections[view.name] }
+              selected={ viewPath == view.name }
               sx={
                 {
                   width: '100%',
@@ -236,6 +236,7 @@ function BasicSide(props: any) {
               key={view.name}
               aria-label="centered"
               onClick={(event: any) => {
+                /*
                 setToogleSelections((prev: any)=>{
                   for(let name in prev) {
                     prev[name] = false
@@ -243,6 +244,7 @@ function BasicSide(props: any) {
                   prev[view.name] = true
                   return prev
                 })
+                */
                 selectView(view)(event)
               }}
              >
@@ -309,7 +311,6 @@ function BasicSide(props: any) {
       <SectionButtons sections={ sectiondefs }/>
         {
           sectiondefs.map((section: any, sectionNumber: number) => {
-            let viewPath: any = location.pathname.split('/')[2]
             if(viewPath == section.name || (section.view && viewPath in section.view) ) {
       
               if('navmenu' === section.kind) {
