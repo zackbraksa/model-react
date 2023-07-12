@@ -49,7 +49,7 @@ function BasicMain(props: any) {
   const mainDiv = {
     height: 'calc(100vh - 6rem)',
     width: sideOpen ? 'calc(100vw - 19rem)' : 'calc(100vw - 4rem)',
-    padding: '4.5em ' + (sideOpen ? '4.5em' : '0') + ' 4.5em ' + (sideOpen ? '4.5em' : '0.5em')
+    padding: '5.0em ' + (sideOpen ? '4.5em' : '0') + ' 4.5em ' + (sideOpen ? '4.5em' : '0.5em')
   }
   
   return (
