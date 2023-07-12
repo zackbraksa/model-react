@@ -151,6 +151,7 @@ function BasicSide(props: any) {
   const open = vxg.cmp.BasicSide.show
   
   
+  
   const navigate = useNavigate()
   const location = useLocation()
   
@@ -172,7 +173,6 @@ function BasicSide(props: any) {
     return viewPath == section.name || (section.view && viewPath in section.view)
   }))
   const [toogleSelections, setToogleSelections] = useState({[viewPath]: true} as any)
-
   
   const drawerwidth = '16rem'
 
@@ -230,7 +230,8 @@ function BasicSide(props: any) {
                   border: 0,
                   '&.MuiToggleButtonGroup-grouped': {
                     borderRadius: '20px !important',
-                  }
+                  },
+                  textTransform: 'none'
                 }
               } 
               key={view.name}

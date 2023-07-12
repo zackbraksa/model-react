@@ -2,6 +2,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import {
   Toolbar,
@@ -15,6 +16,8 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles'
+
+import BasicButton from './BasicButton'
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean,
@@ -62,6 +65,14 @@ function resolveOptions(tooldef: any, tooldata:any) {
   return options
 }
 
+function addItem(seneca: any, led_add: any) {
+  seneca.act('aim:app,set:state', {
+    section: 'vxg.trigger.led.add',
+    content: ++led_add,
+  })
+
+}
+
 function BasicHead(props: any) {
   const { ctx, spec } = props
   const { model, seneca } = ctx()
@@ -70,13 +81,17 @@ function BasicHead(props: any) {
     frame,
   } = spec
   
+  const navigate = useNavigate()
+  const location = useLocation()
+  
   const part = model.app.web.frame[frame].part.head
   const tooldefs = Object.entries(part.tool.def)
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
+  
 
   const user = useSelector((state:any)=>state.main.auth.user)
   const userName = user.name || user.email
-
+ 
   let valuemap:any = {}
   let tooldata: any = {}
   tooldefs.forEach(tooldef=>{
@@ -99,19 +114,18 @@ function BasicHead(props: any) {
 
       }
     }
-  }) 
+  })
   
-  const sideOpen = true
-  const divStyle = {
-    'paddingLeft': sideOpen ? '11.5em' : '0em',
-    'paddingRight': sideOpen ? '1em' : '1em',
-  }
+  
   
   const vxg = useSelector((state: any) => state.main.vxg)
   const open = vxg.cmp.BasicSide.show
+  let led_add = vxg.trigger.led.add
+  
+  const viewPath: any = location.pathname.split('/')[2]
+  let add = model.app.web.frame.private.view[viewPath].content.def.add || { active: false }
   
   let drawerwidth = '16rem'
-  
   
   return (
     <AppBar
@@ -139,10 +153,10 @@ function BasicHead(props: any) {
           
 
 
-        { tooldefs.map(tooldef=>
+        { tooldefs.map(tooldef=> {
 
-          'autocomplete' === tooldef.kind ?
-          <Autocomplete
+          if('autocomplete' === tooldef.kind) {
+           return <Autocomplete
             freeSolo = { true }
             forcePopupIcon={ true }
             value={valuemap[tooldef.name] || tooldef.defaultvalue || ''}
@@ -162,9 +176,22 @@ function BasicHead(props: any) {
             isOptionEqualToValue={(opt:any,val:any)=>
               (opt===val)||(null!=opt&&null!=val&&opt.ent?.id===val.ent?.id)}
           />
+          } else if ('addbutton' === tooldef.kind) {
+            return <BasicButton variant="outlined"
+              key={tooldef.name}
+              sx = {{
+                display: add.active ? null : 'none',
+                textTransform: 'capitalize',
+              }}
+              size="large"
+           
+              onClick={ () => addItem(seneca, led_add) }
+            >
+              { tooldef.title + ' ' + model.app.web.frame.private.view[viewPath].name }
+            </BasicButton>
 
-            :
-          <></>
+          }
+         }
         )}
 
         <div style={{flexGrow:1}}></div>

@@ -59,10 +59,9 @@ function BasicLed(props: any) {
   const { ctx, spec } = props
   const { model, seneca, custom } = ctx()
 
-
+  const vxg = useSelector((state: any) => state.main.vxg)
 
   const [showTable, setShowTable] = useState(false)
-  const [triggerLed, setTriggerLed] = useState(0)
 
   const [item, setItem] = useState( ({} as any) )
   
@@ -114,6 +113,25 @@ function BasicLed(props: any) {
     setShowTable(false)
     
   }, [location.pathname])
+  
+  let led_add = vxg.trigger.led.add
+  let [triggerLed, setTriggerLed] = useState(0)
+  useEffect( ()=> {
+
+    // a workaround to prevent 
+    // 'useEffect' to trigger when re-rendered
+    if(triggerLed >= 2) {
+      setShowTable(true)
+      // reset fields
+      for(let field of itemFields as any) {
+        setValue(field.field, '')
+      }
+
+      setItem( {} )
+    }
+
+    setTriggerLed(++triggerLed)
+  }, [ led_add ])
   
   
   let data = rows //.slice(0, 10)
@@ -202,7 +220,7 @@ function BasicLed(props: any) {
         onClick: (event: any)=> {
           let selitem = { ...data[Number(row.id)] }
           console.log('item: ', item)
-                    for(let field of itemFields as any) {
+          for(let field of itemFields as any) {
             setValue(field.field, selitem[field.field])
           }
 
