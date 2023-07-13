@@ -1,20 +1,8 @@
-
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
+import { useNavigate, useLocation } from 'react-router-dom'
 
-import TextField from '@mui/material/TextField'
-import FormGroup from '@mui/material/FormGroup'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
-import MuiGrid from '@mui/material/Grid'
-import { Grid } from '@mui/material'
-
-
-import { DataGrid } from '@mui/x-data-grid'
 
 import { useForm, Controller } from "react-hook-form"
 
@@ -25,7 +13,8 @@ import Paper from '@mui/material/Paper'
 
 import { MaterialReactTable } from 'material-react-table'
 
-import { useNavigate, useLocation } from 'react-router-dom'
+import BasicList from './BasicList'
+import BasicEdit from './BasicEdit'
 
 function fields (spec: any) {
   // console.log('layout: ', spec.content.def.cols)
@@ -61,8 +50,6 @@ function BasicLed(props: any) {
 
   const vxg = useSelector((state: any) => state.main.vxg)
 
-  const [showTable, setShowTable] = useState(false)
-
   const [item, setItem] = useState( ({} as any) )
   
   const def = spec.content.def
@@ -85,14 +72,15 @@ function BasicLed(props: any) {
   
   const rows = entlist
 
+  const forms = useForm({
+    defaultValues: ({ } as any),
+  })
   const {
     handleSubmit,
     setValue,
     control
-  } = useForm({
-    defaultValues: ({ } as any),
-  })
-
+  } = forms
+  
   const itemFields: any = fields(spec)
   
   
@@ -108,9 +96,12 @@ function BasicLed(props: any) {
       })
     )
   
-
+  let data = rows //.slice(0, 10)
+  console.log('data: ', data)
+  const [showCmp, setShowCmp] = useState(false)
+  
   useEffect(() => {
-    setShowTable(false)
+    setShowCmp(false)
     
   }, [location.pathname])
   
@@ -121,7 +112,7 @@ function BasicLed(props: any) {
     // a workaround to prevent 
     // 'useEffect' to trigger when re-rendered
     if(triggerLed >= 2) {
-      setShowTable(true)
+      setShowCmp(true)
       // reset fields
       for(let field of itemFields as any) {
         setValue(field.field, '')
@@ -134,134 +125,35 @@ function BasicLed(props: any) {
   }, [ led_add ])
   
   
-  let data = rows //.slice(0, 10)
-  console.log('data: ', data)
-  
   
   return (
     <div className="BasicLed">
-
-      {
-      showTable ?
-        <form
-          className="vxg-form-field"
-          onSubmit={handleSubmit( (data)=> {
-            console.log('data: ', data)
-            // handle data
-            // let item = { ...data }
-            // setItem(item)
-         
-          }) }
-        >
-          <Grid container spacing={3} >
-            {
-              itemFields.map((field: any, index: any) => {
-                // console.log('register: ', item )
-                
-                return ( <Grid item xs={field.size} key={index}>
-                  <Controller
-                    name={field.field}
-                    control={control}
-                    defaultValue={item[field.field] || ''}
-                    render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-                      <TextField
-                        key={ field.field }
-                        label={ field.headerName }
-                        fullWidth
-                        disabled={ !!!field.edit }
-                        onChange={onChange}
-                        value={value}
-                        onBlur={onBlur}
-                        error={!!error}
-                        helperText={error ? error.message : null}
-          
-                      />)}
-                    rules={ field.required ? { required: field.required, validate: (value) => true } : {} }
-                  />
-                </Grid> )
-                
-              })
-            }
-          
-            <Grid item xs={12}>
-              <Grid container justifyContent="space-between" alignItems="center" marginTop={2}>
-                <Grid item>
-                  <BasicButton variant="outlined"
-                    size="large"
-                    onClick={ () => { 
-                      setShowTable(false) 
-                    } }
-                  >
-                    Cancel
-                  </BasicButton> 
-                </Grid>
-                <Grid item>
-                  <BasicButton type="submit" variant="outlined"
-                    size="large"
-                    onClick={ ()=> {
-                      console.log('item: ', item)
-                    } }
-                  >
-                    SAVE
-                  </BasicButton>
-            
-                </Grid>
-              </Grid>
-            </Grid>
-          
-          </Grid>
-        </form> :
-        
-            <MaterialReactTable 
-      columns={columns} 
-      data={data}
-            muiTableBodyRowProps={({ row }) => ({
-        //add onClick to row to select upon clicking anywhere in the row
-        onClick: (event: any)=> {
-          let selitem = { ...data[Number(row.id)] }
-          console.log('item: ', item)
-          for(let field of itemFields as any) {
-            setValue(field.field, selitem[field.field])
-          }
-
-          setShowTable(true)
-
-          setItem(selitem)
-          
-          
-         },
-         sx: { cursor: 'pointer' },
+      <BasicList
+        ctx={ ctx }
+        spec={ spec }
+        data={data}
+        itemFields={itemFields}
+        columns={ columns }
+        Cmp = {
+          <BasicEdit
+            ctx={ ctx }
+            spec={ spec }
+            onClose = { () => {
+              setShowCmp(false)
+            } }
+            onSubmit = { async (item: any) => {
+              await seneca.entity(def.ent).save$(item)
+              setShowCmp(false)
+            } }
+            />
         }
-      )}
-    />
-       /*
-      <DataGrid
-        rows={rows}
-        columns={cols}
-        onRowClick={ (params) => {
-          let selitem = { ...params.row }
-          // console.log('item: ', selitem)
-
-
-          for(let field of itemFields as any) {
-            setValue(field.field, selitem[field.field])
-          }
-
-          setShowTable(true)
-
-          setItem(selitem)
-
-
-
-        }}
-
-        checkboxSelection={false}
+        showCmp = { showCmp }
+        setShowCmp = { setShowCmp }
+        forms = { forms }
+        item = { item }
+        setItem = { setItem }
       />
-       */
-      
-      
-      }
-      
+        
     </div>
   )
 }
