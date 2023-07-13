@@ -33,12 +33,7 @@ function BasicList(props: any) {
     <div className="BasicList">
       {
         showCmp ?
-          Cmp.type({
-            ...Cmp.props,
-            forms,
-            item,
-            itemFields,
-            setShowCmp })
+          Cmp
         :
 	<MaterialReactTable 
 	  columns={columns} 

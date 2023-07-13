@@ -98,6 +98,7 @@ function BasicLed(props: any) {
   
   let data = rows //.slice(0, 10)
   console.log('data: ', data)
+  
   const [showCmp, setShowCmp] = useState(false)
   
   useEffect(() => {
@@ -145,6 +146,10 @@ function BasicLed(props: any) {
               await seneca.entity(def.ent).save$(item)
               setShowCmp(false)
             } }
+            forms = { forms }
+            item = { item }
+            itemFields = { itemFields }
+            setShowCmp = { setShowCmp }
             />
         }
         showCmp = { showCmp }

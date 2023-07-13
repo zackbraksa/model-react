@@ -11,8 +11,8 @@ function BasicEdit(props: any) {
     forms,
     item,
     itemFields,
-    onClose,
-    onSubmit,
+    onClose = () => {},
+    onSubmit = () => {},
   } = props
   
   const { ctx, spec } = props
