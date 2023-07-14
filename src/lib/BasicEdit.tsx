@@ -37,7 +37,7 @@ function BasicEdit(props: any) {
           onSubmit(selitem)
         }) }
       >
-        <Grid container spacing={3} >
+        <Grid container spacing={3}>
           {
             itemFields.map((field: any, index: any) => {
               // console.log('register: ', item )
