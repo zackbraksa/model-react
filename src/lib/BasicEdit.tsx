@@ -5,6 +5,12 @@ import { Controller } from "react-hook-form"
 
 import BasicButton from './BasicButton'
 
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
+
+
+const filter = createFilterOptions()
+
+
 function BasicEdit(props: any) {
   let {
     setShowCmp,
@@ -49,17 +55,57 @@ function BasicEdit(props: any) {
                     control={control}
                     defaultValue={item[field.field] || ''}
                     render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-                      <TextField
-                        key={ field.field }
-                        label={ field.headerName }
-                        fullWidth
-                        disabled={ !!!field.edit }
-                        onChange={onChange}
-                        value={value}
-                        onBlur={onBlur}
-                        error={!!error}
-                        helperText={error ? error.message : null}
-                      />)}
+                      field.kind === 'combobox' ? 
+                        <Autocomplete
+                          freeSolo
+                          id="combo-box"
+                          options={field.options}
+                          fullWidth
+                          selectOnFocus
+                          onBlur={onBlur}
+                          handleHomeEndKeys
+                          value = { value }
+      
+                          filterOptions={(options: any, params: any) => {
+                            const filtered = filter(options, params)
+                            const { inputValue } = params
+                            // Suggest the creation of a new value
+                            const isExisting = options.some((option: any) => inputValue === option)
+
+          
+                            if (inputValue != '' && !isExisting) {
+        
+                              setTimeout(()=>{
+                                console.log('inputValue: ', [inputValue])
+                                onChange(inputValue)
+                              }, 0)
+        
+                              return filtered
+                            }
+
+                            return filtered
+                          }}
+      
+                          onChange={(event: any, selectedValue: any) => { onChange(selectedValue || '') }}
+                          renderInput={(params) => <TextField {...params}
+                                                     label={field.field}
+                                                     onBlur={onBlur}
+                                                     error={!!error}
+                                                     helperText={error ? error.message : null}  />}
+                        />
+                        :
+                        <TextField
+                          key={ field.field }
+                          label={ field.headerName }
+                          fullWidth
+                          disabled={ !!!field.edit }
+                          onChange={onChange}
+                          value={value}
+                          onBlur={onBlur}
+                          error={!!error}
+                          helperText={error ? error.message : null}
+                        /> )
+                    }
                     rules={ field.required ? { required: field.required, validate: (value) => true } : {} }
                   />
                 </Grid> )
