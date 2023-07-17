@@ -7,15 +7,10 @@ import { MaterialReactTable } from 'material-react-table'
 
 function BasicList(props: any) {
    let {
+     onRowClick = () => {},
      data,
      itemFields,
      columns,
-     Cmp,
-     showCmp,
-     setShowCmp,
-     forms,
-     item,
-     setItem,
    } = props
    
   const { ctx, spec } = props
@@ -23,35 +18,19 @@ function BasicList(props: any) {
 
   const vxg = useSelector((state: any) => state.main.vxg)
   
-  const {
-    handleSubmit,
-    setValue,
-    control
-  } = forms
-  
   return (
     <div className="BasicList">
-      {
-        showCmp ?
-          Cmp
-        :
-	<MaterialReactTable 
-	  columns={columns} 
-	  data={data}
-          muiTableBodyRowProps={({ row }) => ({
-            onClick: (event: any)=> {
-              let selitem = { ...data[Number(row.id)] }
-              console.log('item: ', item)
-              for(let field of itemFields as any) {
-	        setValue(field.field, selitem[field.field])
-	      }
-	      setShowCmp(true)
-	      setItem(selitem)
-            },
-	    sx: { cursor: 'pointer' },
-	  })}
+      <MaterialReactTable 
+        columns={columns} 
+	data={data}
+        muiTableBodyRowProps={({ row }) => ({
+          onClick: (event: any)=> {
+            let selitem = { ...data[Number(row.id)] }
+            onRowClick(event, selitem)
+          },
+	  sx: { cursor: 'pointer' },
+	})}
 	/>
-    }
     </div>)
     
 }

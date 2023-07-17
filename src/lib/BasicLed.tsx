@@ -44,6 +44,16 @@ function fields (spec: any) {
 }
 
 
+function showTable(seneca: any, show: any) {
+
+  seneca.act('aim:app,set:state', {
+    section: 'vxg.cmp.BasicLed.tool.show.table',
+    content: show,
+  })
+  
+}
+
+
 function BasicLed(props: any) {
   const { ctx, spec } = props
   const { model, seneca, custom } = ctx()
@@ -99,12 +109,15 @@ function BasicLed(props: any) {
   let data = rows //.slice(0, 10)
   console.log('data: ', data)
   
-  const [showCmp, setShowCmp] = useState(false)
+  
+  
+  const showCmp = vxg.cmp.BasicLed.tool.show.table
+  
   
   useEffect(() => {
-    setShowCmp(false)
+    showTable(seneca, false)
     
-  }, [location.pathname])
+  }, [ location.pathname ])
   
   let led_add = vxg.trigger.led.add
   let [triggerLed, setTriggerLed] = useState(0)
@@ -113,7 +126,7 @@ function BasicLed(props: any) {
     // a workaround to prevent 
     // 'useEffect' to trigger when re-rendered
     if(triggerLed >= 2) {
-      setShowCmp(true)
+      showTable(seneca, true)
       // reset fields
       for(let field of itemFields as any) {
         setValue(field.field, '')
@@ -129,36 +142,38 @@ function BasicLed(props: any) {
   
   return (
     <div className="BasicLed">
+    {
+      !showCmp ? 
       <BasicList
         ctx={ ctx }
         spec={ spec }
         data={data}
         itemFields={itemFields}
         columns={ columns }
-        Cmp = {
-          <BasicEdit
-            ctx={ ctx }
-            spec={ spec }
-            onClose = { () => {
-              setShowCmp(false)
-            } }
-            onSubmit = { async (item: any) => {
-              await seneca.entity(def.ent).save$(item)
-              setShowCmp(false)
-            } }
-            forms = { forms }
-            item = { item }
-            itemFields = { itemFields }
-            setShowCmp = { setShowCmp }
-            />
-        }
-        showCmp = { showCmp }
-        setShowCmp = { setShowCmp }
-        forms = { forms }
-        item = { item }
-        setItem = { setItem }
-      />
-        
+        onRowClick = { (event: any, item: any) => {
+          console.log('item: ', item)
+          for(let field of itemFields as any) {
+	    setValue(field.field, item[field.field])
+	  }
+	  showTable(seneca, true)
+	  setItem(item)
+        } }
+      /> : 
+        <BasicEdit
+          ctx={ ctx }
+          spec={ spec }
+          onClose = { () => {
+            showTable(seneca, false)
+          } }
+          onSubmit = { async (item: any) => {
+            await seneca.entity(def.ent).save$(item)
+            showTable(seneca, false)
+          } }
+          forms = { forms }
+          item = { item }
+          itemFields = { itemFields }
+        />
+    }
     </div>
   )
 }

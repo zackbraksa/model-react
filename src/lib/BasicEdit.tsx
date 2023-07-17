@@ -13,7 +13,6 @@ const filter = createFilterOptions()
 
 function BasicEdit(props: any) {
   let {
-    setShowCmp,
     forms,
     item,
     itemFields,
