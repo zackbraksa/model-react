@@ -116,6 +116,7 @@ function BasicLed(props: any) {
   
   useEffect(() => {
     showTable(seneca, false)
+    setItem({})
     
   }, [ location.pathname ])
   
@@ -137,7 +138,6 @@ function BasicLed(props: any) {
 
     setTriggerLed(++triggerLed)
   }, [ led_add ])
-  
   
   
   return (
