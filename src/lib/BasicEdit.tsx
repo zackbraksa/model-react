@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
+
 import { Grid } from '@mui/material'
 import TextField from '@mui/material/TextField'
 
-import { Controller } from "react-hook-form"
+import { useForm, Controller } from 'react-hook-form'
 
 import BasicButton from './BasicButton'
 
@@ -13,7 +15,6 @@ const filter = createFilterOptions()
 
 function BasicEdit(props: any) {
   let {
-    forms,
     item,
     itemFields,
     onClose = () => {},
@@ -25,6 +26,18 @@ function BasicEdit(props: any) {
   
   const def = spec.content.def
   const { ent, cols } = def
+  
+  
+  useEffect( () => {
+    for(let field of itemFields as any) {
+      setValue(field.field, item[field.field] || '')
+    }
+  }, [ item.id ])
+  
+  
+  const forms = useForm({
+    defaultValues: ({ } as any),
+  })
   
   const {
     handleSubmit,

@@ -3,9 +3,6 @@ import { useSelector } from 'react-redux'
 
 import { useNavigate, useLocation } from 'react-router-dom'
 
-
-import { useForm, Controller } from "react-hook-form"
-
 import BasicButton from './BasicButton'
 
 import { styled } from '@mui/material/styles'
@@ -70,15 +67,6 @@ function BasicLed(props: any) {
 
   
   const rows = entlist
-
-  const forms = useForm({
-    defaultValues: ({ } as any),
-  })
-  const {
-    handleSubmit,
-    setValue,
-    control
-  } = forms
   
   const itemFields: any = fields(spec)
   
@@ -109,11 +97,6 @@ function BasicLed(props: any) {
     // a workaround to prevent 
     // 'useEffect' to trigger when re-rendered
     if(triggerLed >= 2) {
-      // reset fields
-      for(let field of itemFields as any) {
-        setValue(field.field, '')
-      }
-
       setItem( { entity$: '-/' + def.ent } )
     }
 
@@ -134,9 +117,6 @@ function BasicLed(props: any) {
           columns={ columns }
           onRowClick = { (event: any, item: any) => {
             console.log('item: ', item)
-            for(let field of itemFields as any) {
-	      setValue(field.field, item[field.field])
-	    }
 	    setItem(item)
           } }
         /> : 
@@ -150,7 +130,6 @@ function BasicLed(props: any) {
             await seneca.entity(def.ent).save$(item)
             setItem({})
           } }
-          forms = { forms }
           item = { item }
           itemFields = { itemFields }
         />
