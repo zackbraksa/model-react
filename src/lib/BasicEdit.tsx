@@ -87,7 +87,7 @@ function BasicEdit(props: any) {
       
                           onChange={(event: any, selectedValue: any) => { onChange(selectedValue || '') }}
                           renderInput={(params) => <TextField {...params}
-                                                     label={field.field}
+                                                     label={field.headerName}
                                                      onBlur={onBlur}
                                                      error={!!error}
                                                      helperText={error ? error.message : null}  />}
