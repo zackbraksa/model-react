@@ -43,24 +43,13 @@ function fields (spec: any) {
   return spec.content.def.cols
 }
 
-
-function showTable(seneca: any, show: any) {
-
-  seneca.act('aim:app,set:state', {
-    section: 'vxg.cmp.BasicLed.tool.show.table',
-    content: show,
-  })
-  
-}
-
-
 function BasicLed(props: any) {
   const { ctx, spec } = props
   const { model, seneca, custom } = ctx()
 
   const vxg = useSelector((state: any) => state.main.vxg)
 
-  const [item, setItem] = useState( ({} as any) )
+  const [item, setItem] = useState( {} as any)
   
   const def = spec.content.def
   const { ent, cols } = def
@@ -109,15 +98,8 @@ function BasicLed(props: any) {
   let data = rows //.slice(0, 10)
   console.log('data: ', data)
   
-  
-  
-  const showCmp = vxg.cmp.BasicLed.tool.show.table
-  
-  
   useEffect(() => {
-    showTable(seneca, false)
     setItem({})
-    
   }, [ location.pathname ])
   
   let led_add = vxg.trigger.led.add
@@ -127,23 +109,23 @@ function BasicLed(props: any) {
     // a workaround to prevent 
     // 'useEffect' to trigger when re-rendered
     if(triggerLed >= 2) {
-      showTable(seneca, true)
       // reset fields
       for(let field of itemFields as any) {
         setValue(field.field, '')
       }
 
-      setItem( {} )
+      setItem( { entity$: '-/' + def.ent } )
     }
 
     setTriggerLed(++triggerLed)
   }, [ led_add ])
   
+  console.log('item::: ', item, def.ent)
   
   return (
     <div className="BasicLed">
     {
-      !showCmp ? 
+      !(item.entity$ == '-/' + def.ent) ? 
       <BasicList
         ctx={ ctx }
         spec={ spec }
@@ -155,7 +137,6 @@ function BasicLed(props: any) {
           for(let field of itemFields as any) {
 	    setValue(field.field, item[field.field])
 	  }
-	  showTable(seneca, true)
 	  setItem(item)
         } }
       /> : 
@@ -163,11 +144,11 @@ function BasicLed(props: any) {
           ctx={ ctx }
           spec={ spec }
           onClose = { () => {
-            showTable(seneca, false)
+            setItem({})
           } }
           onSubmit = { async (item: any) => {
             await seneca.entity(def.ent).save$(item)
-            showTable(seneca, false)
+            setItem({})
           } }
           forms = { forms }
           item = { item }
