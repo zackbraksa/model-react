@@ -63,6 +63,7 @@ function BasicEdit(props: any) {
                           selectOnFocus
                           onBlur={onBlur}
                           handleHomeEndKeys
+                          disableClearable={''==value}
                           value = { value }
       
                           filterOptions={(options: any, params: any) => {
@@ -75,7 +76,6 @@ function BasicEdit(props: any) {
                             if (inputValue != '' && !isExisting) {
         
                               setTimeout(()=>{
-                                console.log('inputValue: ', [inputValue])
                                 onChange(inputValue)
                               }, 0)
         
@@ -105,7 +105,7 @@ function BasicEdit(props: any) {
                           helperText={error ? error.message : null}
                         /> )
                     }
-                    rules={ field.required ? { required: field.required, validate: (value) => true } : {} }
+                    rules={ field.required ? { required: field.required, validate: field.validate || ((value) => true) } : {} }
                   />
                 </Grid> )
                 
