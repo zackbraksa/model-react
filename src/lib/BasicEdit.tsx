@@ -32,7 +32,7 @@ function BasicEdit(props: any) {
     for(let field of itemFields as any) {
       setValue(field.field, item[field.field] || '')
     }
-  }, [ item.id ])
+  }, [ item ])
   
   
   const forms = useForm({
