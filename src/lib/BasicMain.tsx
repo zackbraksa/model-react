@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import { useSelector } from 'react-redux'
 
@@ -59,6 +59,21 @@ function BasicMain(props: any) {
           <Route path="/view">
             { views.map((view:any)=> {
               const Cmp:any = makeCmp(view, ctx)
+              if(view.paramId) {
+                return (
+                  <Fragment key={view.name}>
+                    <Route
+                      key={view.name}
+                      path={ '/view/'+view.name }
+                      element={<Cmp ctx={ctx} spec={view}/>}
+                    />
+                    <Route
+                      key={view.name}
+                      path={ '/view/' + view.name + '/:' + view.paramId }
+                      element={<Cmp ctx={ctx} spec={view}/>}
+                    />   
+                  </Fragment>)
+              }
               return <Route
                 key={view.name}
                 path={'/view/'+view.name}
