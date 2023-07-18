@@ -125,21 +125,21 @@ function BasicLed(props: any) {
   return (
     <div className="BasicLed">
     {
-      !(item.entity$ == '-/' + def.ent) ? 
-      <BasicList
-        ctx={ ctx }
-        spec={ spec }
-        data={data}
-        itemFields={itemFields}
-        columns={ columns }
-        onRowClick = { (event: any, item: any) => {
-          console.log('item: ', item)
-          for(let field of itemFields as any) {
-	    setValue(field.field, item[field.field])
-	  }
-	  setItem(item)
-        } }
-      /> : 
+      '-/' + def.ent !==  item.entity$ ? 
+        <BasicList
+          ctx={ ctx }
+          spec={ spec }
+          data={data}
+          itemFields={itemFields}
+          columns={ columns }
+          onRowClick = { (event: any, item: any) => {
+            console.log('item: ', item)
+            for(let field of itemFields as any) {
+	      setValue(field.field, item[field.field])
+	    }
+	    setItem(item)
+          } }
+        /> : 
         <BasicEdit
           ctx={ ctx }
           spec={ spec }
