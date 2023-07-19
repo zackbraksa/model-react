@@ -10,5 +10,6 @@ export { default as BasicEdit } from './BasicEdit'
 
 export { BasicDrawer, BasicDrawerHeader } from './BasicDrawer'
 export { default as BasicButton } from './BasicEdit'
+export { default as BasicAppBar } from './BasicAppBar'
 
 export { default as BasicAuth } from './BasicAuth'

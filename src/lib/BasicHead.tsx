@@ -12,36 +12,12 @@ import {
   IconButton,
 } from "@mui/material"
 
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
-
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles'
 
 import BasicButton from './BasicButton'
 
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean,
-  drawerwidth?: any,
-}
+import BasicAppBar from './BasicAppBar'
 
-// TODO: BasicAppBar
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop: any) => prop !== 'open',
-})<AppBarProps>(({ theme, open, drawerwidth }: any) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerwidth,
-    width: `calc(100% - ${drawerwidth})`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}))
 
 function onOpen(seneca: any) {
   seneca.act('aim:app,set:state', {
@@ -128,7 +104,7 @@ function BasicHead(props: any) {
   let drawerwidth = '16rem'
   
   return (
-    <AppBar
+    <BasicAppBar
       //position="fixed"
       drawerwidth={drawerwidth}
       open={open}
@@ -200,7 +176,7 @@ function BasicHead(props: any) {
           { userName }
         </Typography>
       </Toolbar>
-    </AppBar>
+    </BasicAppBar>
   )
 }
 
