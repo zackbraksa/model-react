@@ -53,9 +53,17 @@ import {
   AssignmentTurnedInOutlined,
   TextSnippetOutlined,  
   HighlightAlt,
+  SupervisorAccount as AccountIcon,
   Map as MapIcon,
+  Tablet as TabletIcon,
+  Update as UpdateIcon,
+  Security as AdminIcon,
+  ContentPaste as ClipBoardIcon,
+  FitScreen,
+  Apps as DotsSquareIcon,
 
 } from "@mui/icons-material"
+
 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -127,6 +135,13 @@ const iconmap: any = {
   'docs': TextSnippetOutlined,
   'hightlight': HighlightAlt,
   'map': MapIcon,
+  'account': AccountIcon,
+  'tablet': TabletIcon,
+  'update': UpdateIcon,
+  'admin': AdminIcon,
+  'clipboard': ClipBoardIcon,
+  'fitscreen': FitScreen,
+  'dots-square': DotsSquareIcon,
 }
 
 function makeIcon(name: string) {
