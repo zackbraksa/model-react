@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import { useNavigate, useLocation } from 'react-router-dom'
-
-import BasicButton from './BasicButton'
-
-import { styled } from '@mui/material/styles'
-import Paper from '@mui/material/Paper'
+import { useLocation } from 'react-router-dom'
 
 import { MaterialReactTable } from 'material-react-table'
 

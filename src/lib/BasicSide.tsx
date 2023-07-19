@@ -1,24 +1,16 @@
-
 import React, { useState } from 'react'
 
 import { useSelector } from 'react-redux'
 
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles'
-
-// icons
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-
 import { useNavigate, useLocation } from 'react-router-dom'
-
-import ToggleButton from '@mui/material/ToggleButton'
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
 import {
   AppBar,
   Box,
   Button,
   ButtonGroup,
+  ToggleButton,
+  ToggleButtonGroup,
   Container,
   CssBaseline,
   Divider,
@@ -34,20 +26,11 @@ import {
 } from "@mui/material"
 
 
-import MuiDrawer from '@mui/material/Drawer'
-
 import {
+  ChevronLeft,
   MoveToInbox as InboxIcon,
   Mail as MailIcon,
-
-  // mdiAccount,
-  // mdiHistory,
-  // mdiFactory,
-  // mdiGate,
-  // mdiKeyChain,
-  // mdiMapLegend,
-  // mdiFileDocumentOutline,
-
+  
   FactoryOutlined,
   KeyOutlined,
   AssignmentTurnedInOutlined,
@@ -64,67 +47,10 @@ import {
 
 } from "@mui/icons-material"
 
-
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  padding: theme.spacing(0, 1),
-  minHeight: '43px',
-  // border: '2px solid black',
-  // border: '2px solid white',
-  // padding: '10px 10px 10px 10px',
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}))
-
-
-interface DrawerProps {
-  open?: boolean,
-  drawerwidth?: any,
-}
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })<DrawerProps>(
-  ({ theme, open, drawerwidth }) => ({
-    width: drawerwidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme, drawerwidth),
-      '& .MuiDrawer-paper': openedMixin(theme, drawerwidth),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
-  }),
-)
-
-
-const openedMixin = (theme: Theme, drawerwidth: any): CSSObject => ({
-  // backgroundColor: theme.palette.primary.main,
-  width: drawerwidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-})
-
-const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  display: 'none',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-})
+import {
+  BasicDrawer,
+  BasicDrawerHeader
+} from './BasicDrawer'
 
 
 
@@ -310,18 +236,18 @@ function BasicSide(props: any) {
   }
 
   return (
-    <Drawer
+    <BasicDrawer
       variant="permanent"
       drawerwidth = { drawerwidth }
       open={ open }
     >
-      <DrawerHeader>
+      <BasicDrawerHeader>
         <img src={part.logo.img}
           style={ { width: '11rem' } } />
         <IconButton onClick={()=>onClose(seneca)}>
-          <ChevronLeftIcon sx={{ color: 'black' }} />
+          <ChevronLeft sx={{ color: 'black' }} />
         </IconButton>
-      </DrawerHeader>
+      </BasicDrawerHeader>
         
         
       <SectionButtons sections={ sectiondefs }/>
@@ -342,7 +268,7 @@ function BasicSide(props: any) {
             }
           })
         }
-    </Drawer>
+    </BasicDrawer>
     )
 }
 

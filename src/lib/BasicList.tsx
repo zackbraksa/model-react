@@ -38,26 +38,16 @@ function BasicList(props: any) {
 export default BasicList
 
 /*
-<DataGrid
-rows={rows}
-columns={cols}
-onRowClick={ (params) => {
-  let selitem = { ...params.row }
-  // console.log('item: ', selitem)
+  <DataGrid
+    rows={rows}
+    columns={cols}
+    onRowClick={ (params) => {
+      let selitem = { ...params.row }
+      // console.log('item: ', selitem)
+      onRowClick({}, selitem)
+      
+    }}
 
-
-  for(let field of itemFields as any) {
-    setValue(field.field, selitem[field.field])
-  }
-
-  setShowTable(true)
-
-  setItem(selitem)
-
-
-
-}}
-
-checkboxSelection={false}
-/>
+    checkboxSelection={false}
+  />
 */
