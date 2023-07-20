@@ -19,6 +19,7 @@ function BasicEdit(props: any) {
     itemFields,
     onClose = () => {},
     onSubmit = () => {},
+    children = [],
   } = props
   
   const { ctx, spec } = props
@@ -124,6 +125,13 @@ function BasicEdit(props: any) {
                 </Grid> )
                 
             })
+          }
+          
+          { 
+            0 != children.length ?
+            <Grid item>
+              { children }
+            </Grid> : null
           }
           
           <Grid item xs={12}>
