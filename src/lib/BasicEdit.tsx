@@ -30,7 +30,7 @@ function BasicEdit(props: any) {
   
   useEffect( () => {
     for(let field of itemFields as any) {
-      setValue(field.field, item[field.field] || '')
+      setValue(field.field, item[field.field] || field.defaultValue || '')
     }
   }, [ item ])
   
@@ -65,7 +65,7 @@ function BasicEdit(props: any) {
                   <Controller
                     name={field.field}
                     control={control}
-                    defaultValue={item[field.field] || ''}
+                    defaultValue = { item[field.field] || ''}
                     render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                       field.kind === 'combobox' ? 
                         <Autocomplete
@@ -77,6 +77,7 @@ function BasicEdit(props: any) {
                           onBlur={onBlur}
                           handleHomeEndKeys
                           disableClearable={''==value}
+                          disabled={ !!!field.edit }
                           value = { value }
       
                           filterOptions={(options: any, params: any) => {

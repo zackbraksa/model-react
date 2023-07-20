@@ -107,8 +107,7 @@ function BasicLed(props: any) {
         <BasicList
           ctx={ ctx }
           spec={ spec }
-          data={data}
-          itemFields={itemFields}
+          data={ data }
           columns={ columns }
           onRowClick = { (event: any, item: any) => {
             console.log('item: ', item)

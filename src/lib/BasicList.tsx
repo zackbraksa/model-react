@@ -9,7 +9,6 @@ function BasicList(props: any) {
    let {
      onRowClick = () => {},
      data,
-     itemFields,
      columns,
    } = props
    
