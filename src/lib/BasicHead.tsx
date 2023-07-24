@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useState}  from 'react'
 import { useSelector } from 'react-redux'
 
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -10,6 +10,7 @@ import {
   Autocomplete,
   Typography,
   IconButton,
+  createFilterOptions,
 } from "@mui/material"
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
@@ -26,6 +27,7 @@ function onOpen(seneca: any) {
   })
 }
 
+const filter = createFilterOptions()
 
 function resolveOptions(tooldef: any, tooldata:any) {
   let options = []
@@ -101,6 +103,7 @@ function BasicHead(props: any) {
   const viewPath: any = location.pathname.split('/')[2]
   let add = model.app.web.frame.private.view[viewPath].content.def.add || { active: false }
   
+  
   let drawerwidth = '16rem'
   
   return (
@@ -129,24 +132,31 @@ function BasicHead(props: any) {
           
 
 
-        { tooldefs.map(tooldef=> {
-
+        { tooldefs.map(tooldef => {
           if('autocomplete' === tooldef.kind) {
            return <Autocomplete
-            freeSolo = { true }
-            forcePopupIcon={ true }
+            freeSolo
+            forcePopupIcon
             value={valuemap[tooldef.name] || tooldef.defaultvalue || ''}
             key={tooldef.name}
-            options={resolveOptions(tooldef,tooldata)}
+            options={ resolveOptions(tooldef,tooldata) }
+            // disableClearable={ typeof vxg.cmp.BasicHead.tool[tooldef.name].selected != 'object' }
             size='small'
-            sx={{ 
+            sx={{
+              paddingLeft: '1em',
               width: '20rem',
             }}
+            filterOptions={ (options: any, params: any) => {
+              const filtered = filter(options, params)
+              // const { inputValue } = params
+              return filtered
+            } }
             renderInput={(params) => <TextField {...params} label={tooldef.title} />}
             onChange={(event:any,newval:any)=>{
               seneca.act('aim:app,set:state', {
                 section: 'vxg.cmp.BasicHead.tool.'+tooldef.name+'.selected',
-                content: newval.ent,
+                content: 'search'==tooldef.mode && typeof newval === 'string' ? 
+                  { [tooldef.options.label.field]: newval } : newval?.ent,
               })
             }}
             isOptionEqualToValue={(opt:any,val:any)=>
