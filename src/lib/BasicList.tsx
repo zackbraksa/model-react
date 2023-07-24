@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { MaterialReactTable } from 'material-react-table'
@@ -14,12 +14,20 @@ function BasicList(props: any) {
    
   const { ctx, spec } = props
   const { model, seneca, custom } = ctx()
-
+  
   const vxg = useSelector((state: any) => state.main.vxg)
+
+  
   
   return (
     <div className="BasicList">
-      <MaterialReactTable 
+      <MaterialReactTable
+        enableColumnActions={false}
+        enableColumnFilters={false}
+        enablePagination={true}
+        enableSorting={false}
+        enableBottomToolbar={true}
+        enableTopToolbar={false}
         columns={columns} 
 	data={data}
         muiTableBodyRowProps={({ row }) => ({
