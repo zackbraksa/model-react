@@ -32,6 +32,7 @@
     "@emotion/react": ">=11",
     "@emotion/styled": ">=11",
     "@fontsource/roboto": ">=4",
+    "@seneca/search-mini": "0.1.6",
     "@mdi/js": ">=7",
     "@mdi/react": ">=1",
     "@mui/icons-material": ">=5",
