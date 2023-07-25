@@ -86,7 +86,7 @@ function BasicEdit(props: any) {
                           disableClearable={''==value}
                           disabled={ !!!field.edit }
                           value = { value }
-                          getOptionLabel={(option: any) => ( 'status' === field.type ? field.options[option]?.title : option) || '' }
+                          getOptionLabel={(option: any) => ( 'status' === field.type ? field.options[option]?.title : option) || option || '' }
       
                           filterOptions={(options: any, params: any) => {
                             const filtered = filter(options, params)
