@@ -12,6 +12,9 @@ import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
 
 const filter = createFilterOptions()
 
+function resolveOptions(options: any) {
+}
+
 
 function BasicEdit(props: any) {
   let {
@@ -52,7 +55,10 @@ function BasicEdit(props: any) {
       <form
         className="vxg-form-field"
         onSubmit={handleSubmit( async (data: any)=> {
-          let selitem = { ...item, ...data }
+          let selitem = { ...item }
+          for(let k in data) {
+            selitem[k] = data[k]
+          }
           onSubmit(selitem)
         }) }
       >
@@ -72,7 +78,7 @@ function BasicEdit(props: any) {
                         <Autocomplete
                           freeSolo
                           id="combo-box"
-                          options={field.options}
+                          options={ 'status' === field.type ? Object.keys(field.options) : field.options }
                           fullWidth
                           selectOnFocus
                           onBlur={onBlur}
@@ -80,6 +86,7 @@ function BasicEdit(props: any) {
                           disableClearable={''==value}
                           disabled={ !!!field.edit }
                           value = { value }
+                          getOptionLabel={(option: any) => ( 'status' === field.type ? field.options[option]?.title : option) || '' }
       
                           filterOptions={(options: any, params: any) => {
                             const filtered = filter(options, params)
@@ -95,8 +102,8 @@ function BasicEdit(props: any) {
                               }, 0)
         
                               return filtered
+                            
                             }
-
                             return filtered
                           }}
       
