@@ -130,6 +130,9 @@ function BasicEdit(props: any) {
                           onBlur={onBlur}
                           error={!!error}
                           helperText={error ? error.message : null}
+                          sx = { {
+                            textAlign: 'left',
+                          } }
                         >	
                         {
                          field.type == 'status' ?
