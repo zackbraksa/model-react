@@ -1,14 +1,16 @@
 import { useEffect } from 'react'
 
-import { Grid } from '@mui/material'
-import TextField from '@mui/material/TextField'
+import {
+  Grid,
+  TextField,
+  Autocomplete,
+  createFilterOptions,
+  MenuItem
+} from '@mui/material'
 
 import { useForm, Controller } from 'react-hook-form'
 
 import BasicButton from './BasicButton'
-
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
-
 
 const filter = createFilterOptions()
 
@@ -74,11 +76,11 @@ function BasicEdit(props: any) {
                     control={control}
                     defaultValue = { item[field.field] || ''}
                     render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-                      field.kind === 'combobox' ? 
+                      field.kind === 'combobox' && 'status' != field.type ? 
                         <Autocomplete
                           freeSolo
                           id="combo-box"
-                          options={ 'status' === field.type ? Object.keys(field.options) : field.options }
+                          options={ field.options }
                           fullWidth
                           selectOnFocus
                           onBlur={onBlur}
@@ -86,8 +88,7 @@ function BasicEdit(props: any) {
                           disableClearable={''==value}
                           disabled={ !!!field.edit }
                           value = { value }
-                          getOptionLabel={(option: any) => ( 'status' === field.type ? field.options[option]?.title : option) || option || '' }
-      
+                          getOptionLabel={(option: any) => option || '' }
                           filterOptions={(options: any, params: any) => {
                             const filtered = filter(options, params)
                             const { inputValue } = params
@@ -108,24 +109,41 @@ function BasicEdit(props: any) {
                           }}
       
                           onChange={(event: any, selectedValue: any) => { onChange(selectedValue || '') }}
-                          renderInput={(params) => <TextField {...params}
+                          renderInput={(params) => <TextField
+                                                     {...params} 
                                                      label={field.headerName}
                                                      onBlur={onBlur}
                                                      error={!!error}
-                                                     helperText={error ? error.message : null}  />}
+                                                     helperText={error ? error.message : null}
+                                                     />
+                                                    }
                         />
                         :
                         <TextField
                           key={ field.field }
                           label={ field.headerName }
                           fullWidth
+                          select = { 'status' == field.type }
                           disabled={ !!!field.edit }
                           onChange={onChange}
                           value={value}
                           onBlur={onBlur}
                           error={!!error}
                           helperText={error ? error.message : null}
-                        /> )
+                        >	
+                        {
+                         field.type == 'status' ?
+                           Object.keys(field.options).map((option)=>
+                             <MenuItem key={option} value={option} >
+                               { field.options[option]?.title }
+                             </MenuItem>
+                           )
+                         :
+                           null
+                        }
+                        
+                        </TextField>
+                       )
                     }
                     rules={ field.required ? { required: field.required, validate: field.validate || ((value) => true) } : {} }
                   />
