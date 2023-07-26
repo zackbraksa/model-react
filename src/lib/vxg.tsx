@@ -32,7 +32,6 @@ class Vxg {
     for (let entry of this.config.allow.match) {
       this.match.allow.add(entry, { allow: true })
     }
-    console.log('match: ', this.match)
   }
 
   allow(this: any, match: any) {

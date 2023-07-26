@@ -84,6 +84,12 @@ function onClose(seneca: any) {
 
 }
 
+function allow(vxg: any, item: any) {
+  let out = (item && item.allow) ? vxg.allow( item.allow ) : true
+  return out
+}
+    
+    
 function BasicSide(props: any) {
   const {
     vxg,
@@ -168,8 +174,9 @@ function BasicSide(props: any) {
               selected={ viewPath == view.name }
               sx={
                 {
+                  display: allow(vxg, view) ? null : 'none',
                   width: '100%',
-                  display: 'flex',
+                  // display: 'flex',
                   justifyContent: 'flex-start',
                   marginBottom: '10px',
                   border: 0,
@@ -221,7 +228,10 @@ function BasicSide(props: any) {
               <ToggleButton
                 value="check"
                 selected={showViewsData[sectionNumber]}
-                sx={{ padding: '0.5em', width: '100%' }} 
+                sx={{
+                  padding: '0.5em',
+                  width: '100%',
+                }} 
                 key={section.name}
                 onChange={(event: any) => {
                   toggle(sectionNumber)(event)
