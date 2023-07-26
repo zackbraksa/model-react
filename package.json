@@ -29,6 +29,8 @@
   },
   "peerDependencies": {
     "react-hook-form": "^7.43.5",
+    "patrun": "7.2.5",
+    "@jsonic/jsonic-next": "2.10.0",
     "@emotion/react": ">=11",
     "@emotion/styled": ">=11",
     "@fontsource/roboto": ">=4",
