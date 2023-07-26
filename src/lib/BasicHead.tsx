@@ -52,7 +52,12 @@ function addItem(seneca: any, led_add: any) {
 }
 
 function BasicHead(props: any) {
-  const { ctx, spec } = props
+  const {
+    vxg,
+    ctx,
+    spec
+  } = props
+  
   const { model, seneca } = ctx()
   
   const {
@@ -96,9 +101,9 @@ function BasicHead(props: any) {
   
   
   
-  const vxg = useSelector((state: any) => state.main.vxg)
-  const open = vxg.cmp.BasicSide.show
-  let led_add = vxg.trigger.led.add
+  const vxgState = useSelector((state: any) => state.main.vxg)
+  const open = vxgState.cmp.BasicSide.show
+  let led_add = vxgState.trigger.led.add
   
   const viewPath: any = location.pathname.split('/')[2]
   let add = model.app.web.frame.private.view[viewPath].content.def.add || { active: false }

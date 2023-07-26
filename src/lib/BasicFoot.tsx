@@ -5,7 +5,11 @@ import { Box, Container, Grid, Typography } from "@mui/material"
 
 
 function BasicFoot(props: any) {
-  const { ctx, spec } = props
+  const {
+    vxg,
+    ctx,
+    spec
+  } = props
   const model = ctx().model
   
   const { frame } = spec

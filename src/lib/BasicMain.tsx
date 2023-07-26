@@ -30,18 +30,20 @@ function makeCmp(view: any, ctx: any) {
 
 
 function BasicMain(props: any) {
-  const { ctx, spec } = props
+  const {
+    vxg,
+    ctx,
+    spec,
+  } = props
   const { model, content } = ctx()
   
   const { frame } = spec
-  
-  const vxg = useSelector((state: any) => state.main.vxg)
   
   const part = model.app.web.frame[frame].part.main
 
   const views = Object.values(model.app.web.frame.private.view)
   
-  const sideOpen = vxg.cmp.BasicSide.show
+  const sideOpen = useSelector((state: any) => state.main.vxg.cmp.BasicSide.show)
   
   
   const divStyle = {
@@ -68,19 +70,19 @@ function BasicMain(props: any) {
                       <Route
                         key={view.name}
                         path={ '/view/'+view.name }
-                        element={<Cmp ctx={ctx} spec={view}/>}
+                        element={<Cmp vxg={vxg} ctx={ctx} spec={view}/>}
                       />
                       <Route
                         key={view.name}
                         path={ '/view/' + view.name + '/:' + view.paramId }
-                        element={<Cmp ctx={ctx} spec={view}/>}
+                        element={<Cmp vxg={vxg} ctx={ctx} spec={view}/>}
                       />   
                     </Fragment>)
                 }
                 return <Route
                   key={view.name}
                   path={'/view/'+view.name}
-                  element={<Cmp ctx={ctx} spec={view}/>}
+                  element={<Cmp vxg={vxg} ctx={ctx} spec={view}/>}
                 />
               })
             }
