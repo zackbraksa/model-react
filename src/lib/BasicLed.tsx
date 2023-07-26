@@ -36,10 +36,14 @@ function fields (spec: any) {
 }
 
 function BasicLed(props: any) {
-  const { ctx, spec } = props
+  const {
+    vxg,
+    ctx,
+    spec
+  } = props
   const { model, seneca, custom } = ctx()
 
-  const vxg = useSelector((state: any) => state.main.vxg)
+  const vxgState = useSelector((state: any) => state.main.vxg)
 
   const [item, setItem] = useState( {} as any)
   
@@ -85,7 +89,7 @@ function BasicLed(props: any) {
     setItem({})
   }, [ location.pathname ])
   
-  let led_add = vxg.trigger.led.add
+  let led_add = vxgState.trigger.led.add
   let [triggerLed, setTriggerLed] = useState(0)
   useEffect( ()=> {
 
