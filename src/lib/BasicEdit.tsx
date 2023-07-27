@@ -157,7 +157,7 @@ function BasicEdit(props: any) {
           
           { 
             0 != children.length ?
-            <Grid item>
+            <Grid item xs={12}>
               { children }
             </Grid> : null
           }

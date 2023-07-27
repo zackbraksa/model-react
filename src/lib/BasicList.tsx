@@ -10,6 +10,7 @@ function BasicList(props: any) {
      onRowClick = () => {},
      data,
      columns,
+     sx = {},
    } = props
    
   const { ctx, spec } = props
@@ -20,7 +21,7 @@ function BasicList(props: any) {
   
   
   return (
-    <div className="BasicList">
+    <div className="BasicList" style = { { ...sx } } >
       <MaterialReactTable
         enableColumnActions={false}
         enableColumnFilters={false}
