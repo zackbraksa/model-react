@@ -7,14 +7,14 @@ interface BProps extends MuiButtonProps {
 declare const BasicButton: import("@emotion/styled").StyledComponent<{
     children?: import("react").ReactNode;
     classes?: Partial<import("@mui/material").ButtonClasses> | undefined;
-    color?: "inherit" | "error" | "primary" | "secondary" | "info" | "success" | "warning" | undefined;
+    color?: "inherit" | "primary" | "secondary" | "error" | "info" | "success" | "warning" | undefined;
     disabled?: boolean | undefined;
     disableElevation?: boolean | undefined;
     disableFocusRipple?: boolean | undefined;
     endIcon?: import("react").ReactNode;
     fullWidth?: boolean | undefined;
     href?: string | undefined;
-    size?: "small" | "large" | "medium" | undefined;
+    size?: "small" | "medium" | "large" | undefined;
     startIcon?: import("react").ReactNode;
     sx?: import("@mui/material").SxProps<Theme> | undefined;
     variant?: "text" | "outlined" | "contained" | undefined;
@@ -36,5 +36,5 @@ declare const BasicButton: import("@emotion/styled").StyledComponent<{
     touchRippleRef?: import("react").Ref<import("@mui/material/ButtonBase/TouchRipple").TouchRippleActions> | undefined;
 }, "classes"> & import("@mui/material/OverridableComponent").CommonProps & Omit<Omit<import("react").DetailedHTMLProps<import("react").ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref"> & {
     ref?: ((instance: HTMLButtonElement | null) => void) | import("react").RefObject<HTMLButtonElement> | null | undefined;
-}, "children" | keyof import("@mui/material/OverridableComponent").CommonProps | "sx" | "tabIndex" | "color" | "href" | "disabled" | "action" | "size" | "variant" | "fullWidth" | "centerRipple" | "disableRipple" | "disableTouchRipple" | "focusRipple" | "focusVisibleClassName" | "LinkComponent" | "onFocusVisible" | "TouchRippleProps" | "touchRippleRef" | "disableElevation" | "disableFocusRipple" | "endIcon" | "startIcon"> & import("@mui/system").MUIStyledCommonProps<Theme> & BProps, {}, {}>;
+}, "children" | keyof import("@mui/material/OverridableComponent").CommonProps | "sx" | "variant" | "tabIndex" | "color" | "href" | "disabled" | "action" | "size" | "fullWidth" | "centerRipple" | "disableRipple" | "disableTouchRipple" | "focusRipple" | "focusVisibleClassName" | "LinkComponent" | "onFocusVisible" | "TouchRippleProps" | "touchRippleRef" | "disableElevation" | "disableFocusRipple" | "endIcon" | "startIcon"> & import("@mui/system").MUIStyledCommonProps<Theme> & BProps, {}, {}>;
 export default BasicButton;

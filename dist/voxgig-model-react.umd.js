@@ -34,6 +34,10 @@ var __objRest = (source, exclude) => {
     }
   return target;
 };
+var __publicField = (obj, key, value) => {
+  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  return value;
+};
 var __async = (__this, __arguments, generator) => {
   return new Promise((resolve, reject) => {
     var fulfilled = (value) => {
@@ -1062,33 +1066,66 @@ var __async = (__this, __arguments, generator) => {
     jsx,
     jsxs
   }, Symbol.toStringTag, { value: "Module" }));
-  function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null)
-      return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for (i = 0; i < sourceKeys.length; i++) {
-      key = sourceKeys[i];
-      if (excluded.indexOf(key) >= 0)
-        continue;
-      target[key] = source[key];
+  var ChevronRight = {};
+  var interopRequireDefaultExports = {};
+  var interopRequireDefault$1 = {
+    get exports() {
+      return interopRequireDefaultExports;
+    },
+    set exports(v) {
+      interopRequireDefaultExports = v;
     }
-    return target;
-  }
-  function _extends$2() {
-    _extends$2 = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i];
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-      return target;
+  };
+  (function(module2) {
+    function _interopRequireDefault2(obj) {
+      return obj && obj.__esModule ? obj : {
+        "default": obj
+      };
+    }
+    module2.exports = _interopRequireDefault2, module2.exports.__esModule = true, module2.exports["default"] = module2.exports;
+  })(interopRequireDefault$1);
+  const interopRequireDefault = /* @__PURE__ */ getDefaultExportFromCjs(interopRequireDefaultExports);
+  var createSvgIcon$1 = {};
+  function chainPropTypes(propType1, propType2) {
+    if (process.env.NODE_ENV === "production") {
+      return () => null;
+    }
+    return function validate(...args) {
+      return propType1(...args) || propType2(...args);
     };
-    return _extends$2.apply(this, arguments);
+  }
+  function isPlainObject$1(item) {
+    return item !== null && typeof item === "object" && item.constructor === Object;
+  }
+  function deepClone(source) {
+    if (!isPlainObject$1(source)) {
+      return source;
+    }
+    const output = {};
+    Object.keys(source).forEach((key) => {
+      output[key] = deepClone(source[key]);
+    });
+    return output;
+  }
+  function deepmerge(target, source, options = {
+    clone: true
+  }) {
+    const output = options.clone ? __spreadValues({}, target) : target;
+    if (isPlainObject$1(target) && isPlainObject$1(source)) {
+      Object.keys(source).forEach((key) => {
+        if (key === "__proto__") {
+          return;
+        }
+        if (isPlainObject$1(source[key]) && key in target && isPlainObject$1(target[key])) {
+          output[key] = deepmerge(target[key], source[key], options);
+        } else if (options.clone) {
+          output[key] = isPlainObject$1(source[key]) ? deepClone(source[key]) : source[key];
+        } else {
+          output[key] = source[key];
+        }
+      });
+    }
+    return output;
   }
   var propTypesExports = {};
   var propTypes = {
@@ -2065,95 +2102,6 @@ var __async = (__this, __arguments, generator) => {
   } else {
     propTypes.exports = requireFactoryWithThrowingShims()();
   }
-  function r(e) {
-    var t, f, n = "";
-    if ("string" == typeof e || "number" == typeof e)
-      n += e;
-    else if ("object" == typeof e)
-      if (Array.isArray(e))
-        for (t = 0; t < e.length; t++)
-          e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-      else
-        for (t in e)
-          e[t] && (n && (n += " "), n += t);
-    return n;
-  }
-  function clsx() {
-    for (var e, t, f = 0, n = ""; f < arguments.length; )
-      (e = arguments[f++]) && (t = r(e)) && (n && (n += " "), n += t);
-    return n;
-  }
-  function isHostComponent(element) {
-    return typeof element === "string";
-  }
-  function appendOwnerState(elementType, otherProps, ownerState) {
-    if (elementType === void 0 || isHostComponent(elementType)) {
-      return otherProps;
-    }
-    return _extends$2({}, otherProps, {
-      ownerState: _extends$2({}, otherProps.ownerState, ownerState)
-    });
-  }
-  function areArraysEqual(array1, array2, itemComparer = (a, b) => a === b) {
-    return array1.length === array2.length && array1.every((value, index2) => itemComparer(value, array2[index2]));
-  }
-  function extractEventHandlers(object, excludeKeys = []) {
-    if (object === void 0) {
-      return {};
-    }
-    const result = {};
-    Object.keys(object).filter((prop) => prop.match(/^on[A-Z]/) && typeof object[prop] === "function" && !excludeKeys.includes(prop)).forEach((prop) => {
-      result[prop] = object[prop];
-    });
-    return result;
-  }
-  function resolveComponentProps(componentProps, ownerState) {
-    if (typeof componentProps === "function") {
-      return componentProps(ownerState);
-    }
-    return componentProps;
-  }
-  function chainPropTypes(propType1, propType2) {
-    if (process.env.NODE_ENV === "production") {
-      return () => null;
-    }
-    return function validate(...args) {
-      return propType1(...args) || propType2(...args);
-    };
-  }
-  function isPlainObject$1(item) {
-    return item !== null && typeof item === "object" && item.constructor === Object;
-  }
-  function deepClone(source) {
-    if (!isPlainObject$1(source)) {
-      return source;
-    }
-    const output = {};
-    Object.keys(source).forEach((key) => {
-      output[key] = deepClone(source[key]);
-    });
-    return output;
-  }
-  function deepmerge(target, source, options = {
-    clone: true
-  }) {
-    const output = options.clone ? __spreadValues({}, target) : target;
-    if (isPlainObject$1(target) && isPlainObject$1(source)) {
-      Object.keys(source).forEach((key) => {
-        if (key === "__proto__") {
-          return;
-        }
-        if (isPlainObject$1(source[key]) && key in target && isPlainObject$1(target[key])) {
-          output[key] = deepmerge(target[key], source[key], options);
-        } else if (options.clone) {
-          output[key] = isPlainObject$1(source[key]) ? deepClone(source[key]) : source[key];
-        } else {
-          output[key] = source[key];
-        }
-      });
-    }
-    return output;
-  }
   function isClassComponent$2(elementType) {
     const {
       prototype = {}
@@ -3079,6 +3027,82 @@ var __async = (__this, __arguments, generator) => {
     });
     return result;
   }
+  function _extends$2() {
+    _extends$2 = Object.assign ? Object.assign.bind() : function(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    };
+    return _extends$2.apply(this, arguments);
+  }
+  function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for (i = 0; i < sourceKeys.length; i++) {
+      key = sourceKeys[i];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
+  }
+  function r(e) {
+    var t, f, n = "";
+    if ("string" == typeof e || "number" == typeof e)
+      n += e;
+    else if ("object" == typeof e)
+      if (Array.isArray(e))
+        for (t = 0; t < e.length; t++)
+          e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+      else
+        for (t in e)
+          e[t] && (n && (n += " "), n += t);
+    return n;
+  }
+  function clsx() {
+    for (var e, t, f = 0, n = ""; f < arguments.length; )
+      (e = arguments[f++]) && (t = r(e)) && (n && (n += " "), n += t);
+    return n;
+  }
+  function isHostComponent(element) {
+    return typeof element === "string";
+  }
+  function appendOwnerState(elementType, otherProps, ownerState) {
+    if (elementType === void 0 || isHostComponent(elementType)) {
+      return otherProps;
+    }
+    return _extends$2({}, otherProps, {
+      ownerState: _extends$2({}, otherProps.ownerState, ownerState)
+    });
+  }
+  function areArraysEqual(array1, array2, itemComparer = (a, b) => a === b) {
+    return array1.length === array2.length && array1.every((value, index2) => itemComparer(value, array2[index2]));
+  }
+  function extractEventHandlers(object, excludeKeys = []) {
+    if (object === void 0) {
+      return {};
+    }
+    const result = {};
+    Object.keys(object).filter((prop) => prop.match(/^on[A-Z]/) && typeof object[prop] === "function" && !excludeKeys.includes(prop)).forEach((prop) => {
+      result[prop] = object[prop];
+    });
+    return result;
+  }
+  function resolveComponentProps(componentProps, ownerState) {
+    if (typeof componentProps === "function") {
+      return componentProps(ownerState);
+    }
+    return componentProps;
+  }
   function omitEventHandlers(object) {
     if (object === void 0) {
       return {};
@@ -3130,14 +3154,14 @@ var __async = (__this, __arguments, generator) => {
       internalRef: internalSlotProps.ref
     };
   }
-  const _excluded$1K = ["elementType", "externalSlotProps", "ownerState"];
+  const _excluded$1I = ["elementType", "externalSlotProps", "ownerState"];
   function useSlotProps(parameters) {
     var _parameters$additiona;
     const {
       elementType,
       externalSlotProps,
       ownerState
-    } = parameters, rest = _objectWithoutPropertiesLoose(parameters, _excluded$1K);
+    } = parameters, rest = _objectWithoutPropertiesLoose(parameters, _excluded$1I);
     const resolvedComponentsProps = resolveComponentProps(externalSlotProps, ownerState);
     const {
       props: mergedProps,
@@ -4071,8 +4095,8 @@ var __async = (__this, __arguments, generator) => {
     return generateUtilityClass("MuiBadge", slot);
   }
   const badgeUnstyledClasses = generateUtilityClasses("MuiBadge", ["root", "badge", "invisible"]);
-  const _excluded$1J = ["badgeContent", "component", "children", "invisible", "max", "slotProps", "slots", "showZero"];
-  const useUtilityClasses$1c = (ownerState) => {
+  const _excluded$1H = ["badgeContent", "component", "children", "invisible", "max", "slotProps", "slots", "showZero"];
+  const useUtilityClasses$1a = (ownerState) => {
     const {
       invisible
     } = ownerState;
@@ -4090,7 +4114,7 @@ var __async = (__this, __arguments, generator) => {
       slotProps = {},
       slots = {},
       showZero = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1J);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1H);
     const {
       badgeContent,
       max: max2,
@@ -4105,7 +4129,7 @@ var __async = (__this, __arguments, generator) => {
       max: max2,
       showZero
     });
-    const classes = useUtilityClasses$1c(ownerState);
+    const classes = useUtilityClasses$1a(ownerState);
     const Root = component || slots.root || "span";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -4338,8 +4362,8 @@ var __async = (__this, __arguments, generator) => {
       active
     };
   }
-  const _excluded$1I = ["action", "children", "component", "disabled", "focusableWhenDisabled", "onBlur", "onClick", "onFocus", "onFocusVisible", "onKeyDown", "onKeyUp", "onMouseLeave", "slotProps", "slots"];
-  const useUtilityClasses$1b = (ownerState) => {
+  const _excluded$1G = ["action", "children", "component", "disabled", "focusableWhenDisabled", "onBlur", "onClick", "onFocus", "onFocusVisible", "onKeyDown", "onKeyUp", "onMouseLeave", "slotProps", "slots"];
+  const useUtilityClasses$19 = (ownerState) => {
     const {
       active,
       disabled,
@@ -4359,7 +4383,7 @@ var __async = (__this, __arguments, generator) => {
       focusableWhenDisabled = false,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1I);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1G);
     const buttonRef = React__namespace.useRef();
     const {
       active,
@@ -4380,7 +4404,7 @@ var __async = (__this, __arguments, generator) => {
       focusableWhenDisabled,
       focusVisible
     });
-    const classes = useUtilityClasses$1b(ownerState);
+    const classes = useUtilityClasses$19(ownerState);
     const defaultElement = other.href || other.to ? "a" : "button";
     const Root = (_ref = component != null ? component : slots.root) != null ? _ref : defaultElement;
     const rootProps = useSlotProps({
@@ -4895,11 +4919,11 @@ var __async = (__this, __arguments, generator) => {
     return generateUtilityClass("MuiFormControl", slot);
   }
   const formControlUnstyledClasses = generateUtilityClasses("MuiFormControl", ["root", "disabled", "error", "filled", "focused", "required"]);
-  const _excluded$1H = ["defaultValue", "children", "component", "disabled", "error", "onChange", "required", "slotProps", "slots", "value"];
+  const _excluded$1F = ["defaultValue", "children", "component", "disabled", "error", "onChange", "required", "slotProps", "slots", "value"];
   function hasValue$1(value) {
     return value != null && !(Array.isArray(value) && value.length === 0) && value !== "";
   }
-  function useUtilityClasses$1a(ownerState) {
+  function useUtilityClasses$18(ownerState) {
     const {
       disabled,
       error,
@@ -4925,7 +4949,7 @@ var __async = (__this, __arguments, generator) => {
       slotProps = {},
       slots = {},
       value: incomingValue
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1H);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1F);
     const [value, setValue] = useControlled({
       controlled: incomingValue,
       default: defaultValue,
@@ -4963,7 +4987,7 @@ var __async = (__this, __arguments, generator) => {
         value: value != null ? value : ""
       };
     }, [disabled, error, filled, focused, onChange, required, setValue, value]);
-    const classes = useUtilityClasses$1a(ownerState);
+    const classes = useUtilityClasses$18(ownerState);
     const renderChildren = () => {
       if (typeof children === "function") {
         return children(childContext);
@@ -5188,7 +5212,7 @@ var __async = (__this, __arguments, generator) => {
       value
     };
   }
-  const _excluded$1G = ["aria-describedby", "aria-label", "aria-labelledby", "autoComplete", "autoFocus", "className", "component", "defaultValue", "disabled", "endAdornment", "error", "id", "multiline", "name", "onClick", "onChange", "onKeyDown", "onKeyUp", "onFocus", "onBlur", "placeholder", "readOnly", "required", "startAdornment", "value", "type", "rows", "slotProps", "slots", "minRows", "maxRows"];
+  const _excluded$1E = ["aria-describedby", "aria-label", "aria-labelledby", "autoComplete", "autoFocus", "className", "component", "defaultValue", "disabled", "endAdornment", "error", "id", "multiline", "name", "onClick", "onChange", "onKeyDown", "onKeyUp", "onFocus", "onBlur", "placeholder", "readOnly", "required", "startAdornment", "value", "type", "rows", "slotProps", "slots", "minRows", "maxRows"];
   const InputUnstyled = /* @__PURE__ */ React__namespace.forwardRef(function InputUnstyled2(props, forwardedRef) {
     var _ref, _slots$textarea, _slots$input;
     const {
@@ -5223,7 +5247,7 @@ var __async = (__this, __arguments, generator) => {
       slots = {},
       minRows,
       maxRows
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1G);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1E);
     const {
       getRootProps,
       getInputProps,
@@ -7649,7 +7673,7 @@ var __async = (__this, __arguments, generator) => {
     return generateUtilityClass("MuiPopperUnstyled", slot);
   }
   const popperUnstyledClasses = generateUtilityClasses("MuiPopperUnstyled", ["root"]);
-  const _excluded$1F = ["anchorEl", "children", "component", "direction", "disablePortal", "modifiers", "open", "ownerState", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps"], _excluded2$6 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
+  const _excluded$1D = ["anchorEl", "children", "component", "direction", "disablePortal", "modifiers", "open", "ownerState", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps"], _excluded2$6 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
   function flipPlacement(placement, direction) {
     if (direction === "ltr") {
       return placement;
@@ -7676,7 +7700,7 @@ var __async = (__this, __arguments, generator) => {
   function isVirtualElement(element) {
     return !isHTMLElement$1(element);
   }
-  const useUtilityClasses$19 = () => {
+  const useUtilityClasses$17 = () => {
     const slots = {
       root: ["root"]
     };
@@ -7700,7 +7724,7 @@ var __async = (__this, __arguments, generator) => {
       slotProps = {},
       slots = {},
       TransitionProps
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1F);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1D);
     const tooltipRef = React__namespace.useRef(null);
     const ownRef = useForkRef(tooltipRef, ref);
     const popperRef = React__namespace.useRef(null);
@@ -7781,7 +7805,7 @@ var __async = (__this, __arguments, generator) => {
     if (TransitionProps !== null) {
       childProps.TransitionProps = TransitionProps;
     }
-    const classes = useUtilityClasses$19();
+    const classes = useUtilityClasses$17();
     const Root = (_ref = component != null ? component : slots.root) != null ? _ref : "div";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -7990,7 +8014,7 @@ var __async = (__this, __arguments, generator) => {
      */
     transition: propTypesExports.bool
   } : void 0;
-  const _excluded$1E = ["actions", "anchorEl", "children", "component", "keepMounted", "listboxId", "onClose", "open", "slotProps", "slots"];
+  const _excluded$1C = ["actions", "anchorEl", "children", "component", "keepMounted", "listboxId", "onClose", "open", "slotProps", "slots"];
   function getUtilityClasses$1(ownerState) {
     const {
       open
@@ -8014,7 +8038,7 @@ var __async = (__this, __arguments, generator) => {
       open = false,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1E);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1C);
     const {
       contextValue,
       getListboxProps,
@@ -8240,7 +8264,7 @@ var __async = (__this, __arguments, generator) => {
       highlighted
     };
   }
-  const _excluded$1D = ["children", "disabled", "component", "label", "slotProps", "slots"];
+  const _excluded$1B = ["children", "disabled", "component", "label", "slotProps", "slots"];
   function getUtilityClasses(ownerState) {
     const {
       disabled,
@@ -8260,7 +8284,7 @@ var __async = (__this, __arguments, generator) => {
       label,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1D);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1B);
     const {
       getRootProps,
       disabled,
@@ -8516,8 +8540,8 @@ var __async = (__this, __arguments, generator) => {
     return generateUtilityClass("MuiModal", slot);
   }
   const modalUnstyledClasses = generateUtilityClasses("MuiModal", ["root", "hidden"]);
-  const _excluded$1C = ["children", "classes", "closeAfterTransition", "component", "container", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "manager", "onBackdropClick", "onClose", "onKeyDown", "open", "onTransitionEnter", "onTransitionExited", "slotProps", "slots"];
-  const useUtilityClasses$18 = (ownerState) => {
+  const _excluded$1A = ["children", "classes", "closeAfterTransition", "component", "container", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "manager", "onBackdropClick", "onClose", "onKeyDown", "open", "onTransitionEnter", "onTransitionExited", "slotProps", "slots"];
+  const useUtilityClasses$16 = (ownerState) => {
     const {
       open,
       exited,
@@ -8562,7 +8586,7 @@ var __async = (__this, __arguments, generator) => {
       onTransitionExited,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1C);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1A);
     const [exited, setExited] = React__namespace.useState(!open);
     const modal = React__namespace.useRef({});
     const mountNodeRef = React__namespace.useRef(null);
@@ -8631,7 +8655,7 @@ var __async = (__this, __arguments, generator) => {
       hideBackdrop,
       keepMounted
     });
-    const classes = useUtilityClasses$18(ownerState);
+    const classes = useUtilityClasses$16(ownerState);
     const handleEnter = () => {
       setExited(false);
       if (onTransitionEnter) {
@@ -9183,7 +9207,7 @@ var __async = (__this, __arguments, generator) => {
     return generateUtilityClass("MuiSelect", slot);
   }
   const selectUnstyledClasses = generateUtilityClasses("MuiSelect", ["root", "button", "listbox", "popper", "active", "expanded", "disabled", "focusVisible"]);
-  const _excluded$1B = ["autoFocus", "children", "component", "defaultListboxOpen", "defaultValue", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "name", "onChange", "onListboxOpenChange", "optionStringifier", "renderValue", "slotProps", "slots", "value"];
+  const _excluded$1z = ["autoFocus", "children", "component", "defaultListboxOpen", "defaultValue", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "name", "onChange", "onListboxOpenChange", "optionStringifier", "renderValue", "slotProps", "slots", "value"];
   function defaultRenderMultipleValues(selectedOptions) {
     return /* @__PURE__ */ jsx(React__namespace.Fragment, {
       children: selectedOptions.map((o) => o.label).join(", ")
@@ -9198,7 +9222,7 @@ var __async = (__this, __arguments, generator) => {
     }
     return JSON.stringify(selectedOptions.map((o) => o.value));
   }
-  function useUtilityClasses$17(ownerState) {
+  function useUtilityClasses$15(ownerState) {
     const {
       active,
       disabled,
@@ -9232,7 +9256,7 @@ var __async = (__this, __arguments, generator) => {
       slotProps = {},
       slots = {},
       value: valueProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1B);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1z);
     const renderValue = renderValueProp != null ? renderValueProp : defaultRenderMultipleValues;
     const [groupedOptions, setGroupedOptions] = React__namespace.useState([]);
     const options = React__namespace.useMemo(() => flattenOptionGroups(groupedOptions), [groupedOptions]);
@@ -9294,7 +9318,7 @@ var __async = (__this, __arguments, generator) => {
       renderValue,
       value
     });
-    const classes = useUtilityClasses$17(ownerState);
+    const classes = useUtilityClasses$15(ownerState);
     const selectedOptions = React__namespace.useMemo(() => {
       if (value == null) {
         return [];
@@ -9502,8 +9526,8 @@ var __async = (__this, __arguments, generator) => {
     return generateUtilityClass("MuiOptionGroup", slot);
   }
   const optionGroupUnstyledClasses = generateUtilityClasses("MuiOptionGroup", ["root", "label", "list"]);
-  const _excluded$1A = ["component", "disabled", "slotProps", "slots"];
-  function useUtilityClasses$16(disabled) {
+  const _excluded$1y = ["component", "disabled", "slotProps", "slots"];
+  function useUtilityClasses$14(disabled) {
     const slots = {
       root: ["root", disabled && "disabled"],
       label: ["label"],
@@ -9517,11 +9541,11 @@ var __async = (__this, __arguments, generator) => {
       disabled = false,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1A);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1y);
     const Root = component || (slots == null ? void 0 : slots.root) || "li";
     const Label = (slots == null ? void 0 : slots.label) || "span";
     const List2 = (slots == null ? void 0 : slots.list) || "ul";
-    const classes = useUtilityClasses$16(disabled);
+    const classes = useUtilityClasses$14(disabled);
     const rootProps = useSlotProps({
       elementType: Root,
       externalSlotProps: slotProps.root,
@@ -9676,8 +9700,8 @@ var __async = (__this, __arguments, generator) => {
       selected
     };
   }
-  const _excluded$1z = ["children", "component", "disabled", "label", "slotProps", "slots", "value"];
-  function useUtilityClasses$15(ownerState) {
+  const _excluded$1x = ["children", "component", "disabled", "label", "slotProps", "slots", "value"];
+  function useUtilityClasses$13(ownerState) {
     const {
       disabled,
       highlighted,
@@ -9696,7 +9720,7 @@ var __async = (__this, __arguments, generator) => {
       slotProps = {},
       slots = {},
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1z);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1x);
     const selectContext = React__namespace.useContext(SelectUnstyledContext);
     if (!selectContext) {
       throw new Error("OptionUnstyled must be used within a SelectUnstyled");
@@ -9718,7 +9742,7 @@ var __async = (__this, __arguments, generator) => {
       index: index2,
       selected
     });
-    const classes = useUtilityClasses$15(ownerState);
+    const classes = useUtilityClasses$13(ownerState);
     const rootProps = useSlotProps({
       getSlotProps: getRootProps,
       elementType: Root,
@@ -9776,7 +9800,7 @@ var __async = (__this, __arguments, generator) => {
     value: propTypesExports.any.isRequired
   } : void 0;
   const OptionUnstyled$1 = /* @__PURE__ */ React__namespace.memo(OptionUnstyled);
-  const _excluded$1y = ["autoFocus", "children", "component", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "name", "onChange", "onListboxOpenChange", "optionStringifier", "renderValue", "slotProps", "slots", "value"];
+  const _excluded$1w = ["autoFocus", "children", "component", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "name", "onChange", "onListboxOpenChange", "optionStringifier", "renderValue", "slotProps", "slots", "value"];
   function defaultRenderSingleValue(selectedOption) {
     var _selectedOption$label;
     return (_selectedOption$label = selectedOption == null ? void 0 : selectedOption.label) != null ? _selectedOption$label : "";
@@ -9790,7 +9814,7 @@ var __async = (__this, __arguments, generator) => {
     }
     return JSON.stringify(selectedOption.value);
   }
-  function useUtilityClasses$14(ownerState) {
+  function useUtilityClasses$12(ownerState) {
     const {
       active,
       disabled,
@@ -9824,7 +9848,7 @@ var __async = (__this, __arguments, generator) => {
       slotProps = {},
       slots = {},
       value: valueProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1y);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1w);
     const renderValue = renderValueProp != null ? renderValueProp : defaultRenderSingleValue;
     const [groupedOptions, setGroupedOptions] = React__namespace.useState([]);
     const options = React__namespace.useMemo(() => flattenOptionGroups(groupedOptions), [groupedOptions]);
@@ -9886,7 +9910,7 @@ var __async = (__this, __arguments, generator) => {
       renderValue,
       value
     });
-    const classes = useUtilityClasses$14(ownerState);
+    const classes = useUtilityClasses$12(ownerState);
     const selectedOption = React__namespace.useMemo(() => {
       var _options$find;
       return (_options$find = options.find((o) => value === o.value)) != null ? _options$find : null;
@@ -10587,11 +10611,11 @@ var __async = (__this, __arguments, generator) => {
       values: values2
     };
   }
-  const _excluded$1x = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "component", "classes", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
+  const _excluded$1v = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "component", "classes", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
   function Identity$1(x) {
     return x;
   }
-  const useUtilityClasses$13 = (ownerState) => {
+  const useUtilityClasses$11 = (ownerState) => {
     const {
       disabled,
       dragging,
@@ -10641,7 +10665,7 @@ var __async = (__this, __arguments, generator) => {
       defaultValue,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1x);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1v);
     const partialOwnerState = _extends$2({}, props, {
       marks: marksProp,
       classes: classesProp,
@@ -10678,7 +10702,7 @@ var __async = (__this, __arguments, generator) => {
       dragging,
       focusedThumbIndex
     });
-    const classes = useUtilityClasses$13(ownerState);
+    const classes = useUtilityClasses$11(ownerState);
     const Root = (_ref = component != null ? component : slots.root) != null ? _ref : "span";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -11116,8 +11140,8 @@ var __async = (__this, __arguments, generator) => {
       onClickAway: handleClickAway
     };
   }
-  const _excluded$1w = ["autoHideDuration", "children", "component", "disableWindowBlurListener", "exited", "onBlur", "onClose", "onFocus", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "slotProps", "slots"];
-  const useUtilityClasses$12 = () => {
+  const _excluded$1u = ["autoHideDuration", "children", "component", "disableWindowBlurListener", "exited", "onBlur", "onClose", "onFocus", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "slotProps", "slots"];
+  const useUtilityClasses$10 = () => {
     const slots = {
       root: ["root"]
     };
@@ -11135,8 +11159,8 @@ var __async = (__this, __arguments, generator) => {
       resumeHideDuration,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1w);
-    const classes = useUtilityClasses$12();
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1u);
+    const classes = useUtilityClasses$10();
     const {
       getRootProps,
       onClickAway
@@ -11361,8 +11385,8 @@ var __async = (__this, __arguments, generator) => {
     return generateUtilityClass("MuiSwitch", slot);
   }
   const switchUnstyledClasses = generateUtilityClasses("MuiSwitch", ["root", "input", "track", "thumb", "checked", "disabled", "focusVisible", "readOnly"]);
-  const _excluded$1v = ["checked", "component", "defaultChecked", "disabled", "onBlur", "onChange", "onFocus", "onFocusVisible", "readOnly", "required", "slotProps", "slots"];
-  const useUtilityClasses$11 = (ownerState) => {
+  const _excluded$1t = ["checked", "component", "defaultChecked", "disabled", "onBlur", "onChange", "onFocus", "onFocusVisible", "readOnly", "required", "slotProps", "slots"];
+  const useUtilityClasses$$ = (ownerState) => {
     const {
       checked,
       disabled,
@@ -11391,7 +11415,7 @@ var __async = (__this, __arguments, generator) => {
       readOnly: readOnlyProp,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1v);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1t);
     const useSwitchProps = {
       checked: checkedProp,
       defaultChecked,
@@ -11415,7 +11439,7 @@ var __async = (__this, __arguments, generator) => {
       focusVisible,
       readOnly
     });
-    const classes = useUtilityClasses$11(ownerState);
+    const classes = useUtilityClasses$$(ownerState);
     const Root = (_ref = component != null ? component : slots.root) != null ? _ref : "span";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -11529,7 +11553,7 @@ var __async = (__this, __arguments, generator) => {
       track: propTypesExports.oneOfType([propTypesExports.elementType, propTypesExports.oneOf([null])])
     })
   } : void 0;
-  const _excluded$1u = ["component", "count", "getItemAriaLabel", "onPageChange", "page", "rowsPerPage", "showFirstButton", "showLastButton", "direction", "ownerState", "slotProps", "slots"];
+  const _excluded$1s = ["component", "count", "getItemAriaLabel", "onPageChange", "page", "rowsPerPage", "showFirstButton", "showLastButton", "direction", "ownerState", "slotProps", "slots"];
   var _span$4, _span2, _span3, _span4;
   function LastPageIconDefault() {
     return _span$4 || (_span$4 = /* @__PURE__ */ jsx("span", {
@@ -11568,7 +11592,7 @@ var __async = (__this, __arguments, generator) => {
       direction,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1u);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1s);
     const ownerState = props;
     const handleFirstPageButtonClick = (event) => {
       onPageChange(event, 0);
@@ -11660,7 +11684,7 @@ var __async = (__this, __arguments, generator) => {
     return generateUtilityClass("MuiTablePagination", slot);
   }
   const tablePaginationUnstyledClasses = generateUtilityClasses("MuiTablePagination", ["root", "toolbar", "spacer", "selectLabel", "selectRoot", "select", "selectIcon", "input", "menuItem", "displayedRows", "actions"]);
-  const _excluded$1t = ["component", "colSpan", "count", "getItemAriaLabel", "labelDisplayedRows", "labelId", "labelRowsPerPage", "onPageChange", "onRowsPerPageChange", "page", "rowsPerPage", "rowsPerPageOptions", "selectId", "slotProps", "slots"];
+  const _excluded$1r = ["component", "colSpan", "count", "getItemAriaLabel", "labelDisplayedRows", "labelId", "labelRowsPerPage", "onPageChange", "onRowsPerPageChange", "page", "rowsPerPage", "rowsPerPageOptions", "selectId", "slotProps", "slots"];
   function defaultLabelDisplayedRows$1({
     from: from2,
     to,
@@ -11671,7 +11695,7 @@ var __async = (__this, __arguments, generator) => {
   function defaultGetAriaLabel$1(type) {
     return `Go to ${type} page`;
   }
-  const useUtilityClasses$10 = () => {
+  const useUtilityClasses$_ = () => {
     const slots = {
       root: ["root"],
       toolbar: ["toolbar"],
@@ -11704,9 +11728,9 @@ var __async = (__this, __arguments, generator) => {
       selectId: selectIdProp,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1t);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1r);
     const ownerState = props;
-    const classes = useUtilityClasses$10();
+    const classes = useUtilityClasses$_();
     let colSpan;
     if (!component || component === "td" || !isHostComponent(component)) {
       colSpan = colSpanProp || 1e3;
@@ -12027,8 +12051,8 @@ var __async = (__this, __arguments, generator) => {
     }
     return `${context.idPrefix}-T-${value}`;
   }
-  const _excluded$1s = ["children", "value", "defaultValue", "orientation", "direction", "component", "onChange", "selectionFollowsFocus", "slotProps", "slots"];
-  const useUtilityClasses$$ = (ownerState) => {
+  const _excluded$1q = ["children", "value", "defaultValue", "orientation", "direction", "component", "onChange", "selectionFollowsFocus", "slotProps", "slots"];
+  const useUtilityClasses$Z = (ownerState) => {
     const {
       orientation
     } = ownerState;
@@ -12046,7 +12070,7 @@ var __async = (__this, __arguments, generator) => {
       component,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1s);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1q);
     const {
       tabsContextValue
     } = useTabs(props);
@@ -12054,7 +12078,7 @@ var __async = (__this, __arguments, generator) => {
       orientation,
       direction
     });
-    const classes = useUtilityClasses$$(ownerState);
+    const classes = useUtilityClasses$Z(ownerState);
     const TabsRoot = (_ref = component != null ? component : slots.root) != null ? _ref : "div";
     const tabsRootProps = useSlotProps({
       elementType: TabsRoot,
@@ -12154,8 +12178,8 @@ var __async = (__this, __arguments, generator) => {
       getRootProps
     };
   }
-  const _excluded$1r = ["children", "component", "value", "slotProps", "slots"];
-  const useUtilityClasses$_ = (ownerState) => {
+  const _excluded$1p = ["children", "component", "value", "slotProps", "slots"];
+  const useUtilityClasses$Y = (ownerState) => {
     const {
       hidden
     } = ownerState;
@@ -12171,7 +12195,7 @@ var __async = (__this, __arguments, generator) => {
       component,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1r);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1p);
     const {
       hidden,
       getRootProps
@@ -12179,7 +12203,7 @@ var __async = (__this, __arguments, generator) => {
     const ownerState = _extends$2({}, props, {
       hidden
     });
-    const classes = useUtilityClasses$_(ownerState);
+    const classes = useUtilityClasses$Y(ownerState);
     const TabPanelRoot = (_ref = component != null ? component : slots.root) != null ? _ref : "div";
     const tabPanelRootProps = useSlotProps({
       elementType: TabPanelRoot,
@@ -12384,8 +12408,8 @@ var __async = (__this, __arguments, generator) => {
       getRootProps
     };
   }
-  const _excluded$1q = ["children", "component", "slotProps", "slots"];
-  const useUtilityClasses$Z = (ownerState) => {
+  const _excluded$1o = ["children", "component", "slotProps", "slots"];
+  const useUtilityClasses$X = (ownerState) => {
     const {
       orientation
     } = ownerState;
@@ -12400,7 +12424,7 @@ var __async = (__this, __arguments, generator) => {
       component,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1q);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1o);
     const {
       isRtl,
       orientation,
@@ -12413,7 +12437,7 @@ var __async = (__this, __arguments, generator) => {
       isRtl,
       orientation
     });
-    const classes = useUtilityClasses$Z(ownerState);
+    const classes = useUtilityClasses$X(ownerState);
     const TabsListRoot = (_ref = component != null ? component : slots.root) != null ? _ref : "div";
     const tabsListRootProps = useSlotProps({
       elementType: TabsListRoot,
@@ -12462,7 +12486,7 @@ var __async = (__this, __arguments, generator) => {
     return generateUtilityClass("MuiTab", slot);
   }
   const tabUnstyledClasses = generateUtilityClasses("MuiTab", ["root", "selected", "disabled"]);
-  const _excluded$1p = ["getRootProps"];
+  const _excluded$1n = ["getRootProps"];
   function useTab(parameters) {
     var _getPanelId, _getTabId;
     const {
@@ -12473,7 +12497,7 @@ var __async = (__this, __arguments, generator) => {
     } = parameters;
     const _useButton = useButton(parameters), {
       getRootProps: getRootPropsButton
-    } = _useButton, otherButtonProps = _objectWithoutPropertiesLoose(_useButton, _excluded$1p);
+    } = _useButton, otherButtonProps = _objectWithoutPropertiesLoose(_useButton, _excluded$1n);
     const context = useTabContext();
     if (context === null) {
       throw new Error("No TabContext provided");
@@ -12533,8 +12557,8 @@ var __async = (__this, __arguments, generator) => {
       selected
     });
   }
-  const _excluded$1o = ["action", "children", "value", "disabled", "onChange", "onClick", "onFocus", "component", "slotProps", "slots"];
-  const useUtilityClasses$Y = (ownerState) => {
+  const _excluded$1m = ["action", "children", "value", "disabled", "onChange", "onClick", "onFocus", "component", "slotProps", "slots"];
+  const useUtilityClasses$W = (ownerState) => {
     const {
       selected,
       disabled
@@ -12553,7 +12577,7 @@ var __async = (__this, __arguments, generator) => {
       component,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1o);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1m);
     const tabRef = React__namespace.useRef();
     const handleRef = useForkRef(tabRef, ref);
     const {
@@ -12577,7 +12601,7 @@ var __async = (__this, __arguments, generator) => {
       disabled,
       selected
     });
-    const classes = useUtilityClasses$Y(ownerState);
+    const classes = useUtilityClasses$W(ownerState);
     const TabRoot = (_ref = component != null ? component : slots.root) != null ? _ref : "button";
     const tabRootProps = useSlotProps({
       elementType: TabRoot,
@@ -12653,7 +12677,7 @@ var __async = (__this, __arguments, generator) => {
      */
     value: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])
   } : void 0;
-  const _excluded$1n = ["onChange", "maxRows", "minRows", "style", "value"];
+  const _excluded$1l = ["onChange", "maxRows", "minRows", "style", "value"];
   function getStyleValue$1(computedStyle, property) {
     return parseInt(computedStyle[property], 10) || 0;
   }
@@ -12682,7 +12706,7 @@ var __async = (__this, __arguments, generator) => {
       minRows = 1,
       style: style2,
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1n);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1l);
     const {
       current: isControlled
     } = React__namespace.useRef(value != null);
@@ -13157,7 +13181,7 @@ var __async = (__this, __arguments, generator) => {
   function compile(value) {
     return dealloc(parse("", null, null, null, [""], value = alloc(value), 0, [0], value));
   }
-  function parse(value, root, parent, rule, rules, rulesets, pseudo, points, declarations) {
+  function parse(value, root, parent, rule, rules2, rulesets, pseudo, points, declarations) {
     var index2 = 0;
     var offset2 = 0;
     var length2 = pseudo;
@@ -13169,7 +13193,7 @@ var __async = (__this, __arguments, generator) => {
     var ampersand = 1;
     var character2 = 0;
     var type = "";
-    var props = rules;
+    var props = rules2;
     var children = rulesets;
     var reference2 = rule;
     var characters2 = type;
@@ -13223,7 +13247,7 @@ var __async = (__this, __arguments, generator) => {
             case 59:
               characters2 += ";";
             default:
-              append$1(reference2 = ruleset(characters2, root, parent, index2, offset2, rules, points, type, props = [], children = [], length2), rulesets);
+              append$1(reference2 = ruleset(characters2, root, parent, index2, offset2, rules2, points, type, props = [], children = [], length2), rulesets);
               if (character2 === 123)
                 if (offset2 === 0)
                   parse(characters2, root, reference2, reference2, props, rulesets, length2, points, children);
@@ -13233,7 +13257,7 @@ var __async = (__this, __arguments, generator) => {
                     case 108:
                     case 109:
                     case 115:
-                      parse(value, reference2, reference2, rule && append$1(ruleset(value, reference2, reference2, 0, 0, rules, points, type, rules, props = [], length2), children), rules, children, length2, points, rule ? props : children);
+                      parse(value, reference2, reference2, rule && append$1(ruleset(value, reference2, reference2, 0, 0, rules2, points, type, rules2, props = [], length2), children), rules2, children, length2, points, rule ? props : children);
                       break;
                     default:
                       parse(characters2, reference2, reference2, reference2, [""], children, 0, points, children);
@@ -13269,9 +13293,9 @@ var __async = (__this, __arguments, generator) => {
       }
     return rulesets;
   }
-  function ruleset(value, root, parent, index2, offset2, rules, points, type, props, children, length2) {
+  function ruleset(value, root, parent, index2, offset2, rules2, points, type, props, children, length2) {
     var post = offset2 - 1;
-    var rule = offset2 === 0 ? rules : [""];
+    var rule = offset2 === 0 ? rules2 : [""];
     var size = sizeof(rule);
     for (var i = 0, j = 0, k = 0; i < index2; ++i)
       for (var x = 0, y = substr(value, post + 1, post = abs(j = points[i])), z = value; x < size; ++x)
@@ -13623,11 +13647,11 @@ var __async = (__this, __arguments, generator) => {
     }
     fixedElements.set(element, true);
     var points = [];
-    var rules = getRules(value, points);
+    var rules2 = getRules(value, points);
     var parentRules = parent.props;
-    for (var i = 0, k = 0; i < rules.length; i++) {
+    for (var i = 0, k = 0; i < rules2.length; i++) {
       for (var j = 0; j < parentRules.length; j++, k++) {
-        element.props[k] = points[i] ? rules[i].replace(/&\f/g, parentRules[j]) : parentRules[j] + " " + rules[i];
+        element.props[k] = points[i] ? rules2[i].replace(/&\f/g, parentRules[j]) : parentRules[j] + " " + rules2[i];
       }
     }
   };
@@ -14028,7 +14052,7 @@ var __async = (__this, __arguments, generator) => {
       tag.__emotion_styles = processor(tag.__emotion_styles);
     }
   };
-  const _excluded$1m = ["values", "unit", "step"];
+  const _excluded$1k = ["values", "unit", "step"];
   const breakpointKeys = ["xs", "sm", "md", "lg", "xl"];
   const sortBreakpointsValues = (values2) => {
     const breakpointsAsArray = Object.keys(values2).map((key) => ({
@@ -14060,7 +14084,7 @@ var __async = (__this, __arguments, generator) => {
       },
       unit = "px",
       step = 5
-    } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$1m);
+    } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$1k);
     const sortedValues = sortBreakpointsValues(values2);
     const keys = Object.keys(sortedValues);
     function up(key) {
@@ -15098,14 +15122,14 @@ var __async = (__this, __arguments, generator) => {
   }
   const styleFunctionSx = unstable_createStyleFunctionSx();
   styleFunctionSx.filterProps = ["sx"];
-  const _excluded$1l = ["breakpoints", "palette", "spacing", "shape"];
+  const _excluded$1j = ["breakpoints", "palette", "spacing", "shape"];
   function createTheme$1(options = {}, ...args) {
     const {
       breakpoints: breakpointsInput = {},
       palette: paletteInput = {},
       spacing: spacingInput,
       shape: shapeInput = {}
-    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$1l);
+    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$1j);
     const breakpoints2 = createBreakpoints(breakpointsInput);
     const spacing2 = createSpacing(spacingInput);
     let muiTheme = deepmerge({
@@ -15292,7 +15316,7 @@ var __async = (__this, __arguments, generator) => {
     themeKey: "typography"
   });
   const typography = compose(typographyVariant, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign, textTransform);
-  const _excluded$1k = ["sx"];
+  const _excluded$1i = ["sx"];
   const splitProps = (props) => {
     var _props$theme$unstable, _props$theme;
     const result = {
@@ -15312,7 +15336,7 @@ var __async = (__this, __arguments, generator) => {
   function extendSxProp(props) {
     const {
       sx: inSx
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1k);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1i);
     const {
       systemProps,
       otherProps
@@ -15375,7 +15399,7 @@ var __async = (__this, __arguments, generator) => {
       [prop]: value
     };
   }
-  const _excluded$1j = ["className", "component"];
+  const _excluded$1h = ["className", "component"];
   function createBox(options = {}) {
     const {
       themeId,
@@ -15391,7 +15415,7 @@ var __async = (__this, __arguments, generator) => {
       const _extendSxProp = extendSxProp(inProps), {
         className,
         component = "div"
-      } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$1j);
+      } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$1h);
       return /* @__PURE__ */ jsx(BoxRoot, _extends$2({
         as: component,
         ref,
@@ -15421,14 +15445,14 @@ var __async = (__this, __arguments, generator) => {
      */
     sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
   } : void 0;
-  const _excluded$1i = ["variant"];
+  const _excluded$1g = ["variant"];
   function isEmpty$2(string) {
     return string.length === 0;
   }
   function propsToClassKey(props) {
     const {
       variant
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1i);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1g);
     let classKey = variant || "";
     Object.keys(other).sort().forEach((key) => {
       if (key === "color") {
@@ -15439,7 +15463,7 @@ var __async = (__this, __arguments, generator) => {
     });
     return classKey;
   }
-  const _excluded$1h = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
+  const _excluded$1f = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
   function isEmpty$1(obj) {
     return Object.keys(obj).length === 0;
   }
@@ -15527,7 +15551,7 @@ var __async = (__this, __arguments, generator) => {
         skipVariantsResolver: inputSkipVariantsResolver,
         skipSx: inputSkipSx,
         overridesResolver: overridesResolver2
-      } = inputOptions, options = _objectWithoutPropertiesLoose(inputOptions, _excluded$1h);
+      } = inputOptions, options = _objectWithoutPropertiesLoose(inputOptions, _excluded$1f);
       const skipVariantsResolver = inputSkipVariantsResolver !== void 0 ? inputSkipVariantsResolver : componentSlot && componentSlot !== "Root" || false;
       const skipSx = inputSkipSx || false;
       let label;
@@ -16251,7 +16275,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       setColorScheme
     });
   }
-  const _excluded$1g = ["colorSchemes", "components", "generateCssVars", "cssVarPrefix"];
+  const _excluded$1e = ["colorSchemes", "components", "generateCssVars", "cssVarPrefix"];
   const DISABLE_CSS_TRANSITION = "*{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}";
   function createCssVarsProvider(options) {
     const {
@@ -16312,7 +16336,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
           css: {}
         }),
         cssVarPrefix
-      } = _ref, restThemeProp = _objectWithoutPropertiesLoose(_ref, _excluded$1g);
+      } = _ref, restThemeProp = _objectWithoutPropertiesLoose(_ref, _excluded$1e);
       const allColorSchemes = Object.keys(colorSchemes);
       const defaultLightColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.light;
       const defaultDarkColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.dark;
@@ -16647,11 +16671,11 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       varsWithDefaults
     };
   }
-  const _excluded$1f = ["colorSchemes", "components"], _excluded2$5 = ["light"];
+  const _excluded$1d = ["colorSchemes", "components"], _excluded2$5 = ["light"];
   function prepareCssVars(theme, parserConfig) {
     const {
       colorSchemes = {}
-    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$1f);
+    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$1d);
     const {
       vars: rootVars,
       css: rootCss,
@@ -16703,18 +16727,18 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       generateCssVars
     };
   }
-  const _excluded$1e = ["cssVarPrefix", "shouldSkipGeneratingVar"];
+  const _excluded$1c = ["cssVarPrefix", "shouldSkipGeneratingVar"];
   function createCssVarsTheme(theme) {
     const {
       cssVarPrefix,
       shouldSkipGeneratingVar: shouldSkipGeneratingVar2
-    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$1e);
+    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$1c);
     return _extends$2({}, theme, prepareCssVars(otherTheme, {
       prefix: cssVarPrefix,
       shouldSkipGeneratingVar: shouldSkipGeneratingVar2
     }));
   }
-  const _excluded$1d = ["className", "component", "disableGutters", "fixed", "maxWidth", "classes"];
+  const _excluded$1b = ["className", "component", "disableGutters", "fixed", "maxWidth", "classes"];
   const defaultTheme$5 = createTheme$1();
   const defaultCreateStyledComponent$2 = styled$1("div", {
     name: "MuiContainer",
@@ -16731,7 +16755,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     name: "MuiContainer",
     defaultTheme: defaultTheme$5
   });
-  const useUtilityClasses$X = (ownerState, componentName) => {
+  const useUtilityClasses$V = (ownerState, componentName) => {
     const getContainerUtilityClass2 = (slot) => {
       return generateUtilityClass(componentName, slot);
     };
@@ -16807,14 +16831,14 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
         disableGutters = false,
         fixed = false,
         maxWidth: maxWidth2 = "lg"
-      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1d);
+      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1b);
       const ownerState = _extends$2({}, props, {
         component,
         disableGutters,
         fixed,
         maxWidth: maxWidth2
       });
-      const classes = useUtilityClasses$X(ownerState, componentName);
+      const classes = useUtilityClasses$V(ownerState, componentName);
       return (
         // @ts-ignore theme is injected by the styled util
         /* @__PURE__ */ jsx(ContainerRoot, _extends$2({
@@ -17144,7 +17168,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     }
     return [`direction-xs-${String(direction)}`];
   };
-  const _excluded$1c = ["className", "children", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow", "unstable_level"];
+  const _excluded$1a = ["className", "children", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow", "unstable_level"];
   const defaultTheme$4 = createTheme$1();
   const defaultCreateStyledComponent$1 = styled$1("div", {
     name: "MuiGrid",
@@ -17199,7 +17223,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
         columnSpacing: columnSpacingProp = spacingProp,
         disableEqualOverflow: themeDisableEqualOverflow,
         unstable_level: level = 0
-      } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$1c);
+      } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$1a);
       let disableEqualOverflow = themeDisableEqualOverflow;
       if (level && themeDisableEqualOverflow !== void 0) {
         disableEqualOverflow = inProps.disableEqualOverflow;
@@ -17450,7 +17474,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     ...GRID_SIZES.map((size) => `grid-lg-${size}`),
     ...GRID_SIZES.map((size) => `grid-xl-${size}`)
   ]);
-  const _excluded$1b = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
+  const _excluded$19 = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
   const defaultTheme$3 = createTheme$1();
   const defaultCreateStyledComponent = styled$1("div", {
     name: "MuiStack",
@@ -17569,7 +17593,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
         children,
         className,
         useFlexGap = false
-      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1b);
+      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$19);
       const ownerState = {
         direction,
         spacing: spacing2,
@@ -17777,7 +17801,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     A400: "#00e676",
     A700: "#00c853"
   };
-  const _excluded$1a = ["mode", "contrastThreshold", "tonalOffset"];
+  const _excluded$18 = ["mode", "contrastThreshold", "tonalOffset"];
   const light = {
     // The colors used to style the text.
     text: {
@@ -17945,7 +17969,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       mode = "light",
       contrastThreshold = 3,
       tonalOffset = 0.2
-    } = palette2, other = _objectWithoutPropertiesLoose(palette2, _excluded$1a);
+    } = palette2, other = _objectWithoutPropertiesLoose(palette2, _excluded$18);
     const primary = palette2.primary || getDefaultPrimary(mode);
     const secondary = palette2.secondary || getDefaultSecondary(mode);
     const error = palette2.error || getDefaultError(mode);
@@ -18064,7 +18088,7 @@ const theme2 = createTheme({ palette: {
     }, modes2[mode]), other);
     return paletteOutput;
   }
-  const _excluded$19 = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
+  const _excluded$17 = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
   function round$1(value) {
     return Math.round(value * 1e5) / 1e5;
   }
@@ -18088,7 +18112,7 @@ const theme2 = createTheme({ palette: {
       // Apply the CSS properties to all the variants.
       allVariants,
       pxToRem: pxToRem2
-    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$19);
+    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$17);
     if (process.env.NODE_ENV !== "production") {
       if (typeof fontSize2 !== "number") {
         console.error("MUI: `fontSize` is required to be a number.");
@@ -18144,7 +18168,7 @@ const theme2 = createTheme({ palette: {
     return [`${px[0]}px ${px[1]}px ${px[2]}px ${px[3]}px rgba(0,0,0,${shadowKeyUmbraOpacity})`, `${px[4]}px ${px[5]}px ${px[6]}px ${px[7]}px rgba(0,0,0,${shadowKeyPenumbraOpacity})`, `${px[8]}px ${px[9]}px ${px[10]}px ${px[11]}px rgba(0,0,0,${shadowAmbientShadowOpacity})`].join(",");
   }
   const shadows = ["none", createShadow(0, 2, 1, -1, 0, 1, 1, 0, 0, 1, 3, 0), createShadow(0, 3, 1, -2, 0, 2, 2, 0, 0, 1, 5, 0), createShadow(0, 3, 3, -2, 0, 3, 4, 0, 0, 1, 8, 0), createShadow(0, 2, 4, -1, 0, 4, 5, 0, 0, 1, 10, 0), createShadow(0, 3, 5, -1, 0, 5, 8, 0, 0, 1, 14, 0), createShadow(0, 3, 5, -1, 0, 6, 10, 0, 0, 1, 18, 0), createShadow(0, 4, 5, -2, 0, 7, 10, 1, 0, 2, 16, 1), createShadow(0, 5, 5, -3, 0, 8, 10, 1, 0, 3, 14, 2), createShadow(0, 5, 6, -3, 0, 9, 12, 1, 0, 3, 16, 2), createShadow(0, 6, 6, -3, 0, 10, 14, 1, 0, 4, 18, 3), createShadow(0, 6, 7, -4, 0, 11, 15, 1, 0, 4, 20, 3), createShadow(0, 7, 8, -4, 0, 12, 17, 2, 0, 5, 22, 4), createShadow(0, 7, 8, -4, 0, 13, 19, 2, 0, 5, 24, 4), createShadow(0, 7, 9, -4, 0, 14, 21, 2, 0, 5, 26, 4), createShadow(0, 8, 9, -5, 0, 15, 22, 2, 0, 6, 28, 5), createShadow(0, 8, 10, -5, 0, 16, 24, 2, 0, 6, 30, 5), createShadow(0, 8, 11, -5, 0, 17, 26, 2, 0, 6, 32, 5), createShadow(0, 9, 11, -5, 0, 18, 28, 2, 0, 7, 34, 6), createShadow(0, 9, 12, -6, 0, 19, 29, 2, 0, 7, 36, 6), createShadow(0, 10, 13, -6, 0, 20, 31, 3, 0, 8, 38, 7), createShadow(0, 10, 13, -6, 0, 21, 33, 3, 0, 8, 40, 7), createShadow(0, 10, 14, -6, 0, 22, 35, 3, 0, 8, 42, 7), createShadow(0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8), createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8)];
-  const _excluded$18 = ["duration", "easing", "delay"];
+  const _excluded$16 = ["duration", "easing", "delay"];
   const easing = {
     // This is the most common easing curve.
     easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
@@ -18187,7 +18211,7 @@ const theme2 = createTheme({ palette: {
         duration: durationOption = mergedDuration.standard,
         easing: easingOption = mergedEasing.easeInOut,
         delay = 0
-      } = options, other = _objectWithoutPropertiesLoose(options, _excluded$18);
+      } = options, other = _objectWithoutPropertiesLoose(options, _excluded$16);
       if (process.env.NODE_ENV !== "production") {
         const isString2 = (value) => typeof value === "string";
         const isNumber = (value) => !isNaN(parseFloat(value));
@@ -18227,14 +18251,14 @@ const theme2 = createTheme({ palette: {
     snackbar: 1400,
     tooltip: 1500
   };
-  const _excluded$17 = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
+  const _excluded$15 = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
   function createTheme(options = {}, ...args) {
     const {
       mixins: mixinsInput = {},
       palette: paletteInput = {},
       transitions: transitionsInput = {},
       typography: typographyInput = {}
-    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$17);
+    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$15);
     if (options.vars) {
       throw new Error(process.env.NODE_ENV !== "production" ? `MUI: \`vars\` is a private field used for CSS variables support.
 Please use another name.` : formatMuiErrorMessage(18));
@@ -18298,12 +18322,6 @@ Please use another name.` : formatMuiErrorMessage(18));
     return createTheme(...args);
   }
   const defaultTheme$2 = createTheme();
-  const rootShouldForwardProp = (prop) => shouldForwardProp(prop) && prop !== "classes";
-  const slotShouldForwardProp = shouldForwardProp;
-  const styled = createStyled({
-    defaultTheme: defaultTheme$2,
-    rootShouldForwardProp
-  });
   function useThemeProps({
     props,
     name
@@ -18314,336 +18332,12 @@ Please use another name.` : formatMuiErrorMessage(18));
       defaultTheme: defaultTheme$2
     });
   }
-  const getOverlayAlpha = (elevation) => {
-    let alphaValue;
-    if (elevation < 1) {
-      alphaValue = 5.11916 * __pow(elevation, 2);
-    } else {
-      alphaValue = 4.5 * Math.log(elevation + 1) + 2;
-    }
-    return (alphaValue / 100).toFixed(2);
-  };
-  function useTheme() {
-    const theme = useTheme$2(defaultTheme$2);
-    if (process.env.NODE_ENV !== "production") {
-      React__namespace.useDebugValue(theme);
-    }
-    return theme;
-  }
-  function getPaperUtilityClass(slot) {
-    return generateUtilityClass("MuiPaper", slot);
-  }
-  const paperClasses = generateUtilityClasses("MuiPaper", ["root", "rounded", "outlined", "elevation", "elevation0", "elevation1", "elevation2", "elevation3", "elevation4", "elevation5", "elevation6", "elevation7", "elevation8", "elevation9", "elevation10", "elevation11", "elevation12", "elevation13", "elevation14", "elevation15", "elevation16", "elevation17", "elevation18", "elevation19", "elevation20", "elevation21", "elevation22", "elevation23", "elevation24"]);
-  const _excluded$16 = ["className", "component", "elevation", "square", "variant"];
-  const useUtilityClasses$W = (ownerState) => {
-    const {
-      square,
-      elevation,
-      variant,
-      classes
-    } = ownerState;
-    const slots = {
-      root: ["root", variant, !square && "rounded", variant === "elevation" && `elevation${elevation}`]
-    };
-    return composeClasses(slots, getPaperUtilityClass, classes);
-  };
-  const PaperRoot = styled("div", {
-    name: "MuiPaper",
-    slot: "Root",
-    overridesResolver: (props, styles2) => {
-      const {
-        ownerState
-      } = props;
-      return [styles2.root, styles2[ownerState.variant], !ownerState.square && styles2.rounded, ownerState.variant === "elevation" && styles2[`elevation${ownerState.elevation}`]];
-    }
-  })(({
-    theme,
-    ownerState
-  }) => {
-    var _theme$vars$overlays;
-    return _extends$2({
-      backgroundColor: (theme.vars || theme).palette.background.paper,
-      color: (theme.vars || theme).palette.text.primary,
-      transition: theme.transitions.create("box-shadow")
-    }, !ownerState.square && {
-      borderRadius: theme.shape.borderRadius
-    }, ownerState.variant === "outlined" && {
-      border: `1px solid ${(theme.vars || theme).palette.divider}`
-    }, ownerState.variant === "elevation" && _extends$2({
-      boxShadow: (theme.vars || theme).shadows[ownerState.elevation]
-    }, !theme.vars && theme.palette.mode === "dark" && {
-      backgroundImage: `linear-gradient(${alpha("#fff", getOverlayAlpha(ownerState.elevation))}, ${alpha("#fff", getOverlayAlpha(ownerState.elevation))})`
-    }, theme.vars && {
-      backgroundImage: (_theme$vars$overlays = theme.vars.overlays) == null ? void 0 : _theme$vars$overlays[ownerState.elevation]
-    }));
+  const rootShouldForwardProp = (prop) => shouldForwardProp(prop) && prop !== "classes";
+  const slotShouldForwardProp = shouldForwardProp;
+  const styled = createStyled({
+    defaultTheme: defaultTheme$2,
+    rootShouldForwardProp
   });
-  const Paper = /* @__PURE__ */ React__namespace.forwardRef(function Paper2(inProps, ref) {
-    const props = useThemeProps({
-      props: inProps,
-      name: "MuiPaper"
-    });
-    const {
-      className,
-      component = "div",
-      elevation = 1,
-      square = false,
-      variant = "elevation"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$16);
-    const ownerState = _extends$2({}, props, {
-      component,
-      elevation,
-      square,
-      variant
-    });
-    const classes = useUtilityClasses$W(ownerState);
-    if (process.env.NODE_ENV !== "production") {
-      const theme = useTheme();
-      if (theme.shadows[elevation] === void 0) {
-        console.error([`MUI: The elevation provided <Paper elevation={${elevation}}> is not available in the theme.`, `Please make sure that \`theme.shadows[${elevation}]\` is defined.`].join("\n"));
-      }
-    }
-    return /* @__PURE__ */ jsx(PaperRoot, _extends$2({
-      as: component,
-      ownerState,
-      className: clsx(classes.root, className),
-      ref
-    }, other));
-  });
-  process.env.NODE_ENV !== "production" ? Paper.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
-    /**
-     * The content of the component.
-     */
-    children: propTypesExports.node,
-    /**
-     * Override or extend the styles applied to the component.
-     */
-    classes: propTypesExports.object,
-    /**
-     * @ignore
-     */
-    className: propTypesExports.string,
-    /**
-     * The component used for the root node.
-     * Either a string to use a HTML element or a component.
-     */
-    component: propTypesExports.elementType,
-    /**
-     * Shadow depth, corresponds to `dp` in the spec.
-     * It accepts values between 0 and 24 inclusive.
-     * @default 1
-     */
-    elevation: chainPropTypes(integerPropType, (props) => {
-      const {
-        elevation,
-        variant
-      } = props;
-      if (elevation > 0 && variant === "outlined") {
-        return new Error(`MUI: Combining \`elevation={${elevation}}\` with \`variant="${variant}"\` has no effect. Either use \`elevation={0}\` or use a different \`variant\`.`);
-      }
-      return null;
-    }),
-    /**
-     * If `true`, rounded corners are disabled.
-     * @default false
-     */
-    square: propTypesExports.bool,
-    /**
-     * The system prop that allows defining system overrides as well as additional CSS styles.
-     */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
-    /**
-     * The variant to use.
-     * @default 'elevation'
-     */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["elevation", "outlined"]), propTypesExports.string])
-  } : void 0;
-  function getAppBarUtilityClass(slot) {
-    return generateUtilityClass("MuiAppBar", slot);
-  }
-  const appBarClasses = generateUtilityClasses("MuiAppBar", ["root", "positionFixed", "positionAbsolute", "positionSticky", "positionStatic", "positionRelative", "colorDefault", "colorPrimary", "colorSecondary", "colorInherit", "colorTransparent"]);
-  const _excluded$15 = ["className", "color", "enableColorOnDark", "position"];
-  const useUtilityClasses$V = (ownerState) => {
-    const {
-      color: color2,
-      position: position2,
-      classes
-    } = ownerState;
-    const slots = {
-      root: ["root", `color${capitalize(color2)}`, `position${capitalize(position2)}`]
-    };
-    return composeClasses(slots, getAppBarUtilityClass, classes);
-  };
-  const joinVars = (var1, var2) => var1 ? `${var1 == null ? void 0 : var1.replace(")", "")}, ${var2})` : var2;
-  const AppBarRoot = styled(Paper, {
-    name: "MuiAppBar",
-    slot: "Root",
-    overridesResolver: (props, styles2) => {
-      const {
-        ownerState
-      } = props;
-      return [styles2.root, styles2[`position${capitalize(ownerState.position)}`], styles2[`color${capitalize(ownerState.color)}`]];
-    }
-  })(({
-    theme,
-    ownerState
-  }) => {
-    const backgroundColorDefault = theme.palette.mode === "light" ? theme.palette.grey[100] : theme.palette.grey[900];
-    return _extends$2({
-      display: "flex",
-      flexDirection: "column",
-      width: "100%",
-      boxSizing: "border-box",
-      // Prevent padding issue with the Modal and fixed positioned AppBar.
-      flexShrink: 0
-    }, ownerState.position === "fixed" && {
-      position: "fixed",
-      zIndex: (theme.vars || theme).zIndex.appBar,
-      top: 0,
-      left: "auto",
-      right: 0,
-      "@media print": {
-        // Prevent the app bar to be visible on each printed page.
-        position: "absolute"
-      }
-    }, ownerState.position === "absolute" && {
-      position: "absolute",
-      zIndex: (theme.vars || theme).zIndex.appBar,
-      top: 0,
-      left: "auto",
-      right: 0
-    }, ownerState.position === "sticky" && {
-      // ⚠️ sticky is not supported by IE11.
-      position: "sticky",
-      zIndex: (theme.vars || theme).zIndex.appBar,
-      top: 0,
-      left: "auto",
-      right: 0
-    }, ownerState.position === "static" && {
-      position: "static"
-    }, ownerState.position === "relative" && {
-      position: "relative"
-    }, !theme.vars && _extends$2({}, ownerState.color === "default" && {
-      backgroundColor: backgroundColorDefault,
-      color: theme.palette.getContrastText(backgroundColorDefault)
-    }, ownerState.color && ownerState.color !== "default" && ownerState.color !== "inherit" && ownerState.color !== "transparent" && {
-      backgroundColor: theme.palette[ownerState.color].main,
-      color: theme.palette[ownerState.color].contrastText
-    }, ownerState.color === "inherit" && {
-      color: "inherit"
-    }, theme.palette.mode === "dark" && !ownerState.enableColorOnDark && {
-      backgroundColor: null,
-      color: null
-    }, ownerState.color === "transparent" && _extends$2({
-      backgroundColor: "transparent",
-      color: "inherit"
-    }, theme.palette.mode === "dark" && {
-      backgroundImage: "none"
-    })), theme.vars && _extends$2({}, ownerState.color === "default" && {
-      "--AppBar-background": ownerState.enableColorOnDark ? theme.vars.palette.AppBar.defaultBg : joinVars(theme.vars.palette.AppBar.darkBg, theme.vars.palette.AppBar.defaultBg),
-      "--AppBar-color": ownerState.enableColorOnDark ? theme.vars.palette.text.primary : joinVars(theme.vars.palette.AppBar.darkColor, theme.vars.palette.text.primary)
-    }, ownerState.color && !ownerState.color.match(/^(default|inherit|transparent)$/) && {
-      "--AppBar-background": ownerState.enableColorOnDark ? theme.vars.palette[ownerState.color].main : joinVars(theme.vars.palette.AppBar.darkBg, theme.vars.palette[ownerState.color].main),
-      "--AppBar-color": ownerState.enableColorOnDark ? theme.vars.palette[ownerState.color].contrastText : joinVars(theme.vars.palette.AppBar.darkColor, theme.vars.palette[ownerState.color].contrastText)
-    }, {
-      backgroundColor: "var(--AppBar-background)",
-      color: ownerState.color === "inherit" ? "inherit" : "var(--AppBar-color)"
-    }, ownerState.color === "transparent" && {
-      backgroundImage: "none",
-      backgroundColor: "transparent",
-      color: "inherit"
-    }));
-  });
-  const AppBar$1 = /* @__PURE__ */ React__namespace.forwardRef(function AppBar2(inProps, ref) {
-    const props = useThemeProps({
-      props: inProps,
-      name: "MuiAppBar"
-    });
-    const {
-      className,
-      color: color2 = "primary",
-      enableColorOnDark = false,
-      position: position2 = "fixed"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$15);
-    const ownerState = _extends$2({}, props, {
-      color: color2,
-      position: position2,
-      enableColorOnDark
-    });
-    const classes = useUtilityClasses$V(ownerState);
-    return /* @__PURE__ */ jsx(AppBarRoot, _extends$2({
-      square: true,
-      component: "header",
-      ownerState,
-      elevation: 4,
-      className: clsx(classes.root, className, position2 === "fixed" && "mui-fixed"),
-      ref
-    }, other));
-  });
-  process.env.NODE_ENV !== "production" ? AppBar$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
-    /**
-     * The content of the component.
-     */
-    children: propTypesExports.node,
-    /**
-     * Override or extend the styles applied to the component.
-     */
-    classes: propTypesExports.object,
-    /**
-     * @ignore
-     */
-    className: propTypesExports.string,
-    /**
-     * The color of the component.
-     * It supports both default and custom theme colors, which can be added as shown in the
-     * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
-     * @default 'primary'
-     */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["default", "inherit", "primary", "secondary", "transparent"]), propTypesExports.string]),
-    /**
-     * If true, the `color` prop is applied in dark mode.
-     * @default false
-     */
-    enableColorOnDark: propTypesExports.bool,
-    /**
-     * The positioning type. The behavior of the different options is described
-     * [in the MDN web docs](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Positioning).
-     * Note: `sticky` is not universally supported and will fall back to `static` when unavailable.
-     * @default 'fixed'
-     */
-    position: propTypesExports.oneOf(["absolute", "fixed", "relative", "static", "sticky"]),
-    /**
-     * The system prop that allows defining system overrides as well as additional CSS styles.
-     */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
-  } : void 0;
-  var ChevronRight = {};
-  var interopRequireDefaultExports = {};
-  var interopRequireDefault$1 = {
-    get exports() {
-      return interopRequireDefaultExports;
-    },
-    set exports(v) {
-      interopRequireDefaultExports = v;
-    }
-  };
-  (function(module2) {
-    function _interopRequireDefault2(obj) {
-      return obj && obj.__esModule ? obj : {
-        "default": obj
-      };
-    }
-    module2.exports = _interopRequireDefault2, module2.exports.__esModule = true, module2.exports["default"] = module2.exports;
-  })(interopRequireDefault$1);
-  const interopRequireDefault = /* @__PURE__ */ getDefaultExportFromCjs(interopRequireDefaultExports);
-  var createSvgIcon$1 = {};
   function getSvgIconUtilityClass(slot) {
     return generateUtilityClass("MuiSvgIcon", slot);
   }
@@ -18882,17 +18576,17 @@ Please use another name.` : formatMuiErrorMessage(18));
   }
   const require$$2 = /* @__PURE__ */ getAugmentedNamespace(jsxRuntime);
   "use strict";
-  var _interopRequireDefault$t = interopRequireDefaultExports;
+  var _interopRequireDefault$s = interopRequireDefaultExports;
   Object.defineProperty(ChevronRight, "__esModule", {
     value: true
   });
-  var default_1$t = ChevronRight.default = void 0;
-  var _createSvgIcon$t = _interopRequireDefault$t(requireCreateSvgIcon());
-  var _jsxRuntime$t = require$$2;
-  var _default$t = (0, _createSvgIcon$t.default)(/* @__PURE__ */ (0, _jsxRuntime$t.jsx)("path", {
+  var default_1$s = ChevronRight.default = void 0;
+  var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
+  var _jsxRuntime$s = require$$2;
+  var _default$s = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
     d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
   }), "ChevronRight");
-  default_1$t = ChevronRight.default = _default$t;
+  default_1$s = ChevronRight.default = _default$s;
   const _excluded$13 = ["defaultProps", "mixins", "overrides", "palette", "props", "styleOverrides"], _excluded2$4 = ["type", "mode"];
   function adaptV4Theme(inputTheme) {
     if (process.env.NODE_ENV !== "production") {
@@ -19099,6 +18793,13 @@ Use unitless line heights instead.` : formatMuiErrorMessage(6));
     });
     return theme;
   }
+  function useTheme() {
+    const theme = useTheme$2(defaultTheme$2);
+    if (process.env.NODE_ENV !== "production") {
+      React__namespace.useDebugValue(theme);
+    }
+    return theme;
+  }
   function makeStyles() {
     throw new Error(process.env.NODE_ENV !== "production" ? `MUI: makeStyles is no longer exported from @mui/material/styles.
 You have to import it from @mui/styles.
@@ -19114,6 +18815,15 @@ See https://mui.com/r/migration-v4/#mui-material-styles for more details.` : for
 You have to import it from @mui/styles.
 See https://mui.com/r/migration-v4/#mui-material-styles for more details.` : formatMuiErrorMessage(16));
   }
+  const getOverlayAlpha = (elevation) => {
+    let alphaValue;
+    if (elevation < 1) {
+      alphaValue = 5.11916 * __pow(elevation, 2);
+    } else {
+      alphaValue = 4.5 * Math.log(elevation + 1) + 2;
+    }
+    return (alphaValue / 100).toFixed(2);
+  };
   const _excluded$12 = ["colorSchemes", "cssVarPrefix"], _excluded2$3 = ["palette"];
   const defaultDarkOverlays = [...Array(25)].map((_2, index2) => {
     if (index2 === 0) {
@@ -19410,7 +19120,301 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     color: theme.palette.primary.main,
     border: "1px solid " + theme.palette.primary.main
   }));
-  const AppBar = styled(AppBar$1, {
+  function getPaperUtilityClass(slot) {
+    return generateUtilityClass("MuiPaper", slot);
+  }
+  const paperClasses = generateUtilityClasses("MuiPaper", ["root", "rounded", "outlined", "elevation", "elevation0", "elevation1", "elevation2", "elevation3", "elevation4", "elevation5", "elevation6", "elevation7", "elevation8", "elevation9", "elevation10", "elevation11", "elevation12", "elevation13", "elevation14", "elevation15", "elevation16", "elevation17", "elevation18", "elevation19", "elevation20", "elevation21", "elevation22", "elevation23", "elevation24"]);
+  const _excluded$11 = ["className", "component", "elevation", "square", "variant"];
+  const useUtilityClasses$T = (ownerState) => {
+    const {
+      square,
+      elevation,
+      variant,
+      classes
+    } = ownerState;
+    const slots = {
+      root: ["root", variant, !square && "rounded", variant === "elevation" && `elevation${elevation}`]
+    };
+    return composeClasses(slots, getPaperUtilityClass, classes);
+  };
+  const PaperRoot = styled("div", {
+    name: "MuiPaper",
+    slot: "Root",
+    overridesResolver: (props, styles2) => {
+      const {
+        ownerState
+      } = props;
+      return [styles2.root, styles2[ownerState.variant], !ownerState.square && styles2.rounded, ownerState.variant === "elevation" && styles2[`elevation${ownerState.elevation}`]];
+    }
+  })(({
+    theme,
+    ownerState
+  }) => {
+    var _theme$vars$overlays;
+    return _extends$2({
+      backgroundColor: (theme.vars || theme).palette.background.paper,
+      color: (theme.vars || theme).palette.text.primary,
+      transition: theme.transitions.create("box-shadow")
+    }, !ownerState.square && {
+      borderRadius: theme.shape.borderRadius
+    }, ownerState.variant === "outlined" && {
+      border: `1px solid ${(theme.vars || theme).palette.divider}`
+    }, ownerState.variant === "elevation" && _extends$2({
+      boxShadow: (theme.vars || theme).shadows[ownerState.elevation]
+    }, !theme.vars && theme.palette.mode === "dark" && {
+      backgroundImage: `linear-gradient(${alpha("#fff", getOverlayAlpha(ownerState.elevation))}, ${alpha("#fff", getOverlayAlpha(ownerState.elevation))})`
+    }, theme.vars && {
+      backgroundImage: (_theme$vars$overlays = theme.vars.overlays) == null ? void 0 : _theme$vars$overlays[ownerState.elevation]
+    }));
+  });
+  const Paper = /* @__PURE__ */ React__namespace.forwardRef(function Paper2(inProps, ref) {
+    const props = useThemeProps({
+      props: inProps,
+      name: "MuiPaper"
+    });
+    const {
+      className,
+      component = "div",
+      elevation = 1,
+      square = false,
+      variant = "elevation"
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$11);
+    const ownerState = _extends$2({}, props, {
+      component,
+      elevation,
+      square,
+      variant
+    });
+    const classes = useUtilityClasses$T(ownerState);
+    if (process.env.NODE_ENV !== "production") {
+      const theme = useTheme();
+      if (theme.shadows[elevation] === void 0) {
+        console.error([`MUI: The elevation provided <Paper elevation={${elevation}}> is not available in the theme.`, `Please make sure that \`theme.shadows[${elevation}]\` is defined.`].join("\n"));
+      }
+    }
+    return /* @__PURE__ */ jsx(PaperRoot, _extends$2({
+      as: component,
+      ownerState,
+      className: clsx(classes.root, className),
+      ref
+    }, other));
+  });
+  process.env.NODE_ENV !== "production" ? Paper.propTypes = {
+    // ----------------------------- Warning --------------------------------
+    // | These PropTypes are generated from the TypeScript type definitions |
+    // |     To update them edit the d.ts file and run "yarn proptypes"     |
+    // ----------------------------------------------------------------------
+    /**
+     * The content of the component.
+     */
+    children: propTypesExports.node,
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    classes: propTypesExports.object,
+    /**
+     * @ignore
+     */
+    className: propTypesExports.string,
+    /**
+     * The component used for the root node.
+     * Either a string to use a HTML element or a component.
+     */
+    component: propTypesExports.elementType,
+    /**
+     * Shadow depth, corresponds to `dp` in the spec.
+     * It accepts values between 0 and 24 inclusive.
+     * @default 1
+     */
+    elevation: chainPropTypes(integerPropType, (props) => {
+      const {
+        elevation,
+        variant
+      } = props;
+      if (elevation > 0 && variant === "outlined") {
+        return new Error(`MUI: Combining \`elevation={${elevation}}\` with \`variant="${variant}"\` has no effect. Either use \`elevation={0}\` or use a different \`variant\`.`);
+      }
+      return null;
+    }),
+    /**
+     * If `true`, rounded corners are disabled.
+     * @default false
+     */
+    square: propTypesExports.bool,
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    /**
+     * The variant to use.
+     * @default 'elevation'
+     */
+    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["elevation", "outlined"]), propTypesExports.string])
+  } : void 0;
+  function getAppBarUtilityClass(slot) {
+    return generateUtilityClass("MuiAppBar", slot);
+  }
+  const appBarClasses = generateUtilityClasses("MuiAppBar", ["root", "positionFixed", "positionAbsolute", "positionSticky", "positionStatic", "positionRelative", "colorDefault", "colorPrimary", "colorSecondary", "colorInherit", "colorTransparent"]);
+  const _excluded$10 = ["className", "color", "enableColorOnDark", "position"];
+  const useUtilityClasses$S = (ownerState) => {
+    const {
+      color: color2,
+      position: position2,
+      classes
+    } = ownerState;
+    const slots = {
+      root: ["root", `color${capitalize(color2)}`, `position${capitalize(position2)}`]
+    };
+    return composeClasses(slots, getAppBarUtilityClass, classes);
+  };
+  const joinVars = (var1, var2) => var1 ? `${var1 == null ? void 0 : var1.replace(")", "")}, ${var2})` : var2;
+  const AppBarRoot = styled(Paper, {
+    name: "MuiAppBar",
+    slot: "Root",
+    overridesResolver: (props, styles2) => {
+      const {
+        ownerState
+      } = props;
+      return [styles2.root, styles2[`position${capitalize(ownerState.position)}`], styles2[`color${capitalize(ownerState.color)}`]];
+    }
+  })(({
+    theme,
+    ownerState
+  }) => {
+    const backgroundColorDefault = theme.palette.mode === "light" ? theme.palette.grey[100] : theme.palette.grey[900];
+    return _extends$2({
+      display: "flex",
+      flexDirection: "column",
+      width: "100%",
+      boxSizing: "border-box",
+      // Prevent padding issue with the Modal and fixed positioned AppBar.
+      flexShrink: 0
+    }, ownerState.position === "fixed" && {
+      position: "fixed",
+      zIndex: (theme.vars || theme).zIndex.appBar,
+      top: 0,
+      left: "auto",
+      right: 0,
+      "@media print": {
+        // Prevent the app bar to be visible on each printed page.
+        position: "absolute"
+      }
+    }, ownerState.position === "absolute" && {
+      position: "absolute",
+      zIndex: (theme.vars || theme).zIndex.appBar,
+      top: 0,
+      left: "auto",
+      right: 0
+    }, ownerState.position === "sticky" && {
+      // ⚠️ sticky is not supported by IE11.
+      position: "sticky",
+      zIndex: (theme.vars || theme).zIndex.appBar,
+      top: 0,
+      left: "auto",
+      right: 0
+    }, ownerState.position === "static" && {
+      position: "static"
+    }, ownerState.position === "relative" && {
+      position: "relative"
+    }, !theme.vars && _extends$2({}, ownerState.color === "default" && {
+      backgroundColor: backgroundColorDefault,
+      color: theme.palette.getContrastText(backgroundColorDefault)
+    }, ownerState.color && ownerState.color !== "default" && ownerState.color !== "inherit" && ownerState.color !== "transparent" && {
+      backgroundColor: theme.palette[ownerState.color].main,
+      color: theme.palette[ownerState.color].contrastText
+    }, ownerState.color === "inherit" && {
+      color: "inherit"
+    }, theme.palette.mode === "dark" && !ownerState.enableColorOnDark && {
+      backgroundColor: null,
+      color: null
+    }, ownerState.color === "transparent" && _extends$2({
+      backgroundColor: "transparent",
+      color: "inherit"
+    }, theme.palette.mode === "dark" && {
+      backgroundImage: "none"
+    })), theme.vars && _extends$2({}, ownerState.color === "default" && {
+      "--AppBar-background": ownerState.enableColorOnDark ? theme.vars.palette.AppBar.defaultBg : joinVars(theme.vars.palette.AppBar.darkBg, theme.vars.palette.AppBar.defaultBg),
+      "--AppBar-color": ownerState.enableColorOnDark ? theme.vars.palette.text.primary : joinVars(theme.vars.palette.AppBar.darkColor, theme.vars.palette.text.primary)
+    }, ownerState.color && !ownerState.color.match(/^(default|inherit|transparent)$/) && {
+      "--AppBar-background": ownerState.enableColorOnDark ? theme.vars.palette[ownerState.color].main : joinVars(theme.vars.palette.AppBar.darkBg, theme.vars.palette[ownerState.color].main),
+      "--AppBar-color": ownerState.enableColorOnDark ? theme.vars.palette[ownerState.color].contrastText : joinVars(theme.vars.palette.AppBar.darkColor, theme.vars.palette[ownerState.color].contrastText)
+    }, {
+      backgroundColor: "var(--AppBar-background)",
+      color: ownerState.color === "inherit" ? "inherit" : "var(--AppBar-color)"
+    }, ownerState.color === "transparent" && {
+      backgroundImage: "none",
+      backgroundColor: "transparent",
+      color: "inherit"
+    }));
+  });
+  const AppBar = /* @__PURE__ */ React__namespace.forwardRef(function AppBar2(inProps, ref) {
+    const props = useThemeProps({
+      props: inProps,
+      name: "MuiAppBar"
+    });
+    const {
+      className,
+      color: color2 = "primary",
+      enableColorOnDark = false,
+      position: position2 = "fixed"
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$10);
+    const ownerState = _extends$2({}, props, {
+      color: color2,
+      position: position2,
+      enableColorOnDark
+    });
+    const classes = useUtilityClasses$S(ownerState);
+    return /* @__PURE__ */ jsx(AppBarRoot, _extends$2({
+      square: true,
+      component: "header",
+      ownerState,
+      elevation: 4,
+      className: clsx(classes.root, className, position2 === "fixed" && "mui-fixed"),
+      ref
+    }, other));
+  });
+  process.env.NODE_ENV !== "production" ? AppBar.propTypes = {
+    // ----------------------------- Warning --------------------------------
+    // | These PropTypes are generated from the TypeScript type definitions |
+    // |     To update them edit the d.ts file and run "yarn proptypes"     |
+    // ----------------------------------------------------------------------
+    /**
+     * The content of the component.
+     */
+    children: propTypesExports.node,
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    classes: propTypesExports.object,
+    /**
+     * @ignore
+     */
+    className: propTypesExports.string,
+    /**
+     * The color of the component.
+     * It supports both default and custom theme colors, which can be added as shown in the
+     * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
+     * @default 'primary'
+     */
+    color: propTypesExports.oneOfType([propTypesExports.oneOf(["default", "inherit", "primary", "secondary", "transparent"]), propTypesExports.string]),
+    /**
+     * If true, the `color` prop is applied in dark mode.
+     * @default false
+     */
+    enableColorOnDark: propTypesExports.bool,
+    /**
+     * The positioning type. The behavior of the different options is described
+     * [in the MDN web docs](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Positioning).
+     * Note: `sticky` is not universally supported and will fall back to `static` when unavailable.
+     * @default 'fixed'
+     */
+    position: propTypesExports.oneOf(["absolute", "fixed", "relative", "static", "sticky"]),
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+  } : void 0;
+  const BasicAppBar = styled(AppBar, {
     shouldForwardProp: (prop) => prop !== "open"
   })(({ theme, open, drawerwidth }) => __spreadValues({
     zIndex: theme.zIndex.drawer + 1,
@@ -19432,7 +19436,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       content: true
     });
   }
-  function resolveOptions(tooldef, tooldata) {
+  const filter$1 = material.createFilterOptions();
+  function resolveOptions$1(tooldef, tooldata) {
     let options = [];
     if ("ent" === tooldef.options.kind && tooldata[tooldef.name]) {
       let ents = tooldata[tooldef.name].ents || [];
@@ -19450,7 +19455,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   }
   function BasicHead(props) {
-    const { ctx, spec } = props;
+    const {
+      vxg,
+      ctx,
+      spec
+    } = props;
     const { model, seneca } = ctx();
     const {
       frame
@@ -19480,14 +19489,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
       }
     });
-    const vxg = reactRedux.useSelector((state) => state.main.vxg);
-    const open = vxg.cmp.BasicSide.show;
-    let led_add = vxg.trigger.led.add;
+    const vxgState = reactRedux.useSelector((state) => state.main.vxg);
+    const open = vxgState.cmp.BasicSide.show;
+    let led_add = vxgState.trigger.led.add;
     const viewPath = location.pathname.split("/")[2];
     let add = model.app.web.frame.private.view[viewPath].content.def.add || { active: false };
     let drawerwidth = "16rem";
     return /* @__PURE__ */ jsx(
-      AppBar,
+      BasicAppBar,
       {
         drawerwidth,
         open,
@@ -19505,7 +19514,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               sx: __spreadValues({
                 marginRight: 2
               }, open && { display: "none" }),
-              children: /* @__PURE__ */ jsx(default_1$t, {})
+              children: /* @__PURE__ */ jsx(default_1$s, {})
             }
           ),
           tooldefs.map(
@@ -19517,16 +19526,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                     freeSolo: true,
                     forcePopupIcon: true,
                     value: valuemap[tooldef.name] || tooldef.defaultvalue || "",
-                    options: resolveOptions(tooldef, tooldata),
+                    options: resolveOptions$1(tooldef, tooldata),
                     size: "small",
                     sx: {
+                      paddingLeft: "1em",
                       width: "20rem"
+                    },
+                    filterOptions: (options, params) => {
+                      const filtered = filter$1(options, params);
+                      return filtered;
                     },
                     renderInput: (params) => /* @__PURE__ */ jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
                     onChange: (event, newval) => {
                       seneca.act("aim:app,set:state", {
                         section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
-                        content: newval.ent
+                        content: "search" == tooldef.mode && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
                       });
                     },
                     isOptionEqualToValue: (opt, val) => {
@@ -19560,19 +19574,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     );
   }
-  var ChevronLeft = {};
-  "use strict";
-  var _interopRequireDefault$s = interopRequireDefaultExports;
-  Object.defineProperty(ChevronLeft, "__esModule", {
-    value: true
-  });
-  var default_1$s = ChevronLeft.default = void 0;
-  var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-  var _jsxRuntime$s = require$$2;
-  var _default$s = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
-    d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
-  }), "ChevronLeft");
-  default_1$s = ChevronLeft.default = _default$s;
   function _setPrototypeOf(o, p) {
     _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
       o2.__proto__ = p2;
@@ -20779,1252 +20780,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   SwitchTransition.defaultProps = {
     mode: modes.out
   };
-  function Ripple(props) {
-    const {
-      className,
-      classes,
-      pulsate = false,
-      rippleX,
-      rippleY,
-      rippleSize,
-      in: inProp,
-      onExited,
-      timeout
-    } = props;
-    const [leaving, setLeaving] = React__namespace.useState(false);
-    const rippleClassName = clsx(className, classes.ripple, classes.rippleVisible, pulsate && classes.ripplePulsate);
-    const rippleStyles = {
-      width: rippleSize,
-      height: rippleSize,
-      top: -(rippleSize / 2) + rippleY,
-      left: -(rippleSize / 2) + rippleX
-    };
-    const childClassName = clsx(classes.child, leaving && classes.childLeaving, pulsate && classes.childPulsate);
-    if (!inProp && !leaving) {
-      setLeaving(true);
-    }
-    React__namespace.useEffect(() => {
-      if (!inProp && onExited != null) {
-        const timeoutId = setTimeout(onExited, timeout);
-        return () => {
-          clearTimeout(timeoutId);
-        };
-      }
-      return void 0;
-    }, [onExited, inProp, timeout]);
-    return /* @__PURE__ */ jsx("span", {
-      className: rippleClassName,
-      style: rippleStyles,
-      children: /* @__PURE__ */ jsx("span", {
-        className: childClassName
-      })
-    });
-  }
-  process.env.NODE_ENV !== "production" ? Ripple.propTypes = {
-    /**
-     * Override or extend the styles applied to the component.
-     * See [CSS API](#css) below for more details.
-     */
-    classes: propTypesExports.object.isRequired,
-    className: propTypesExports.string,
-    /**
-     * @ignore - injected from TransitionGroup
-     */
-    in: propTypesExports.bool,
-    /**
-     * @ignore - injected from TransitionGroup
-     */
-    onExited: propTypesExports.func,
-    /**
-     * If `true`, the ripple pulsates, typically indicating the keyboard focus state of an element.
-     */
-    pulsate: propTypesExports.bool,
-    /**
-     * Diameter of the ripple.
-     */
-    rippleSize: propTypesExports.number,
-    /**
-     * Horizontal position of the ripple center.
-     */
-    rippleX: propTypesExports.number,
-    /**
-     * Vertical position of the ripple center.
-     */
-    rippleY: propTypesExports.number,
-    /**
-     * exit delay
-     */
-    timeout: propTypesExports.number.isRequired
-  } : void 0;
-  function getTouchRippleUtilityClass(slot) {
-    return generateUtilityClass("MuiTouchRipple", slot);
-  }
-  const touchRippleClasses = generateUtilityClasses("MuiTouchRipple", ["root", "ripple", "rippleVisible", "ripplePulsate", "child", "childLeaving", "childPulsate"]);
-  const _excluded$11 = ["center", "classes", "className"];
-  let _$2 = (t) => t, _t$2, _t2$2, _t3$2, _t4$2;
-  const DURATION = 550;
-  const DELAY_RIPPLE = 80;
-  const enterKeyframe = react.keyframes(_t$2 || (_t$2 = _$2`
-  0% {
-    transform: scale(0);
-    opacity: 0.1;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 0.3;
-  }
-`));
-  const exitKeyframe = react.keyframes(_t2$2 || (_t2$2 = _$2`
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-`));
-  const pulsateKeyframe = react.keyframes(_t3$2 || (_t3$2 = _$2`
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(0.92);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-`));
-  const TouchRippleRoot = styled("span", {
-    name: "MuiTouchRipple",
-    slot: "Root"
-  })({
-    overflow: "hidden",
-    pointerEvents: "none",
-    position: "absolute",
-    zIndex: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    borderRadius: "inherit"
-  });
-  const TouchRippleRipple = styled(Ripple, {
-    name: "MuiTouchRipple",
-    slot: "Ripple"
-  })(_t4$2 || (_t4$2 = _$2`
-  opacity: 0;
-  position: absolute;
-
-  &.${0} {
-    opacity: 0.3;
-    transform: scale(1);
-    animation-name: ${0};
-    animation-duration: ${0}ms;
-    animation-timing-function: ${0};
-  }
-
-  &.${0} {
-    animation-duration: ${0}ms;
-  }
-
-  & .${0} {
-    opacity: 1;
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: currentColor;
-  }
-
-  & .${0} {
-    opacity: 0;
-    animation-name: ${0};
-    animation-duration: ${0}ms;
-    animation-timing-function: ${0};
-  }
-
-  & .${0} {
-    position: absolute;
-    /* @noflip */
-    left: 0px;
-    top: 0;
-    animation-name: ${0};
-    animation-duration: 2500ms;
-    animation-timing-function: ${0};
-    animation-iteration-count: infinite;
-    animation-delay: 200ms;
-  }
-`), touchRippleClasses.rippleVisible, enterKeyframe, DURATION, ({
-    theme
-  }) => theme.transitions.easing.easeInOut, touchRippleClasses.ripplePulsate, ({
-    theme
-  }) => theme.transitions.duration.shorter, touchRippleClasses.child, touchRippleClasses.childLeaving, exitKeyframe, DURATION, ({
-    theme
-  }) => theme.transitions.easing.easeInOut, touchRippleClasses.childPulsate, pulsateKeyframe, ({
-    theme
-  }) => theme.transitions.easing.easeInOut);
-  const TouchRipple = /* @__PURE__ */ React__namespace.forwardRef(function TouchRipple2(inProps, ref) {
-    const props = useThemeProps({
-      props: inProps,
-      name: "MuiTouchRipple"
-    });
-    const {
-      center: centerProp = false,
-      classes = {},
-      className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$11);
-    const [ripples, setRipples] = React__namespace.useState([]);
-    const nextKey = React__namespace.useRef(0);
-    const rippleCallback = React__namespace.useRef(null);
-    React__namespace.useEffect(() => {
-      if (rippleCallback.current) {
-        rippleCallback.current();
-        rippleCallback.current = null;
-      }
-    }, [ripples]);
-    const ignoringMouseDown = React__namespace.useRef(false);
-    const startTimer = React__namespace.useRef(null);
-    const startTimerCommit = React__namespace.useRef(null);
-    const container = React__namespace.useRef(null);
-    React__namespace.useEffect(() => {
-      return () => {
-        clearTimeout(startTimer.current);
-      };
-    }, []);
-    const startCommit = React__namespace.useCallback((params) => {
-      const {
-        pulsate: pulsate2,
-        rippleX,
-        rippleY,
-        rippleSize,
-        cb
-      } = params;
-      setRipples((oldRipples) => [...oldRipples, /* @__PURE__ */ jsx(TouchRippleRipple, {
-        classes: {
-          ripple: clsx(classes.ripple, touchRippleClasses.ripple),
-          rippleVisible: clsx(classes.rippleVisible, touchRippleClasses.rippleVisible),
-          ripplePulsate: clsx(classes.ripplePulsate, touchRippleClasses.ripplePulsate),
-          child: clsx(classes.child, touchRippleClasses.child),
-          childLeaving: clsx(classes.childLeaving, touchRippleClasses.childLeaving),
-          childPulsate: clsx(classes.childPulsate, touchRippleClasses.childPulsate)
-        },
-        timeout: DURATION,
-        pulsate: pulsate2,
-        rippleX,
-        rippleY,
-        rippleSize
-      }, nextKey.current)]);
-      nextKey.current += 1;
-      rippleCallback.current = cb;
-    }, [classes]);
-    const start2 = React__namespace.useCallback((event = {}, options = {}, cb = () => {
-    }) => {
-      const {
-        pulsate: pulsate2 = false,
-        center = centerProp || options.pulsate,
-        fakeElement = false
-        // For test purposes
-      } = options;
-      if ((event == null ? void 0 : event.type) === "mousedown" && ignoringMouseDown.current) {
-        ignoringMouseDown.current = false;
-        return;
-      }
-      if ((event == null ? void 0 : event.type) === "touchstart") {
-        ignoringMouseDown.current = true;
-      }
-      const element = fakeElement ? null : container.current;
-      const rect = element ? element.getBoundingClientRect() : {
-        width: 0,
-        height: 0,
-        left: 0,
-        top: 0
-      };
-      let rippleX;
-      let rippleY;
-      let rippleSize;
-      if (center || event === void 0 || event.clientX === 0 && event.clientY === 0 || !event.clientX && !event.touches) {
-        rippleX = Math.round(rect.width / 2);
-        rippleY = Math.round(rect.height / 2);
-      } else {
-        const {
-          clientX,
-          clientY
-        } = event.touches && event.touches.length > 0 ? event.touches[0] : event;
-        rippleX = Math.round(clientX - rect.left);
-        rippleY = Math.round(clientY - rect.top);
-      }
-      if (center) {
-        rippleSize = Math.sqrt((2 * __pow(rect.width, 2) + __pow(rect.height, 2)) / 3);
-        if (rippleSize % 2 === 0) {
-          rippleSize += 1;
-        }
-      } else {
-        const sizeX = Math.max(Math.abs((element ? element.clientWidth : 0) - rippleX), rippleX) * 2 + 2;
-        const sizeY = Math.max(Math.abs((element ? element.clientHeight : 0) - rippleY), rippleY) * 2 + 2;
-        rippleSize = Math.sqrt(__pow(sizeX, 2) + __pow(sizeY, 2));
-      }
-      if (event != null && event.touches) {
-        if (startTimerCommit.current === null) {
-          startTimerCommit.current = () => {
-            startCommit({
-              pulsate: pulsate2,
-              rippleX,
-              rippleY,
-              rippleSize,
-              cb
-            });
-          };
-          startTimer.current = setTimeout(() => {
-            if (startTimerCommit.current) {
-              startTimerCommit.current();
-              startTimerCommit.current = null;
-            }
-          }, DELAY_RIPPLE);
-        }
-      } else {
-        startCommit({
-          pulsate: pulsate2,
-          rippleX,
-          rippleY,
-          rippleSize,
-          cb
-        });
-      }
-    }, [centerProp, startCommit]);
-    const pulsate = React__namespace.useCallback(() => {
-      start2({}, {
-        pulsate: true
-      });
-    }, [start2]);
-    const stop = React__namespace.useCallback((event, cb) => {
-      clearTimeout(startTimer.current);
-      if ((event == null ? void 0 : event.type) === "touchend" && startTimerCommit.current) {
-        startTimerCommit.current();
-        startTimerCommit.current = null;
-        startTimer.current = setTimeout(() => {
-          stop(event, cb);
-        });
-        return;
-      }
-      startTimerCommit.current = null;
-      setRipples((oldRipples) => {
-        if (oldRipples.length > 0) {
-          return oldRipples.slice(1);
-        }
-        return oldRipples;
-      });
-      rippleCallback.current = cb;
-    }, []);
-    React__namespace.useImperativeHandle(ref, () => ({
-      pulsate,
-      start: start2,
-      stop
-    }), [pulsate, start2, stop]);
-    return /* @__PURE__ */ jsx(TouchRippleRoot, _extends$2({
-      className: clsx(touchRippleClasses.root, classes.root, className),
-      ref: container
-    }, other, {
-      children: /* @__PURE__ */ jsx(TransitionGroup, {
-        component: null,
-        exit: true,
-        children: ripples
-      })
-    }));
-  });
-  process.env.NODE_ENV !== "production" ? TouchRipple.propTypes = {
-    /**
-     * If `true`, the ripple starts at the center of the component
-     * rather than at the point of interaction.
-     */
-    center: propTypesExports.bool,
-    /**
-     * Override or extend the styles applied to the component.
-     * See [CSS API](#css) below for more details.
-     */
-    classes: propTypesExports.object,
-    /**
-     * @ignore
-     */
-    className: propTypesExports.string
-  } : void 0;
-  function getButtonBaseUtilityClass(slot) {
-    return generateUtilityClass("MuiButtonBase", slot);
-  }
-  const buttonBaseClasses = generateUtilityClasses("MuiButtonBase", ["root", "disabled", "focusVisible"]);
-  const _excluded$10 = ["action", "centerRipple", "children", "className", "component", "disabled", "disableRipple", "disableTouchRipple", "focusRipple", "focusVisibleClassName", "LinkComponent", "onBlur", "onClick", "onContextMenu", "onDragLeave", "onFocus", "onFocusVisible", "onKeyDown", "onKeyUp", "onMouseDown", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchMove", "onTouchStart", "tabIndex", "TouchRippleProps", "touchRippleRef", "type"];
-  const useUtilityClasses$T = (ownerState) => {
-    const {
-      disabled,
-      focusVisible,
-      focusVisibleClassName,
-      classes
-    } = ownerState;
-    const slots = {
-      root: ["root", disabled && "disabled", focusVisible && "focusVisible"]
-    };
-    const composedClasses = composeClasses(slots, getButtonBaseUtilityClass, classes);
-    if (focusVisible && focusVisibleClassName) {
-      composedClasses.root += ` ${focusVisibleClassName}`;
-    }
-    return composedClasses;
-  };
-  const ButtonBaseRoot = styled("button", {
-    name: "MuiButtonBase",
-    slot: "Root",
-    overridesResolver: (props, styles2) => styles2.root
-  })({
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-    boxSizing: "border-box",
-    WebkitTapHighlightColor: "transparent",
-    backgroundColor: "transparent",
-    // Reset default value
-    // We disable the focus ring for mouse, touch and keyboard users.
-    outline: 0,
-    border: 0,
-    margin: 0,
-    // Remove the margin in Safari
-    borderRadius: 0,
-    padding: 0,
-    // Remove the padding in Firefox
-    cursor: "pointer",
-    userSelect: "none",
-    verticalAlign: "middle",
-    MozAppearance: "none",
-    // Reset
-    WebkitAppearance: "none",
-    // Reset
-    textDecoration: "none",
-    // So we take precedent over the style of a native <a /> element.
-    color: "inherit",
-    "&::-moz-focus-inner": {
-      borderStyle: "none"
-      // Remove Firefox dotted outline.
-    },
-    [`&.${buttonBaseClasses.disabled}`]: {
-      pointerEvents: "none",
-      // Disable link interactions
-      cursor: "default"
-    },
-    "@media print": {
-      colorAdjust: "exact"
-    }
-  });
-  const ButtonBase = /* @__PURE__ */ React__namespace.forwardRef(function ButtonBase2(inProps, ref) {
-    const props = useThemeProps({
-      props: inProps,
-      name: "MuiButtonBase"
-    });
-    const {
-      action,
-      centerRipple = false,
-      children,
-      className,
-      component = "button",
-      disabled = false,
-      disableRipple = false,
-      disableTouchRipple = false,
-      focusRipple = false,
-      LinkComponent = "a",
-      onBlur,
-      onClick,
-      onContextMenu,
-      onDragLeave,
-      onFocus,
-      onFocusVisible,
-      onKeyDown,
-      onKeyUp,
-      onMouseDown,
-      onMouseLeave,
-      onMouseUp,
-      onTouchEnd,
-      onTouchMove,
-      onTouchStart,
-      tabIndex = 0,
-      TouchRippleProps,
-      touchRippleRef,
-      type
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$10);
-    const buttonRef = React__namespace.useRef(null);
-    const rippleRef = React__namespace.useRef(null);
-    const handleRippleRef = useForkRef(rippleRef, touchRippleRef);
-    const {
-      isFocusVisibleRef,
-      onFocus: handleFocusVisible,
-      onBlur: handleBlurVisible,
-      ref: focusVisibleRef
-    } = useIsFocusVisible();
-    const [focusVisible, setFocusVisible] = React__namespace.useState(false);
-    if (disabled && focusVisible) {
-      setFocusVisible(false);
-    }
-    React__namespace.useImperativeHandle(action, () => ({
-      focusVisible: () => {
-        setFocusVisible(true);
-        buttonRef.current.focus();
-      }
-    }), []);
-    const [mountedState, setMountedState] = React__namespace.useState(false);
-    React__namespace.useEffect(() => {
-      setMountedState(true);
-    }, []);
-    const enableTouchRipple = mountedState && !disableRipple && !disabled;
-    React__namespace.useEffect(() => {
-      if (focusVisible && focusRipple && !disableRipple && mountedState) {
-        rippleRef.current.pulsate();
-      }
-    }, [disableRipple, focusRipple, focusVisible, mountedState]);
-    function useRippleHandler(rippleAction, eventCallback, skipRippleAction = disableTouchRipple) {
-      return useEventCallback((event) => {
-        if (eventCallback) {
-          eventCallback(event);
-        }
-        const ignore = skipRippleAction;
-        if (!ignore && rippleRef.current) {
-          rippleRef.current[rippleAction](event);
-        }
-        return true;
-      });
-    }
-    const handleMouseDown = useRippleHandler("start", onMouseDown);
-    const handleContextMenu = useRippleHandler("stop", onContextMenu);
-    const handleDragLeave = useRippleHandler("stop", onDragLeave);
-    const handleMouseUp = useRippleHandler("stop", onMouseUp);
-    const handleMouseLeave = useRippleHandler("stop", (event) => {
-      if (focusVisible) {
-        event.preventDefault();
-      }
-      if (onMouseLeave) {
-        onMouseLeave(event);
-      }
-    });
-    const handleTouchStart = useRippleHandler("start", onTouchStart);
-    const handleTouchEnd = useRippleHandler("stop", onTouchEnd);
-    const handleTouchMove = useRippleHandler("stop", onTouchMove);
-    const handleBlur2 = useRippleHandler("stop", (event) => {
-      handleBlurVisible(event);
-      if (isFocusVisibleRef.current === false) {
-        setFocusVisible(false);
-      }
-      if (onBlur) {
-        onBlur(event);
-      }
-    }, false);
-    const handleFocus = useEventCallback((event) => {
-      if (!buttonRef.current) {
-        buttonRef.current = event.currentTarget;
-      }
-      handleFocusVisible(event);
-      if (isFocusVisibleRef.current === true) {
-        setFocusVisible(true);
-        if (onFocusVisible) {
-          onFocusVisible(event);
-        }
-      }
-      if (onFocus) {
-        onFocus(event);
-      }
-    });
-    const isNonNativeButton = () => {
-      const button = buttonRef.current;
-      return component && component !== "button" && !(button.tagName === "A" && button.href);
-    };
-    const keydownRef = React__namespace.useRef(false);
-    const handleKeyDown2 = useEventCallback((event) => {
-      if (focusRipple && !keydownRef.current && focusVisible && rippleRef.current && event.key === " ") {
-        keydownRef.current = true;
-        rippleRef.current.stop(event, () => {
-          rippleRef.current.start(event);
-        });
-      }
-      if (event.target === event.currentTarget && isNonNativeButton() && event.key === " ") {
-        event.preventDefault();
-      }
-      if (onKeyDown) {
-        onKeyDown(event);
-      }
-      if (event.target === event.currentTarget && isNonNativeButton() && event.key === "Enter" && !disabled) {
-        event.preventDefault();
-        if (onClick) {
-          onClick(event);
-        }
-      }
-    });
-    const handleKeyUp = useEventCallback((event) => {
-      if (focusRipple && event.key === " " && rippleRef.current && focusVisible && !event.defaultPrevented) {
-        keydownRef.current = false;
-        rippleRef.current.stop(event, () => {
-          rippleRef.current.pulsate(event);
-        });
-      }
-      if (onKeyUp) {
-        onKeyUp(event);
-      }
-      if (onClick && event.target === event.currentTarget && isNonNativeButton() && event.key === " " && !event.defaultPrevented) {
-        onClick(event);
-      }
-    });
-    let ComponentProp = component;
-    if (ComponentProp === "button" && (other.href || other.to)) {
-      ComponentProp = LinkComponent;
-    }
-    const buttonProps = {};
-    if (ComponentProp === "button") {
-      buttonProps.type = type === void 0 ? "button" : type;
-      buttonProps.disabled = disabled;
-    } else {
-      if (!other.href && !other.to) {
-        buttonProps.role = "button";
-      }
-      if (disabled) {
-        buttonProps["aria-disabled"] = disabled;
-      }
-    }
-    const handleRef = useForkRef(ref, focusVisibleRef, buttonRef);
-    if (process.env.NODE_ENV !== "production") {
-      React__namespace.useEffect(() => {
-        if (enableTouchRipple && !rippleRef.current) {
-          console.error(["MUI: The `component` prop provided to ButtonBase is invalid.", "Please make sure the children prop is rendered in this custom component."].join("\n"));
-        }
-      }, [enableTouchRipple]);
-    }
-    const ownerState = _extends$2({}, props, {
-      centerRipple,
-      component,
-      disabled,
-      disableRipple,
-      disableTouchRipple,
-      focusRipple,
-      tabIndex,
-      focusVisible
-    });
-    const classes = useUtilityClasses$T(ownerState);
-    return /* @__PURE__ */ jsxs(ButtonBaseRoot, _extends$2({
-      as: ComponentProp,
-      className: clsx(classes.root, className),
-      ownerState,
-      onBlur: handleBlur2,
-      onClick,
-      onContextMenu: handleContextMenu,
-      onFocus: handleFocus,
-      onKeyDown: handleKeyDown2,
-      onKeyUp: handleKeyUp,
-      onMouseDown: handleMouseDown,
-      onMouseLeave: handleMouseLeave,
-      onMouseUp: handleMouseUp,
-      onDragLeave: handleDragLeave,
-      onTouchEnd: handleTouchEnd,
-      onTouchMove: handleTouchMove,
-      onTouchStart: handleTouchStart,
-      ref: handleRef,
-      tabIndex: disabled ? -1 : tabIndex,
-      type
-    }, buttonProps, other, {
-      children: [children, enableTouchRipple ? (
-        /* TouchRipple is only needed client-side, x2 boost on the server. */
-        /* @__PURE__ */ jsx(TouchRipple, _extends$2({
-          ref: handleRippleRef,
-          center: centerRipple
-        }, TouchRippleProps))
-      ) : null]
-    }));
-  });
-  process.env.NODE_ENV !== "production" ? ButtonBase.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
-    /**
-     * A ref for imperative actions.
-     * It currently only supports `focusVisible()` action.
-     */
-    action: refType,
-    /**
-     * If `true`, the ripples are centered.
-     * They won't start at the cursor interaction position.
-     * @default false
-     */
-    centerRipple: propTypesExports.bool,
-    /**
-     * The content of the component.
-     */
-    children: propTypesExports.node,
-    /**
-     * Override or extend the styles applied to the component.
-     */
-    classes: propTypesExports.object,
-    /**
-     * @ignore
-     */
-    className: propTypesExports.string,
-    /**
-     * The component used for the root node.
-     * Either a string to use a HTML element or a component.
-     */
-    component: elementTypeAcceptingRef$1,
-    /**
-     * If `true`, the component is disabled.
-     * @default false
-     */
-    disabled: propTypesExports.bool,
-    /**
-     * If `true`, the ripple effect is disabled.
-     *
-     * ⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure
-     * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
-     * @default false
-     */
-    disableRipple: propTypesExports.bool,
-    /**
-     * If `true`, the touch ripple effect is disabled.
-     * @default false
-     */
-    disableTouchRipple: propTypesExports.bool,
-    /**
-     * If `true`, the base button will have a keyboard focus ripple.
-     * @default false
-     */
-    focusRipple: propTypesExports.bool,
-    /**
-     * This prop can help identify which element has keyboard focus.
-     * The class name will be applied when the element gains the focus through keyboard interaction.
-     * It's a polyfill for the [CSS :focus-visible selector](https://drafts.csswg.org/selectors-4/#the-focus-visible-pseudo).
-     * The rationale for using this feature [is explained here](https://github.com/WICG/focus-visible/blob/HEAD/explainer.md).
-     * A [polyfill can be used](https://github.com/WICG/focus-visible) to apply a `focus-visible` class to other components
-     * if needed.
-     */
-    focusVisibleClassName: propTypesExports.string,
-    /**
-     * @ignore
-     */
-    href: propTypesExports.any,
-    /**
-     * The component used to render a link when the `href` prop is provided.
-     * @default 'a'
-     */
-    LinkComponent: propTypesExports.elementType,
-    /**
-     * @ignore
-     */
-    onBlur: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onClick: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onContextMenu: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onDragLeave: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onFocus: propTypesExports.func,
-    /**
-     * Callback fired when the component is focused with a keyboard.
-     * We trigger a `onFocus` callback too.
-     */
-    onFocusVisible: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onKeyDown: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onKeyUp: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onMouseDown: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onMouseLeave: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onMouseUp: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onTouchEnd: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onTouchMove: propTypesExports.func,
-    /**
-     * @ignore
-     */
-    onTouchStart: propTypesExports.func,
-    /**
-     * The system prop that allows defining system overrides as well as additional CSS styles.
-     */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
-    /**
-     * @default 0
-     */
-    tabIndex: propTypesExports.number,
-    /**
-     * Props applied to the `TouchRipple` element.
-     */
-    TouchRippleProps: propTypesExports.object,
-    /**
-     * A ref that points to the `TouchRipple` element.
-     */
-    touchRippleRef: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.shape({
-      current: propTypesExports.shape({
-        pulsate: propTypesExports.func.isRequired,
-        start: propTypesExports.func.isRequired,
-        stop: propTypesExports.func.isRequired
-      })
-    })]),
-    /**
-     * @ignore
-     */
-    type: propTypesExports.oneOfType([propTypesExports.oneOf(["button", "reset", "submit"]), propTypesExports.string])
-  } : void 0;
-  function getToggleButtonUtilityClass(slot) {
-    return generateUtilityClass("MuiToggleButton", slot);
-  }
-  const toggleButtonClasses = generateUtilityClasses("MuiToggleButton", ["root", "disabled", "selected", "standard", "primary", "secondary", "sizeSmall", "sizeMedium", "sizeLarge"]);
-  const _excluded$$ = ["children", "className", "color", "disabled", "disableFocusRipple", "fullWidth", "onChange", "onClick", "selected", "size", "value"];
-  const useUtilityClasses$S = (ownerState) => {
-    const {
-      classes,
-      fullWidth,
-      selected,
-      disabled,
-      size,
-      color: color2
-    } = ownerState;
-    const slots = {
-      root: ["root", selected && "selected", disabled && "disabled", fullWidth && "fullWidth", `size${capitalize(size)}`, color2]
-    };
-    return composeClasses(slots, getToggleButtonUtilityClass, classes);
-  };
-  const ToggleButtonRoot = styled(ButtonBase, {
-    name: "MuiToggleButton",
-    slot: "Root",
-    overridesResolver: (props, styles2) => {
-      const {
-        ownerState
-      } = props;
-      return [styles2.root, styles2[`size${capitalize(ownerState.size)}`]];
-    }
-  })(({
-    theme,
-    ownerState
-  }) => {
-    let selectedColor = ownerState.color === "standard" ? theme.palette.text.primary : theme.palette[ownerState.color].main;
-    let selectedColorChannel;
-    if (theme.vars) {
-      selectedColor = ownerState.color === "standard" ? theme.vars.palette.text.primary : theme.vars.palette[ownerState.color].main;
-      selectedColorChannel = ownerState.color === "standard" ? theme.vars.palette.text.primaryChannel : theme.vars.palette[ownerState.color].mainChannel;
-    }
-    return _extends$2({}, theme.typography.button, {
-      borderRadius: (theme.vars || theme).shape.borderRadius,
-      padding: 11,
-      border: `1px solid ${(theme.vars || theme).palette.divider}`,
-      color: (theme.vars || theme).palette.action.active
-    }, ownerState.fullWidth && {
-      width: "100%"
-    }, {
-      [`&.${toggleButtonClasses.disabled}`]: {
-        color: (theme.vars || theme).palette.action.disabled,
-        border: `1px solid ${(theme.vars || theme).palette.action.disabledBackground}`
-      },
-      "&:hover": {
-        textDecoration: "none",
-        // Reset on mouse devices
-        backgroundColor: theme.vars ? `rgba(${theme.vars.palette.text.primaryChannel} / ${theme.vars.palette.action.hoverOpacity})` : alpha(theme.palette.text.primary, theme.palette.action.hoverOpacity),
-        "@media (hover: none)": {
-          backgroundColor: "transparent"
-        }
-      },
-      [`&.${toggleButtonClasses.selected}`]: {
-        color: selectedColor,
-        backgroundColor: theme.vars ? `rgba(${selectedColorChannel} / ${theme.vars.palette.action.selectedOpacity})` : alpha(selectedColor, theme.palette.action.selectedOpacity),
-        "&:hover": {
-          backgroundColor: theme.vars ? `rgba(${selectedColorChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.hoverOpacity}))` : alpha(selectedColor, theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity),
-          // Reset on touch devices, it doesn't add specificity
-          "@media (hover: none)": {
-            backgroundColor: theme.vars ? `rgba(${selectedColorChannel} / ${theme.vars.palette.action.selectedOpacity})` : alpha(selectedColor, theme.palette.action.selectedOpacity)
-          }
-        }
-      }
-    }, ownerState.size === "small" && {
-      padding: 7,
-      fontSize: theme.typography.pxToRem(13)
-    }, ownerState.size === "large" && {
-      padding: 15,
-      fontSize: theme.typography.pxToRem(15)
-    });
-  });
-  const ToggleButton = /* @__PURE__ */ React__namespace.forwardRef(function ToggleButton2(inProps, ref) {
-    const props = useThemeProps({
-      props: inProps,
-      name: "MuiToggleButton"
-    });
-    const {
-      children,
-      className,
-      color: color2 = "standard",
-      disabled = false,
-      disableFocusRipple = false,
-      fullWidth = false,
-      onChange,
-      onClick,
-      selected,
-      size = "medium",
-      value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$$);
-    const ownerState = _extends$2({}, props, {
-      color: color2,
-      disabled,
-      disableFocusRipple,
-      fullWidth,
-      size
-    });
-    const classes = useUtilityClasses$S(ownerState);
-    const handleChange = (event) => {
-      if (onClick) {
-        onClick(event, value);
-        if (event.defaultPrevented) {
-          return;
-        }
-      }
-      if (onChange) {
-        onChange(event, value);
-      }
-    };
-    return /* @__PURE__ */ jsx(ToggleButtonRoot, _extends$2({
-      className: clsx(classes.root, className),
-      disabled,
-      focusRipple: !disableFocusRipple,
-      ref,
-      onClick: handleChange,
-      onChange,
-      value,
-      ownerState,
-      "aria-pressed": selected
-    }, other, {
-      children
-    }));
-  });
-  process.env.NODE_ENV !== "production" ? ToggleButton.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
-    /**
-     * The content of the component.
-     */
-    children: propTypesExports.node,
-    /**
-     * Override or extend the styles applied to the component.
-     */
-    classes: propTypesExports.object,
-    /**
-     * @ignore
-     */
-    className: propTypesExports.string,
-    /**
-     * The color of the button when it is in an active state.
-     * It supports both default and custom theme colors, which can be added as shown in the
-     * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
-     * @default 'standard'
-     */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["standard", "primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
-    /**
-     * If `true`, the component is disabled.
-     * @default false
-     */
-    disabled: propTypesExports.bool,
-    /**
-     * If `true`, the  keyboard focus ripple is disabled.
-     * @default false
-     */
-    disableFocusRipple: propTypesExports.bool,
-    /**
-     * If `true`, the ripple effect is disabled.
-     *
-     * ⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure
-     * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
-     * @default false
-     */
-    disableRipple: propTypesExports.bool,
-    /**
-     * If `true`, the button will take up the full width of its container.
-     * @default false
-     */
-    fullWidth: propTypesExports.bool,
-    /**
-     * Callback fired when the state changes.
-     *
-     * @param {React.MouseEvent<HTMLElement>} event The event source of the callback.
-     * @param {any} value of the selected button.
-     */
-    onChange: propTypesExports.func,
-    /**
-     * Callback fired when the button is clicked.
-     *
-     * @param {React.MouseEvent<HTMLElement>} event The event source of the callback.
-     * @param {any} value of the selected button.
-     */
-    onClick: propTypesExports.func,
-    /**
-     * If `true`, the button is rendered in an active state.
-     */
-    selected: propTypesExports.bool,
-    /**
-     * The size of the component.
-     * The prop defaults to the value inherited from the parent ToggleButtonGroup component.
-     * @default 'medium'
-     */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["small", "medium", "large"]), propTypesExports.string]),
-    /**
-     * The system prop that allows defining system overrides as well as additional CSS styles.
-     */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
-    /**
-     * The value to associate with the button when selected in a
-     * ToggleButtonGroup.
-     */
-    value: propTypesExports.any.isRequired
-  } : void 0;
-  function isValueSelected(value, candidate) {
-    if (candidate === void 0 || value === void 0) {
-      return false;
-    }
-    if (Array.isArray(candidate)) {
-      return candidate.indexOf(value) >= 0;
-    }
-    return value === candidate;
-  }
-  function getToggleButtonGroupUtilityClass(slot) {
-    return generateUtilityClass("MuiToggleButtonGroup", slot);
-  }
-  const toggleButtonGroupClasses = generateUtilityClasses("MuiToggleButtonGroup", ["root", "selected", "vertical", "disabled", "grouped", "groupedHorizontal", "groupedVertical"]);
-  const _excluded$_ = ["children", "className", "color", "disabled", "exclusive", "fullWidth", "onChange", "orientation", "size", "value"];
-  const useUtilityClasses$R = (ownerState) => {
-    const {
-      classes,
-      orientation,
-      fullWidth,
-      disabled
-    } = ownerState;
-    const slots = {
-      root: ["root", orientation === "vertical" && "vertical", fullWidth && "fullWidth"],
-      grouped: ["grouped", `grouped${capitalize(orientation)}`, disabled && "disabled"]
-    };
-    return composeClasses(slots, getToggleButtonGroupUtilityClass, classes);
-  };
-  const ToggleButtonGroupRoot = styled("div", {
-    name: "MuiToggleButtonGroup",
-    slot: "Root",
-    overridesResolver: (props, styles2) => {
-      const {
-        ownerState
-      } = props;
-      return [{
-        [`& .${toggleButtonGroupClasses.grouped}`]: styles2.grouped
-      }, {
-        [`& .${toggleButtonGroupClasses.grouped}`]: styles2[`grouped${capitalize(ownerState.orientation)}`]
-      }, styles2.root, ownerState.orientation === "vertical" && styles2.vertical, ownerState.fullWidth && styles2.fullWidth];
-    }
-  })(({
-    ownerState,
-    theme
-  }) => _extends$2({
-    display: "inline-flex",
-    borderRadius: (theme.vars || theme).shape.borderRadius
-  }, ownerState.orientation === "vertical" && {
-    flexDirection: "column"
-  }, ownerState.fullWidth && {
-    width: "100%"
-  }, {
-    [`& .${toggleButtonGroupClasses.grouped}`]: _extends$2({}, ownerState.orientation === "horizontal" ? {
-      "&:not(:first-of-type)": {
-        marginLeft: -1,
-        borderLeft: "1px solid transparent",
-        borderTopLeftRadius: 0,
-        borderBottomLeftRadius: 0
-      },
-      "&:not(:last-of-type)": {
-        borderTopRightRadius: 0,
-        borderBottomRightRadius: 0
-      },
-      [`&.${toggleButtonGroupClasses.selected} + .${toggleButtonGroupClasses.grouped}.${toggleButtonGroupClasses.selected}`]: {
-        borderLeft: 0,
-        marginLeft: 0
-      }
-    } : {
-      "&:not(:first-of-type)": {
-        marginTop: -1,
-        borderTop: "1px solid transparent",
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 0
-      },
-      "&:not(:last-of-type)": {
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0
-      },
-      [`&.${toggleButtonGroupClasses.selected} + .${toggleButtonGroupClasses.grouped}.${toggleButtonGroupClasses.selected}`]: {
-        borderTop: 0,
-        marginTop: 0
-      }
-    })
-  }));
-  const ToggleButtonGroup = /* @__PURE__ */ React__namespace.forwardRef(function ToggleButtonGroup2(inProps, ref) {
-    const props = useThemeProps({
-      props: inProps,
-      name: "MuiToggleButtonGroup"
-    });
-    const {
-      children,
-      className,
-      color: color2 = "standard",
-      disabled = false,
-      exclusive = false,
-      fullWidth = false,
-      onChange,
-      orientation = "horizontal",
-      size = "medium",
-      value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$_);
-    const ownerState = _extends$2({}, props, {
-      disabled,
-      fullWidth,
-      orientation,
-      size
-    });
-    const classes = useUtilityClasses$R(ownerState);
-    const handleChange = (event, buttonValue) => {
-      if (!onChange) {
-        return;
-      }
-      const index2 = value && value.indexOf(buttonValue);
-      let newValue;
-      if (value && index2 >= 0) {
-        newValue = value.slice();
-        newValue.splice(index2, 1);
-      } else {
-        newValue = value ? value.concat(buttonValue) : [buttonValue];
-      }
-      onChange(event, newValue);
-    };
-    const handleExclusiveChange = (event, buttonValue) => {
-      if (!onChange) {
-        return;
-      }
-      onChange(event, value === buttonValue ? null : buttonValue);
-    };
-    return /* @__PURE__ */ jsx(ToggleButtonGroupRoot, _extends$2({
-      role: "group",
-      className: clsx(classes.root, className),
-      ref,
-      ownerState
-    }, other, {
-      children: React__namespace.Children.map(children, (child) => {
-        if (!/* @__PURE__ */ React__namespace.isValidElement(child)) {
-          return null;
-        }
-        if (process.env.NODE_ENV !== "production") {
-          if (reactIsExports.isFragment(child)) {
-            console.error(["MUI: The ToggleButtonGroup component doesn't accept a Fragment as a child.", "Consider providing an array instead."].join("\n"));
-          }
-        }
-        return /* @__PURE__ */ React__namespace.cloneElement(child, {
-          className: clsx(classes.grouped, child.props.className),
-          onChange: exclusive ? handleExclusiveChange : handleChange,
-          selected: child.props.selected === void 0 ? isValueSelected(child.props.value, value) : child.props.selected,
-          size: child.props.size || size,
-          fullWidth,
-          color: child.props.color || color2,
-          disabled: child.props.disabled || disabled
-        });
-      })
-    }));
-  });
-  process.env.NODE_ENV !== "production" ? ToggleButtonGroup.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
-    /**
-     * The content of the component.
-     */
-    children: propTypesExports.node,
-    /**
-     * Override or extend the styles applied to the component.
-     */
-    classes: propTypesExports.object,
-    /**
-     * @ignore
-     */
-    className: propTypesExports.string,
-    /**
-     * The color of the button when it is selected.
-     * It supports both default and custom theme colors, which can be added as shown in the
-     * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
-     * @default 'standard'
-     */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["standard", "primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
-    /**
-     * If `true`, the component is disabled. This implies that all ToggleButton children will be disabled.
-     * @default false
-     */
-    disabled: propTypesExports.bool,
-    /**
-     * If `true`, only allow one of the child ToggleButton values to be selected.
-     * @default false
-     */
-    exclusive: propTypesExports.bool,
-    /**
-     * If `true`, the button group will take up the full width of its container.
-     * @default false
-     */
-    fullWidth: propTypesExports.bool,
-    /**
-     * Callback fired when the value changes.
-     *
-     * @param {React.MouseEvent<HTMLElement>} event The event source of the callback.
-     * @param {any} value of the selected buttons. When `exclusive` is true
-     * this is a single value; when false an array of selected values. If no value
-     * is selected and `exclusive` is true the value is null; when false an empty array.
-     */
-    onChange: propTypesExports.func,
-    /**
-     * The component orientation (layout flow direction).
-     * @default 'horizontal'
-     */
-    orientation: propTypesExports.oneOf(["horizontal", "vertical"]),
-    /**
-     * The size of the component.
-     * @default 'medium'
-     */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["small", "medium", "large"]), propTypesExports.string]),
-    /**
-     * The system prop that allows defining system overrides as well as additional CSS styles.
-     */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
-    /**
-     * The currently selected value within the group or an array of selected
-     * values when `exclusive` is false.
-     *
-     * The value must have reference equality with the option in order to be selected.
-     */
-    value: propTypesExports.any
-  } : void 0;
   const reflow = (node2) => node2.scrollTop;
   function getTransitionProps(props, options) {
     var _style$transitionDura, _style$transitionTimi;
@@ -22039,7 +20794,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       delay: style2.transitionDelay
     };
   }
-  const _excluded$Z = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
+  const _excluded$$ = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
   const styles$2 = {
     entering: {
       opacity: 1
@@ -22070,7 +20825,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       timeout = defaultTimeout,
       // eslint-disable-next-line react/prop-types
       TransitionComponent = Transition
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Z);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$$);
     const enableStrictModeCompat = true;
     const nodeRef = React__namespace.useRef(null);
     const handleRef = useForkRef(nodeRef, children.ref, ref);
@@ -22225,8 +20980,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass("MuiBackdrop", slot);
   }
   const backdropClasses = generateUtilityClasses("MuiBackdrop", ["root", "invisible"]);
-  const _excluded$Y = ["children", "className", "component", "components", "componentsProps", "invisible", "open", "slotProps", "slots", "TransitionComponent", "transitionDuration"];
-  const useUtilityClasses$Q = (ownerState) => {
+  const _excluded$_ = ["children", "className", "component", "components", "componentsProps", "invisible", "open", "slotProps", "slots", "TransitionComponent", "transitionDuration"];
+  const useUtilityClasses$R = (ownerState) => {
     const {
       classes,
       invisible
@@ -22279,12 +21034,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots = {},
       TransitionComponent = Fade,
       transitionDuration
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Y);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$_);
     const ownerState = _extends$2({}, props, {
       component,
       invisible
     });
-    const classes = useUtilityClasses$Q(ownerState);
+    const classes = useUtilityClasses$R(ownerState);
     const rootSlotProps = (_slotProps$root = slotProps.root) != null ? _slotProps$root : componentsProps.root;
     return /* @__PURE__ */ jsx(TransitionComponent, _extends$2({
       in: open,
@@ -22398,7 +21153,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       exit: propTypesExports.number
     })])
   } : void 0;
-  const _excluded$X = ["BackdropComponent", "BackdropProps", "closeAfterTransition", "children", "component", "components", "componentsProps", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "slotProps", "slots", "theme"];
+  const _excluded$Z = ["BackdropComponent", "BackdropProps", "closeAfterTransition", "children", "component", "components", "componentsProps", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "slotProps", "slots", "theme"];
   const modalClasses = modalUnstyledClasses;
   const extendUtilityClasses = (ownerState) => {
     return ownerState.classes;
@@ -22460,7 +21215,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots,
       // eslint-disable-next-line react/prop-types
       theme
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$X);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Z);
     const [exited, setExited] = React__namespace.useState(true);
     const commonProps = {
       closeAfterTransition,
@@ -22668,7 +21423,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
   } : void 0;
-  const _excluded$W = ["addEndListener", "appear", "children", "container", "direction", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
+  const _excluded$Y = ["addEndListener", "appear", "children", "container", "direction", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
   function getTranslateValue(direction, node2, resolvedContainer) {
     const rect = node2.getBoundingClientRect();
     const containerRect = resolvedContainer && resolvedContainer.getBoundingClientRect();
@@ -22749,7 +21504,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       timeout = defaultTimeout,
       // eslint-disable-next-line react/prop-types
       TransitionComponent = Transition
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$W);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Y);
     const childrenRef = React__namespace.useRef(null);
     const handleRef = useForkRef(children.ref, childrenRef, ref);
     const normalizedTransitionCallback = (callback) => (isAppearing) => {
@@ -22968,14 +21723,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass("MuiDrawer", slot);
   }
   const drawerClasses = generateUtilityClasses("MuiDrawer", ["root", "docked", "paper", "paperAnchorLeft", "paperAnchorRight", "paperAnchorTop", "paperAnchorBottom", "paperAnchorDockedLeft", "paperAnchorDockedRight", "paperAnchorDockedTop", "paperAnchorDockedBottom", "modal"]);
-  const _excluded$V = ["BackdropProps"], _excluded2$2 = ["anchor", "BackdropProps", "children", "className", "elevation", "hideBackdrop", "ModalProps", "onClose", "open", "PaperProps", "SlideProps", "TransitionComponent", "transitionDuration", "variant"];
+  const _excluded$X = ["BackdropProps"], _excluded2$2 = ["anchor", "BackdropProps", "children", "className", "elevation", "hideBackdrop", "ModalProps", "onClose", "open", "PaperProps", "SlideProps", "TransitionComponent", "transitionDuration", "variant"];
   const overridesResolver$2 = (props, styles2) => {
     const {
       ownerState
     } = props;
     return [styles2.root, (ownerState.variant === "permanent" || ownerState.variant === "persistent") && styles2.docked, styles2.modal];
   };
-  const useUtilityClasses$P = (ownerState) => {
+  const useUtilityClasses$Q = (ownerState) => {
     const {
       classes,
       anchor,
@@ -23073,7 +21828,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function getAnchor(theme, anchor) {
     return theme.direction === "rtl" && isHorizontal(anchor) ? oppositeDirection[anchor] : anchor;
   }
-  const Drawer$1 = /* @__PURE__ */ React__namespace.forwardRef(function Drawer2(inProps, ref) {
+  const Drawer = /* @__PURE__ */ React__namespace.forwardRef(function Drawer2(inProps, ref) {
     const props = useThemeProps({
       props: inProps,
       name: "MuiDrawer"
@@ -23101,7 +21856,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       TransitionComponent = Slide,
       transitionDuration = defaultTransitionDuration,
       variant = "temporary"
-    } = props, ModalProps = _objectWithoutPropertiesLoose(props.ModalProps, _excluded$V), other = _objectWithoutPropertiesLoose(props, _excluded2$2);
+    } = props, ModalProps = _objectWithoutPropertiesLoose(props.ModalProps, _excluded$X), other = _objectWithoutPropertiesLoose(props, _excluded2$2);
     const mounted = React__namespace.useRef(false);
     React__namespace.useEffect(() => {
       mounted.current = true;
@@ -23114,7 +21869,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       open,
       variant
     }, other);
-    const classes = useUtilityClasses$P(ownerState);
+    const classes = useUtilityClasses$Q(ownerState);
     const drawer = /* @__PURE__ */ jsx(DrawerPaper, _extends$2({
       elevation: variant === "temporary" ? elevation : 0,
       square: true
@@ -23163,7 +21918,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children: slidingDrawer
     }));
   });
-  process.env.NODE_ENV !== "production" ? Drawer$1.propTypes = {
+  process.env.NODE_ENV !== "production" ? Drawer.propTypes = {
     // ----------------------------- Warning --------------------------------
     // | These PropTypes are generated from the TypeScript type definitions |
     // |     To update them edit the d.ts file and run "yarn proptypes"     |
@@ -23247,14 +22002,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     variant: propTypesExports.oneOf(["permanent", "persistent", "temporary"])
   } : void 0;
-  const DrawerHeader = styled("div")(({ theme }) => __spreadValues({
+  const BasicDrawerHeader = styled("div")(({ theme }) => __spreadValues({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     padding: theme.spacing(0, 1),
     minHeight: "43px"
   }, theme.mixins.toolbar));
-  const Drawer = styled(Drawer$1, { shouldForwardProp: (prop) => prop !== "open" })(
+  const BasicDrawer = styled(Drawer, { shouldForwardProp: (prop) => prop !== "open" })(
     ({ theme, open, drawerwidth }) => __spreadValues(__spreadValues({
       width: drawerwidth,
       flexShrink: 0,
@@ -23293,7 +22048,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     "done": iconsMaterial.AssignmentTurnedInOutlined,
     "docs": iconsMaterial.TextSnippetOutlined,
     "hightlight": iconsMaterial.HighlightAlt,
-    "map": iconsMaterial.Map
+    "map": iconsMaterial.Map,
+    "account": iconsMaterial.SupervisorAccount,
+    "tablet": iconsMaterial.Tablet,
+    "update": iconsMaterial.Update,
+    "admin": iconsMaterial.Security,
+    "clipboard": iconsMaterial.ContentPaste,
+    "fitscreen": iconsMaterial.FitScreen,
+    "dots-square": iconsMaterial.Apps
   };
   function makeIcon(name) {
     let Icon = iconmap[name];
@@ -23305,11 +22067,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       content: false
     });
   }
+  function allow(vxg, item) {
+    let out = item && item.allow ? vxg.allow(item.allow) : true;
+    return out;
+  }
   function BasicSide(props) {
-    const { ctx, spec } = props;
+    const {
+      vxg,
+      ctx,
+      spec
+    } = props;
     const { model, seneca } = ctx();
-    const vxg = reactRedux.useSelector((state) => state.main.vxg);
-    const open = vxg.cmp.BasicSide.show;
+    const vxgState = reactRedux.useSelector((state) => state.main.vxg);
+    const open = vxgState.cmp.BasicSide.show;
     const navigate = reactRouterDom.useNavigate();
     const location = reactRouterDom.useLocation();
     const { frame } = spec;
@@ -23348,19 +22118,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const DefaultNavMenu = (props2) => {
       const { viewdefs: viewdefs2, viewOrder } = props2;
       return /* @__PURE__ */ jsx(material.Box, { sx: { overflow: "auto" }, children: /* @__PURE__ */ jsx(
-        ToggleButtonGroup,
+        material.ToggleButtonGroup,
         {
           orientation: "vertical",
           "aria-label": "text alignment",
           sx: { width: "100%" },
           children: sortViews(viewdefs2, viewOrder).map((view) => /* @__PURE__ */ jsxs(
-            ToggleButton,
+            material.ToggleButton,
             {
               value: "check",
               selected: viewPath == view.name,
               sx: {
+                display: allow(vxg, view) ? null : "none",
                 width: "100%",
-                display: "flex",
+                // display: 'flex',
                 justifyContent: "flex-start",
                 marginBottom: "10px",
                 border: 0,
@@ -23389,11 +22160,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return null;
       }
       return /* @__PURE__ */ jsx(material.Box, { sx: { display: "flex", width: "100%" }, children: /* @__PURE__ */ jsx(material.ButtonGroup, { sx: { width: "100%" }, children: sections.map((section, sectionNumber) => /* @__PURE__ */ jsx(
-        ToggleButton,
+        material.ToggleButton,
         {
           value: "check",
           selected: showViewsData[sectionNumber],
-          sx: { padding: "0.5em", width: "100%" },
+          sx: {
+            padding: "0.5em",
+            width: "100%"
+          },
           onChange: (event) => {
             toggle(sectionNumber)(event);
             selectView(section)(event);
@@ -23407,13 +22181,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       )) }) });
     };
     return /* @__PURE__ */ jsxs(
-      Drawer,
+      BasicDrawer,
       {
         variant: "permanent",
         drawerwidth,
         open,
         children: [
-          /* @__PURE__ */ jsxs(DrawerHeader, { children: [
+          /* @__PURE__ */ jsxs(BasicDrawerHeader, { children: [
             /* @__PURE__ */ jsx(
               "img",
               {
@@ -23421,7 +22195,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 style: { width: "11rem" }
               }
             ),
-            /* @__PURE__ */ jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsx(default_1$s, { sx: { color: "black" } }) })
+            /* @__PURE__ */ jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
           ] }),
           /* @__PURE__ */ jsx(SectionButtons, { sections: sectiondefs }),
           sectiondefs.map((section, sectionNumber) => {
@@ -23436,1726 +22210,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         ]
       }
     );
-  }
-  var isCheckBoxInput = (element) => element.type === "checkbox";
-  var isDateObject = (value) => value instanceof Date;
-  var isNullOrUndefined = (value) => value == null;
-  const isObjectType = (value) => typeof value === "object";
-  var isObject = (value) => !isNullOrUndefined(value) && !Array.isArray(value) && isObjectType(value) && !isDateObject(value);
-  var getEventValue = (event) => isObject(event) && event.target ? isCheckBoxInput(event.target) ? event.target.checked : event.target.value : event;
-  var getNodeParentName = (name) => name.substring(0, name.search(/\.\d+(\.|$)/)) || name;
-  var isNameInFieldArray = (names, name) => names.has(getNodeParentName(name));
-  var isPlainObject = (tempObject) => {
-    const prototypeCopy = tempObject.constructor && tempObject.constructor.prototype;
-    return isObject(prototypeCopy) && prototypeCopy.hasOwnProperty("isPrototypeOf");
-  };
-  var isWeb = typeof window !== "undefined" && typeof window.HTMLElement !== "undefined" && typeof document !== "undefined";
-  function cloneObject(data) {
-    let copy2;
-    const isArray = Array.isArray(data);
-    if (data instanceof Date) {
-      copy2 = new Date(data);
-    } else if (data instanceof Set) {
-      copy2 = new Set(data);
-    } else if (!(isWeb && (data instanceof Blob || data instanceof FileList)) && (isArray || isObject(data))) {
-      copy2 = isArray ? [] : {};
-      if (!isArray && !isPlainObject(data)) {
-        copy2 = data;
-      } else {
-        for (const key in data) {
-          if (data.hasOwnProperty(key)) {
-            copy2[key] = cloneObject(data[key]);
-          }
-        }
-      }
-    } else {
-      return data;
-    }
-    return copy2;
-  }
-  var compact = (value) => Array.isArray(value) ? value.filter(Boolean) : [];
-  var isUndefined = (val) => val === void 0;
-  var get = (obj, path, defaultValue) => {
-    if (!path || !isObject(obj)) {
-      return defaultValue;
-    }
-    const result = compact(path.split(/[,[\].]+?/)).reduce((result2, key) => isNullOrUndefined(result2) ? result2 : result2[key], obj);
-    return isUndefined(result) || result === obj ? isUndefined(obj[path]) ? defaultValue : obj[path] : result;
-  };
-  const EVENTS = {
-    BLUR: "blur",
-    FOCUS_OUT: "focusout",
-    CHANGE: "change"
-  };
-  const VALIDATION_MODE = {
-    onBlur: "onBlur",
-    onChange: "onChange",
-    onSubmit: "onSubmit",
-    onTouched: "onTouched",
-    all: "all"
-  };
-  const INPUT_VALIDATION_RULES = {
-    max: "max",
-    min: "min",
-    maxLength: "maxLength",
-    minLength: "minLength",
-    pattern: "pattern",
-    required: "required",
-    validate: "validate"
-  };
-  const HookFormContext = React.createContext(null);
-  const useFormContext = () => React.useContext(HookFormContext);
-  const FormProvider = (props) => {
-    const _a = props, { children } = _a, data = __objRest(_a, ["children"]);
-    return React.createElement(HookFormContext.Provider, { value: data }, children);
-  };
-  var getProxyFormState = (formState, control, localProxyFormState, isRoot = true) => {
-    const result = {
-      defaultValues: control._defaultValues
-    };
-    for (const key in formState) {
-      Object.defineProperty(result, key, {
-        get: () => {
-          const _key = key;
-          if (control._proxyFormState[_key] !== VALIDATION_MODE.all) {
-            control._proxyFormState[_key] = !isRoot || VALIDATION_MODE.all;
-          }
-          localProxyFormState && (localProxyFormState[_key] = true);
-          return formState[_key];
-        }
-      });
-    }
-    return result;
-  };
-  var isEmptyObject = (value) => isObject(value) && !Object.keys(value).length;
-  var shouldRenderFormState = (formStateData, _proxyFormState, updateFormState, isRoot) => {
-    updateFormState(formStateData);
-    const _a = formStateData, { name } = _a, formState = __objRest(_a, ["name"]);
-    return isEmptyObject(formState) || Object.keys(formState).length >= Object.keys(_proxyFormState).length || Object.keys(formState).find((key) => _proxyFormState[key] === (!isRoot || VALIDATION_MODE.all));
-  };
-  var convertToArrayPayload = (value) => Array.isArray(value) ? value : [value];
-  var shouldSubscribeByName = (name, signalName, exact) => exact && signalName ? name === signalName : !name || !signalName || name === signalName || convertToArrayPayload(name).some((currentName) => currentName && (currentName.startsWith(signalName) || signalName.startsWith(currentName)));
-  function useSubscribe(props) {
-    const _props = React.useRef(props);
-    _props.current = props;
-    React.useEffect(() => {
-      const subscription = !props.disabled && _props.current.subject && _props.current.subject.subscribe({
-        next: _props.current.next
-      });
-      return () => {
-        subscription && subscription.unsubscribe();
-      };
-    }, [props.disabled]);
-  }
-  function useFormState(props) {
-    const methods = useFormContext();
-    const { control = methods.control, disabled, name, exact } = props || {};
-    const [formState, updateFormState] = React.useState(control._formState);
-    const _mounted = React.useRef(true);
-    const _localProxyFormState = React.useRef({
-      isDirty: false,
-      isLoading: false,
-      dirtyFields: false,
-      touchedFields: false,
-      isValidating: false,
-      isValid: false,
-      errors: false
-    });
-    const _name = React.useRef(name);
-    _name.current = name;
-    useSubscribe({
-      disabled,
-      next: (value) => _mounted.current && shouldSubscribeByName(_name.current, value.name, exact) && shouldRenderFormState(value, _localProxyFormState.current, control._updateFormState) && updateFormState(__spreadValues(__spreadValues({}, control._formState), value)),
-      subject: control._subjects.state
-    });
-    React.useEffect(() => {
-      _mounted.current = true;
-      _localProxyFormState.current.isValid && control._updateValid(true);
-      return () => {
-        _mounted.current = false;
-      };
-    }, [control]);
-    return getProxyFormState(formState, control, _localProxyFormState.current, false);
-  }
-  var isString = (value) => typeof value === "string";
-  var generateWatchOutput = (names, _names, formValues, isGlobal, defaultValue) => {
-    if (isString(names)) {
-      isGlobal && _names.watch.add(names);
-      return get(formValues, names, defaultValue);
-    }
-    if (Array.isArray(names)) {
-      return names.map((fieldName) => (isGlobal && _names.watch.add(fieldName), get(formValues, fieldName)));
-    }
-    isGlobal && (_names.watchAll = true);
-    return formValues;
-  };
-  function useWatch(props) {
-    const methods = useFormContext();
-    const { control = methods.control, name, defaultValue, disabled, exact } = props || {};
-    const _name = React.useRef(name);
-    _name.current = name;
-    useSubscribe({
-      disabled,
-      subject: control._subjects.values,
-      next: (formState) => {
-        if (shouldSubscribeByName(_name.current, formState.name, exact)) {
-          updateValue(cloneObject(generateWatchOutput(_name.current, control._names, formState.values || control._formValues, false, defaultValue)));
-        }
-      }
-    });
-    const [value, updateValue] = React.useState(control._getWatch(name, defaultValue));
-    React.useEffect(() => control._removeUnmounted());
-    return value;
-  }
-  var isKey = (value) => /^\w*$/.test(value);
-  var stringToPath = (input) => compact(input.replace(/["|']|\]/g, "").split(/\.|\[/));
-  function set(object, path, value) {
-    let index2 = -1;
-    const tempPath = isKey(path) ? [path] : stringToPath(path);
-    const length2 = tempPath.length;
-    const lastIndex = length2 - 1;
-    while (++index2 < length2) {
-      const key = tempPath[index2];
-      let newValue = value;
-      if (index2 !== lastIndex) {
-        const objValue = object[key];
-        newValue = isObject(objValue) || Array.isArray(objValue) ? objValue : !isNaN(+tempPath[index2 + 1]) ? [] : {};
-      }
-      object[key] = newValue;
-      object = object[key];
-    }
-    return object;
-  }
-  function useController(props) {
-    const methods = useFormContext();
-    const { name, control = methods.control, shouldUnregister } = props;
-    const isArrayField = isNameInFieldArray(control._names.array, name);
-    const value = useWatch({
-      control,
-      name,
-      defaultValue: get(control._formValues, name, get(control._defaultValues, name, props.defaultValue)),
-      exact: true
-    });
-    const formState = useFormState({
-      control,
-      name
-    });
-    const _registerProps = React.useRef(control.register(name, __spreadProps(__spreadValues({}, props.rules), {
-      value
-    })));
-    _registerProps.current = control.register(name, props.rules);
-    React.useEffect(() => {
-      const _shouldUnregisterField = control._options.shouldUnregister || shouldUnregister;
-      const updateMounted = (name2, value2) => {
-        const field = get(control._fields, name2);
-        if (field) {
-          field._f.mount = value2;
-        }
-      };
-      updateMounted(name, true);
-      if (_shouldUnregisterField) {
-        const value2 = cloneObject(get(control._options.defaultValues, name));
-        set(control._defaultValues, name, value2);
-        if (isUndefined(get(control._formValues, name))) {
-          set(control._formValues, name, value2);
-        }
-      }
-      return () => {
-        (isArrayField ? _shouldUnregisterField && !control._state.action : _shouldUnregisterField) ? control.unregister(name) : updateMounted(name, false);
-      };
-    }, [name, control, isArrayField, shouldUnregister]);
-    return {
-      field: {
-        name,
-        value,
-        onChange: React.useCallback((event) => _registerProps.current.onChange({
-          target: {
-            value: getEventValue(event),
-            name
-          },
-          type: EVENTS.CHANGE
-        }), [name]),
-        onBlur: React.useCallback(() => _registerProps.current.onBlur({
-          target: {
-            value: get(control._formValues, name),
-            name
-          },
-          type: EVENTS.BLUR
-        }), [name, control]),
-        ref: (elm) => {
-          const field = get(control._fields, name);
-          if (field && elm) {
-            field._f.ref = {
-              focus: () => elm.focus(),
-              select: () => elm.select(),
-              setCustomValidity: (message) => elm.setCustomValidity(message),
-              reportValidity: () => elm.reportValidity()
-            };
-          }
-        }
-      },
-      formState,
-      fieldState: Object.defineProperties({}, {
-        invalid: {
-          enumerable: true,
-          get: () => !!get(formState.errors, name)
-        },
-        isDirty: {
-          enumerable: true,
-          get: () => !!get(formState.dirtyFields, name)
-        },
-        isTouched: {
-          enumerable: true,
-          get: () => !!get(formState.touchedFields, name)
-        },
-        error: {
-          enumerable: true,
-          get: () => get(formState.errors, name)
-        }
-      })
-    };
-  }
-  const Controller = (props) => props.render(useController(props));
-  const POST_REQUEST = "post";
-  function Form(props) {
-    const methods = useFormContext();
-    const [mounted, setMounted] = React.useState(false);
-    const _a = props, { control = methods.control, onSubmit, children, action, method = POST_REQUEST, headers, encType, onError, render, onSuccess, validateStatus } = _a, rest = __objRest(_a, ["control", "onSubmit", "children", "action", "method", "headers", "encType", "onError", "render", "onSuccess", "validateStatus"]);
-    const submit = (event) => __async(this, null, function* () {
-      let hasError = false;
-      let type = "";
-      yield control.handleSubmit((data) => __async(this, null, function* () {
-        const formData = new FormData();
-        let formDataJson = "";
-        try {
-          formDataJson = JSON.stringify(data);
-        } catch (_a2) {
-        }
-        for (const name of control._names.mount) {
-          formData.append(name, get(data, name));
-        }
-        if (onSubmit) {
-          onSubmit({
-            data,
-            event,
-            method,
-            formData,
-            formDataJson
-          });
-        }
-        if (action) {
-          try {
-            const shouldStringifySubmissionData = [
-              headers && headers["Content-Type"],
-              encType
-            ].some((value) => value && value.includes("json"));
-            const response = yield fetch(action, {
-              method,
-              headers: __spreadValues(__spreadValues({}, headers), encType ? { "Content-Type": encType } : {}),
-              body: shouldStringifySubmissionData ? formDataJson : formData
-            });
-            if (response && (validateStatus ? !validateStatus(response.status) : response.status < 200 || response.status >= 300)) {
-              hasError = true;
-              onError && onError({ response });
-              type = String(response.status);
-            } else {
-              onSuccess && onSuccess({ response });
-            }
-          } catch (error) {
-            hasError = true;
-            onError && onError({ error });
-          }
-        }
-      }))(event);
-      if (hasError && props.control) {
-        props.control._subjects.state.next({
-          isSubmitSuccessful: false
-        });
-        props.control.setError("root.server", {
-          type
-        });
-      }
-    });
-    React.useEffect(() => {
-      setMounted(true);
-    }, []);
-    return render ? React.createElement(React.Fragment, null, render({
-      submit
-    })) : React.createElement("form", __spreadValues({ noValidate: mounted, action, method, encType, onSubmit: submit }, rest), children);
-  }
-  var appendErrors = (name, validateAllFieldCriteria, errors, type, message) => validateAllFieldCriteria ? __spreadProps(__spreadValues({}, errors[name]), {
-    types: __spreadProps(__spreadValues({}, errors[name] && errors[name].types ? errors[name].types : {}), {
-      [type]: message || true
-    })
-  }) : {};
-  const focusFieldBy = (fields2, callback, fieldsNames) => {
-    for (const key of fieldsNames || Object.keys(fields2)) {
-      const field = get(fields2, key);
-      if (field) {
-        const _a = field, { _f } = _a, currentField = __objRest(_a, ["_f"]);
-        if (_f && callback(_f.name)) {
-          if (_f.ref.focus) {
-            _f.ref.focus();
-            break;
-          } else if (_f.refs && _f.refs[0].focus) {
-            _f.refs[0].focus();
-            break;
-          }
-        } else if (isObject(currentField)) {
-          focusFieldBy(currentField, callback);
-        }
-      }
-    }
-  };
-  var generateId = () => {
-    const d = typeof performance === "undefined" ? Date.now() : performance.now() * 1e3;
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-      const r2 = (Math.random() * 16 + d) % 16 | 0;
-      return (c == "x" ? r2 : r2 & 3 | 8).toString(16);
-    });
-  };
-  var getFocusFieldName = (name, index2, options = {}) => options.shouldFocus || isUndefined(options.shouldFocus) ? options.focusName || `${name}.${isUndefined(options.focusIndex) ? index2 : options.focusIndex}.` : "";
-  var getValidationModes = (mode) => ({
-    isOnSubmit: !mode || mode === VALIDATION_MODE.onSubmit,
-    isOnBlur: mode === VALIDATION_MODE.onBlur,
-    isOnChange: mode === VALIDATION_MODE.onChange,
-    isOnAll: mode === VALIDATION_MODE.all,
-    isOnTouch: mode === VALIDATION_MODE.onTouched
-  });
-  var isWatched = (name, _names, isBlurEvent) => !isBlurEvent && (_names.watchAll || _names.watch.has(name) || [..._names.watch].some((watchName) => name.startsWith(watchName) && /^\.\w+/.test(name.slice(watchName.length))));
-  var updateFieldArrayRootError = (errors, error, name) => {
-    const fieldArrayErrors = compact(get(errors, name));
-    set(fieldArrayErrors, "root", error[name]);
-    set(errors, name, fieldArrayErrors);
-    return errors;
-  };
-  var isBoolean = (value) => typeof value === "boolean";
-  var isFileInput = (element) => element.type === "file";
-  var isFunction$1 = (value) => typeof value === "function";
-  var isHTMLElement = (value) => {
-    if (!isWeb) {
-      return false;
-    }
-    const owner = value ? value.ownerDocument : 0;
-    return value instanceof (owner && owner.defaultView ? owner.defaultView.HTMLElement : HTMLElement);
-  };
-  var isMessage = (value) => isString(value);
-  var isRadioInput = (element) => element.type === "radio";
-  var isRegex = (value) => value instanceof RegExp;
-  const defaultResult = {
-    value: false,
-    isValid: false
-  };
-  const validResult = { value: true, isValid: true };
-  var getCheckboxValue = (options) => {
-    if (Array.isArray(options)) {
-      if (options.length > 1) {
-        const values2 = options.filter((option) => option && option.checked && !option.disabled).map((option) => option.value);
-        return { value: values2, isValid: !!values2.length };
-      }
-      return options[0].checked && !options[0].disabled ? (
-        // @ts-expect-error expected to work in the browser
-        options[0].attributes && !isUndefined(options[0].attributes.value) ? isUndefined(options[0].value) || options[0].value === "" ? validResult : { value: options[0].value, isValid: true } : validResult
-      ) : defaultResult;
-    }
-    return defaultResult;
-  };
-  const defaultReturn = {
-    isValid: false,
-    value: null
-  };
-  var getRadioValue = (options) => Array.isArray(options) ? options.reduce((previous, option) => option && option.checked && !option.disabled ? {
-    isValid: true,
-    value: option.value
-  } : previous, defaultReturn) : defaultReturn;
-  function getValidateError(result, ref, type = "validate") {
-    if (isMessage(result) || Array.isArray(result) && result.every(isMessage) || isBoolean(result) && !result) {
-      return {
-        type,
-        message: isMessage(result) ? result : "",
-        ref
-      };
-    }
-  }
-  var getValueAndMessage = (validationData) => isObject(validationData) && !isRegex(validationData) ? validationData : {
-    value: validationData,
-    message: ""
-  };
-  var validateField = (field, formValues, validateAllFieldCriteria, shouldUseNativeValidation, isFieldArray) => __async(this, null, function* () {
-    const { ref, refs, required, maxLength, minLength, min: min2, max: max2, pattern, validate, name, valueAsNumber, mount, disabled } = field._f;
-    const inputValue = get(formValues, name);
-    if (!mount || disabled) {
-      return {};
-    }
-    const inputRef = refs ? refs[0] : ref;
-    const setCustomValidity = (message) => {
-      if (shouldUseNativeValidation && inputRef.reportValidity) {
-        inputRef.setCustomValidity(isBoolean(message) ? "" : message || "");
-        inputRef.reportValidity();
-      }
-    };
-    const error = {};
-    const isRadio = isRadioInput(ref);
-    const isCheckBox = isCheckBoxInput(ref);
-    const isRadioOrCheckbox2 = isRadio || isCheckBox;
-    const isEmpty2 = (valueAsNumber || isFileInput(ref)) && isUndefined(ref.value) && isUndefined(inputValue) || isHTMLElement(ref) && ref.value === "" || inputValue === "" || Array.isArray(inputValue) && !inputValue.length;
-    const appendErrorsCurry = appendErrors.bind(null, name, validateAllFieldCriteria, error);
-    const getMinMaxMessage = (exceedMax, maxLengthMessage, minLengthMessage, maxType = INPUT_VALIDATION_RULES.maxLength, minType = INPUT_VALIDATION_RULES.minLength) => {
-      const message = exceedMax ? maxLengthMessage : minLengthMessage;
-      error[name] = __spreadValues({
-        type: exceedMax ? maxType : minType,
-        message,
-        ref
-      }, appendErrorsCurry(exceedMax ? maxType : minType, message));
-    };
-    if (isFieldArray ? !Array.isArray(inputValue) || !inputValue.length : required && (!isRadioOrCheckbox2 && (isEmpty2 || isNullOrUndefined(inputValue)) || isBoolean(inputValue) && !inputValue || isCheckBox && !getCheckboxValue(refs).isValid || isRadio && !getRadioValue(refs).isValid)) {
-      const { value, message } = isMessage(required) ? { value: !!required, message: required } : getValueAndMessage(required);
-      if (value) {
-        error[name] = __spreadValues({
-          type: INPUT_VALIDATION_RULES.required,
-          message,
-          ref: inputRef
-        }, appendErrorsCurry(INPUT_VALIDATION_RULES.required, message));
-        if (!validateAllFieldCriteria) {
-          setCustomValidity(message);
-          return error;
-        }
-      }
-    }
-    if (!isEmpty2 && (!isNullOrUndefined(min2) || !isNullOrUndefined(max2))) {
-      let exceedMax;
-      let exceedMin;
-      const maxOutput = getValueAndMessage(max2);
-      const minOutput = getValueAndMessage(min2);
-      if (!isNullOrUndefined(inputValue) && !isNaN(inputValue)) {
-        const valueNumber = ref.valueAsNumber || (inputValue ? +inputValue : inputValue);
-        if (!isNullOrUndefined(maxOutput.value)) {
-          exceedMax = valueNumber > maxOutput.value;
-        }
-        if (!isNullOrUndefined(minOutput.value)) {
-          exceedMin = valueNumber < minOutput.value;
-        }
-      } else {
-        const valueDate = ref.valueAsDate || new Date(inputValue);
-        const convertTimeToDate = (time) => new Date(new Date().toDateString() + " " + time);
-        const isTime = ref.type == "time";
-        const isWeek = ref.type == "week";
-        if (isString(maxOutput.value) && inputValue) {
-          exceedMax = isTime ? convertTimeToDate(inputValue) > convertTimeToDate(maxOutput.value) : isWeek ? inputValue > maxOutput.value : valueDate > new Date(maxOutput.value);
-        }
-        if (isString(minOutput.value) && inputValue) {
-          exceedMin = isTime ? convertTimeToDate(inputValue) < convertTimeToDate(minOutput.value) : isWeek ? inputValue < minOutput.value : valueDate < new Date(minOutput.value);
-        }
-      }
-      if (exceedMax || exceedMin) {
-        getMinMaxMessage(!!exceedMax, maxOutput.message, minOutput.message, INPUT_VALIDATION_RULES.max, INPUT_VALIDATION_RULES.min);
-        if (!validateAllFieldCriteria) {
-          setCustomValidity(error[name].message);
-          return error;
-        }
-      }
-    }
-    if ((maxLength || minLength) && !isEmpty2 && (isString(inputValue) || isFieldArray && Array.isArray(inputValue))) {
-      const maxLengthOutput = getValueAndMessage(maxLength);
-      const minLengthOutput = getValueAndMessage(minLength);
-      const exceedMax = !isNullOrUndefined(maxLengthOutput.value) && inputValue.length > +maxLengthOutput.value;
-      const exceedMin = !isNullOrUndefined(minLengthOutput.value) && inputValue.length < +minLengthOutput.value;
-      if (exceedMax || exceedMin) {
-        getMinMaxMessage(exceedMax, maxLengthOutput.message, minLengthOutput.message);
-        if (!validateAllFieldCriteria) {
-          setCustomValidity(error[name].message);
-          return error;
-        }
-      }
-    }
-    if (pattern && !isEmpty2 && isString(inputValue)) {
-      const { value: patternValue, message } = getValueAndMessage(pattern);
-      if (isRegex(patternValue) && !inputValue.match(patternValue)) {
-        error[name] = __spreadValues({
-          type: INPUT_VALIDATION_RULES.pattern,
-          message,
-          ref
-        }, appendErrorsCurry(INPUT_VALIDATION_RULES.pattern, message));
-        if (!validateAllFieldCriteria) {
-          setCustomValidity(message);
-          return error;
-        }
-      }
-    }
-    if (validate) {
-      if (isFunction$1(validate)) {
-        const result = yield validate(inputValue, formValues);
-        const validateError = getValidateError(result, inputRef);
-        if (validateError) {
-          error[name] = __spreadValues(__spreadValues({}, validateError), appendErrorsCurry(INPUT_VALIDATION_RULES.validate, validateError.message));
-          if (!validateAllFieldCriteria) {
-            setCustomValidity(validateError.message);
-            return error;
-          }
-        }
-      } else if (isObject(validate)) {
-        let validationResult = {};
-        for (const key in validate) {
-          if (!isEmptyObject(validationResult) && !validateAllFieldCriteria) {
-            break;
-          }
-          const validateError = getValidateError(yield validate[key](inputValue, formValues), inputRef, key);
-          if (validateError) {
-            validationResult = __spreadValues(__spreadValues({}, validateError), appendErrorsCurry(key, validateError.message));
-            setCustomValidity(validateError.message);
-            if (validateAllFieldCriteria) {
-              error[name] = validationResult;
-            }
-          }
-        }
-        if (!isEmptyObject(validationResult)) {
-          error[name] = __spreadValues({
-            ref: inputRef
-          }, validationResult);
-          if (!validateAllFieldCriteria) {
-            return error;
-          }
-        }
-      }
-    }
-    setCustomValidity(true);
-    return error;
-  });
-  function append(data, value) {
-    return [...data, ...convertToArrayPayload(value)];
-  }
-  var fillEmptyArray = (value) => Array.isArray(value) ? value.map(() => void 0) : void 0;
-  function insert(data, index2, value) {
-    return [
-      ...data.slice(0, index2),
-      ...convertToArrayPayload(value),
-      ...data.slice(index2)
-    ];
-  }
-  var moveArrayAt = (data, from2, to) => {
-    if (!Array.isArray(data)) {
-      return [];
-    }
-    if (isUndefined(data[to])) {
-      data[to] = void 0;
-    }
-    data.splice(to, 0, data.splice(from2, 1)[0]);
-    return data;
-  };
-  function prepend(data, value) {
-    return [...convertToArrayPayload(value), ...convertToArrayPayload(data)];
-  }
-  function removeAtIndexes(data, indexes) {
-    let i = 0;
-    const temp = [...data];
-    for (const index2 of indexes) {
-      temp.splice(index2 - i, 1);
-      i++;
-    }
-    return compact(temp).length ? temp : [];
-  }
-  var removeArrayAt = (data, index2) => isUndefined(index2) ? [] : removeAtIndexes(data, convertToArrayPayload(index2).sort((a, b) => a - b));
-  var swapArrayAt = (data, indexA, indexB) => {
-    data[indexA] = [data[indexB], data[indexB] = data[indexA]][0];
-  };
-  function baseGet(object, updatePath) {
-    const length2 = updatePath.slice(0, -1).length;
-    let index2 = 0;
-    while (index2 < length2) {
-      object = isUndefined(object) ? index2++ : object[updatePath[index2++]];
-    }
-    return object;
-  }
-  function isEmptyArray(obj) {
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key) && !isUndefined(obj[key])) {
-        return false;
-      }
-    }
-    return true;
-  }
-  function unset(object, path) {
-    const paths = Array.isArray(path) ? path : isKey(path) ? [path] : stringToPath(path);
-    const childObject = paths.length === 1 ? object : baseGet(object, paths);
-    const index2 = paths.length - 1;
-    const key = paths[index2];
-    if (childObject) {
-      delete childObject[key];
-    }
-    if (index2 !== 0 && (isObject(childObject) && isEmptyObject(childObject) || Array.isArray(childObject) && isEmptyArray(childObject))) {
-      unset(object, paths.slice(0, -1));
-    }
-    return object;
-  }
-  var updateAt = (fieldValues, index2, value) => {
-    fieldValues[index2] = value;
-    return fieldValues;
-  };
-  function useFieldArray(props) {
-    const methods = useFormContext();
-    const { control = methods.control, name, keyName = "id", shouldUnregister } = props;
-    const [fields2, setFields] = React.useState(control._getFieldArray(name));
-    const ids = React.useRef(control._getFieldArray(name).map(generateId));
-    const _fieldIds = React.useRef(fields2);
-    const _name = React.useRef(name);
-    const _actioned = React.useRef(false);
-    _name.current = name;
-    _fieldIds.current = fields2;
-    control._names.array.add(name);
-    props.rules && control.register(name, props.rules);
-    useSubscribe({
-      next: ({ values: values2, name: fieldArrayName }) => {
-        if (fieldArrayName === _name.current || !fieldArrayName) {
-          const fieldValues = get(values2, _name.current);
-          if (Array.isArray(fieldValues)) {
-            setFields(fieldValues);
-            ids.current = fieldValues.map(generateId);
-          }
-        }
-      },
-      subject: control._subjects.array
-    });
-    const updateValues = React.useCallback((updatedFieldArrayValues) => {
-      _actioned.current = true;
-      control._updateFieldArray(name, updatedFieldArrayValues);
-    }, [control, name]);
-    const append$12 = (value, options) => {
-      const appendValue = convertToArrayPayload(cloneObject(value));
-      const updatedFieldArrayValues = append(control._getFieldArray(name), appendValue);
-      control._names.focus = getFocusFieldName(name, updatedFieldArrayValues.length - 1, options);
-      ids.current = append(ids.current, appendValue.map(generateId));
-      updateValues(updatedFieldArrayValues);
-      setFields(updatedFieldArrayValues);
-      control._updateFieldArray(name, updatedFieldArrayValues, append, {
-        argA: fillEmptyArray(value)
-      });
-    };
-    const prepend$1 = (value, options) => {
-      const prependValue = convertToArrayPayload(cloneObject(value));
-      const updatedFieldArrayValues = prepend(control._getFieldArray(name), prependValue);
-      control._names.focus = getFocusFieldName(name, 0, options);
-      ids.current = prepend(ids.current, prependValue.map(generateId));
-      updateValues(updatedFieldArrayValues);
-      setFields(updatedFieldArrayValues);
-      control._updateFieldArray(name, updatedFieldArrayValues, prepend, {
-        argA: fillEmptyArray(value)
-      });
-    };
-    const remove = (index2) => {
-      const updatedFieldArrayValues = removeArrayAt(control._getFieldArray(name), index2);
-      ids.current = removeArrayAt(ids.current, index2);
-      updateValues(updatedFieldArrayValues);
-      setFields(updatedFieldArrayValues);
-      control._updateFieldArray(name, updatedFieldArrayValues, removeArrayAt, {
-        argA: index2
-      });
-    };
-    const insert$1 = (index2, value, options) => {
-      const insertValue = convertToArrayPayload(cloneObject(value));
-      const updatedFieldArrayValues = insert(control._getFieldArray(name), index2, insertValue);
-      control._names.focus = getFocusFieldName(name, index2, options);
-      ids.current = insert(ids.current, index2, insertValue.map(generateId));
-      updateValues(updatedFieldArrayValues);
-      setFields(updatedFieldArrayValues);
-      control._updateFieldArray(name, updatedFieldArrayValues, insert, {
-        argA: index2,
-        argB: fillEmptyArray(value)
-      });
-    };
-    const swap = (indexA, indexB) => {
-      const updatedFieldArrayValues = control._getFieldArray(name);
-      swapArrayAt(updatedFieldArrayValues, indexA, indexB);
-      swapArrayAt(ids.current, indexA, indexB);
-      updateValues(updatedFieldArrayValues);
-      setFields(updatedFieldArrayValues);
-      control._updateFieldArray(name, updatedFieldArrayValues, swapArrayAt, {
-        argA: indexA,
-        argB: indexB
-      }, false);
-    };
-    const move = (from2, to) => {
-      const updatedFieldArrayValues = control._getFieldArray(name);
-      moveArrayAt(updatedFieldArrayValues, from2, to);
-      moveArrayAt(ids.current, from2, to);
-      updateValues(updatedFieldArrayValues);
-      setFields(updatedFieldArrayValues);
-      control._updateFieldArray(name, updatedFieldArrayValues, moveArrayAt, {
-        argA: from2,
-        argB: to
-      }, false);
-    };
-    const update = (index2, value) => {
-      const updateValue = cloneObject(value);
-      const updatedFieldArrayValues = updateAt(control._getFieldArray(name), index2, updateValue);
-      ids.current = [...updatedFieldArrayValues].map((item, i) => !item || i === index2 ? generateId() : ids.current[i]);
-      updateValues(updatedFieldArrayValues);
-      setFields([...updatedFieldArrayValues]);
-      control._updateFieldArray(name, updatedFieldArrayValues, updateAt, {
-        argA: index2,
-        argB: updateValue
-      }, true, false);
-    };
-    const replace2 = (value) => {
-      const updatedFieldArrayValues = convertToArrayPayload(cloneObject(value));
-      ids.current = updatedFieldArrayValues.map(generateId);
-      updateValues([...updatedFieldArrayValues]);
-      setFields([...updatedFieldArrayValues]);
-      control._updateFieldArray(name, [...updatedFieldArrayValues], (data) => data, {}, true, false);
-    };
-    React.useEffect(() => {
-      control._state.action = false;
-      isWatched(name, control._names) && control._subjects.state.next(__spreadValues({}, control._formState));
-      if (_actioned.current && (!getValidationModes(control._options.mode).isOnSubmit || control._formState.isSubmitted)) {
-        if (control._options.resolver) {
-          control._executeSchema([name]).then((result) => {
-            const error = get(result.errors, name);
-            const existingError = get(control._formState.errors, name);
-            if (existingError ? !error && existingError.type || error && (existingError.type !== error.type || existingError.message !== error.message) : error && error.type) {
-              error ? set(control._formState.errors, name, error) : unset(control._formState.errors, name);
-              control._subjects.state.next({
-                errors: control._formState.errors
-              });
-            }
-          });
-        } else {
-          const field = get(control._fields, name);
-          if (field && field._f) {
-            validateField(field, control._formValues, control._options.criteriaMode === VALIDATION_MODE.all, control._options.shouldUseNativeValidation, true).then((error) => !isEmptyObject(error) && control._subjects.state.next({
-              errors: updateFieldArrayRootError(control._formState.errors, error, name)
-            }));
-          }
-        }
-      }
-      control._subjects.values.next({
-        name,
-        values: __spreadValues({}, control._formValues)
-      });
-      control._names.focus && focusFieldBy(control._fields, (key) => !!key && key.startsWith(control._names.focus || ""));
-      control._names.focus = "";
-      control._updateValid();
-    }, [fields2, name, control]);
-    React.useEffect(() => {
-      !get(control._formValues, name) && control._updateFieldArray(name);
-      return () => {
-        (control._options.shouldUnregister || shouldUnregister) && control.unregister(name);
-      };
-    }, [name, control, keyName, shouldUnregister]);
-    return {
-      swap: React.useCallback(swap, [updateValues, name, control]),
-      move: React.useCallback(move, [updateValues, name, control]),
-      prepend: React.useCallback(prepend$1, [updateValues, name, control]),
-      append: React.useCallback(append$12, [updateValues, name, control]),
-      remove: React.useCallback(remove, [updateValues, name, control]),
-      insert: React.useCallback(insert$1, [updateValues, name, control]),
-      update: React.useCallback(update, [updateValues, name, control]),
-      replace: React.useCallback(replace2, [updateValues, name, control]),
-      fields: React.useMemo(() => fields2.map((field, index2) => __spreadProps(__spreadValues({}, field), {
-        [keyName]: ids.current[index2] || generateId()
-      })), [fields2, keyName])
-    };
-  }
-  function createSubject() {
-    let _observers = [];
-    const next2 = (value) => {
-      for (const observer of _observers) {
-        observer.next && observer.next(value);
-      }
-    };
-    const subscribe = (observer) => {
-      _observers.push(observer);
-      return {
-        unsubscribe: () => {
-          _observers = _observers.filter((o) => o !== observer);
-        }
-      };
-    };
-    const unsubscribe = () => {
-      _observers = [];
-    };
-    return {
-      get observers() {
-        return _observers;
-      },
-      next: next2,
-      subscribe,
-      unsubscribe
-    };
-  }
-  var isPrimitive = (value) => isNullOrUndefined(value) || !isObjectType(value);
-  function deepEqual(object1, object2) {
-    if (isPrimitive(object1) || isPrimitive(object2)) {
-      return object1 === object2;
-    }
-    if (isDateObject(object1) && isDateObject(object2)) {
-      return object1.getTime() === object2.getTime();
-    }
-    const keys1 = Object.keys(object1);
-    const keys2 = Object.keys(object2);
-    if (keys1.length !== keys2.length) {
-      return false;
-    }
-    for (const key of keys1) {
-      const val1 = object1[key];
-      if (!keys2.includes(key)) {
-        return false;
-      }
-      if (key !== "ref") {
-        const val2 = object2[key];
-        if (isDateObject(val1) && isDateObject(val2) || isObject(val1) && isObject(val2) || Array.isArray(val1) && Array.isArray(val2) ? !deepEqual(val1, val2) : val1 !== val2) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-  var isMultipleSelect = (element) => element.type === `select-multiple`;
-  var isRadioOrCheckbox = (ref) => isRadioInput(ref) || isCheckBoxInput(ref);
-  var live = (ref) => isHTMLElement(ref) && ref.isConnected;
-  var objectHasFunction = (data) => {
-    for (const key in data) {
-      if (isFunction$1(data[key])) {
-        return true;
-      }
-    }
-    return false;
-  };
-  function markFieldsDirty(data, fields2 = {}) {
-    const isParentNodeArray = Array.isArray(data);
-    if (isObject(data) || isParentNodeArray) {
-      for (const key in data) {
-        if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
-          fields2[key] = Array.isArray(data[key]) ? [] : {};
-          markFieldsDirty(data[key], fields2[key]);
-        } else if (!isNullOrUndefined(data[key])) {
-          fields2[key] = true;
-        }
-      }
-    }
-    return fields2;
-  }
-  function getDirtyFieldsFromDefaultValues(data, formValues, dirtyFieldsFromValues) {
-    const isParentNodeArray = Array.isArray(data);
-    if (isObject(data) || isParentNodeArray) {
-      for (const key in data) {
-        if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
-          if (isUndefined(formValues) || isPrimitive(dirtyFieldsFromValues[key])) {
-            dirtyFieldsFromValues[key] = Array.isArray(data[key]) ? markFieldsDirty(data[key], []) : __spreadValues({}, markFieldsDirty(data[key]));
-          } else {
-            getDirtyFieldsFromDefaultValues(data[key], isNullOrUndefined(formValues) ? {} : formValues[key], dirtyFieldsFromValues[key]);
-          }
-        } else {
-          dirtyFieldsFromValues[key] = !deepEqual(data[key], formValues[key]);
-        }
-      }
-    }
-    return dirtyFieldsFromValues;
-  }
-  var getDirtyFields = (defaultValues, formValues) => getDirtyFieldsFromDefaultValues(defaultValues, formValues, markFieldsDirty(formValues));
-  var getFieldValueAs = (value, { valueAsNumber, valueAsDate, setValueAs }) => isUndefined(value) ? value : valueAsNumber ? value === "" ? NaN : value ? +value : value : valueAsDate && isString(value) ? new Date(value) : setValueAs ? setValueAs(value) : value;
-  function getFieldValue(_f) {
-    const ref = _f.ref;
-    if (_f.refs ? _f.refs.every((ref2) => ref2.disabled) : ref.disabled) {
-      return;
-    }
-    if (isFileInput(ref)) {
-      return ref.files;
-    }
-    if (isRadioInput(ref)) {
-      return getRadioValue(_f.refs).value;
-    }
-    if (isMultipleSelect(ref)) {
-      return [...ref.selectedOptions].map(({ value }) => value);
-    }
-    if (isCheckBoxInput(ref)) {
-      return getCheckboxValue(_f.refs).value;
-    }
-    return getFieldValueAs(isUndefined(ref.value) ? _f.ref.value : ref.value, _f);
-  }
-  var getResolverOptions = (fieldsNames, _fields, criteriaMode, shouldUseNativeValidation) => {
-    const fields2 = {};
-    for (const name of fieldsNames) {
-      const field = get(_fields, name);
-      field && set(fields2, name, field._f);
-    }
-    return {
-      criteriaMode,
-      names: [...fieldsNames],
-      fields: fields2,
-      shouldUseNativeValidation
-    };
-  };
-  var getRuleValue = (rule) => isUndefined(rule) ? rule : isRegex(rule) ? rule.source : isObject(rule) ? isRegex(rule.value) ? rule.value.source : rule.value : rule;
-  var hasValidation = (options) => options.mount && (options.required || options.min || options.max || options.maxLength || options.minLength || options.pattern || options.validate);
-  function schemaErrorLookup(errors, _fields, name) {
-    const error = get(errors, name);
-    if (error || isKey(name)) {
-      return {
-        error,
-        name
-      };
-    }
-    const names = name.split(".");
-    while (names.length) {
-      const fieldName = names.join(".");
-      const field = get(_fields, fieldName);
-      const foundError = get(errors, fieldName);
-      if (field && !Array.isArray(field) && name !== fieldName) {
-        return { name };
-      }
-      if (foundError && foundError.type) {
-        return {
-          name: fieldName,
-          error: foundError
-        };
-      }
-      names.pop();
-    }
-    return {
-      name
-    };
-  }
-  var skipValidation = (isBlurEvent, isTouched, isSubmitted, reValidateMode, mode) => {
-    if (mode.isOnAll) {
-      return false;
-    } else if (!isSubmitted && mode.isOnTouch) {
-      return !(isTouched || isBlurEvent);
-    } else if (isSubmitted ? reValidateMode.isOnBlur : mode.isOnBlur) {
-      return !isBlurEvent;
-    } else if (isSubmitted ? reValidateMode.isOnChange : mode.isOnChange) {
-      return isBlurEvent;
-    }
-    return true;
-  };
-  var unsetEmptyArray = (ref, name) => !compact(get(ref, name)).length && unset(ref, name);
-  const defaultOptions = {
-    mode: VALIDATION_MODE.onSubmit,
-    reValidateMode: VALIDATION_MODE.onChange,
-    shouldFocusError: true
-  };
-  function createFormControl(props = {}, flushRootRender) {
-    let _options = __spreadValues(__spreadValues({}, defaultOptions), props);
-    let _formState = {
-      submitCount: 0,
-      isDirty: false,
-      isLoading: isFunction$1(_options.defaultValues),
-      isValidating: false,
-      isSubmitted: false,
-      isSubmitting: false,
-      isSubmitSuccessful: false,
-      isValid: false,
-      touchedFields: {},
-      dirtyFields: {},
-      errors: {}
-    };
-    let _fields = {};
-    let _defaultValues = isObject(_options.defaultValues) || isObject(_options.values) ? cloneObject(_options.defaultValues || _options.values) || {} : {};
-    let _formValues = _options.shouldUnregister ? {} : cloneObject(_defaultValues);
-    let _state = {
-      action: false,
-      mount: false,
-      watch: false
-    };
-    let _names = {
-      mount: /* @__PURE__ */ new Set(),
-      unMount: /* @__PURE__ */ new Set(),
-      array: /* @__PURE__ */ new Set(),
-      watch: /* @__PURE__ */ new Set()
-    };
-    let delayErrorCallback;
-    let timer = 0;
-    const _proxyFormState = {
-      isDirty: false,
-      dirtyFields: false,
-      touchedFields: false,
-      isValidating: false,
-      isValid: false,
-      errors: false
-    };
-    const _subjects = {
-      values: createSubject(),
-      array: createSubject(),
-      state: createSubject()
-    };
-    const shouldCaptureDirtyFields = props.resetOptions && props.resetOptions.keepDirtyValues;
-    const validationModeBeforeSubmit = getValidationModes(_options.mode);
-    const validationModeAfterSubmit = getValidationModes(_options.reValidateMode);
-    const shouldDisplayAllAssociatedErrors = _options.criteriaMode === VALIDATION_MODE.all;
-    const debounce2 = (callback) => (wait) => {
-      clearTimeout(timer);
-      timer = setTimeout(callback, wait);
-    };
-    const _updateValid = (shouldUpdateValid) => __async(this, null, function* () {
-      if (_proxyFormState.isValid || shouldUpdateValid) {
-        const isValid = _options.resolver ? isEmptyObject((yield _executeSchema()).errors) : yield executeBuiltInValidation(_fields, true);
-        if (isValid !== _formState.isValid) {
-          _subjects.state.next({
-            isValid
-          });
-        }
-      }
-    });
-    const _updateIsValidating = (value) => _proxyFormState.isValidating && _subjects.state.next({
-      isValidating: value
-    });
-    const _updateFieldArray = (name, values2 = [], method, args, shouldSetValues = true, shouldUpdateFieldsAndState = true) => {
-      if (args && method) {
-        _state.action = true;
-        if (shouldUpdateFieldsAndState && Array.isArray(get(_fields, name))) {
-          const fieldValues = method(get(_fields, name), args.argA, args.argB);
-          shouldSetValues && set(_fields, name, fieldValues);
-        }
-        if (shouldUpdateFieldsAndState && Array.isArray(get(_formState.errors, name))) {
-          const errors = method(get(_formState.errors, name), args.argA, args.argB);
-          shouldSetValues && set(_formState.errors, name, errors);
-          unsetEmptyArray(_formState.errors, name);
-        }
-        if (_proxyFormState.touchedFields && shouldUpdateFieldsAndState && Array.isArray(get(_formState.touchedFields, name))) {
-          const touchedFields = method(get(_formState.touchedFields, name), args.argA, args.argB);
-          shouldSetValues && set(_formState.touchedFields, name, touchedFields);
-        }
-        if (_proxyFormState.dirtyFields) {
-          _formState.dirtyFields = getDirtyFields(_defaultValues, _formValues);
-        }
-        _subjects.state.next({
-          name,
-          isDirty: _getDirty(name, values2),
-          dirtyFields: _formState.dirtyFields,
-          errors: _formState.errors,
-          isValid: _formState.isValid
-        });
-      } else {
-        set(_formValues, name, values2);
-      }
-    };
-    const updateErrors = (name, error) => {
-      set(_formState.errors, name, error);
-      _subjects.state.next({
-        errors: _formState.errors
-      });
-    };
-    const updateValidAndValue = (name, shouldSkipSetValueAs, value, ref) => {
-      const field = get(_fields, name);
-      if (field) {
-        const defaultValue = get(_formValues, name, isUndefined(value) ? get(_defaultValues, name) : value);
-        isUndefined(defaultValue) || ref && ref.defaultChecked || shouldSkipSetValueAs ? set(_formValues, name, shouldSkipSetValueAs ? defaultValue : getFieldValue(field._f)) : setFieldValue(name, defaultValue);
-        _state.mount && _updateValid();
-      }
-    };
-    const updateTouchAndDirty = (name, fieldValue, isBlurEvent, shouldDirty, shouldRender) => {
-      let shouldUpdateField = false;
-      let isPreviousDirty = false;
-      const output = {
-        name
-      };
-      if (!isBlurEvent || shouldDirty) {
-        if (_proxyFormState.isDirty) {
-          isPreviousDirty = _formState.isDirty;
-          _formState.isDirty = output.isDirty = _getDirty();
-          shouldUpdateField = isPreviousDirty !== output.isDirty;
-        }
-        const isCurrentFieldPristine = deepEqual(get(_defaultValues, name), fieldValue);
-        isPreviousDirty = get(_formState.dirtyFields, name);
-        isCurrentFieldPristine ? unset(_formState.dirtyFields, name) : set(_formState.dirtyFields, name, true);
-        output.dirtyFields = _formState.dirtyFields;
-        shouldUpdateField = shouldUpdateField || _proxyFormState.dirtyFields && isPreviousDirty !== !isCurrentFieldPristine;
-      }
-      if (isBlurEvent) {
-        const isPreviousFieldTouched = get(_formState.touchedFields, name);
-        if (!isPreviousFieldTouched) {
-          set(_formState.touchedFields, name, isBlurEvent);
-          output.touchedFields = _formState.touchedFields;
-          shouldUpdateField = shouldUpdateField || _proxyFormState.touchedFields && isPreviousFieldTouched !== isBlurEvent;
-        }
-      }
-      shouldUpdateField && shouldRender && _subjects.state.next(output);
-      return shouldUpdateField ? output : {};
-    };
-    const shouldRenderByError = (name, isValid, error, fieldState) => {
-      const previousFieldError = get(_formState.errors, name);
-      const shouldUpdateValid = _proxyFormState.isValid && isBoolean(isValid) && _formState.isValid !== isValid;
-      if (props.delayError && error) {
-        delayErrorCallback = debounce2(() => updateErrors(name, error));
-        delayErrorCallback(props.delayError);
-      } else {
-        clearTimeout(timer);
-        delayErrorCallback = null;
-        error ? set(_formState.errors, name, error) : unset(_formState.errors, name);
-      }
-      if ((error ? !deepEqual(previousFieldError, error) : previousFieldError) || !isEmptyObject(fieldState) || shouldUpdateValid) {
-        const updatedFormState = __spreadProps(__spreadValues(__spreadValues({}, fieldState), shouldUpdateValid && isBoolean(isValid) ? { isValid } : {}), {
-          errors: _formState.errors,
-          name
-        });
-        _formState = __spreadValues(__spreadValues({}, _formState), updatedFormState);
-        _subjects.state.next(updatedFormState);
-      }
-      _updateIsValidating(false);
-    };
-    const _executeSchema = (name) => __async(this, null, function* () {
-      return _options.resolver(_formValues, _options.context, getResolverOptions(name || _names.mount, _fields, _options.criteriaMode, _options.shouldUseNativeValidation));
-    });
-    const executeSchemaAndUpdateState = (names) => __async(this, null, function* () {
-      const { errors } = yield _executeSchema();
-      if (names) {
-        for (const name of names) {
-          const error = get(errors, name);
-          error ? set(_formState.errors, name, error) : unset(_formState.errors, name);
-        }
-      } else {
-        _formState.errors = errors;
-      }
-      return errors;
-    });
-    const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields2, shouldOnlyCheckValid, context = {
-      valid: true
-    }) {
-      for (const name in fields2) {
-        const field = fields2[name];
-        if (field) {
-          const _a = field, { _f } = _a, fieldValue = __objRest(_a, ["_f"]);
-          if (_f) {
-            const isFieldArrayRoot = _names.array.has(_f.name);
-            const fieldError = yield validateField(field, _formValues, shouldDisplayAllAssociatedErrors, _options.shouldUseNativeValidation && !shouldOnlyCheckValid, isFieldArrayRoot);
-            if (fieldError[_f.name]) {
-              context.valid = false;
-              if (shouldOnlyCheckValid) {
-                break;
-              }
-            }
-            !shouldOnlyCheckValid && (get(fieldError, _f.name) ? isFieldArrayRoot ? updateFieldArrayRootError(_formState.errors, fieldError, _f.name) : set(_formState.errors, _f.name, fieldError[_f.name]) : unset(_formState.errors, _f.name));
-          }
-          fieldValue && (yield executeBuiltInValidation(fieldValue, shouldOnlyCheckValid, context));
-        }
-      }
-      return context.valid;
-    });
-    const _removeUnmounted = () => {
-      for (const name of _names.unMount) {
-        const field = get(_fields, name);
-        field && (field._f.refs ? field._f.refs.every((ref) => !live(ref)) : !live(field._f.ref)) && unregister(name);
-      }
-      _names.unMount = /* @__PURE__ */ new Set();
-    };
-    const _getDirty = (name, data) => (name && data && set(_formValues, name, data), !deepEqual(getValues(), _defaultValues));
-    const _getWatch = (names, defaultValue, isGlobal) => generateWatchOutput(names, _names, __spreadValues({}, _state.mount ? _formValues : isUndefined(defaultValue) ? _defaultValues : isString(names) ? { [names]: defaultValue } : defaultValue), isGlobal, defaultValue);
-    const _getFieldArray = (name) => compact(get(_state.mount ? _formValues : _defaultValues, name, props.shouldUnregister ? get(_defaultValues, name, []) : []));
-    const setFieldValue = (name, value, options = {}) => {
-      const field = get(_fields, name);
-      let fieldValue = value;
-      if (field) {
-        const fieldReference = field._f;
-        if (fieldReference) {
-          !fieldReference.disabled && set(_formValues, name, getFieldValueAs(value, fieldReference));
-          fieldValue = isHTMLElement(fieldReference.ref) && isNullOrUndefined(value) ? "" : value;
-          if (isMultipleSelect(fieldReference.ref)) {
-            [...fieldReference.ref.options].forEach((optionRef) => optionRef.selected = fieldValue.includes(optionRef.value));
-          } else if (fieldReference.refs) {
-            if (isCheckBoxInput(fieldReference.ref)) {
-              fieldReference.refs.length > 1 ? fieldReference.refs.forEach((checkboxRef) => (!checkboxRef.defaultChecked || !checkboxRef.disabled) && (checkboxRef.checked = Array.isArray(fieldValue) ? !!fieldValue.find((data) => data === checkboxRef.value) : fieldValue === checkboxRef.value)) : fieldReference.refs[0] && (fieldReference.refs[0].checked = !!fieldValue);
-            } else {
-              fieldReference.refs.forEach((radioRef) => radioRef.checked = radioRef.value === fieldValue);
-            }
-          } else if (isFileInput(fieldReference.ref)) {
-            fieldReference.ref.value = "";
-          } else {
-            fieldReference.ref.value = fieldValue;
-            if (!fieldReference.ref.type) {
-              _subjects.values.next({
-                name,
-                values: __spreadValues({}, _formValues)
-              });
-            }
-          }
-        }
-      }
-      (options.shouldDirty || options.shouldTouch) && updateTouchAndDirty(name, fieldValue, options.shouldTouch, options.shouldDirty, true);
-      options.shouldValidate && trigger(name);
-    };
-    const setValues = (name, value, options) => {
-      for (const fieldKey in value) {
-        const fieldValue = value[fieldKey];
-        const fieldName = `${name}.${fieldKey}`;
-        const field = get(_fields, fieldName);
-        (_names.array.has(name) || !isPrimitive(fieldValue) || field && !field._f) && !isDateObject(fieldValue) ? setValues(fieldName, fieldValue, options) : setFieldValue(fieldName, fieldValue, options);
-      }
-    };
-    const setValue = (name, value, options = {}) => {
-      const field = get(_fields, name);
-      const isFieldArray = _names.array.has(name);
-      const cloneValue = cloneObject(value);
-      set(_formValues, name, cloneValue);
-      if (isFieldArray) {
-        _subjects.array.next({
-          name,
-          values: __spreadValues({}, _formValues)
-        });
-        if ((_proxyFormState.isDirty || _proxyFormState.dirtyFields) && options.shouldDirty) {
-          _subjects.state.next({
-            name,
-            dirtyFields: getDirtyFields(_defaultValues, _formValues),
-            isDirty: _getDirty(name, cloneValue)
-          });
-        }
-      } else {
-        field && !field._f && !isNullOrUndefined(cloneValue) ? setValues(name, cloneValue, options) : setFieldValue(name, cloneValue, options);
-      }
-      isWatched(name, _names) && _subjects.state.next(__spreadValues({}, _formState));
-      _subjects.values.next({
-        name,
-        values: __spreadValues({}, _formValues)
-      });
-      !_state.mount && flushRootRender();
-    };
-    const onChange = (event) => __async(this, null, function* () {
-      const target = event.target;
-      let name = target.name;
-      let isFieldValueUpdated = true;
-      const field = get(_fields, name);
-      const getCurrentFieldValue = () => target.type ? getFieldValue(field._f) : getEventValue(event);
-      if (field) {
-        let error;
-        let isValid;
-        const fieldValue = getCurrentFieldValue();
-        const isBlurEvent = event.type === EVENTS.BLUR || event.type === EVENTS.FOCUS_OUT;
-        const shouldSkipValidation = !hasValidation(field._f) && !_options.resolver && !get(_formState.errors, name) && !field._f.deps || skipValidation(isBlurEvent, get(_formState.touchedFields, name), _formState.isSubmitted, validationModeAfterSubmit, validationModeBeforeSubmit);
-        const watched = isWatched(name, _names, isBlurEvent);
-        set(_formValues, name, fieldValue);
-        if (isBlurEvent) {
-          field._f.onBlur && field._f.onBlur(event);
-          delayErrorCallback && delayErrorCallback(0);
-        } else if (field._f.onChange) {
-          field._f.onChange(event);
-        }
-        const fieldState = updateTouchAndDirty(name, fieldValue, isBlurEvent, false);
-        const shouldRender = !isEmptyObject(fieldState) || watched;
-        !isBlurEvent && _subjects.values.next({
-          name,
-          type: event.type,
-          values: __spreadValues({}, _formValues)
-        });
-        if (shouldSkipValidation) {
-          _proxyFormState.isValid && _updateValid();
-          return shouldRender && _subjects.state.next(__spreadValues({ name }, watched ? {} : fieldState));
-        }
-        !isBlurEvent && watched && _subjects.state.next(__spreadValues({}, _formState));
-        _updateIsValidating(true);
-        if (_options.resolver) {
-          const { errors } = yield _executeSchema([name]);
-          const previousErrorLookupResult = schemaErrorLookup(_formState.errors, _fields, name);
-          const errorLookupResult = schemaErrorLookup(errors, _fields, previousErrorLookupResult.name || name);
-          error = errorLookupResult.error;
-          name = errorLookupResult.name;
-          isValid = isEmptyObject(errors);
-        } else {
-          error = (yield validateField(field, _formValues, shouldDisplayAllAssociatedErrors, _options.shouldUseNativeValidation))[name];
-          isFieldValueUpdated = isNaN(fieldValue) || fieldValue === get(_formValues, name, fieldValue);
-          if (isFieldValueUpdated) {
-            if (error) {
-              isValid = false;
-            } else if (_proxyFormState.isValid) {
-              isValid = yield executeBuiltInValidation(_fields, true);
-            }
-          }
-        }
-        if (isFieldValueUpdated) {
-          field._f.deps && trigger(field._f.deps);
-          shouldRenderByError(name, isValid, error, fieldState);
-        }
-      }
-    });
-    const trigger = (_0, ..._1) => __async(this, [_0, ..._1], function* (name, options = {}) {
-      let isValid;
-      let validationResult;
-      const fieldNames = convertToArrayPayload(name);
-      _updateIsValidating(true);
-      if (_options.resolver) {
-        const errors = yield executeSchemaAndUpdateState(isUndefined(name) ? name : fieldNames);
-        isValid = isEmptyObject(errors);
-        validationResult = name ? !fieldNames.some((name2) => get(errors, name2)) : isValid;
-      } else if (name) {
-        validationResult = (yield Promise.all(fieldNames.map((fieldName) => __async(this, null, function* () {
-          const field = get(_fields, fieldName);
-          return yield executeBuiltInValidation(field && field._f ? { [fieldName]: field } : field);
-        })))).every(Boolean);
-        !(!validationResult && !_formState.isValid) && _updateValid();
-      } else {
-        validationResult = isValid = yield executeBuiltInValidation(_fields);
-      }
-      _subjects.state.next(__spreadProps(__spreadValues(__spreadValues({}, !isString(name) || _proxyFormState.isValid && isValid !== _formState.isValid ? {} : { name }), _options.resolver || !name ? { isValid } : {}), {
-        errors: _formState.errors,
-        isValidating: false
-      }));
-      options.shouldFocus && !validationResult && focusFieldBy(_fields, (key) => key && get(_formState.errors, key), name ? fieldNames : _names.mount);
-      return validationResult;
-    });
-    const getValues = (fieldNames) => {
-      const values2 = __spreadValues(__spreadValues({}, _defaultValues), _state.mount ? _formValues : {});
-      return isUndefined(fieldNames) ? values2 : isString(fieldNames) ? get(values2, fieldNames) : fieldNames.map((name) => get(values2, name));
-    };
-    const getFieldState = (name, formState) => ({
-      invalid: !!get((formState || _formState).errors, name),
-      isDirty: !!get((formState || _formState).dirtyFields, name),
-      isTouched: !!get((formState || _formState).touchedFields, name),
-      error: get((formState || _formState).errors, name)
-    });
-    const clearErrors = (name) => {
-      name && convertToArrayPayload(name).forEach((inputName) => unset(_formState.errors, inputName));
-      _subjects.state.next({
-        errors: name ? _formState.errors : {}
-      });
-    };
-    const setError = (name, error, options) => {
-      const ref = (get(_fields, name, { _f: {} })._f || {}).ref;
-      set(_formState.errors, name, __spreadProps(__spreadValues({}, error), {
-        ref
-      }));
-      _subjects.state.next({
-        name,
-        errors: _formState.errors,
-        isValid: false
-      });
-      options && options.shouldFocus && ref && ref.focus && ref.focus();
-    };
-    const watch = (name, defaultValue) => isFunction$1(name) ? _subjects.values.subscribe({
-      next: (payload) => name(_getWatch(void 0, defaultValue), payload)
-    }) : _getWatch(name, defaultValue, true);
-    const unregister = (name, options = {}) => {
-      for (const fieldName of name ? convertToArrayPayload(name) : _names.mount) {
-        _names.mount.delete(fieldName);
-        _names.array.delete(fieldName);
-        if (!options.keepValue) {
-          unset(_fields, fieldName);
-          unset(_formValues, fieldName);
-        }
-        !options.keepError && unset(_formState.errors, fieldName);
-        !options.keepDirty && unset(_formState.dirtyFields, fieldName);
-        !options.keepTouched && unset(_formState.touchedFields, fieldName);
-        !_options.shouldUnregister && !options.keepDefaultValue && unset(_defaultValues, fieldName);
-      }
-      _subjects.values.next({
-        values: __spreadValues({}, _formValues)
-      });
-      _subjects.state.next(__spreadValues(__spreadValues({}, _formState), !options.keepDirty ? {} : { isDirty: _getDirty() }));
-      !options.keepIsValid && _updateValid();
-    };
-    const register = (name, options = {}) => {
-      let field = get(_fields, name);
-      const disabledIsDefined = isBoolean(options.disabled);
-      set(_fields, name, __spreadProps(__spreadValues({}, field || {}), {
-        _f: __spreadValues(__spreadProps(__spreadValues({}, field && field._f ? field._f : { ref: { name } }), {
-          name,
-          mount: true
-        }), options)
-      }));
-      _names.mount.add(name);
-      if (!isUndefined(options.value)) {
-        set(_formValues, name, options.value);
-      }
-      field ? disabledIsDefined && set(_formValues, name, options.disabled ? void 0 : get(_formValues, name, getFieldValue(field._f))) : updateValidAndValue(name, true, options.value);
-      return __spreadProps(__spreadValues(__spreadValues({}, disabledIsDefined ? { disabled: options.disabled } : {}), _options.progressive ? {
-        required: !!options.required,
-        min: getRuleValue(options.min),
-        max: getRuleValue(options.max),
-        minLength: getRuleValue(options.minLength),
-        maxLength: getRuleValue(options.maxLength),
-        pattern: getRuleValue(options.pattern)
-      } : {}), {
-        name,
-        onChange,
-        onBlur: onChange,
-        ref: (ref) => {
-          if (ref) {
-            register(name, options);
-            field = get(_fields, name);
-            const fieldRef = isUndefined(ref.value) ? ref.querySelectorAll ? ref.querySelectorAll("input,select,textarea")[0] || ref : ref : ref;
-            const radioOrCheckbox = isRadioOrCheckbox(fieldRef);
-            const refs = field._f.refs || [];
-            if (radioOrCheckbox ? refs.find((option) => option === fieldRef) : fieldRef === field._f.ref) {
-              return;
-            }
-            set(_fields, name, {
-              _f: __spreadValues(__spreadValues({}, field._f), radioOrCheckbox ? {
-                refs: [
-                  ...refs.filter(live),
-                  fieldRef,
-                  ...Array.isArray(get(_defaultValues, name)) ? [{}] : []
-                ],
-                ref: { type: fieldRef.type, name }
-              } : { ref: fieldRef })
-            });
-            updateValidAndValue(name, false, void 0, fieldRef);
-          } else {
-            field = get(_fields, name, {});
-            if (field._f) {
-              field._f.mount = false;
-            }
-            (_options.shouldUnregister || options.shouldUnregister) && !(isNameInFieldArray(_names.array, name) && _state.action) && _names.unMount.add(name);
-          }
-        }
-      });
-    };
-    const _focusError = () => _options.shouldFocusError && focusFieldBy(_fields, (key) => key && get(_formState.errors, key), _names.mount);
-    const handleSubmit = (onValid, onInvalid) => (e) => __async(this, null, function* () {
-      if (e) {
-        e.preventDefault && e.preventDefault();
-        e.persist && e.persist();
-      }
-      let fieldValues = cloneObject(_formValues);
-      _subjects.state.next({
-        isSubmitting: true
-      });
-      if (_options.resolver) {
-        const { errors, values: values2 } = yield _executeSchema();
-        _formState.errors = errors;
-        fieldValues = values2;
-      } else {
-        yield executeBuiltInValidation(_fields);
-      }
-      unset(_formState.errors, "root");
-      if (isEmptyObject(_formState.errors)) {
-        _subjects.state.next({
-          errors: {}
-        });
-        yield onValid(fieldValues, e);
-      } else {
-        if (onInvalid) {
-          yield onInvalid(__spreadValues({}, _formState.errors), e);
-        }
-        _focusError();
-        setTimeout(_focusError);
-      }
-      _subjects.state.next({
-        isSubmitted: true,
-        isSubmitting: false,
-        isSubmitSuccessful: isEmptyObject(_formState.errors),
-        submitCount: _formState.submitCount + 1,
-        errors: _formState.errors
-      });
-    });
-    const resetField = (name, options = {}) => {
-      if (get(_fields, name)) {
-        if (isUndefined(options.defaultValue)) {
-          setValue(name, get(_defaultValues, name));
-        } else {
-          setValue(name, options.defaultValue);
-          set(_defaultValues, name, options.defaultValue);
-        }
-        if (!options.keepTouched) {
-          unset(_formState.touchedFields, name);
-        }
-        if (!options.keepDirty) {
-          unset(_formState.dirtyFields, name);
-          _formState.isDirty = options.defaultValue ? _getDirty(name, get(_defaultValues, name)) : _getDirty();
-        }
-        if (!options.keepError) {
-          unset(_formState.errors, name);
-          _proxyFormState.isValid && _updateValid();
-        }
-        _subjects.state.next(__spreadValues({}, _formState));
-      }
-    };
-    const _reset = (formValues, keepStateOptions = {}) => {
-      const updatedValues = formValues || _defaultValues;
-      const cloneUpdatedValues = cloneObject(updatedValues);
-      const values2 = formValues && !isEmptyObject(formValues) ? cloneUpdatedValues : _defaultValues;
-      if (!keepStateOptions.keepDefaultValues) {
-        _defaultValues = updatedValues;
-      }
-      if (!keepStateOptions.keepValues) {
-        if (keepStateOptions.keepDirtyValues || shouldCaptureDirtyFields) {
-          for (const fieldName of _names.mount) {
-            get(_formState.dirtyFields, fieldName) ? set(values2, fieldName, get(_formValues, fieldName)) : setValue(fieldName, get(values2, fieldName));
-          }
-        } else {
-          if (isWeb && isUndefined(formValues)) {
-            for (const name of _names.mount) {
-              const field = get(_fields, name);
-              if (field && field._f) {
-                const fieldReference = Array.isArray(field._f.refs) ? field._f.refs[0] : field._f.ref;
-                if (isHTMLElement(fieldReference)) {
-                  const form = fieldReference.closest("form");
-                  if (form) {
-                    form.reset();
-                    break;
-                  }
-                }
-              }
-            }
-          }
-          _fields = {};
-        }
-        _formValues = props.shouldUnregister ? keepStateOptions.keepDefaultValues ? cloneObject(_defaultValues) : {} : cloneObject(values2);
-        _subjects.array.next({
-          values: __spreadValues({}, values2)
-        });
-        _subjects.values.next({
-          values: __spreadValues({}, values2)
-        });
-      }
-      _names = {
-        mount: /* @__PURE__ */ new Set(),
-        unMount: /* @__PURE__ */ new Set(),
-        array: /* @__PURE__ */ new Set(),
-        watch: /* @__PURE__ */ new Set(),
-        watchAll: false,
-        focus: ""
-      };
-      !_state.mount && flushRootRender();
-      _state.mount = !_proxyFormState.isValid || !!keepStateOptions.keepIsValid;
-      _state.watch = !!props.shouldUnregister;
-      _subjects.state.next({
-        submitCount: keepStateOptions.keepSubmitCount ? _formState.submitCount : 0,
-        isDirty: keepStateOptions.keepDirty ? _formState.isDirty : !!(keepStateOptions.keepDefaultValues && !deepEqual(formValues, _defaultValues)),
-        isSubmitted: keepStateOptions.keepIsSubmitted ? _formState.isSubmitted : false,
-        dirtyFields: keepStateOptions.keepDirtyValues ? _formState.dirtyFields : keepStateOptions.keepDefaultValues && formValues ? getDirtyFields(_defaultValues, formValues) : {},
-        touchedFields: keepStateOptions.keepTouched ? _formState.touchedFields : {},
-        errors: keepStateOptions.keepErrors ? _formState.errors : {},
-        isSubmitting: false,
-        isSubmitSuccessful: false
-      });
-    };
-    const reset = (formValues, keepStateOptions) => _reset(isFunction$1(formValues) ? formValues(_formValues) : formValues, keepStateOptions);
-    const setFocus = (name, options = {}) => {
-      const field = get(_fields, name);
-      const fieldReference = field && field._f;
-      if (fieldReference) {
-        const fieldRef = fieldReference.refs ? fieldReference.refs[0] : fieldReference.ref;
-        if (fieldRef.focus) {
-          fieldRef.focus();
-          options.shouldSelect && fieldRef.select();
-        }
-      }
-    };
-    const _updateFormState = (updatedFormState) => {
-      _formState = __spreadValues(__spreadValues({}, _formState), updatedFormState);
-    };
-    const _resetDefaultValues = () => isFunction$1(_options.defaultValues) && _options.defaultValues().then((values2) => {
-      reset(values2, _options.resetOptions);
-      _subjects.state.next({
-        isLoading: false
-      });
-    });
-    return {
-      control: {
-        register,
-        unregister,
-        getFieldState,
-        handleSubmit,
-        setError,
-        _executeSchema,
-        _getWatch,
-        _getDirty,
-        _updateValid,
-        _removeUnmounted,
-        _updateFieldArray,
-        _getFieldArray,
-        _reset,
-        _resetDefaultValues,
-        _updateFormState,
-        _subjects,
-        _proxyFormState,
-        get _fields() {
-          return _fields;
-        },
-        get _formValues() {
-          return _formValues;
-        },
-        get _state() {
-          return _state;
-        },
-        set _state(value) {
-          _state = value;
-        },
-        get _defaultValues() {
-          return _defaultValues;
-        },
-        get _names() {
-          return _names;
-        },
-        set _names(value) {
-          _names = value;
-        },
-        get _formState() {
-          return _formState;
-        },
-        set _formState(value) {
-          _formState = value;
-        },
-        get _options() {
-          return _options;
-        },
-        set _options(value) {
-          _options = __spreadValues(__spreadValues({}, _options), value);
-        }
-      },
-      trigger,
-      register,
-      handleSubmit,
-      watch,
-      setValue,
-      getValues,
-      reset,
-      resetField,
-      clearErrors,
-      unregister,
-      setError,
-      setFocus,
-      getFieldState
-    };
-  }
-  function useForm(props = {}) {
-    const _formControl = React.useRef();
-    const _values = React.useRef();
-    const [formState, updateFormState] = React.useState({
-      isDirty: false,
-      isValidating: false,
-      isLoading: isFunction$1(props.defaultValues),
-      isSubmitted: false,
-      isSubmitting: false,
-      isSubmitSuccessful: false,
-      isValid: false,
-      submitCount: 0,
-      dirtyFields: {},
-      touchedFields: {},
-      errors: {},
-      defaultValues: isFunction$1(props.defaultValues) ? void 0 : props.defaultValues
-    });
-    if (!_formControl.current) {
-      _formControl.current = __spreadProps(__spreadValues({}, createFormControl(props, () => updateFormState((formState2) => __spreadValues({}, formState2)))), {
-        formState
-      });
-    }
-    const control = _formControl.current.control;
-    control._options = props;
-    useSubscribe({
-      subject: control._subjects.state,
-      next: (value) => {
-        if (shouldRenderFormState(value, control._proxyFormState, control._updateFormState, true)) {
-          updateFormState(__spreadValues({}, control._formState));
-        }
-      }
-    });
-    React.useEffect(() => {
-      if (props.values && !deepEqual(props.values, _values.current)) {
-        control._reset(props.values, control._options.resetOptions);
-        _values.current = props.values;
-      } else {
-        control._resetDefaultValues();
-      }
-    }, [props.values, control]);
-    React.useEffect(() => {
-      if (!control._state.mount) {
-        control._updateValid();
-        control._state.mount = true;
-      }
-      if (control._state.watch) {
-        control._state.watch = false;
-        control._subjects.state.next(__spreadValues({}, control._formState));
-      }
-      control._removeUnmounted();
-    });
-    _formControl.current.formState = getProxyFormState(formState, control);
-    return _formControl.current;
   }
   /**
    * table-core
@@ -25181,7 +22235,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       });
     };
   }
-  function isFunction(d) {
+  function isFunction$1(d) {
     return d instanceof Function;
   }
   function isNumberArray(d) {
@@ -26146,7 +23200,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         },
         getFilterFn: () => {
           var _table$options$filter, _table$options$filter2;
-          return isFunction(column2.columnDef.filterFn) ? column2.columnDef.filterFn : column2.columnDef.filterFn === "auto" ? column2.getAutoFilterFn() : (_table$options$filter = (_table$options$filter2 = table.options.filterFns) == null ? void 0 : _table$options$filter2[column2.columnDef.filterFn]) != null ? _table$options$filter : filterFns[column2.columnDef.filterFn];
+          return isFunction$1(column2.columnDef.filterFn) ? column2.columnDef.filterFn : column2.columnDef.filterFn === "auto" ? column2.getAutoFilterFn() : (_table$options$filter = (_table$options$filter2 = table.options.filterFns) == null ? void 0 : _table$options$filter2[column2.columnDef.filterFn]) != null ? _table$options$filter : filterFns[column2.columnDef.filterFn];
         },
         getCanFilter: () => {
           var _column$columnDef$ena, _table$options$enable, _table$options$enable2;
@@ -26234,17 +23288,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           const {
             globalFilterFn
           } = table.options;
-          return isFunction(globalFilterFn) ? globalFilterFn : globalFilterFn === "auto" ? table.getGlobalAutoFilterFn() : (_table$options$filter3 = (_table$options$filter4 = table.options.filterFns) == null ? void 0 : _table$options$filter4[globalFilterFn]) != null ? _table$options$filter3 : filterFns[globalFilterFn];
+          return isFunction$1(globalFilterFn) ? globalFilterFn : globalFilterFn === "auto" ? table.getGlobalAutoFilterFn() : (_table$options$filter3 = (_table$options$filter4 = table.options.filterFns) == null ? void 0 : _table$options$filter4[globalFilterFn]) != null ? _table$options$filter3 : filterFns[globalFilterFn];
         },
         setColumnFilters: (updater) => {
           const leafColumns = table.getAllLeafColumns();
           const updateFn = (old) => {
             var _functionalUpdate;
-            return (_functionalUpdate = functionalUpdate(updater, old)) == null ? void 0 : _functionalUpdate.filter((filter) => {
-              const column2 = leafColumns.find((d) => d.id === filter.id);
+            return (_functionalUpdate = functionalUpdate(updater, old)) == null ? void 0 : _functionalUpdate.filter((filter2) => {
+              const column2 = leafColumns.find((d) => d.id === filter2.id);
               if (column2) {
                 const filterFn = column2.getFilterFn();
-                if (shouldAutoRemoveFilter(filterFn, filter.value, column2)) {
+                if (shouldAutoRemoveFilter(filterFn, filter2.value, column2)) {
                   return false;
                 }
               }
@@ -26459,7 +23513,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           if (!column2) {
             throw new Error();
           }
-          return isFunction(column2.columnDef.aggregationFn) ? column2.columnDef.aggregationFn : column2.columnDef.aggregationFn === "auto" ? column2.getAutoAggregationFn() : (_table$options$aggreg = (_table$options$aggreg2 = table.options.aggregationFns) == null ? void 0 : _table$options$aggreg2[column2.columnDef.aggregationFn]) != null ? _table$options$aggreg : aggregationFns[column2.columnDef.aggregationFn];
+          return isFunction$1(column2.columnDef.aggregationFn) ? column2.columnDef.aggregationFn : column2.columnDef.aggregationFn === "auto" ? column2.getAutoAggregationFn() : (_table$options$aggreg = (_table$options$aggreg2 = table.options.aggregationFns) == null ? void 0 : _table$options$aggreg2[column2.columnDef.aggregationFn]) != null ? _table$options$aggreg : aggregationFns[column2.columnDef.aggregationFn];
         }
       };
     },
@@ -27321,7 +24375,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           if (!column2) {
             throw new Error();
           }
-          return isFunction(column2.columnDef.sortingFn) ? column2.columnDef.sortingFn : column2.columnDef.sortingFn === "auto" ? column2.getAutoSortingFn() : (_table$options$sortin = (_table$options$sortin2 = table.options.sortingFns) == null ? void 0 : _table$options$sortin2[column2.columnDef.sortingFn]) != null ? _table$options$sortin : sortingFns[column2.columnDef.sortingFn];
+          return isFunction$1(column2.columnDef.sortingFn) ? column2.columnDef.sortingFn : column2.columnDef.sortingFn === "auto" ? column2.getAutoSortingFn() : (_table$options$sortin = (_table$options$sortin2 = table.options.sortingFns) == null ? void 0 : _table$options$sortin2[column2.columnDef.sortingFn]) != null ? _table$options$sortin : sortingFns[column2.columnDef.sortingFn];
         },
         toggleSorting: (desc, multi) => {
           const nextSortingOrder = column2.getNextSortingOrder();
@@ -29489,7 +26543,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   if (process.env.NODE_ENV !== "production") {
     DialogContext.displayName = "DialogContext";
   }
-  const _excluded$U = ["aria-describedby", "aria-labelledby", "BackdropComponent", "BackdropProps", "children", "className", "disableEscapeKeyDown", "fullScreen", "fullWidth", "maxWidth", "onBackdropClick", "onClose", "open", "PaperComponent", "PaperProps", "scroll", "TransitionComponent", "transitionDuration", "TransitionProps"];
+  const _excluded$W = ["aria-describedby", "aria-labelledby", "BackdropComponent", "BackdropProps", "children", "className", "disableEscapeKeyDown", "fullScreen", "fullWidth", "maxWidth", "onBackdropClick", "onClose", "open", "PaperComponent", "PaperProps", "scroll", "TransitionComponent", "transitionDuration", "TransitionProps"];
   const DialogBackdrop = styled(Backdrop, {
     name: "MuiDialog",
     slot: "Backdrop",
@@ -29498,7 +26552,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     // Improve scrollable dialog support.
     zIndex: -1
   });
-  const useUtilityClasses$O = (ownerState) => {
+  const useUtilityClasses$P = (ownerState) => {
     const {
       classes,
       scroll,
@@ -29647,7 +26701,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       TransitionComponent = Fade,
       transitionDuration = defaultTransitionDuration,
       TransitionProps
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$U);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$W);
     const ownerState = _extends$2({}, props, {
       disableEscapeKeyDown,
       fullScreen,
@@ -29655,7 +26709,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       maxWidth: maxWidth2,
       scroll
     });
-    const classes = useUtilityClasses$O(ownerState);
+    const classes = useUtilityClasses$P(ownerState);
     const backdropClick = React__namespace.useRef();
     const handleMouseDown = (event) => {
       backdropClick.current = event.target === event.currentTarget;
@@ -29853,7 +26907,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     TransitionProps: propTypesExports.object
   } : void 0;
-  const _excluded$T = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
+  const _excluded$V = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
   function getScale(value) {
     return `scale(${value}, ${__pow(value, 2)})`;
   }
@@ -29885,7 +26939,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       timeout = "auto",
       // eslint-disable-next-line react/prop-types
       TransitionComponent = Transition
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$T);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$V);
     const timer = React__namespace.useRef();
     const autoTimeout = React__namespace.useRef();
     const theme = useTheme();
@@ -30083,6 +27137,819 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     })])
   } : void 0;
   Grow.muiSupportAuto = true;
+  function Ripple(props) {
+    const {
+      className,
+      classes,
+      pulsate = false,
+      rippleX,
+      rippleY,
+      rippleSize,
+      in: inProp,
+      onExited,
+      timeout
+    } = props;
+    const [leaving, setLeaving] = React__namespace.useState(false);
+    const rippleClassName = clsx(className, classes.ripple, classes.rippleVisible, pulsate && classes.ripplePulsate);
+    const rippleStyles = {
+      width: rippleSize,
+      height: rippleSize,
+      top: -(rippleSize / 2) + rippleY,
+      left: -(rippleSize / 2) + rippleX
+    };
+    const childClassName = clsx(classes.child, leaving && classes.childLeaving, pulsate && classes.childPulsate);
+    if (!inProp && !leaving) {
+      setLeaving(true);
+    }
+    React__namespace.useEffect(() => {
+      if (!inProp && onExited != null) {
+        const timeoutId = setTimeout(onExited, timeout);
+        return () => {
+          clearTimeout(timeoutId);
+        };
+      }
+      return void 0;
+    }, [onExited, inProp, timeout]);
+    return /* @__PURE__ */ jsx("span", {
+      className: rippleClassName,
+      style: rippleStyles,
+      children: /* @__PURE__ */ jsx("span", {
+        className: childClassName
+      })
+    });
+  }
+  process.env.NODE_ENV !== "production" ? Ripple.propTypes = {
+    /**
+     * Override or extend the styles applied to the component.
+     * See [CSS API](#css) below for more details.
+     */
+    classes: propTypesExports.object.isRequired,
+    className: propTypesExports.string,
+    /**
+     * @ignore - injected from TransitionGroup
+     */
+    in: propTypesExports.bool,
+    /**
+     * @ignore - injected from TransitionGroup
+     */
+    onExited: propTypesExports.func,
+    /**
+     * If `true`, the ripple pulsates, typically indicating the keyboard focus state of an element.
+     */
+    pulsate: propTypesExports.bool,
+    /**
+     * Diameter of the ripple.
+     */
+    rippleSize: propTypesExports.number,
+    /**
+     * Horizontal position of the ripple center.
+     */
+    rippleX: propTypesExports.number,
+    /**
+     * Vertical position of the ripple center.
+     */
+    rippleY: propTypesExports.number,
+    /**
+     * exit delay
+     */
+    timeout: propTypesExports.number.isRequired
+  } : void 0;
+  function getTouchRippleUtilityClass(slot) {
+    return generateUtilityClass("MuiTouchRipple", slot);
+  }
+  const touchRippleClasses = generateUtilityClasses("MuiTouchRipple", ["root", "ripple", "rippleVisible", "ripplePulsate", "child", "childLeaving", "childPulsate"]);
+  const _excluded$U = ["center", "classes", "className"];
+  let _$2 = (t) => t, _t$2, _t2$2, _t3$2, _t4$2;
+  const DURATION = 550;
+  const DELAY_RIPPLE = 80;
+  const enterKeyframe = react.keyframes(_t$2 || (_t$2 = _$2`
+  0% {
+    transform: scale(0);
+    opacity: 0.1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+`));
+  const exitKeyframe = react.keyframes(_t2$2 || (_t2$2 = _$2`
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+`));
+  const pulsateKeyframe = react.keyframes(_t3$2 || (_t3$2 = _$2`
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.92);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+`));
+  const TouchRippleRoot = styled("span", {
+    name: "MuiTouchRipple",
+    slot: "Root"
+  })({
+    overflow: "hidden",
+    pointerEvents: "none",
+    position: "absolute",
+    zIndex: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    borderRadius: "inherit"
+  });
+  const TouchRippleRipple = styled(Ripple, {
+    name: "MuiTouchRipple",
+    slot: "Ripple"
+  })(_t4$2 || (_t4$2 = _$2`
+  opacity: 0;
+  position: absolute;
+
+  &.${0} {
+    opacity: 0.3;
+    transform: scale(1);
+    animation-name: ${0};
+    animation-duration: ${0}ms;
+    animation-timing-function: ${0};
+  }
+
+  &.${0} {
+    animation-duration: ${0}ms;
+  }
+
+  & .${0} {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+
+  & .${0} {
+    opacity: 0;
+    animation-name: ${0};
+    animation-duration: ${0}ms;
+    animation-timing-function: ${0};
+  }
+
+  & .${0} {
+    position: absolute;
+    /* @noflip */
+    left: 0px;
+    top: 0;
+    animation-name: ${0};
+    animation-duration: 2500ms;
+    animation-timing-function: ${0};
+    animation-iteration-count: infinite;
+    animation-delay: 200ms;
+  }
+`), touchRippleClasses.rippleVisible, enterKeyframe, DURATION, ({
+    theme
+  }) => theme.transitions.easing.easeInOut, touchRippleClasses.ripplePulsate, ({
+    theme
+  }) => theme.transitions.duration.shorter, touchRippleClasses.child, touchRippleClasses.childLeaving, exitKeyframe, DURATION, ({
+    theme
+  }) => theme.transitions.easing.easeInOut, touchRippleClasses.childPulsate, pulsateKeyframe, ({
+    theme
+  }) => theme.transitions.easing.easeInOut);
+  const TouchRipple = /* @__PURE__ */ React__namespace.forwardRef(function TouchRipple2(inProps, ref) {
+    const props = useThemeProps({
+      props: inProps,
+      name: "MuiTouchRipple"
+    });
+    const {
+      center: centerProp = false,
+      classes = {},
+      className
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$U);
+    const [ripples, setRipples] = React__namespace.useState([]);
+    const nextKey = React__namespace.useRef(0);
+    const rippleCallback = React__namespace.useRef(null);
+    React__namespace.useEffect(() => {
+      if (rippleCallback.current) {
+        rippleCallback.current();
+        rippleCallback.current = null;
+      }
+    }, [ripples]);
+    const ignoringMouseDown = React__namespace.useRef(false);
+    const startTimer = React__namespace.useRef(null);
+    const startTimerCommit = React__namespace.useRef(null);
+    const container = React__namespace.useRef(null);
+    React__namespace.useEffect(() => {
+      return () => {
+        clearTimeout(startTimer.current);
+      };
+    }, []);
+    const startCommit = React__namespace.useCallback((params) => {
+      const {
+        pulsate: pulsate2,
+        rippleX,
+        rippleY,
+        rippleSize,
+        cb
+      } = params;
+      setRipples((oldRipples) => [...oldRipples, /* @__PURE__ */ jsx(TouchRippleRipple, {
+        classes: {
+          ripple: clsx(classes.ripple, touchRippleClasses.ripple),
+          rippleVisible: clsx(classes.rippleVisible, touchRippleClasses.rippleVisible),
+          ripplePulsate: clsx(classes.ripplePulsate, touchRippleClasses.ripplePulsate),
+          child: clsx(classes.child, touchRippleClasses.child),
+          childLeaving: clsx(classes.childLeaving, touchRippleClasses.childLeaving),
+          childPulsate: clsx(classes.childPulsate, touchRippleClasses.childPulsate)
+        },
+        timeout: DURATION,
+        pulsate: pulsate2,
+        rippleX,
+        rippleY,
+        rippleSize
+      }, nextKey.current)]);
+      nextKey.current += 1;
+      rippleCallback.current = cb;
+    }, [classes]);
+    const start2 = React__namespace.useCallback((event = {}, options = {}, cb = () => {
+    }) => {
+      const {
+        pulsate: pulsate2 = false,
+        center = centerProp || options.pulsate,
+        fakeElement = false
+        // For test purposes
+      } = options;
+      if ((event == null ? void 0 : event.type) === "mousedown" && ignoringMouseDown.current) {
+        ignoringMouseDown.current = false;
+        return;
+      }
+      if ((event == null ? void 0 : event.type) === "touchstart") {
+        ignoringMouseDown.current = true;
+      }
+      const element = fakeElement ? null : container.current;
+      const rect = element ? element.getBoundingClientRect() : {
+        width: 0,
+        height: 0,
+        left: 0,
+        top: 0
+      };
+      let rippleX;
+      let rippleY;
+      let rippleSize;
+      if (center || event === void 0 || event.clientX === 0 && event.clientY === 0 || !event.clientX && !event.touches) {
+        rippleX = Math.round(rect.width / 2);
+        rippleY = Math.round(rect.height / 2);
+      } else {
+        const {
+          clientX,
+          clientY
+        } = event.touches && event.touches.length > 0 ? event.touches[0] : event;
+        rippleX = Math.round(clientX - rect.left);
+        rippleY = Math.round(clientY - rect.top);
+      }
+      if (center) {
+        rippleSize = Math.sqrt((2 * __pow(rect.width, 2) + __pow(rect.height, 2)) / 3);
+        if (rippleSize % 2 === 0) {
+          rippleSize += 1;
+        }
+      } else {
+        const sizeX = Math.max(Math.abs((element ? element.clientWidth : 0) - rippleX), rippleX) * 2 + 2;
+        const sizeY = Math.max(Math.abs((element ? element.clientHeight : 0) - rippleY), rippleY) * 2 + 2;
+        rippleSize = Math.sqrt(__pow(sizeX, 2) + __pow(sizeY, 2));
+      }
+      if (event != null && event.touches) {
+        if (startTimerCommit.current === null) {
+          startTimerCommit.current = () => {
+            startCommit({
+              pulsate: pulsate2,
+              rippleX,
+              rippleY,
+              rippleSize,
+              cb
+            });
+          };
+          startTimer.current = setTimeout(() => {
+            if (startTimerCommit.current) {
+              startTimerCommit.current();
+              startTimerCommit.current = null;
+            }
+          }, DELAY_RIPPLE);
+        }
+      } else {
+        startCommit({
+          pulsate: pulsate2,
+          rippleX,
+          rippleY,
+          rippleSize,
+          cb
+        });
+      }
+    }, [centerProp, startCommit]);
+    const pulsate = React__namespace.useCallback(() => {
+      start2({}, {
+        pulsate: true
+      });
+    }, [start2]);
+    const stop = React__namespace.useCallback((event, cb) => {
+      clearTimeout(startTimer.current);
+      if ((event == null ? void 0 : event.type) === "touchend" && startTimerCommit.current) {
+        startTimerCommit.current();
+        startTimerCommit.current = null;
+        startTimer.current = setTimeout(() => {
+          stop(event, cb);
+        });
+        return;
+      }
+      startTimerCommit.current = null;
+      setRipples((oldRipples) => {
+        if (oldRipples.length > 0) {
+          return oldRipples.slice(1);
+        }
+        return oldRipples;
+      });
+      rippleCallback.current = cb;
+    }, []);
+    React__namespace.useImperativeHandle(ref, () => ({
+      pulsate,
+      start: start2,
+      stop
+    }), [pulsate, start2, stop]);
+    return /* @__PURE__ */ jsx(TouchRippleRoot, _extends$2({
+      className: clsx(touchRippleClasses.root, classes.root, className),
+      ref: container
+    }, other, {
+      children: /* @__PURE__ */ jsx(TransitionGroup, {
+        component: null,
+        exit: true,
+        children: ripples
+      })
+    }));
+  });
+  process.env.NODE_ENV !== "production" ? TouchRipple.propTypes = {
+    /**
+     * If `true`, the ripple starts at the center of the component
+     * rather than at the point of interaction.
+     */
+    center: propTypesExports.bool,
+    /**
+     * Override or extend the styles applied to the component.
+     * See [CSS API](#css) below for more details.
+     */
+    classes: propTypesExports.object,
+    /**
+     * @ignore
+     */
+    className: propTypesExports.string
+  } : void 0;
+  function getButtonBaseUtilityClass(slot) {
+    return generateUtilityClass("MuiButtonBase", slot);
+  }
+  const buttonBaseClasses = generateUtilityClasses("MuiButtonBase", ["root", "disabled", "focusVisible"]);
+  const _excluded$T = ["action", "centerRipple", "children", "className", "component", "disabled", "disableRipple", "disableTouchRipple", "focusRipple", "focusVisibleClassName", "LinkComponent", "onBlur", "onClick", "onContextMenu", "onDragLeave", "onFocus", "onFocusVisible", "onKeyDown", "onKeyUp", "onMouseDown", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchMove", "onTouchStart", "tabIndex", "TouchRippleProps", "touchRippleRef", "type"];
+  const useUtilityClasses$O = (ownerState) => {
+    const {
+      disabled,
+      focusVisible,
+      focusVisibleClassName,
+      classes
+    } = ownerState;
+    const slots = {
+      root: ["root", disabled && "disabled", focusVisible && "focusVisible"]
+    };
+    const composedClasses = composeClasses(slots, getButtonBaseUtilityClass, classes);
+    if (focusVisible && focusVisibleClassName) {
+      composedClasses.root += ` ${focusVisibleClassName}`;
+    }
+    return composedClasses;
+  };
+  const ButtonBaseRoot = styled("button", {
+    name: "MuiButtonBase",
+    slot: "Root",
+    overridesResolver: (props, styles2) => styles2.root
+  })({
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    boxSizing: "border-box",
+    WebkitTapHighlightColor: "transparent",
+    backgroundColor: "transparent",
+    // Reset default value
+    // We disable the focus ring for mouse, touch and keyboard users.
+    outline: 0,
+    border: 0,
+    margin: 0,
+    // Remove the margin in Safari
+    borderRadius: 0,
+    padding: 0,
+    // Remove the padding in Firefox
+    cursor: "pointer",
+    userSelect: "none",
+    verticalAlign: "middle",
+    MozAppearance: "none",
+    // Reset
+    WebkitAppearance: "none",
+    // Reset
+    textDecoration: "none",
+    // So we take precedent over the style of a native <a /> element.
+    color: "inherit",
+    "&::-moz-focus-inner": {
+      borderStyle: "none"
+      // Remove Firefox dotted outline.
+    },
+    [`&.${buttonBaseClasses.disabled}`]: {
+      pointerEvents: "none",
+      // Disable link interactions
+      cursor: "default"
+    },
+    "@media print": {
+      colorAdjust: "exact"
+    }
+  });
+  const ButtonBase = /* @__PURE__ */ React__namespace.forwardRef(function ButtonBase2(inProps, ref) {
+    const props = useThemeProps({
+      props: inProps,
+      name: "MuiButtonBase"
+    });
+    const {
+      action,
+      centerRipple = false,
+      children,
+      className,
+      component = "button",
+      disabled = false,
+      disableRipple = false,
+      disableTouchRipple = false,
+      focusRipple = false,
+      LinkComponent = "a",
+      onBlur,
+      onClick,
+      onContextMenu,
+      onDragLeave,
+      onFocus,
+      onFocusVisible,
+      onKeyDown,
+      onKeyUp,
+      onMouseDown,
+      onMouseLeave,
+      onMouseUp,
+      onTouchEnd,
+      onTouchMove,
+      onTouchStart,
+      tabIndex = 0,
+      TouchRippleProps,
+      touchRippleRef,
+      type
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$T);
+    const buttonRef = React__namespace.useRef(null);
+    const rippleRef = React__namespace.useRef(null);
+    const handleRippleRef = useForkRef(rippleRef, touchRippleRef);
+    const {
+      isFocusVisibleRef,
+      onFocus: handleFocusVisible,
+      onBlur: handleBlurVisible,
+      ref: focusVisibleRef
+    } = useIsFocusVisible();
+    const [focusVisible, setFocusVisible] = React__namespace.useState(false);
+    if (disabled && focusVisible) {
+      setFocusVisible(false);
+    }
+    React__namespace.useImperativeHandle(action, () => ({
+      focusVisible: () => {
+        setFocusVisible(true);
+        buttonRef.current.focus();
+      }
+    }), []);
+    const [mountedState, setMountedState] = React__namespace.useState(false);
+    React__namespace.useEffect(() => {
+      setMountedState(true);
+    }, []);
+    const enableTouchRipple = mountedState && !disableRipple && !disabled;
+    React__namespace.useEffect(() => {
+      if (focusVisible && focusRipple && !disableRipple && mountedState) {
+        rippleRef.current.pulsate();
+      }
+    }, [disableRipple, focusRipple, focusVisible, mountedState]);
+    function useRippleHandler(rippleAction, eventCallback, skipRippleAction = disableTouchRipple) {
+      return useEventCallback((event) => {
+        if (eventCallback) {
+          eventCallback(event);
+        }
+        const ignore = skipRippleAction;
+        if (!ignore && rippleRef.current) {
+          rippleRef.current[rippleAction](event);
+        }
+        return true;
+      });
+    }
+    const handleMouseDown = useRippleHandler("start", onMouseDown);
+    const handleContextMenu = useRippleHandler("stop", onContextMenu);
+    const handleDragLeave = useRippleHandler("stop", onDragLeave);
+    const handleMouseUp = useRippleHandler("stop", onMouseUp);
+    const handleMouseLeave = useRippleHandler("stop", (event) => {
+      if (focusVisible) {
+        event.preventDefault();
+      }
+      if (onMouseLeave) {
+        onMouseLeave(event);
+      }
+    });
+    const handleTouchStart = useRippleHandler("start", onTouchStart);
+    const handleTouchEnd = useRippleHandler("stop", onTouchEnd);
+    const handleTouchMove = useRippleHandler("stop", onTouchMove);
+    const handleBlur2 = useRippleHandler("stop", (event) => {
+      handleBlurVisible(event);
+      if (isFocusVisibleRef.current === false) {
+        setFocusVisible(false);
+      }
+      if (onBlur) {
+        onBlur(event);
+      }
+    }, false);
+    const handleFocus = useEventCallback((event) => {
+      if (!buttonRef.current) {
+        buttonRef.current = event.currentTarget;
+      }
+      handleFocusVisible(event);
+      if (isFocusVisibleRef.current === true) {
+        setFocusVisible(true);
+        if (onFocusVisible) {
+          onFocusVisible(event);
+        }
+      }
+      if (onFocus) {
+        onFocus(event);
+      }
+    });
+    const isNonNativeButton = () => {
+      const button = buttonRef.current;
+      return component && component !== "button" && !(button.tagName === "A" && button.href);
+    };
+    const keydownRef = React__namespace.useRef(false);
+    const handleKeyDown2 = useEventCallback((event) => {
+      if (focusRipple && !keydownRef.current && focusVisible && rippleRef.current && event.key === " ") {
+        keydownRef.current = true;
+        rippleRef.current.stop(event, () => {
+          rippleRef.current.start(event);
+        });
+      }
+      if (event.target === event.currentTarget && isNonNativeButton() && event.key === " ") {
+        event.preventDefault();
+      }
+      if (onKeyDown) {
+        onKeyDown(event);
+      }
+      if (event.target === event.currentTarget && isNonNativeButton() && event.key === "Enter" && !disabled) {
+        event.preventDefault();
+        if (onClick) {
+          onClick(event);
+        }
+      }
+    });
+    const handleKeyUp = useEventCallback((event) => {
+      if (focusRipple && event.key === " " && rippleRef.current && focusVisible && !event.defaultPrevented) {
+        keydownRef.current = false;
+        rippleRef.current.stop(event, () => {
+          rippleRef.current.pulsate(event);
+        });
+      }
+      if (onKeyUp) {
+        onKeyUp(event);
+      }
+      if (onClick && event.target === event.currentTarget && isNonNativeButton() && event.key === " " && !event.defaultPrevented) {
+        onClick(event);
+      }
+    });
+    let ComponentProp = component;
+    if (ComponentProp === "button" && (other.href || other.to)) {
+      ComponentProp = LinkComponent;
+    }
+    const buttonProps = {};
+    if (ComponentProp === "button") {
+      buttonProps.type = type === void 0 ? "button" : type;
+      buttonProps.disabled = disabled;
+    } else {
+      if (!other.href && !other.to) {
+        buttonProps.role = "button";
+      }
+      if (disabled) {
+        buttonProps["aria-disabled"] = disabled;
+      }
+    }
+    const handleRef = useForkRef(ref, focusVisibleRef, buttonRef);
+    if (process.env.NODE_ENV !== "production") {
+      React__namespace.useEffect(() => {
+        if (enableTouchRipple && !rippleRef.current) {
+          console.error(["MUI: The `component` prop provided to ButtonBase is invalid.", "Please make sure the children prop is rendered in this custom component."].join("\n"));
+        }
+      }, [enableTouchRipple]);
+    }
+    const ownerState = _extends$2({}, props, {
+      centerRipple,
+      component,
+      disabled,
+      disableRipple,
+      disableTouchRipple,
+      focusRipple,
+      tabIndex,
+      focusVisible
+    });
+    const classes = useUtilityClasses$O(ownerState);
+    return /* @__PURE__ */ jsxs(ButtonBaseRoot, _extends$2({
+      as: ComponentProp,
+      className: clsx(classes.root, className),
+      ownerState,
+      onBlur: handleBlur2,
+      onClick,
+      onContextMenu: handleContextMenu,
+      onFocus: handleFocus,
+      onKeyDown: handleKeyDown2,
+      onKeyUp: handleKeyUp,
+      onMouseDown: handleMouseDown,
+      onMouseLeave: handleMouseLeave,
+      onMouseUp: handleMouseUp,
+      onDragLeave: handleDragLeave,
+      onTouchEnd: handleTouchEnd,
+      onTouchMove: handleTouchMove,
+      onTouchStart: handleTouchStart,
+      ref: handleRef,
+      tabIndex: disabled ? -1 : tabIndex,
+      type
+    }, buttonProps, other, {
+      children: [children, enableTouchRipple ? (
+        /* TouchRipple is only needed client-side, x2 boost on the server. */
+        /* @__PURE__ */ jsx(TouchRipple, _extends$2({
+          ref: handleRippleRef,
+          center: centerRipple
+        }, TouchRippleProps))
+      ) : null]
+    }));
+  });
+  process.env.NODE_ENV !== "production" ? ButtonBase.propTypes = {
+    // ----------------------------- Warning --------------------------------
+    // | These PropTypes are generated from the TypeScript type definitions |
+    // |     To update them edit the d.ts file and run "yarn proptypes"     |
+    // ----------------------------------------------------------------------
+    /**
+     * A ref for imperative actions.
+     * It currently only supports `focusVisible()` action.
+     */
+    action: refType,
+    /**
+     * If `true`, the ripples are centered.
+     * They won't start at the cursor interaction position.
+     * @default false
+     */
+    centerRipple: propTypesExports.bool,
+    /**
+     * The content of the component.
+     */
+    children: propTypesExports.node,
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    classes: propTypesExports.object,
+    /**
+     * @ignore
+     */
+    className: propTypesExports.string,
+    /**
+     * The component used for the root node.
+     * Either a string to use a HTML element or a component.
+     */
+    component: elementTypeAcceptingRef$1,
+    /**
+     * If `true`, the component is disabled.
+     * @default false
+     */
+    disabled: propTypesExports.bool,
+    /**
+     * If `true`, the ripple effect is disabled.
+     *
+     * ⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure
+     * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
+     * @default false
+     */
+    disableRipple: propTypesExports.bool,
+    /**
+     * If `true`, the touch ripple effect is disabled.
+     * @default false
+     */
+    disableTouchRipple: propTypesExports.bool,
+    /**
+     * If `true`, the base button will have a keyboard focus ripple.
+     * @default false
+     */
+    focusRipple: propTypesExports.bool,
+    /**
+     * This prop can help identify which element has keyboard focus.
+     * The class name will be applied when the element gains the focus through keyboard interaction.
+     * It's a polyfill for the [CSS :focus-visible selector](https://drafts.csswg.org/selectors-4/#the-focus-visible-pseudo).
+     * The rationale for using this feature [is explained here](https://github.com/WICG/focus-visible/blob/HEAD/explainer.md).
+     * A [polyfill can be used](https://github.com/WICG/focus-visible) to apply a `focus-visible` class to other components
+     * if needed.
+     */
+    focusVisibleClassName: propTypesExports.string,
+    /**
+     * @ignore
+     */
+    href: propTypesExports.any,
+    /**
+     * The component used to render a link when the `href` prop is provided.
+     * @default 'a'
+     */
+    LinkComponent: propTypesExports.elementType,
+    /**
+     * @ignore
+     */
+    onBlur: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onClick: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onContextMenu: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onDragLeave: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onFocus: propTypesExports.func,
+    /**
+     * Callback fired when the component is focused with a keyboard.
+     * We trigger a `onFocus` callback too.
+     */
+    onFocusVisible: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onKeyDown: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onKeyUp: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onMouseDown: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onMouseLeave: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onMouseUp: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onTouchEnd: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onTouchMove: propTypesExports.func,
+    /**
+     * @ignore
+     */
+    onTouchStart: propTypesExports.func,
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    /**
+     * @default 0
+     */
+    tabIndex: propTypesExports.number,
+    /**
+     * Props applied to the `TouchRipple` element.
+     */
+    TouchRippleProps: propTypesExports.object,
+    /**
+     * A ref that points to the `TouchRipple` element.
+     */
+    touchRippleRef: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.shape({
+      current: propTypesExports.shape({
+        pulsate: propTypesExports.func.isRequired,
+        start: propTypesExports.func.isRequired,
+        stop: propTypesExports.func.isRequired
+      })
+    })]),
+    /**
+     * @ignore
+     */
+    type: propTypesExports.oneOfType([propTypesExports.oneOf(["button", "reset", "submit"]), propTypesExports.string])
+  } : void 0;
   function getIconButtonUtilityClass(slot) {
     return generateUtilityClass("MuiIconButton", slot);
   }
@@ -47029,62 +44896,1781 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   function BasicList(props) {
     let {
+      onRowClick = () => {
+      },
       data,
-      itemFields,
       columns,
-      Cmp,
-      showCmp,
-      setShowCmp,
-      forms,
-      item,
-      setItem
+      sx = {}
     } = props;
     const { ctx, spec } = props;
     const { model, seneca, custom } = ctx();
     const vxg = reactRedux.useSelector((state) => state.main.vxg);
-    const {
-      handleSubmit,
-      setValue,
-      control
-    } = forms;
-    return /* @__PURE__ */ jsx("div", { className: "BasicList", children: showCmp ? Cmp.type(__spreadProps(__spreadValues({}, Cmp.props), {
-      forms,
-      item,
-      itemFields,
-      setShowCmp
-    })) : /* @__PURE__ */ jsx(
+    return /* @__PURE__ */ jsx("div", { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ jsx(
       MaterialReactTable,
       {
+        enableColumnActions: false,
+        enableColumnFilters: false,
+        enablePagination: true,
+        enableSorting: false,
+        enableBottomToolbar: true,
+        enableTopToolbar: false,
         columns,
         data,
         muiTableBodyRowProps: ({ row }) => ({
           onClick: (event) => {
             let selitem = __spreadValues({}, data[Number(row.id)]);
-            console.log("item: ", item);
-            for (let field of itemFields) {
-              setValue(field.field, selitem[field.field]);
-            }
-            setShowCmp(true);
-            setItem(selitem);
+            onRowClick(event, selitem);
           },
           sx: { cursor: "pointer" }
         })
       }
     ) });
   }
+  var isCheckBoxInput = (element) => element.type === "checkbox";
+  var isDateObject = (value) => value instanceof Date;
+  var isNullOrUndefined = (value) => value == null;
+  const isObjectType = (value) => typeof value === "object";
+  var isObject = (value) => !isNullOrUndefined(value) && !Array.isArray(value) && isObjectType(value) && !isDateObject(value);
+  var getEventValue = (event) => isObject(event) && event.target ? isCheckBoxInput(event.target) ? event.target.checked : event.target.value : event;
+  var getNodeParentName = (name) => name.substring(0, name.search(/\.\d+(\.|$)/)) || name;
+  var isNameInFieldArray = (names, name) => names.has(getNodeParentName(name));
+  var isPlainObject = (tempObject) => {
+    const prototypeCopy = tempObject.constructor && tempObject.constructor.prototype;
+    return isObject(prototypeCopy) && prototypeCopy.hasOwnProperty("isPrototypeOf");
+  };
+  var isWeb = typeof window !== "undefined" && typeof window.HTMLElement !== "undefined" && typeof document !== "undefined";
+  function cloneObject(data) {
+    let copy2;
+    const isArray = Array.isArray(data);
+    if (data instanceof Date) {
+      copy2 = new Date(data);
+    } else if (data instanceof Set) {
+      copy2 = new Set(data);
+    } else if (!(isWeb && (data instanceof Blob || data instanceof FileList)) && (isArray || isObject(data))) {
+      copy2 = isArray ? [] : {};
+      if (!isArray && !isPlainObject(data)) {
+        copy2 = data;
+      } else {
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            copy2[key] = cloneObject(data[key]);
+          }
+        }
+      }
+    } else {
+      return data;
+    }
+    return copy2;
+  }
+  var compact = (value) => Array.isArray(value) ? value.filter(Boolean) : [];
+  var isUndefined = (val) => val === void 0;
+  var get = (obj, path, defaultValue) => {
+    if (!path || !isObject(obj)) {
+      return defaultValue;
+    }
+    const result = compact(path.split(/[,[\].]+?/)).reduce((result2, key) => isNullOrUndefined(result2) ? result2 : result2[key], obj);
+    return isUndefined(result) || result === obj ? isUndefined(obj[path]) ? defaultValue : obj[path] : result;
+  };
+  const EVENTS = {
+    BLUR: "blur",
+    FOCUS_OUT: "focusout",
+    CHANGE: "change"
+  };
+  const VALIDATION_MODE = {
+    onBlur: "onBlur",
+    onChange: "onChange",
+    onSubmit: "onSubmit",
+    onTouched: "onTouched",
+    all: "all"
+  };
+  const INPUT_VALIDATION_RULES = {
+    max: "max",
+    min: "min",
+    maxLength: "maxLength",
+    minLength: "minLength",
+    pattern: "pattern",
+    required: "required",
+    validate: "validate"
+  };
+  const HookFormContext = React.createContext(null);
+  const useFormContext = () => React.useContext(HookFormContext);
+  const FormProvider = (props) => {
+    const _a = props, { children } = _a, data = __objRest(_a, ["children"]);
+    return React.createElement(HookFormContext.Provider, { value: data }, children);
+  };
+  var getProxyFormState = (formState, control, localProxyFormState, isRoot = true) => {
+    const result = {
+      defaultValues: control._defaultValues
+    };
+    for (const key in formState) {
+      Object.defineProperty(result, key, {
+        get: () => {
+          const _key = key;
+          if (control._proxyFormState[_key] !== VALIDATION_MODE.all) {
+            control._proxyFormState[_key] = !isRoot || VALIDATION_MODE.all;
+          }
+          localProxyFormState && (localProxyFormState[_key] = true);
+          return formState[_key];
+        }
+      });
+    }
+    return result;
+  };
+  var isEmptyObject = (value) => isObject(value) && !Object.keys(value).length;
+  var shouldRenderFormState = (formStateData, _proxyFormState, updateFormState, isRoot) => {
+    updateFormState(formStateData);
+    const _a = formStateData, { name } = _a, formState = __objRest(_a, ["name"]);
+    return isEmptyObject(formState) || Object.keys(formState).length >= Object.keys(_proxyFormState).length || Object.keys(formState).find((key) => _proxyFormState[key] === (!isRoot || VALIDATION_MODE.all));
+  };
+  var convertToArrayPayload = (value) => Array.isArray(value) ? value : [value];
+  var shouldSubscribeByName = (name, signalName, exact) => exact && signalName ? name === signalName : !name || !signalName || name === signalName || convertToArrayPayload(name).some((currentName) => currentName && (currentName.startsWith(signalName) || signalName.startsWith(currentName)));
+  function useSubscribe(props) {
+    const _props = React.useRef(props);
+    _props.current = props;
+    React.useEffect(() => {
+      const subscription = !props.disabled && _props.current.subject && _props.current.subject.subscribe({
+        next: _props.current.next
+      });
+      return () => {
+        subscription && subscription.unsubscribe();
+      };
+    }, [props.disabled]);
+  }
+  function useFormState(props) {
+    const methods = useFormContext();
+    const { control = methods.control, disabled, name, exact } = props || {};
+    const [formState, updateFormState] = React.useState(control._formState);
+    const _mounted = React.useRef(true);
+    const _localProxyFormState = React.useRef({
+      isDirty: false,
+      isLoading: false,
+      dirtyFields: false,
+      touchedFields: false,
+      isValidating: false,
+      isValid: false,
+      errors: false
+    });
+    const _name = React.useRef(name);
+    _name.current = name;
+    useSubscribe({
+      disabled,
+      next: (value) => _mounted.current && shouldSubscribeByName(_name.current, value.name, exact) && shouldRenderFormState(value, _localProxyFormState.current, control._updateFormState) && updateFormState(__spreadValues(__spreadValues({}, control._formState), value)),
+      subject: control._subjects.state
+    });
+    React.useEffect(() => {
+      _mounted.current = true;
+      _localProxyFormState.current.isValid && control._updateValid(true);
+      return () => {
+        _mounted.current = false;
+      };
+    }, [control]);
+    return getProxyFormState(formState, control, _localProxyFormState.current, false);
+  }
+  var isString = (value) => typeof value === "string";
+  var generateWatchOutput = (names, _names, formValues, isGlobal, defaultValue) => {
+    if (isString(names)) {
+      isGlobal && _names.watch.add(names);
+      return get(formValues, names, defaultValue);
+    }
+    if (Array.isArray(names)) {
+      return names.map((fieldName) => (isGlobal && _names.watch.add(fieldName), get(formValues, fieldName)));
+    }
+    isGlobal && (_names.watchAll = true);
+    return formValues;
+  };
+  function useWatch(props) {
+    const methods = useFormContext();
+    const { control = methods.control, name, defaultValue, disabled, exact } = props || {};
+    const _name = React.useRef(name);
+    _name.current = name;
+    useSubscribe({
+      disabled,
+      subject: control._subjects.values,
+      next: (formState) => {
+        if (shouldSubscribeByName(_name.current, formState.name, exact)) {
+          updateValue(cloneObject(generateWatchOutput(_name.current, control._names, formState.values || control._formValues, false, defaultValue)));
+        }
+      }
+    });
+    const [value, updateValue] = React.useState(control._getWatch(name, defaultValue));
+    React.useEffect(() => control._removeUnmounted());
+    return value;
+  }
+  var isKey = (value) => /^\w*$/.test(value);
+  var stringToPath = (input) => compact(input.replace(/["|']|\]/g, "").split(/\.|\[/));
+  function set(object, path, value) {
+    let index2 = -1;
+    const tempPath = isKey(path) ? [path] : stringToPath(path);
+    const length2 = tempPath.length;
+    const lastIndex = length2 - 1;
+    while (++index2 < length2) {
+      const key = tempPath[index2];
+      let newValue = value;
+      if (index2 !== lastIndex) {
+        const objValue = object[key];
+        newValue = isObject(objValue) || Array.isArray(objValue) ? objValue : !isNaN(+tempPath[index2 + 1]) ? [] : {};
+      }
+      object[key] = newValue;
+      object = object[key];
+    }
+    return object;
+  }
+  function useController(props) {
+    const methods = useFormContext();
+    const { name, control = methods.control, shouldUnregister } = props;
+    const isArrayField = isNameInFieldArray(control._names.array, name);
+    const value = useWatch({
+      control,
+      name,
+      defaultValue: get(control._formValues, name, get(control._defaultValues, name, props.defaultValue)),
+      exact: true
+    });
+    const formState = useFormState({
+      control,
+      name
+    });
+    const _registerProps = React.useRef(control.register(name, __spreadProps(__spreadValues({}, props.rules), {
+      value
+    })));
+    _registerProps.current = control.register(name, props.rules);
+    React.useEffect(() => {
+      const _shouldUnregisterField = control._options.shouldUnregister || shouldUnregister;
+      const updateMounted = (name2, value2) => {
+        const field = get(control._fields, name2);
+        if (field) {
+          field._f.mount = value2;
+        }
+      };
+      updateMounted(name, true);
+      if (_shouldUnregisterField) {
+        const value2 = cloneObject(get(control._options.defaultValues, name));
+        set(control._defaultValues, name, value2);
+        if (isUndefined(get(control._formValues, name))) {
+          set(control._formValues, name, value2);
+        }
+      }
+      return () => {
+        (isArrayField ? _shouldUnregisterField && !control._state.action : _shouldUnregisterField) ? control.unregister(name) : updateMounted(name, false);
+      };
+    }, [name, control, isArrayField, shouldUnregister]);
+    return {
+      field: {
+        name,
+        value,
+        onChange: React.useCallback((event) => _registerProps.current.onChange({
+          target: {
+            value: getEventValue(event),
+            name
+          },
+          type: EVENTS.CHANGE
+        }), [name]),
+        onBlur: React.useCallback(() => _registerProps.current.onBlur({
+          target: {
+            value: get(control._formValues, name),
+            name
+          },
+          type: EVENTS.BLUR
+        }), [name, control]),
+        ref: (elm) => {
+          const field = get(control._fields, name);
+          if (field && elm) {
+            field._f.ref = {
+              focus: () => elm.focus(),
+              select: () => elm.select(),
+              setCustomValidity: (message) => elm.setCustomValidity(message),
+              reportValidity: () => elm.reportValidity()
+            };
+          }
+        }
+      },
+      formState,
+      fieldState: Object.defineProperties({}, {
+        invalid: {
+          enumerable: true,
+          get: () => !!get(formState.errors, name)
+        },
+        isDirty: {
+          enumerable: true,
+          get: () => !!get(formState.dirtyFields, name)
+        },
+        isTouched: {
+          enumerable: true,
+          get: () => !!get(formState.touchedFields, name)
+        },
+        error: {
+          enumerable: true,
+          get: () => get(formState.errors, name)
+        }
+      })
+    };
+  }
+  const Controller = (props) => props.render(useController(props));
+  const POST_REQUEST = "post";
+  function Form(props) {
+    const methods = useFormContext();
+    const [mounted, setMounted] = React.useState(false);
+    const _a = props, { control = methods.control, onSubmit, children, action, method = POST_REQUEST, headers, encType, onError, render, onSuccess, validateStatus } = _a, rest = __objRest(_a, ["control", "onSubmit", "children", "action", "method", "headers", "encType", "onError", "render", "onSuccess", "validateStatus"]);
+    const submit = (event) => __async(this, null, function* () {
+      let hasError = false;
+      let type = "";
+      yield control.handleSubmit((data) => __async(this, null, function* () {
+        const formData = new FormData();
+        let formDataJson = "";
+        try {
+          formDataJson = JSON.stringify(data);
+        } catch (_a2) {
+        }
+        for (const name of control._names.mount) {
+          formData.append(name, get(data, name));
+        }
+        if (onSubmit) {
+          onSubmit({
+            data,
+            event,
+            method,
+            formData,
+            formDataJson
+          });
+        }
+        if (action) {
+          try {
+            const shouldStringifySubmissionData = [
+              headers && headers["Content-Type"],
+              encType
+            ].some((value) => value && value.includes("json"));
+            const response = yield fetch(action, {
+              method,
+              headers: __spreadValues(__spreadValues({}, headers), encType ? { "Content-Type": encType } : {}),
+              body: shouldStringifySubmissionData ? formDataJson : formData
+            });
+            if (response && (validateStatus ? !validateStatus(response.status) : response.status < 200 || response.status >= 300)) {
+              hasError = true;
+              onError && onError({ response });
+              type = String(response.status);
+            } else {
+              onSuccess && onSuccess({ response });
+            }
+          } catch (error) {
+            hasError = true;
+            onError && onError({ error });
+          }
+        }
+      }))(event);
+      if (hasError && props.control) {
+        props.control._subjects.state.next({
+          isSubmitSuccessful: false
+        });
+        props.control.setError("root.server", {
+          type
+        });
+      }
+    });
+    React.useEffect(() => {
+      setMounted(true);
+    }, []);
+    return render ? React.createElement(React.Fragment, null, render({
+      submit
+    })) : React.createElement("form", __spreadValues({ noValidate: mounted, action, method, encType, onSubmit: submit }, rest), children);
+  }
+  var appendErrors = (name, validateAllFieldCriteria, errors, type, message) => validateAllFieldCriteria ? __spreadProps(__spreadValues({}, errors[name]), {
+    types: __spreadProps(__spreadValues({}, errors[name] && errors[name].types ? errors[name].types : {}), {
+      [type]: message || true
+    })
+  }) : {};
+  const focusFieldBy = (fields2, callback, fieldsNames) => {
+    for (const key of fieldsNames || Object.keys(fields2)) {
+      const field = get(fields2, key);
+      if (field) {
+        const _a = field, { _f } = _a, currentField = __objRest(_a, ["_f"]);
+        if (_f && callback(_f.name)) {
+          if (_f.ref.focus) {
+            _f.ref.focus();
+            break;
+          } else if (_f.refs && _f.refs[0].focus) {
+            _f.refs[0].focus();
+            break;
+          }
+        } else if (isObject(currentField)) {
+          focusFieldBy(currentField, callback);
+        }
+      }
+    }
+  };
+  var generateId = () => {
+    const d = typeof performance === "undefined" ? Date.now() : performance.now() * 1e3;
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+      const r2 = (Math.random() * 16 + d) % 16 | 0;
+      return (c == "x" ? r2 : r2 & 3 | 8).toString(16);
+    });
+  };
+  var getFocusFieldName = (name, index2, options = {}) => options.shouldFocus || isUndefined(options.shouldFocus) ? options.focusName || `${name}.${isUndefined(options.focusIndex) ? index2 : options.focusIndex}.` : "";
+  var getValidationModes = (mode) => ({
+    isOnSubmit: !mode || mode === VALIDATION_MODE.onSubmit,
+    isOnBlur: mode === VALIDATION_MODE.onBlur,
+    isOnChange: mode === VALIDATION_MODE.onChange,
+    isOnAll: mode === VALIDATION_MODE.all,
+    isOnTouch: mode === VALIDATION_MODE.onTouched
+  });
+  var isWatched = (name, _names, isBlurEvent) => !isBlurEvent && (_names.watchAll || _names.watch.has(name) || [..._names.watch].some((watchName) => name.startsWith(watchName) && /^\.\w+/.test(name.slice(watchName.length))));
+  var updateFieldArrayRootError = (errors, error, name) => {
+    const fieldArrayErrors = compact(get(errors, name));
+    set(fieldArrayErrors, "root", error[name]);
+    set(errors, name, fieldArrayErrors);
+    return errors;
+  };
+  var isBoolean = (value) => typeof value === "boolean";
+  var isFileInput = (element) => element.type === "file";
+  var isFunction = (value) => typeof value === "function";
+  var isHTMLElement = (value) => {
+    if (!isWeb) {
+      return false;
+    }
+    const owner = value ? value.ownerDocument : 0;
+    return value instanceof (owner && owner.defaultView ? owner.defaultView.HTMLElement : HTMLElement);
+  };
+  var isMessage = (value) => isString(value);
+  var isRadioInput = (element) => element.type === "radio";
+  var isRegex = (value) => value instanceof RegExp;
+  const defaultResult = {
+    value: false,
+    isValid: false
+  };
+  const validResult = { value: true, isValid: true };
+  var getCheckboxValue = (options) => {
+    if (Array.isArray(options)) {
+      if (options.length > 1) {
+        const values2 = options.filter((option) => option && option.checked && !option.disabled).map((option) => option.value);
+        return { value: values2, isValid: !!values2.length };
+      }
+      return options[0].checked && !options[0].disabled ? (
+        // @ts-expect-error expected to work in the browser
+        options[0].attributes && !isUndefined(options[0].attributes.value) ? isUndefined(options[0].value) || options[0].value === "" ? validResult : { value: options[0].value, isValid: true } : validResult
+      ) : defaultResult;
+    }
+    return defaultResult;
+  };
+  const defaultReturn = {
+    isValid: false,
+    value: null
+  };
+  var getRadioValue = (options) => Array.isArray(options) ? options.reduce((previous, option) => option && option.checked && !option.disabled ? {
+    isValid: true,
+    value: option.value
+  } : previous, defaultReturn) : defaultReturn;
+  function getValidateError(result, ref, type = "validate") {
+    if (isMessage(result) || Array.isArray(result) && result.every(isMessage) || isBoolean(result) && !result) {
+      return {
+        type,
+        message: isMessage(result) ? result : "",
+        ref
+      };
+    }
+  }
+  var getValueAndMessage = (validationData) => isObject(validationData) && !isRegex(validationData) ? validationData : {
+    value: validationData,
+    message: ""
+  };
+  var validateField = (field, formValues, validateAllFieldCriteria, shouldUseNativeValidation, isFieldArray) => __async(this, null, function* () {
+    const { ref, refs, required, maxLength, minLength, min: min2, max: max2, pattern, validate, name, valueAsNumber, mount, disabled } = field._f;
+    const inputValue = get(formValues, name);
+    if (!mount || disabled) {
+      return {};
+    }
+    const inputRef = refs ? refs[0] : ref;
+    const setCustomValidity = (message) => {
+      if (shouldUseNativeValidation && inputRef.reportValidity) {
+        inputRef.setCustomValidity(isBoolean(message) ? "" : message || "");
+        inputRef.reportValidity();
+      }
+    };
+    const error = {};
+    const isRadio = isRadioInput(ref);
+    const isCheckBox = isCheckBoxInput(ref);
+    const isRadioOrCheckbox2 = isRadio || isCheckBox;
+    const isEmpty2 = (valueAsNumber || isFileInput(ref)) && isUndefined(ref.value) && isUndefined(inputValue) || isHTMLElement(ref) && ref.value === "" || inputValue === "" || Array.isArray(inputValue) && !inputValue.length;
+    const appendErrorsCurry = appendErrors.bind(null, name, validateAllFieldCriteria, error);
+    const getMinMaxMessage = (exceedMax, maxLengthMessage, minLengthMessage, maxType = INPUT_VALIDATION_RULES.maxLength, minType = INPUT_VALIDATION_RULES.minLength) => {
+      const message = exceedMax ? maxLengthMessage : minLengthMessage;
+      error[name] = __spreadValues({
+        type: exceedMax ? maxType : minType,
+        message,
+        ref
+      }, appendErrorsCurry(exceedMax ? maxType : minType, message));
+    };
+    if (isFieldArray ? !Array.isArray(inputValue) || !inputValue.length : required && (!isRadioOrCheckbox2 && (isEmpty2 || isNullOrUndefined(inputValue)) || isBoolean(inputValue) && !inputValue || isCheckBox && !getCheckboxValue(refs).isValid || isRadio && !getRadioValue(refs).isValid)) {
+      const { value, message } = isMessage(required) ? { value: !!required, message: required } : getValueAndMessage(required);
+      if (value) {
+        error[name] = __spreadValues({
+          type: INPUT_VALIDATION_RULES.required,
+          message,
+          ref: inputRef
+        }, appendErrorsCurry(INPUT_VALIDATION_RULES.required, message));
+        if (!validateAllFieldCriteria) {
+          setCustomValidity(message);
+          return error;
+        }
+      }
+    }
+    if (!isEmpty2 && (!isNullOrUndefined(min2) || !isNullOrUndefined(max2))) {
+      let exceedMax;
+      let exceedMin;
+      const maxOutput = getValueAndMessage(max2);
+      const minOutput = getValueAndMessage(min2);
+      if (!isNullOrUndefined(inputValue) && !isNaN(inputValue)) {
+        const valueNumber = ref.valueAsNumber || (inputValue ? +inputValue : inputValue);
+        if (!isNullOrUndefined(maxOutput.value)) {
+          exceedMax = valueNumber > maxOutput.value;
+        }
+        if (!isNullOrUndefined(minOutput.value)) {
+          exceedMin = valueNumber < minOutput.value;
+        }
+      } else {
+        const valueDate = ref.valueAsDate || new Date(inputValue);
+        const convertTimeToDate = (time) => new Date(new Date().toDateString() + " " + time);
+        const isTime = ref.type == "time";
+        const isWeek = ref.type == "week";
+        if (isString(maxOutput.value) && inputValue) {
+          exceedMax = isTime ? convertTimeToDate(inputValue) > convertTimeToDate(maxOutput.value) : isWeek ? inputValue > maxOutput.value : valueDate > new Date(maxOutput.value);
+        }
+        if (isString(minOutput.value) && inputValue) {
+          exceedMin = isTime ? convertTimeToDate(inputValue) < convertTimeToDate(minOutput.value) : isWeek ? inputValue < minOutput.value : valueDate < new Date(minOutput.value);
+        }
+      }
+      if (exceedMax || exceedMin) {
+        getMinMaxMessage(!!exceedMax, maxOutput.message, minOutput.message, INPUT_VALIDATION_RULES.max, INPUT_VALIDATION_RULES.min);
+        if (!validateAllFieldCriteria) {
+          setCustomValidity(error[name].message);
+          return error;
+        }
+      }
+    }
+    if ((maxLength || minLength) && !isEmpty2 && (isString(inputValue) || isFieldArray && Array.isArray(inputValue))) {
+      const maxLengthOutput = getValueAndMessage(maxLength);
+      const minLengthOutput = getValueAndMessage(minLength);
+      const exceedMax = !isNullOrUndefined(maxLengthOutput.value) && inputValue.length > +maxLengthOutput.value;
+      const exceedMin = !isNullOrUndefined(minLengthOutput.value) && inputValue.length < +minLengthOutput.value;
+      if (exceedMax || exceedMin) {
+        getMinMaxMessage(exceedMax, maxLengthOutput.message, minLengthOutput.message);
+        if (!validateAllFieldCriteria) {
+          setCustomValidity(error[name].message);
+          return error;
+        }
+      }
+    }
+    if (pattern && !isEmpty2 && isString(inputValue)) {
+      const { value: patternValue, message } = getValueAndMessage(pattern);
+      if (isRegex(patternValue) && !inputValue.match(patternValue)) {
+        error[name] = __spreadValues({
+          type: INPUT_VALIDATION_RULES.pattern,
+          message,
+          ref
+        }, appendErrorsCurry(INPUT_VALIDATION_RULES.pattern, message));
+        if (!validateAllFieldCriteria) {
+          setCustomValidity(message);
+          return error;
+        }
+      }
+    }
+    if (validate) {
+      if (isFunction(validate)) {
+        const result = yield validate(inputValue, formValues);
+        const validateError = getValidateError(result, inputRef);
+        if (validateError) {
+          error[name] = __spreadValues(__spreadValues({}, validateError), appendErrorsCurry(INPUT_VALIDATION_RULES.validate, validateError.message));
+          if (!validateAllFieldCriteria) {
+            setCustomValidity(validateError.message);
+            return error;
+          }
+        }
+      } else if (isObject(validate)) {
+        let validationResult = {};
+        for (const key in validate) {
+          if (!isEmptyObject(validationResult) && !validateAllFieldCriteria) {
+            break;
+          }
+          const validateError = getValidateError(yield validate[key](inputValue, formValues), inputRef, key);
+          if (validateError) {
+            validationResult = __spreadValues(__spreadValues({}, validateError), appendErrorsCurry(key, validateError.message));
+            setCustomValidity(validateError.message);
+            if (validateAllFieldCriteria) {
+              error[name] = validationResult;
+            }
+          }
+        }
+        if (!isEmptyObject(validationResult)) {
+          error[name] = __spreadValues({
+            ref: inputRef
+          }, validationResult);
+          if (!validateAllFieldCriteria) {
+            return error;
+          }
+        }
+      }
+    }
+    setCustomValidity(true);
+    return error;
+  });
+  function append(data, value) {
+    return [...data, ...convertToArrayPayload(value)];
+  }
+  var fillEmptyArray = (value) => Array.isArray(value) ? value.map(() => void 0) : void 0;
+  function insert(data, index2, value) {
+    return [
+      ...data.slice(0, index2),
+      ...convertToArrayPayload(value),
+      ...data.slice(index2)
+    ];
+  }
+  var moveArrayAt = (data, from2, to) => {
+    if (!Array.isArray(data)) {
+      return [];
+    }
+    if (isUndefined(data[to])) {
+      data[to] = void 0;
+    }
+    data.splice(to, 0, data.splice(from2, 1)[0]);
+    return data;
+  };
+  function prepend(data, value) {
+    return [...convertToArrayPayload(value), ...convertToArrayPayload(data)];
+  }
+  function removeAtIndexes(data, indexes) {
+    let i = 0;
+    const temp = [...data];
+    for (const index2 of indexes) {
+      temp.splice(index2 - i, 1);
+      i++;
+    }
+    return compact(temp).length ? temp : [];
+  }
+  var removeArrayAt = (data, index2) => isUndefined(index2) ? [] : removeAtIndexes(data, convertToArrayPayload(index2).sort((a, b) => a - b));
+  var swapArrayAt = (data, indexA, indexB) => {
+    data[indexA] = [data[indexB], data[indexB] = data[indexA]][0];
+  };
+  function baseGet(object, updatePath) {
+    const length2 = updatePath.slice(0, -1).length;
+    let index2 = 0;
+    while (index2 < length2) {
+      object = isUndefined(object) ? index2++ : object[updatePath[index2++]];
+    }
+    return object;
+  }
+  function isEmptyArray(obj) {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key) && !isUndefined(obj[key])) {
+        return false;
+      }
+    }
+    return true;
+  }
+  function unset(object, path) {
+    const paths = Array.isArray(path) ? path : isKey(path) ? [path] : stringToPath(path);
+    const childObject = paths.length === 1 ? object : baseGet(object, paths);
+    const index2 = paths.length - 1;
+    const key = paths[index2];
+    if (childObject) {
+      delete childObject[key];
+    }
+    if (index2 !== 0 && (isObject(childObject) && isEmptyObject(childObject) || Array.isArray(childObject) && isEmptyArray(childObject))) {
+      unset(object, paths.slice(0, -1));
+    }
+    return object;
+  }
+  var updateAt = (fieldValues, index2, value) => {
+    fieldValues[index2] = value;
+    return fieldValues;
+  };
+  function useFieldArray(props) {
+    const methods = useFormContext();
+    const { control = methods.control, name, keyName = "id", shouldUnregister } = props;
+    const [fields2, setFields] = React.useState(control._getFieldArray(name));
+    const ids = React.useRef(control._getFieldArray(name).map(generateId));
+    const _fieldIds = React.useRef(fields2);
+    const _name = React.useRef(name);
+    const _actioned = React.useRef(false);
+    _name.current = name;
+    _fieldIds.current = fields2;
+    control._names.array.add(name);
+    props.rules && control.register(name, props.rules);
+    useSubscribe({
+      next: ({ values: values2, name: fieldArrayName }) => {
+        if (fieldArrayName === _name.current || !fieldArrayName) {
+          const fieldValues = get(values2, _name.current);
+          if (Array.isArray(fieldValues)) {
+            setFields(fieldValues);
+            ids.current = fieldValues.map(generateId);
+          }
+        }
+      },
+      subject: control._subjects.array
+    });
+    const updateValues = React.useCallback((updatedFieldArrayValues) => {
+      _actioned.current = true;
+      control._updateFieldArray(name, updatedFieldArrayValues);
+    }, [control, name]);
+    const append$12 = (value, options) => {
+      const appendValue = convertToArrayPayload(cloneObject(value));
+      const updatedFieldArrayValues = append(control._getFieldArray(name), appendValue);
+      control._names.focus = getFocusFieldName(name, updatedFieldArrayValues.length - 1, options);
+      ids.current = append(ids.current, appendValue.map(generateId));
+      updateValues(updatedFieldArrayValues);
+      setFields(updatedFieldArrayValues);
+      control._updateFieldArray(name, updatedFieldArrayValues, append, {
+        argA: fillEmptyArray(value)
+      });
+    };
+    const prepend$1 = (value, options) => {
+      const prependValue = convertToArrayPayload(cloneObject(value));
+      const updatedFieldArrayValues = prepend(control._getFieldArray(name), prependValue);
+      control._names.focus = getFocusFieldName(name, 0, options);
+      ids.current = prepend(ids.current, prependValue.map(generateId));
+      updateValues(updatedFieldArrayValues);
+      setFields(updatedFieldArrayValues);
+      control._updateFieldArray(name, updatedFieldArrayValues, prepend, {
+        argA: fillEmptyArray(value)
+      });
+    };
+    const remove = (index2) => {
+      const updatedFieldArrayValues = removeArrayAt(control._getFieldArray(name), index2);
+      ids.current = removeArrayAt(ids.current, index2);
+      updateValues(updatedFieldArrayValues);
+      setFields(updatedFieldArrayValues);
+      control._updateFieldArray(name, updatedFieldArrayValues, removeArrayAt, {
+        argA: index2
+      });
+    };
+    const insert$1 = (index2, value, options) => {
+      const insertValue = convertToArrayPayload(cloneObject(value));
+      const updatedFieldArrayValues = insert(control._getFieldArray(name), index2, insertValue);
+      control._names.focus = getFocusFieldName(name, index2, options);
+      ids.current = insert(ids.current, index2, insertValue.map(generateId));
+      updateValues(updatedFieldArrayValues);
+      setFields(updatedFieldArrayValues);
+      control._updateFieldArray(name, updatedFieldArrayValues, insert, {
+        argA: index2,
+        argB: fillEmptyArray(value)
+      });
+    };
+    const swap = (indexA, indexB) => {
+      const updatedFieldArrayValues = control._getFieldArray(name);
+      swapArrayAt(updatedFieldArrayValues, indexA, indexB);
+      swapArrayAt(ids.current, indexA, indexB);
+      updateValues(updatedFieldArrayValues);
+      setFields(updatedFieldArrayValues);
+      control._updateFieldArray(name, updatedFieldArrayValues, swapArrayAt, {
+        argA: indexA,
+        argB: indexB
+      }, false);
+    };
+    const move = (from2, to) => {
+      const updatedFieldArrayValues = control._getFieldArray(name);
+      moveArrayAt(updatedFieldArrayValues, from2, to);
+      moveArrayAt(ids.current, from2, to);
+      updateValues(updatedFieldArrayValues);
+      setFields(updatedFieldArrayValues);
+      control._updateFieldArray(name, updatedFieldArrayValues, moveArrayAt, {
+        argA: from2,
+        argB: to
+      }, false);
+    };
+    const update = (index2, value) => {
+      const updateValue = cloneObject(value);
+      const updatedFieldArrayValues = updateAt(control._getFieldArray(name), index2, updateValue);
+      ids.current = [...updatedFieldArrayValues].map((item, i) => !item || i === index2 ? generateId() : ids.current[i]);
+      updateValues(updatedFieldArrayValues);
+      setFields([...updatedFieldArrayValues]);
+      control._updateFieldArray(name, updatedFieldArrayValues, updateAt, {
+        argA: index2,
+        argB: updateValue
+      }, true, false);
+    };
+    const replace2 = (value) => {
+      const updatedFieldArrayValues = convertToArrayPayload(cloneObject(value));
+      ids.current = updatedFieldArrayValues.map(generateId);
+      updateValues([...updatedFieldArrayValues]);
+      setFields([...updatedFieldArrayValues]);
+      control._updateFieldArray(name, [...updatedFieldArrayValues], (data) => data, {}, true, false);
+    };
+    React.useEffect(() => {
+      control._state.action = false;
+      isWatched(name, control._names) && control._subjects.state.next(__spreadValues({}, control._formState));
+      if (_actioned.current && (!getValidationModes(control._options.mode).isOnSubmit || control._formState.isSubmitted)) {
+        if (control._options.resolver) {
+          control._executeSchema([name]).then((result) => {
+            const error = get(result.errors, name);
+            const existingError = get(control._formState.errors, name);
+            if (existingError ? !error && existingError.type || error && (existingError.type !== error.type || existingError.message !== error.message) : error && error.type) {
+              error ? set(control._formState.errors, name, error) : unset(control._formState.errors, name);
+              control._subjects.state.next({
+                errors: control._formState.errors
+              });
+            }
+          });
+        } else {
+          const field = get(control._fields, name);
+          if (field && field._f) {
+            validateField(field, control._formValues, control._options.criteriaMode === VALIDATION_MODE.all, control._options.shouldUseNativeValidation, true).then((error) => !isEmptyObject(error) && control._subjects.state.next({
+              errors: updateFieldArrayRootError(control._formState.errors, error, name)
+            }));
+          }
+        }
+      }
+      control._subjects.values.next({
+        name,
+        values: __spreadValues({}, control._formValues)
+      });
+      control._names.focus && focusFieldBy(control._fields, (key) => !!key && key.startsWith(control._names.focus || ""));
+      control._names.focus = "";
+      control._updateValid();
+    }, [fields2, name, control]);
+    React.useEffect(() => {
+      !get(control._formValues, name) && control._updateFieldArray(name);
+      return () => {
+        (control._options.shouldUnregister || shouldUnregister) && control.unregister(name);
+      };
+    }, [name, control, keyName, shouldUnregister]);
+    return {
+      swap: React.useCallback(swap, [updateValues, name, control]),
+      move: React.useCallback(move, [updateValues, name, control]),
+      prepend: React.useCallback(prepend$1, [updateValues, name, control]),
+      append: React.useCallback(append$12, [updateValues, name, control]),
+      remove: React.useCallback(remove, [updateValues, name, control]),
+      insert: React.useCallback(insert$1, [updateValues, name, control]),
+      update: React.useCallback(update, [updateValues, name, control]),
+      replace: React.useCallback(replace2, [updateValues, name, control]),
+      fields: React.useMemo(() => fields2.map((field, index2) => __spreadProps(__spreadValues({}, field), {
+        [keyName]: ids.current[index2] || generateId()
+      })), [fields2, keyName])
+    };
+  }
+  function createSubject() {
+    let _observers = [];
+    const next2 = (value) => {
+      for (const observer of _observers) {
+        observer.next && observer.next(value);
+      }
+    };
+    const subscribe = (observer) => {
+      _observers.push(observer);
+      return {
+        unsubscribe: () => {
+          _observers = _observers.filter((o) => o !== observer);
+        }
+      };
+    };
+    const unsubscribe = () => {
+      _observers = [];
+    };
+    return {
+      get observers() {
+        return _observers;
+      },
+      next: next2,
+      subscribe,
+      unsubscribe
+    };
+  }
+  var isPrimitive = (value) => isNullOrUndefined(value) || !isObjectType(value);
+  function deepEqual(object1, object2) {
+    if (isPrimitive(object1) || isPrimitive(object2)) {
+      return object1 === object2;
+    }
+    if (isDateObject(object1) && isDateObject(object2)) {
+      return object1.getTime() === object2.getTime();
+    }
+    const keys1 = Object.keys(object1);
+    const keys2 = Object.keys(object2);
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+    for (const key of keys1) {
+      const val1 = object1[key];
+      if (!keys2.includes(key)) {
+        return false;
+      }
+      if (key !== "ref") {
+        const val2 = object2[key];
+        if (isDateObject(val1) && isDateObject(val2) || isObject(val1) && isObject(val2) || Array.isArray(val1) && Array.isArray(val2) ? !deepEqual(val1, val2) : val1 !== val2) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  var isMultipleSelect = (element) => element.type === `select-multiple`;
+  var isRadioOrCheckbox = (ref) => isRadioInput(ref) || isCheckBoxInput(ref);
+  var live = (ref) => isHTMLElement(ref) && ref.isConnected;
+  var objectHasFunction = (data) => {
+    for (const key in data) {
+      if (isFunction(data[key])) {
+        return true;
+      }
+    }
+    return false;
+  };
+  function markFieldsDirty(data, fields2 = {}) {
+    const isParentNodeArray = Array.isArray(data);
+    if (isObject(data) || isParentNodeArray) {
+      for (const key in data) {
+        if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
+          fields2[key] = Array.isArray(data[key]) ? [] : {};
+          markFieldsDirty(data[key], fields2[key]);
+        } else if (!isNullOrUndefined(data[key])) {
+          fields2[key] = true;
+        }
+      }
+    }
+    return fields2;
+  }
+  function getDirtyFieldsFromDefaultValues(data, formValues, dirtyFieldsFromValues) {
+    const isParentNodeArray = Array.isArray(data);
+    if (isObject(data) || isParentNodeArray) {
+      for (const key in data) {
+        if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
+          if (isUndefined(formValues) || isPrimitive(dirtyFieldsFromValues[key])) {
+            dirtyFieldsFromValues[key] = Array.isArray(data[key]) ? markFieldsDirty(data[key], []) : __spreadValues({}, markFieldsDirty(data[key]));
+          } else {
+            getDirtyFieldsFromDefaultValues(data[key], isNullOrUndefined(formValues) ? {} : formValues[key], dirtyFieldsFromValues[key]);
+          }
+        } else {
+          dirtyFieldsFromValues[key] = !deepEqual(data[key], formValues[key]);
+        }
+      }
+    }
+    return dirtyFieldsFromValues;
+  }
+  var getDirtyFields = (defaultValues, formValues) => getDirtyFieldsFromDefaultValues(defaultValues, formValues, markFieldsDirty(formValues));
+  var getFieldValueAs = (value, { valueAsNumber, valueAsDate, setValueAs }) => isUndefined(value) ? value : valueAsNumber ? value === "" ? NaN : value ? +value : value : valueAsDate && isString(value) ? new Date(value) : setValueAs ? setValueAs(value) : value;
+  function getFieldValue(_f) {
+    const ref = _f.ref;
+    if (_f.refs ? _f.refs.every((ref2) => ref2.disabled) : ref.disabled) {
+      return;
+    }
+    if (isFileInput(ref)) {
+      return ref.files;
+    }
+    if (isRadioInput(ref)) {
+      return getRadioValue(_f.refs).value;
+    }
+    if (isMultipleSelect(ref)) {
+      return [...ref.selectedOptions].map(({ value }) => value);
+    }
+    if (isCheckBoxInput(ref)) {
+      return getCheckboxValue(_f.refs).value;
+    }
+    return getFieldValueAs(isUndefined(ref.value) ? _f.ref.value : ref.value, _f);
+  }
+  var getResolverOptions = (fieldsNames, _fields, criteriaMode, shouldUseNativeValidation) => {
+    const fields2 = {};
+    for (const name of fieldsNames) {
+      const field = get(_fields, name);
+      field && set(fields2, name, field._f);
+    }
+    return {
+      criteriaMode,
+      names: [...fieldsNames],
+      fields: fields2,
+      shouldUseNativeValidation
+    };
+  };
+  var getRuleValue = (rule) => isUndefined(rule) ? rule : isRegex(rule) ? rule.source : isObject(rule) ? isRegex(rule.value) ? rule.value.source : rule.value : rule;
+  var hasValidation = (options) => options.mount && (options.required || options.min || options.max || options.maxLength || options.minLength || options.pattern || options.validate);
+  function schemaErrorLookup(errors, _fields, name) {
+    const error = get(errors, name);
+    if (error || isKey(name)) {
+      return {
+        error,
+        name
+      };
+    }
+    const names = name.split(".");
+    while (names.length) {
+      const fieldName = names.join(".");
+      const field = get(_fields, fieldName);
+      const foundError = get(errors, fieldName);
+      if (field && !Array.isArray(field) && name !== fieldName) {
+        return { name };
+      }
+      if (foundError && foundError.type) {
+        return {
+          name: fieldName,
+          error: foundError
+        };
+      }
+      names.pop();
+    }
+    return {
+      name
+    };
+  }
+  var skipValidation = (isBlurEvent, isTouched, isSubmitted, reValidateMode, mode) => {
+    if (mode.isOnAll) {
+      return false;
+    } else if (!isSubmitted && mode.isOnTouch) {
+      return !(isTouched || isBlurEvent);
+    } else if (isSubmitted ? reValidateMode.isOnBlur : mode.isOnBlur) {
+      return !isBlurEvent;
+    } else if (isSubmitted ? reValidateMode.isOnChange : mode.isOnChange) {
+      return isBlurEvent;
+    }
+    return true;
+  };
+  var unsetEmptyArray = (ref, name) => !compact(get(ref, name)).length && unset(ref, name);
+  const defaultOptions = {
+    mode: VALIDATION_MODE.onSubmit,
+    reValidateMode: VALIDATION_MODE.onChange,
+    shouldFocusError: true
+  };
+  function createFormControl(props = {}, flushRootRender) {
+    let _options = __spreadValues(__spreadValues({}, defaultOptions), props);
+    let _formState = {
+      submitCount: 0,
+      isDirty: false,
+      isLoading: isFunction(_options.defaultValues),
+      isValidating: false,
+      isSubmitted: false,
+      isSubmitting: false,
+      isSubmitSuccessful: false,
+      isValid: false,
+      touchedFields: {},
+      dirtyFields: {},
+      errors: {}
+    };
+    let _fields = {};
+    let _defaultValues = isObject(_options.defaultValues) || isObject(_options.values) ? cloneObject(_options.defaultValues || _options.values) || {} : {};
+    let _formValues = _options.shouldUnregister ? {} : cloneObject(_defaultValues);
+    let _state = {
+      action: false,
+      mount: false,
+      watch: false
+    };
+    let _names = {
+      mount: /* @__PURE__ */ new Set(),
+      unMount: /* @__PURE__ */ new Set(),
+      array: /* @__PURE__ */ new Set(),
+      watch: /* @__PURE__ */ new Set()
+    };
+    let delayErrorCallback;
+    let timer = 0;
+    const _proxyFormState = {
+      isDirty: false,
+      dirtyFields: false,
+      touchedFields: false,
+      isValidating: false,
+      isValid: false,
+      errors: false
+    };
+    const _subjects = {
+      values: createSubject(),
+      array: createSubject(),
+      state: createSubject()
+    };
+    const shouldCaptureDirtyFields = props.resetOptions && props.resetOptions.keepDirtyValues;
+    const validationModeBeforeSubmit = getValidationModes(_options.mode);
+    const validationModeAfterSubmit = getValidationModes(_options.reValidateMode);
+    const shouldDisplayAllAssociatedErrors = _options.criteriaMode === VALIDATION_MODE.all;
+    const debounce2 = (callback) => (wait) => {
+      clearTimeout(timer);
+      timer = setTimeout(callback, wait);
+    };
+    const _updateValid = (shouldUpdateValid) => __async(this, null, function* () {
+      if (_proxyFormState.isValid || shouldUpdateValid) {
+        const isValid = _options.resolver ? isEmptyObject((yield _executeSchema()).errors) : yield executeBuiltInValidation(_fields, true);
+        if (isValid !== _formState.isValid) {
+          _subjects.state.next({
+            isValid
+          });
+        }
+      }
+    });
+    const _updateIsValidating = (value) => _proxyFormState.isValidating && _subjects.state.next({
+      isValidating: value
+    });
+    const _updateFieldArray = (name, values2 = [], method, args, shouldSetValues = true, shouldUpdateFieldsAndState = true) => {
+      if (args && method) {
+        _state.action = true;
+        if (shouldUpdateFieldsAndState && Array.isArray(get(_fields, name))) {
+          const fieldValues = method(get(_fields, name), args.argA, args.argB);
+          shouldSetValues && set(_fields, name, fieldValues);
+        }
+        if (shouldUpdateFieldsAndState && Array.isArray(get(_formState.errors, name))) {
+          const errors = method(get(_formState.errors, name), args.argA, args.argB);
+          shouldSetValues && set(_formState.errors, name, errors);
+          unsetEmptyArray(_formState.errors, name);
+        }
+        if (_proxyFormState.touchedFields && shouldUpdateFieldsAndState && Array.isArray(get(_formState.touchedFields, name))) {
+          const touchedFields = method(get(_formState.touchedFields, name), args.argA, args.argB);
+          shouldSetValues && set(_formState.touchedFields, name, touchedFields);
+        }
+        if (_proxyFormState.dirtyFields) {
+          _formState.dirtyFields = getDirtyFields(_defaultValues, _formValues);
+        }
+        _subjects.state.next({
+          name,
+          isDirty: _getDirty(name, values2),
+          dirtyFields: _formState.dirtyFields,
+          errors: _formState.errors,
+          isValid: _formState.isValid
+        });
+      } else {
+        set(_formValues, name, values2);
+      }
+    };
+    const updateErrors = (name, error) => {
+      set(_formState.errors, name, error);
+      _subjects.state.next({
+        errors: _formState.errors
+      });
+    };
+    const updateValidAndValue = (name, shouldSkipSetValueAs, value, ref) => {
+      const field = get(_fields, name);
+      if (field) {
+        const defaultValue = get(_formValues, name, isUndefined(value) ? get(_defaultValues, name) : value);
+        isUndefined(defaultValue) || ref && ref.defaultChecked || shouldSkipSetValueAs ? set(_formValues, name, shouldSkipSetValueAs ? defaultValue : getFieldValue(field._f)) : setFieldValue(name, defaultValue);
+        _state.mount && _updateValid();
+      }
+    };
+    const updateTouchAndDirty = (name, fieldValue, isBlurEvent, shouldDirty, shouldRender) => {
+      let shouldUpdateField = false;
+      let isPreviousDirty = false;
+      const output = {
+        name
+      };
+      if (!isBlurEvent || shouldDirty) {
+        if (_proxyFormState.isDirty) {
+          isPreviousDirty = _formState.isDirty;
+          _formState.isDirty = output.isDirty = _getDirty();
+          shouldUpdateField = isPreviousDirty !== output.isDirty;
+        }
+        const isCurrentFieldPristine = deepEqual(get(_defaultValues, name), fieldValue);
+        isPreviousDirty = get(_formState.dirtyFields, name);
+        isCurrentFieldPristine ? unset(_formState.dirtyFields, name) : set(_formState.dirtyFields, name, true);
+        output.dirtyFields = _formState.dirtyFields;
+        shouldUpdateField = shouldUpdateField || _proxyFormState.dirtyFields && isPreviousDirty !== !isCurrentFieldPristine;
+      }
+      if (isBlurEvent) {
+        const isPreviousFieldTouched = get(_formState.touchedFields, name);
+        if (!isPreviousFieldTouched) {
+          set(_formState.touchedFields, name, isBlurEvent);
+          output.touchedFields = _formState.touchedFields;
+          shouldUpdateField = shouldUpdateField || _proxyFormState.touchedFields && isPreviousFieldTouched !== isBlurEvent;
+        }
+      }
+      shouldUpdateField && shouldRender && _subjects.state.next(output);
+      return shouldUpdateField ? output : {};
+    };
+    const shouldRenderByError = (name, isValid, error, fieldState) => {
+      const previousFieldError = get(_formState.errors, name);
+      const shouldUpdateValid = _proxyFormState.isValid && isBoolean(isValid) && _formState.isValid !== isValid;
+      if (props.delayError && error) {
+        delayErrorCallback = debounce2(() => updateErrors(name, error));
+        delayErrorCallback(props.delayError);
+      } else {
+        clearTimeout(timer);
+        delayErrorCallback = null;
+        error ? set(_formState.errors, name, error) : unset(_formState.errors, name);
+      }
+      if ((error ? !deepEqual(previousFieldError, error) : previousFieldError) || !isEmptyObject(fieldState) || shouldUpdateValid) {
+        const updatedFormState = __spreadProps(__spreadValues(__spreadValues({}, fieldState), shouldUpdateValid && isBoolean(isValid) ? { isValid } : {}), {
+          errors: _formState.errors,
+          name
+        });
+        _formState = __spreadValues(__spreadValues({}, _formState), updatedFormState);
+        _subjects.state.next(updatedFormState);
+      }
+      _updateIsValidating(false);
+    };
+    const _executeSchema = (name) => __async(this, null, function* () {
+      return _options.resolver(_formValues, _options.context, getResolverOptions(name || _names.mount, _fields, _options.criteriaMode, _options.shouldUseNativeValidation));
+    });
+    const executeSchemaAndUpdateState = (names) => __async(this, null, function* () {
+      const { errors } = yield _executeSchema();
+      if (names) {
+        for (const name of names) {
+          const error = get(errors, name);
+          error ? set(_formState.errors, name, error) : unset(_formState.errors, name);
+        }
+      } else {
+        _formState.errors = errors;
+      }
+      return errors;
+    });
+    const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields2, shouldOnlyCheckValid, context = {
+      valid: true
+    }) {
+      for (const name in fields2) {
+        const field = fields2[name];
+        if (field) {
+          const _a = field, { _f } = _a, fieldValue = __objRest(_a, ["_f"]);
+          if (_f) {
+            const isFieldArrayRoot = _names.array.has(_f.name);
+            const fieldError = yield validateField(field, _formValues, shouldDisplayAllAssociatedErrors, _options.shouldUseNativeValidation && !shouldOnlyCheckValid, isFieldArrayRoot);
+            if (fieldError[_f.name]) {
+              context.valid = false;
+              if (shouldOnlyCheckValid) {
+                break;
+              }
+            }
+            !shouldOnlyCheckValid && (get(fieldError, _f.name) ? isFieldArrayRoot ? updateFieldArrayRootError(_formState.errors, fieldError, _f.name) : set(_formState.errors, _f.name, fieldError[_f.name]) : unset(_formState.errors, _f.name));
+          }
+          fieldValue && (yield executeBuiltInValidation(fieldValue, shouldOnlyCheckValid, context));
+        }
+      }
+      return context.valid;
+    });
+    const _removeUnmounted = () => {
+      for (const name of _names.unMount) {
+        const field = get(_fields, name);
+        field && (field._f.refs ? field._f.refs.every((ref) => !live(ref)) : !live(field._f.ref)) && unregister(name);
+      }
+      _names.unMount = /* @__PURE__ */ new Set();
+    };
+    const _getDirty = (name, data) => (name && data && set(_formValues, name, data), !deepEqual(getValues(), _defaultValues));
+    const _getWatch = (names, defaultValue, isGlobal) => generateWatchOutput(names, _names, __spreadValues({}, _state.mount ? _formValues : isUndefined(defaultValue) ? _defaultValues : isString(names) ? { [names]: defaultValue } : defaultValue), isGlobal, defaultValue);
+    const _getFieldArray = (name) => compact(get(_state.mount ? _formValues : _defaultValues, name, props.shouldUnregister ? get(_defaultValues, name, []) : []));
+    const setFieldValue = (name, value, options = {}) => {
+      const field = get(_fields, name);
+      let fieldValue = value;
+      if (field) {
+        const fieldReference = field._f;
+        if (fieldReference) {
+          !fieldReference.disabled && set(_formValues, name, getFieldValueAs(value, fieldReference));
+          fieldValue = isHTMLElement(fieldReference.ref) && isNullOrUndefined(value) ? "" : value;
+          if (isMultipleSelect(fieldReference.ref)) {
+            [...fieldReference.ref.options].forEach((optionRef) => optionRef.selected = fieldValue.includes(optionRef.value));
+          } else if (fieldReference.refs) {
+            if (isCheckBoxInput(fieldReference.ref)) {
+              fieldReference.refs.length > 1 ? fieldReference.refs.forEach((checkboxRef) => (!checkboxRef.defaultChecked || !checkboxRef.disabled) && (checkboxRef.checked = Array.isArray(fieldValue) ? !!fieldValue.find((data) => data === checkboxRef.value) : fieldValue === checkboxRef.value)) : fieldReference.refs[0] && (fieldReference.refs[0].checked = !!fieldValue);
+            } else {
+              fieldReference.refs.forEach((radioRef) => radioRef.checked = radioRef.value === fieldValue);
+            }
+          } else if (isFileInput(fieldReference.ref)) {
+            fieldReference.ref.value = "";
+          } else {
+            fieldReference.ref.value = fieldValue;
+            if (!fieldReference.ref.type) {
+              _subjects.values.next({
+                name,
+                values: __spreadValues({}, _formValues)
+              });
+            }
+          }
+        }
+      }
+      (options.shouldDirty || options.shouldTouch) && updateTouchAndDirty(name, fieldValue, options.shouldTouch, options.shouldDirty, true);
+      options.shouldValidate && trigger(name);
+    };
+    const setValues = (name, value, options) => {
+      for (const fieldKey in value) {
+        const fieldValue = value[fieldKey];
+        const fieldName = `${name}.${fieldKey}`;
+        const field = get(_fields, fieldName);
+        (_names.array.has(name) || !isPrimitive(fieldValue) || field && !field._f) && !isDateObject(fieldValue) ? setValues(fieldName, fieldValue, options) : setFieldValue(fieldName, fieldValue, options);
+      }
+    };
+    const setValue = (name, value, options = {}) => {
+      const field = get(_fields, name);
+      const isFieldArray = _names.array.has(name);
+      const cloneValue = cloneObject(value);
+      set(_formValues, name, cloneValue);
+      if (isFieldArray) {
+        _subjects.array.next({
+          name,
+          values: __spreadValues({}, _formValues)
+        });
+        if ((_proxyFormState.isDirty || _proxyFormState.dirtyFields) && options.shouldDirty) {
+          _subjects.state.next({
+            name,
+            dirtyFields: getDirtyFields(_defaultValues, _formValues),
+            isDirty: _getDirty(name, cloneValue)
+          });
+        }
+      } else {
+        field && !field._f && !isNullOrUndefined(cloneValue) ? setValues(name, cloneValue, options) : setFieldValue(name, cloneValue, options);
+      }
+      isWatched(name, _names) && _subjects.state.next(__spreadValues({}, _formState));
+      _subjects.values.next({
+        name,
+        values: __spreadValues({}, _formValues)
+      });
+      !_state.mount && flushRootRender();
+    };
+    const onChange = (event) => __async(this, null, function* () {
+      const target = event.target;
+      let name = target.name;
+      let isFieldValueUpdated = true;
+      const field = get(_fields, name);
+      const getCurrentFieldValue = () => target.type ? getFieldValue(field._f) : getEventValue(event);
+      if (field) {
+        let error;
+        let isValid;
+        const fieldValue = getCurrentFieldValue();
+        const isBlurEvent = event.type === EVENTS.BLUR || event.type === EVENTS.FOCUS_OUT;
+        const shouldSkipValidation = !hasValidation(field._f) && !_options.resolver && !get(_formState.errors, name) && !field._f.deps || skipValidation(isBlurEvent, get(_formState.touchedFields, name), _formState.isSubmitted, validationModeAfterSubmit, validationModeBeforeSubmit);
+        const watched = isWatched(name, _names, isBlurEvent);
+        set(_formValues, name, fieldValue);
+        if (isBlurEvent) {
+          field._f.onBlur && field._f.onBlur(event);
+          delayErrorCallback && delayErrorCallback(0);
+        } else if (field._f.onChange) {
+          field._f.onChange(event);
+        }
+        const fieldState = updateTouchAndDirty(name, fieldValue, isBlurEvent, false);
+        const shouldRender = !isEmptyObject(fieldState) || watched;
+        !isBlurEvent && _subjects.values.next({
+          name,
+          type: event.type,
+          values: __spreadValues({}, _formValues)
+        });
+        if (shouldSkipValidation) {
+          _proxyFormState.isValid && _updateValid();
+          return shouldRender && _subjects.state.next(__spreadValues({ name }, watched ? {} : fieldState));
+        }
+        !isBlurEvent && watched && _subjects.state.next(__spreadValues({}, _formState));
+        _updateIsValidating(true);
+        if (_options.resolver) {
+          const { errors } = yield _executeSchema([name]);
+          const previousErrorLookupResult = schemaErrorLookup(_formState.errors, _fields, name);
+          const errorLookupResult = schemaErrorLookup(errors, _fields, previousErrorLookupResult.name || name);
+          error = errorLookupResult.error;
+          name = errorLookupResult.name;
+          isValid = isEmptyObject(errors);
+        } else {
+          error = (yield validateField(field, _formValues, shouldDisplayAllAssociatedErrors, _options.shouldUseNativeValidation))[name];
+          isFieldValueUpdated = isNaN(fieldValue) || fieldValue === get(_formValues, name, fieldValue);
+          if (isFieldValueUpdated) {
+            if (error) {
+              isValid = false;
+            } else if (_proxyFormState.isValid) {
+              isValid = yield executeBuiltInValidation(_fields, true);
+            }
+          }
+        }
+        if (isFieldValueUpdated) {
+          field._f.deps && trigger(field._f.deps);
+          shouldRenderByError(name, isValid, error, fieldState);
+        }
+      }
+    });
+    const trigger = (_0, ..._1) => __async(this, [_0, ..._1], function* (name, options = {}) {
+      let isValid;
+      let validationResult;
+      const fieldNames = convertToArrayPayload(name);
+      _updateIsValidating(true);
+      if (_options.resolver) {
+        const errors = yield executeSchemaAndUpdateState(isUndefined(name) ? name : fieldNames);
+        isValid = isEmptyObject(errors);
+        validationResult = name ? !fieldNames.some((name2) => get(errors, name2)) : isValid;
+      } else if (name) {
+        validationResult = (yield Promise.all(fieldNames.map((fieldName) => __async(this, null, function* () {
+          const field = get(_fields, fieldName);
+          return yield executeBuiltInValidation(field && field._f ? { [fieldName]: field } : field);
+        })))).every(Boolean);
+        !(!validationResult && !_formState.isValid) && _updateValid();
+      } else {
+        validationResult = isValid = yield executeBuiltInValidation(_fields);
+      }
+      _subjects.state.next(__spreadProps(__spreadValues(__spreadValues({}, !isString(name) || _proxyFormState.isValid && isValid !== _formState.isValid ? {} : { name }), _options.resolver || !name ? { isValid } : {}), {
+        errors: _formState.errors,
+        isValidating: false
+      }));
+      options.shouldFocus && !validationResult && focusFieldBy(_fields, (key) => key && get(_formState.errors, key), name ? fieldNames : _names.mount);
+      return validationResult;
+    });
+    const getValues = (fieldNames) => {
+      const values2 = __spreadValues(__spreadValues({}, _defaultValues), _state.mount ? _formValues : {});
+      return isUndefined(fieldNames) ? values2 : isString(fieldNames) ? get(values2, fieldNames) : fieldNames.map((name) => get(values2, name));
+    };
+    const getFieldState = (name, formState) => ({
+      invalid: !!get((formState || _formState).errors, name),
+      isDirty: !!get((formState || _formState).dirtyFields, name),
+      isTouched: !!get((formState || _formState).touchedFields, name),
+      error: get((formState || _formState).errors, name)
+    });
+    const clearErrors = (name) => {
+      name && convertToArrayPayload(name).forEach((inputName) => unset(_formState.errors, inputName));
+      _subjects.state.next({
+        errors: name ? _formState.errors : {}
+      });
+    };
+    const setError = (name, error, options) => {
+      const ref = (get(_fields, name, { _f: {} })._f || {}).ref;
+      set(_formState.errors, name, __spreadProps(__spreadValues({}, error), {
+        ref
+      }));
+      _subjects.state.next({
+        name,
+        errors: _formState.errors,
+        isValid: false
+      });
+      options && options.shouldFocus && ref && ref.focus && ref.focus();
+    };
+    const watch = (name, defaultValue) => isFunction(name) ? _subjects.values.subscribe({
+      next: (payload) => name(_getWatch(void 0, defaultValue), payload)
+    }) : _getWatch(name, defaultValue, true);
+    const unregister = (name, options = {}) => {
+      for (const fieldName of name ? convertToArrayPayload(name) : _names.mount) {
+        _names.mount.delete(fieldName);
+        _names.array.delete(fieldName);
+        if (!options.keepValue) {
+          unset(_fields, fieldName);
+          unset(_formValues, fieldName);
+        }
+        !options.keepError && unset(_formState.errors, fieldName);
+        !options.keepDirty && unset(_formState.dirtyFields, fieldName);
+        !options.keepTouched && unset(_formState.touchedFields, fieldName);
+        !_options.shouldUnregister && !options.keepDefaultValue && unset(_defaultValues, fieldName);
+      }
+      _subjects.values.next({
+        values: __spreadValues({}, _formValues)
+      });
+      _subjects.state.next(__spreadValues(__spreadValues({}, _formState), !options.keepDirty ? {} : { isDirty: _getDirty() }));
+      !options.keepIsValid && _updateValid();
+    };
+    const register = (name, options = {}) => {
+      let field = get(_fields, name);
+      const disabledIsDefined = isBoolean(options.disabled);
+      set(_fields, name, __spreadProps(__spreadValues({}, field || {}), {
+        _f: __spreadValues(__spreadProps(__spreadValues({}, field && field._f ? field._f : { ref: { name } }), {
+          name,
+          mount: true
+        }), options)
+      }));
+      _names.mount.add(name);
+      if (!isUndefined(options.value)) {
+        set(_formValues, name, options.value);
+      }
+      field ? disabledIsDefined && set(_formValues, name, options.disabled ? void 0 : get(_formValues, name, getFieldValue(field._f))) : updateValidAndValue(name, true, options.value);
+      return __spreadProps(__spreadValues(__spreadValues({}, disabledIsDefined ? { disabled: options.disabled } : {}), _options.progressive ? {
+        required: !!options.required,
+        min: getRuleValue(options.min),
+        max: getRuleValue(options.max),
+        minLength: getRuleValue(options.minLength),
+        maxLength: getRuleValue(options.maxLength),
+        pattern: getRuleValue(options.pattern)
+      } : {}), {
+        name,
+        onChange,
+        onBlur: onChange,
+        ref: (ref) => {
+          if (ref) {
+            register(name, options);
+            field = get(_fields, name);
+            const fieldRef = isUndefined(ref.value) ? ref.querySelectorAll ? ref.querySelectorAll("input,select,textarea")[0] || ref : ref : ref;
+            const radioOrCheckbox = isRadioOrCheckbox(fieldRef);
+            const refs = field._f.refs || [];
+            if (radioOrCheckbox ? refs.find((option) => option === fieldRef) : fieldRef === field._f.ref) {
+              return;
+            }
+            set(_fields, name, {
+              _f: __spreadValues(__spreadValues({}, field._f), radioOrCheckbox ? {
+                refs: [
+                  ...refs.filter(live),
+                  fieldRef,
+                  ...Array.isArray(get(_defaultValues, name)) ? [{}] : []
+                ],
+                ref: { type: fieldRef.type, name }
+              } : { ref: fieldRef })
+            });
+            updateValidAndValue(name, false, void 0, fieldRef);
+          } else {
+            field = get(_fields, name, {});
+            if (field._f) {
+              field._f.mount = false;
+            }
+            (_options.shouldUnregister || options.shouldUnregister) && !(isNameInFieldArray(_names.array, name) && _state.action) && _names.unMount.add(name);
+          }
+        }
+      });
+    };
+    const _focusError = () => _options.shouldFocusError && focusFieldBy(_fields, (key) => key && get(_formState.errors, key), _names.mount);
+    const handleSubmit = (onValid, onInvalid) => (e) => __async(this, null, function* () {
+      if (e) {
+        e.preventDefault && e.preventDefault();
+        e.persist && e.persist();
+      }
+      let fieldValues = cloneObject(_formValues);
+      _subjects.state.next({
+        isSubmitting: true
+      });
+      if (_options.resolver) {
+        const { errors, values: values2 } = yield _executeSchema();
+        _formState.errors = errors;
+        fieldValues = values2;
+      } else {
+        yield executeBuiltInValidation(_fields);
+      }
+      unset(_formState.errors, "root");
+      if (isEmptyObject(_formState.errors)) {
+        _subjects.state.next({
+          errors: {}
+        });
+        yield onValid(fieldValues, e);
+      } else {
+        if (onInvalid) {
+          yield onInvalid(__spreadValues({}, _formState.errors), e);
+        }
+        _focusError();
+        setTimeout(_focusError);
+      }
+      _subjects.state.next({
+        isSubmitted: true,
+        isSubmitting: false,
+        isSubmitSuccessful: isEmptyObject(_formState.errors),
+        submitCount: _formState.submitCount + 1,
+        errors: _formState.errors
+      });
+    });
+    const resetField = (name, options = {}) => {
+      if (get(_fields, name)) {
+        if (isUndefined(options.defaultValue)) {
+          setValue(name, get(_defaultValues, name));
+        } else {
+          setValue(name, options.defaultValue);
+          set(_defaultValues, name, options.defaultValue);
+        }
+        if (!options.keepTouched) {
+          unset(_formState.touchedFields, name);
+        }
+        if (!options.keepDirty) {
+          unset(_formState.dirtyFields, name);
+          _formState.isDirty = options.defaultValue ? _getDirty(name, get(_defaultValues, name)) : _getDirty();
+        }
+        if (!options.keepError) {
+          unset(_formState.errors, name);
+          _proxyFormState.isValid && _updateValid();
+        }
+        _subjects.state.next(__spreadValues({}, _formState));
+      }
+    };
+    const _reset = (formValues, keepStateOptions = {}) => {
+      const updatedValues = formValues || _defaultValues;
+      const cloneUpdatedValues = cloneObject(updatedValues);
+      const values2 = formValues && !isEmptyObject(formValues) ? cloneUpdatedValues : _defaultValues;
+      if (!keepStateOptions.keepDefaultValues) {
+        _defaultValues = updatedValues;
+      }
+      if (!keepStateOptions.keepValues) {
+        if (keepStateOptions.keepDirtyValues || shouldCaptureDirtyFields) {
+          for (const fieldName of _names.mount) {
+            get(_formState.dirtyFields, fieldName) ? set(values2, fieldName, get(_formValues, fieldName)) : setValue(fieldName, get(values2, fieldName));
+          }
+        } else {
+          if (isWeb && isUndefined(formValues)) {
+            for (const name of _names.mount) {
+              const field = get(_fields, name);
+              if (field && field._f) {
+                const fieldReference = Array.isArray(field._f.refs) ? field._f.refs[0] : field._f.ref;
+                if (isHTMLElement(fieldReference)) {
+                  const form = fieldReference.closest("form");
+                  if (form) {
+                    form.reset();
+                    break;
+                  }
+                }
+              }
+            }
+          }
+          _fields = {};
+        }
+        _formValues = props.shouldUnregister ? keepStateOptions.keepDefaultValues ? cloneObject(_defaultValues) : {} : cloneObject(values2);
+        _subjects.array.next({
+          values: __spreadValues({}, values2)
+        });
+        _subjects.values.next({
+          values: __spreadValues({}, values2)
+        });
+      }
+      _names = {
+        mount: /* @__PURE__ */ new Set(),
+        unMount: /* @__PURE__ */ new Set(),
+        array: /* @__PURE__ */ new Set(),
+        watch: /* @__PURE__ */ new Set(),
+        watchAll: false,
+        focus: ""
+      };
+      !_state.mount && flushRootRender();
+      _state.mount = !_proxyFormState.isValid || !!keepStateOptions.keepIsValid;
+      _state.watch = !!props.shouldUnregister;
+      _subjects.state.next({
+        submitCount: keepStateOptions.keepSubmitCount ? _formState.submitCount : 0,
+        isDirty: keepStateOptions.keepDirty ? _formState.isDirty : !!(keepStateOptions.keepDefaultValues && !deepEqual(formValues, _defaultValues)),
+        isSubmitted: keepStateOptions.keepIsSubmitted ? _formState.isSubmitted : false,
+        dirtyFields: keepStateOptions.keepDirtyValues ? _formState.dirtyFields : keepStateOptions.keepDefaultValues && formValues ? getDirtyFields(_defaultValues, formValues) : {},
+        touchedFields: keepStateOptions.keepTouched ? _formState.touchedFields : {},
+        errors: keepStateOptions.keepErrors ? _formState.errors : {},
+        isSubmitting: false,
+        isSubmitSuccessful: false
+      });
+    };
+    const reset = (formValues, keepStateOptions) => _reset(isFunction(formValues) ? formValues(_formValues) : formValues, keepStateOptions);
+    const setFocus = (name, options = {}) => {
+      const field = get(_fields, name);
+      const fieldReference = field && field._f;
+      if (fieldReference) {
+        const fieldRef = fieldReference.refs ? fieldReference.refs[0] : fieldReference.ref;
+        if (fieldRef.focus) {
+          fieldRef.focus();
+          options.shouldSelect && fieldRef.select();
+        }
+      }
+    };
+    const _updateFormState = (updatedFormState) => {
+      _formState = __spreadValues(__spreadValues({}, _formState), updatedFormState);
+    };
+    const _resetDefaultValues = () => isFunction(_options.defaultValues) && _options.defaultValues().then((values2) => {
+      reset(values2, _options.resetOptions);
+      _subjects.state.next({
+        isLoading: false
+      });
+    });
+    return {
+      control: {
+        register,
+        unregister,
+        getFieldState,
+        handleSubmit,
+        setError,
+        _executeSchema,
+        _getWatch,
+        _getDirty,
+        _updateValid,
+        _removeUnmounted,
+        _updateFieldArray,
+        _getFieldArray,
+        _reset,
+        _resetDefaultValues,
+        _updateFormState,
+        _subjects,
+        _proxyFormState,
+        get _fields() {
+          return _fields;
+        },
+        get _formValues() {
+          return _formValues;
+        },
+        get _state() {
+          return _state;
+        },
+        set _state(value) {
+          _state = value;
+        },
+        get _defaultValues() {
+          return _defaultValues;
+        },
+        get _names() {
+          return _names;
+        },
+        set _names(value) {
+          _names = value;
+        },
+        get _formState() {
+          return _formState;
+        },
+        set _formState(value) {
+          _formState = value;
+        },
+        get _options() {
+          return _options;
+        },
+        set _options(value) {
+          _options = __spreadValues(__spreadValues({}, _options), value);
+        }
+      },
+      trigger,
+      register,
+      handleSubmit,
+      watch,
+      setValue,
+      getValues,
+      reset,
+      resetField,
+      clearErrors,
+      unregister,
+      setError,
+      setFocus,
+      getFieldState
+    };
+  }
+  function useForm(props = {}) {
+    const _formControl = React.useRef();
+    const _values = React.useRef();
+    const [formState, updateFormState] = React.useState({
+      isDirty: false,
+      isValidating: false,
+      isLoading: isFunction(props.defaultValues),
+      isSubmitted: false,
+      isSubmitting: false,
+      isSubmitSuccessful: false,
+      isValid: false,
+      submitCount: 0,
+      dirtyFields: {},
+      touchedFields: {},
+      errors: {},
+      defaultValues: isFunction(props.defaultValues) ? void 0 : props.defaultValues
+    });
+    if (!_formControl.current) {
+      _formControl.current = __spreadProps(__spreadValues({}, createFormControl(props, () => updateFormState((formState2) => __spreadValues({}, formState2)))), {
+        formState
+      });
+    }
+    const control = _formControl.current.control;
+    control._options = props;
+    useSubscribe({
+      subject: control._subjects.state,
+      next: (value) => {
+        if (shouldRenderFormState(value, control._proxyFormState, control._updateFormState, true)) {
+          updateFormState(__spreadValues({}, control._formState));
+        }
+      }
+    });
+    React.useEffect(() => {
+      if (props.values && !deepEqual(props.values, _values.current)) {
+        control._reset(props.values, control._options.resetOptions);
+        _values.current = props.values;
+      } else {
+        control._resetDefaultValues();
+      }
+    }, [props.values, control]);
+    React.useEffect(() => {
+      if (!control._state.mount) {
+        control._updateValid();
+        control._state.mount = true;
+      }
+      if (control._state.watch) {
+        control._state.watch = false;
+        control._subjects.state.next(__spreadValues({}, control._formState));
+      }
+      control._removeUnmounted();
+    });
+    _formControl.current.formState = getProxyFormState(formState, control);
+    return _formControl.current;
+  }
+  const filter = material.createFilterOptions();
+  function resolveOptions(options) {
+  }
   function BasicEdit(props) {
     let {
-      setShowCmp,
-      forms,
       item,
       itemFields,
-      onClose: onClose2,
-      onSubmit
+      onClose: onClose2 = () => {
+      },
+      onSubmit = () => {
+      },
+      children = []
     } = props;
     const { ctx, spec } = props;
     const { model, seneca, custom } = ctx();
     const def = spec.content.def;
     const { ent, cols } = def;
+    React.useEffect(() => {
+      for (let field of itemFields) {
+        setValue(field.field, item[field.field] || field.defaultValue || "");
+      }
+    }, [item]);
+    const forms = useForm({
+      defaultValues: {}
+    });
     const {
       handleSubmit,
       setValue,
@@ -47095,7 +46681,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       {
         className: "vxg-form-field",
         onSubmit: handleSubmit((data) => __async(this, null, function* () {
-          let selitem = __spreadValues(__spreadValues({}, item), data);
+          let selitem = __spreadValues({}, item);
+          for (let k in data) {
+            selitem[k] = data[k];
+          }
           onSubmit(selitem);
         })),
         children: /* @__PURE__ */ jsxs(material.Grid, { container: true, spacing: 3, children: [
@@ -47106,24 +46695,74 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 name: field.field,
                 control,
                 defaultValue: item[field.field] || "",
-                render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => /* @__PURE__ */ jsx(
-                  TextField,
+                render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => field.kind === "combobox" && "status" != field.type ? /* @__PURE__ */ jsx(
+                  material.Autocomplete,
+                  {
+                    freeSolo: true,
+                    id: "combo-box",
+                    options: field.options,
+                    fullWidth: true,
+                    selectOnFocus: true,
+                    onBlur,
+                    handleHomeEndKeys: true,
+                    disableClearable: "" == value,
+                    disabled: !!!field.edit,
+                    value,
+                    getOptionLabel: (option) => option || "",
+                    filterOptions: (options, params) => {
+                      const filtered = filter(options, params);
+                      const { inputValue } = params;
+                      const isExisting = options.some((option) => inputValue === option);
+                      if (inputValue != "" && !isExisting) {
+                        setTimeout(() => {
+                          onChange(inputValue);
+                        }, 0);
+                        return filtered;
+                      }
+                      return filtered;
+                    },
+                    onChange: (event, selectedValue) => {
+                      onChange(selectedValue || "");
+                    },
+                    renderInput: (params) => /* @__PURE__ */ jsx(
+                      material.TextField,
+                      __spreadProps(__spreadValues({}, params), {
+                        label: field.headerName,
+                        onBlur,
+                        error: !!error,
+                        helperText: error ? error.message : null
+                      })
+                    )
+                  }
+                ) : /* @__PURE__ */ jsx(
+                  material.TextField,
                   {
                     label: field.headerName,
                     fullWidth: true,
+                    select: "status" == field.type,
                     disabled: !!!field.edit,
                     onChange,
                     value,
                     onBlur,
                     error: !!error,
-                    helperText: error ? error.message : null
+                    helperText: error ? error.message : null,
+                    sx: {
+                      textAlign: "left"
+                    },
+                    children: field.type == "status" ? Object.keys(field.options).map(
+                      (option) => {
+                        var _a;
+                        return /* @__PURE__ */ jsx(material.MenuItem, { value: option, children: (_a = field.options[option]) == null ? void 0 : _a.title }, option);
+                      }
+                    ) : null
                   },
                   field.field
                 ),
-                rules: field.required ? { required: field.required, validate: (value) => true } : {}
+                rules: field.required ? { required: field.required, validate: field.validate || ((value) => true) } : {}
               }
             ) }, index2);
           }),
+          0 != children.length ? /* @__PURE__ */ jsx(material.Grid, { item: true, xs: 12, children }) : null,
           /* @__PURE__ */ jsx(material.Grid, { item: true, xs: 12, children: /* @__PURE__ */ jsxs(material.Grid, { container: true, justifyContent: "space-between", alignItems: "center", marginTop: 2, children: [
             /* @__PURE__ */ jsx(material.Grid, { item: true, children: /* @__PURE__ */ jsx(
               BasicButton,
@@ -47162,9 +46801,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return spec.content.def.cols;
   }
   function BasicLed(props) {
-    const { ctx, spec } = props;
+    const {
+      vxg,
+      ctx,
+      spec
+    } = props;
     const { model, seneca, custom } = ctx();
-    const vxg = reactRedux.useSelector((state) => state.main.vxg);
+    const vxgState = reactRedux.useSelector((state) => state.main.vxg);
     const [item, setItem] = React.useState({});
     const def = spec.content.def;
     const { ent, cols } = def;
@@ -47178,18 +46821,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       seneca.entity(def.ent).list$(q);
     }
     const rows = entlist;
-    const forms = useForm({
-      defaultValues: {}
-    });
-    const {
-      handleSubmit,
-      setValue,
-      control
-    } = forms;
     const itemFields = fields(spec);
     const columns = itemFields.map(
       (field) => ({
-        accessorFn: (row) => row[field.field],
+        accessorFn: (row) => {
+          var _a;
+          return "status" === field.type ? (_a = field.options[row[field.field]]) == null ? void 0 : _a.title : row[field.field];
+        },
         accessorKey: field.field,
         header: field.headerName,
         Header: () => /* @__PURE__ */ jsx("span", { children: field.headerName }),
@@ -47199,49 +46837,44 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     );
     let data = rows;
     console.log("data: ", data);
-    const [showCmp, setShowCmp] = React.useState(false);
     React.useEffect(() => {
-      setShowCmp(false);
+      setItem({});
     }, [location.pathname]);
-    let led_add = vxg.trigger.led.add;
+    let led_add = vxgState.trigger.led.add;
     let [triggerLed, setTriggerLed] = React.useState(0);
     React.useEffect(() => {
       if (triggerLed >= 2) {
-        setShowCmp(true);
-        for (let field of itemFields) {
-          setValue(field.field, "");
-        }
-        setItem({});
+        setItem({ entity$: "-/" + def.ent });
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
-    return /* @__PURE__ */ jsx("div", { className: "BasicLed", children: /* @__PURE__ */ jsx(
+    console.log("item::: ", item, def.ent);
+    return /* @__PURE__ */ jsx("div", { className: "BasicLed", children: "-/" + def.ent !== item.entity$ ? /* @__PURE__ */ jsx(
       BasicList,
       {
         ctx,
         spec,
         data,
-        itemFields,
         columns,
-        Cmp: /* @__PURE__ */ jsx(
-          BasicEdit,
-          {
-            ctx,
-            spec,
-            onClose: () => {
-              setShowCmp(false);
-            },
-            onSubmit: (item2) => __async(this, null, function* () {
-              yield seneca.entity(def.ent).save$(item2);
-              setShowCmp(false);
-            })
-          }
-        ),
-        showCmp,
-        setShowCmp,
-        forms,
+        onRowClick: (event, item2) => {
+          console.log("item: ", item2);
+          setItem(item2);
+        }
+      }
+    ) : /* @__PURE__ */ jsx(
+      BasicEdit,
+      {
+        ctx,
+        spec,
+        onClose: () => {
+          setItem({});
+        },
+        onSubmit: (item2) => __async(this, null, function* () {
+          yield seneca.entity(def.ent).save$(item2);
+          setItem({});
+        }),
         item,
-        setItem
+        itemFields
       }
     ) });
   }
@@ -47256,13 +46889,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return cmp;
   }
   function BasicMain(props) {
-    const { ctx, spec } = props;
+    const {
+      vxg,
+      ctx,
+      spec
+    } = props;
     const { model, content } = ctx();
     const { frame } = spec;
-    const vxg = reactRedux.useSelector((state) => state.main.vxg);
     const part = model.app.web.frame[frame].part.main;
     const views = Object.values(model.app.web.frame.private.view);
-    const sideOpen = vxg.cmp.BasicSide.show;
+    const sideOpen = reactRedux.useSelector((state) => state.main.vxg.cmp.BasicSide.show);
     const divStyle = {
       "paddingLeft": sideOpen ? "12.0em" : "0em",
       "paddingRight": 0
@@ -47270,22 +46906,46 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const mainDiv = {
       height: "calc(100vh - 6rem)",
       width: sideOpen ? "calc(100vw - 19rem)" : "calc(100vw - 4rem)",
-      padding: "5.0em " + (sideOpen ? "4.5em" : "0") + " 4.5em " + (sideOpen ? "4.5em" : "0.5em")
+      padding: "84px " + (sideOpen ? "4.5em" : "0") + " 4.5em " + (sideOpen ? "4.5em" : "0.5em")
     };
     return /* @__PURE__ */ jsx("div", { className: "BasicMain", style: mainDiv, children: /* @__PURE__ */ jsx("div", { style: __spreadValues({ width: "100%", height: "100%" }, divStyle), children: /* @__PURE__ */ jsx(reactRouterDom.Routes, { children: /* @__PURE__ */ jsx(reactRouterDom.Route, { path: "/view", children: views.map((view) => {
       const Cmp = makeCmp(view, ctx);
+      if (view.paramId) {
+        return /* @__PURE__ */ jsxs(React.Fragment, { children: [
+          /* @__PURE__ */ jsx(
+            reactRouterDom.Route,
+            {
+              path: "/view/" + view.name,
+              element: /* @__PURE__ */ jsx(Cmp, { vxg, ctx, spec: view })
+            },
+            view.name
+          ),
+          /* @__PURE__ */ jsx(
+            reactRouterDom.Route,
+            {
+              path: "/view/" + view.name + "/:" + view.paramId,
+              element: /* @__PURE__ */ jsx(Cmp, { vxg, ctx, spec: view })
+            },
+            view.name
+          )
+        ] }, view.name);
+      }
       return /* @__PURE__ */ jsx(
         reactRouterDom.Route,
         {
           path: "/view/" + view.name,
-          element: /* @__PURE__ */ jsx(Cmp, { ctx, spec: view })
+          element: /* @__PURE__ */ jsx(Cmp, { vxg, ctx, spec: view })
         },
         view.name
       );
     }) }) }) }) });
   }
   function BasicFoot(props) {
-    const { ctx, spec } = props;
+    const {
+      vxg,
+      ctx,
+      spec
+    } = props;
     const model = ctx().model;
     const { frame } = spec;
     const part = model.app.web.frame[frame].part.foot;
@@ -47304,7 +46964,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     );
   }
   function BasicAdmin(props) {
-    const { ctx, spec } = props;
+    const {
+      vxg,
+      ctx,
+      spec
+    } = props;
     const model = ctx().model;
     const { frame } = spec;
     const part = model.app.web.frame[frame].part.admin;
@@ -47321,11 +46985,3235 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       frame
     };
     return /* @__PURE__ */ jsxs("div", { children: [
-      /* @__PURE__ */ jsx(BasicHead, { ctx, spec: headSpec }),
-      /* @__PURE__ */ jsx(BasicSide, { ctx, spec: sideSpec }),
-      /* @__PURE__ */ jsx(BasicMain, { ctx, spec: mainSpec }),
-      /* @__PURE__ */ jsx(BasicFoot, { ctx, spec: footSpec })
+      /* @__PURE__ */ jsx(BasicHead, { vxg, ctx, spec: headSpec }),
+      /* @__PURE__ */ jsx(BasicSide, { vxg, ctx, spec: sideSpec }),
+      /* @__PURE__ */ jsx(BasicMain, { vxg, ctx, spec: mainSpec }),
+      /* @__PURE__ */ jsx(BasicFoot, { vxg, ctx, spec: footSpec })
     ] });
+  }
+  var patrun_minExports = {};
+  var patrun_min = {
+    get exports() {
+      return patrun_minExports;
+    },
+    set exports(v) {
+      patrun_minExports = v;
+    }
+  };
+  (function(module2, exports3) {
+    !function(e) {
+      if (true)
+        module2.exports = e();
+      else if (false)
+        (void 0)([], e);
+      else {
+        ("undefined" != typeof window ? window : "undefined" != typeof commonjsGlobal ? commonjsGlobal : "undefined" != typeof self ? self : this).Patrun = e();
+      }
+    }(function() {
+      var e = { exports: {} };
+      (function(t2) {
+        (function() {
+          !function(n2) {
+            "object" == typeof e.exports ? e.exports = n2() : ("undefined" != typeof window ? window : void 0 !== t2 ? t2 : "undefined" != typeof self ? self : this).Gex = n2();
+          }(function() {
+            var e2 = { exports: {} };
+            Object.defineProperty(e2.exports, "__esModule", { value: true }), e2.exports.Gex = void 0;
+            class t3 {
+              constructor(e3) {
+                this.desc = "", this.gexmap = {}, null != e3 && (Array.isArray(e3) ? e3 : [e3]).forEach((e4) => {
+                  this.gexmap[e4] = this.re(this.clean(e4));
+                });
+              }
+              dodgy(e3) {
+                return null == e3 || Number.isNaN(e3);
+              }
+              clean(e3) {
+                let t4 = "" + e3;
+                return this.dodgy(e3) ? "" : t4;
+              }
+              match(e3) {
+                e3 = "" + e3;
+                let t4 = false, n3 = Object.keys(this.gexmap);
+                for (let r3 = 0; r3 < n3.length && !t4; r3++)
+                  t4 = !!this.gexmap[n3[r3]].exec(e3);
+                return t4;
+              }
+              on(e3) {
+                if (null == e3)
+                  return null;
+                let t4 = typeof e3;
+                if ("string" === t4 || "number" === t4 || "boolean" === t4 || e3 instanceof Date || e3 instanceof RegExp)
+                  return this.match(e3) ? e3 : null;
+                if (Array.isArray(e3)) {
+                  let t5 = [];
+                  for (let n3 = 0; n3 < e3.length; n3++)
+                    !this.dodgy(e3[n3]) && this.match(e3[n3]) && t5.push(e3[n3]);
+                  return t5;
+                }
+                {
+                  let t5 = {};
+                  for (let n3 in e3)
+                    Object.prototype.hasOwnProperty.call(e3, n3) && this.match(n3) && (t5[n3] = e3[n3]);
+                  return t5;
+                }
+              }
+              esc(e3) {
+                let t4 = this.clean(e3);
+                return (t4 = t4.replace(/\*/g, "**")).replace(/\?/g, "*?");
+              }
+              escregexp(e3) {
+                return e3 ? ("" + e3).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") : "";
+              }
+              re(e3) {
+                if ("" === e3 || e3)
+                  return e3 = "^" + (e3 = (e3 = (e3 = (e3 = (e3 = this.escregexp(e3)).replace(/\\\*/g, "[\\s\\S]*")).replace(/\\\?/g, "[\\s\\S]")).replace(/\[\\s\\S\]\*\[\\s\\S\]\*/g, "\\*")).replace(/\[\\s\\S\]\*\[\\s\\S\]/g, "\\?")) + "$", new RegExp(e3);
+                {
+                  let e4 = Object.keys(this.gexmap);
+                  return 1 == e4.length ? this.gexmap[e4[0]] : __spreadValues({}, this.gexmap);
+                }
+              }
+              toString() {
+                let e3 = this.desc;
+                return "" != e3 ? e3 : this.desc = "Gex[" + Object.keys(this.gexmap) + "]";
+              }
+              inspect() {
+                return this.toString();
+              }
+            }
+            function n2(e3) {
+              return new t3(e3);
+            }
+            return e2.exports.Gex = n2, e2.exports = n2, e2.exports.Gex = n2, e2.exports.default = n2, e2.exports;
+          });
+        }).call(this);
+      }).call(this, "undefined" != typeof commonjsGlobal ? commonjsGlobal : "undefined" != typeof self ? self : "undefined" != typeof window ? window : {}), e = e.exports;
+      var t, n, r2, s, i, o, l, u, a, f = {}, p = this && this.__classPrivateFieldGet || function(e2, t2, n2, r3) {
+        if ("a" === n2 && !r3)
+          throw new TypeError("Private accessor was defined without a getter");
+        if ("function" == typeof t2 ? e2 !== t2 || !r3 : !t2.has(e2))
+          throw new TypeError("Cannot read private member from an object whose class did not declare it");
+        return "m" === n2 ? r3 : "a" === n2 ? r3.call(e2) : r3 ? r3.value : t2.get(e2);
+      };
+      Object.defineProperty(f, "__esModule", { value: true }), f.IntervalMatcher = f.GexMatcher = void 0, f.GexMatcher = class {
+        constructor() {
+        }
+        make(t2, n2) {
+          if ("string" == typeof n2 && n2.match(/[*?]/)) {
+            let t3 = (0, e.Gex)(n2);
+            return { kind: "gex", match: (e2) => null != t3.on(e2), fix: n2, meta: {}, same(e2) {
+              return null != e2 && e2.kind === this.kind && e2.fix === this.fix;
+            } };
+          }
+        }
+        scan(e2, t2) {
+          let n2 = e2.filter((e3) => "*" === e3.fix).length > 0;
+          return { complete: n2, sound: n2, gaps: [], overs: [], why: "no-star" };
+        }
+      };
+      const h = new RegExp(["^/s*", "(=*[<>/(/[]?=*)?/s*([-+0-9a-fA-FeEoOxX]+(/.([0-9a-fA-FeEoOxX]+))?)([/)/]]?)(/s*(,|&+|/|+|/./.)/s*(=*[<>]?=*)/s*([-+.0-9a-fA-FeEoOxX]+)/s*([/)/]]?))?/s*$"].join("").replace(/\//g, "\\"));
+      class c {
+        constructor() {
+          this.kind = "interval", t.set(this, (e2, t2) => function(n2) {
+            return e2(n2) && t2(n2);
+          }), n.set(this, (e2, t2) => function(n2) {
+            return e2(n2) || t2(n2);
+          }), r2.set(this, (e2) => function(e3) {
+            return false;
+          }), s.set(this, (e2) => function(e3) {
+            return false;
+          }), i.set(this, (e2) => function(t2) {
+            return t2 > e2;
+          }), o.set(this, (e2) => function(t2) {
+            return t2 >= e2;
+          }), l.set(this, (e2) => function(t2) {
+            return t2 < e2;
+          }), u.set(this, (e2) => function(t2) {
+            return t2 <= e2;
+          }), a.set(this, (e2) => function(t2) {
+            return t2 === e2;
+          });
+        }
+        make(e2, f2) {
+          if ("string" == typeof f2 && f2.match(/[=<>.[()\]]/)) {
+            let e3 = f2.match(h), d2 = { jo: "and", o0: "err", n0: NaN, o1: "err", n1: NaN }, g2 = (e4) => false;
+            if (null != e3) {
+              let h2 = c.normop(e3[1]) || c.normop(e3[5]), m2 = c.normop(e3[8]) || c.normop(e3[10]), v = p(this, "=" === h2 ? a : "<" === h2 || ")" === h2 ? l : "<=" === h2 || "]" === h2 ? u : ">" === h2 || "(" === h2 ? i : ">=" === h2 || "[" === h2 ? o : s, "f"), x = Number(e3[2]), k = null == e3[9] ? NaN : Number(e3[9]), y = e3[7], w = null == y ? p(this, n, "f") : "&" === y.substring(0, 1) || "," === y.substring(0, 1) ? p(this, t, "f") : p(this, n, "f");
+              ".." === y && (w = p(this, t, "f"), v = p(this, s, "f") === v ? p(this, o, "f") : v, m2 = "" === m2 ? "<=" : m2);
+              let N = p(this, null == m2 ? r2 : "=" === m2 ? a : "<" === m2 || ")" === m2 ? l : "<=" === m2 || "]" === m2 ? u : ">" === m2 ? i : ">=" === m2 ? o : s, "f");
+              if (x === k && ("=" === h2 && null != m2 ? (k = NaN, N = p(this, r2, "f"), v = m2.includes("<") ? p(this, u, "f") : m2.includes(">") ? p(this, o, "f") : m2.includes("=") ? p(this, a, "f") : p(this, s, "f")) : "=" === m2 && null != h2 && (k = NaN, N = p(this, r2, "f"), v = h2.includes("<") ? p(this, u, "f") : h2.includes(">") ? p(this, o, "f") : p(this, s, "f"))), p(this, s, "f") !== v && p(this, r2, "f") === N && (p(this, l, "f") === v || p(this, u, "f") === v ? (N = v, k = x, v = p(this, o, "f"), x = Number.NEGATIVE_INFINITY, w = p(this, t, "f")) : p(this, i, "f") !== v && p(this, o, "f") !== v || (N = p(this, u, "f"), k = Number.POSITIVE_INFINITY, w = p(this, t, "f"))), !isNaN(k) && k < x) {
+                let e4 = N, t2 = k;
+                k = x, x = t2, ".." !== y && (N = v, v = e4);
+              }
+              let b = v(x), O = N(k), j = w(b, O);
+              return { kind: "interval", fix: f2, meta: d2 = { jo: j.name, o0: b.name, n0: x, o1: O.name, n1: k }, match: g2 = (e4) => {
+                let t2 = false, n2 = parseFloat(e4);
+                return isNaN(n2) || (t2 = j(n2)), t2;
+              }, same(e4) {
+                return null != e4 && e4.kind === this.kind && e4.meta.jo === this.meta.jo && e4.meta.o0 === this.meta.o0 && e4.meta.n0 === this.meta.n0 && e4.meta.o1 === this.meta.o1 && e4.meta.n1 === this.meta.n1;
+              } };
+            }
+          }
+        }
+        scan(e2, t2) {
+          let n2 = { complete: false, sound: false, gaps: [], overs: [], lower: null, upper: null }, r3 = Number.NEGATIVE_INFINITY, s2 = Number.POSITIVE_INFINITY, i2 = this.half_intervals(e2);
+          i2.reduce((e3, t3) => {
+            let n3 = "eq" === t3.o, s3 = "lt" === t3.o, i3 = "lte" === t3.o, o3 = "gt" === t3.o, l2 = "gte" === t3.o, u2 = t3.n;
+            if (null == e3.lower) {
+              let s4 = { n: r3, o: "gte" };
+              e3.lower = s4, e3.upper = t3, r3 == u2 && l2 || (o3 || l2 ? e3.gaps.push([s4, { n: u2, o: o3 ? "lte" : "lt", m: 0 }]) : n3 && e3.gaps.push([s4, { n: u2, o: "lte", m: 1 }]));
+            } else {
+              let r4 = "eq" === e3.upper.o, a2 = "lt" === e3.upper.o, f2 = "lte" === e3.upper.o, p2 = (e3.upper.o, e3.upper.o, e3.upper.n), h2 = e3.upper;
+              u2 === p2 ? a2 && (l2 || n3) || (f2 || r4) && o3 || (r4 || a2 || f2) && e3.gaps.push([{ n: p2, o: r4 || f2 ? "gt" : "gte", m: 2, d: { u: h2, h: t3 } }, { n: u2, o: n3 || l2 ? "lt" : "lte", m: 3 }]) : p2 < u2 ? s3 || i3 || (r4 || a2 || f2) && e3.gaps.push([{ n: p2, o: r4 || f2 ? "gt" : "gte", m: 4 }, { n: u2, o: n3 || l2 ? "lt" : "lte", m: 5 }]) : e3.overs.push([{ n: u2, o: n3 || l2 ? "gte" : "gt", m: 10 }, { n: p2, o: r4 || f2 ? "lte" : "lt", m: 11 }]), e3.upper = t3;
+            }
+            return e3;
+          }, n2);
+          let o2 = 0 < i2.length && i2[i2.length - 1];
+          return o2 && s2 !== o2.n && "gt" !== o2.o && "gte" !== o2.o && n2.gaps.push([{ n: o2.n, o: "eq" === o2.o || "lte" === o2.o ? "gt" : "gte", m: 6 }, { n: s2, o: "lte", m: 7 }]), n2.complete = 0 === n2.gaps.length, n2.sound = 0 === n2.overs.length, n2;
+        }
+        half_intervals(e2) {
+          let t2 = [];
+          for (let r3 of e2)
+            t2.push([{ n: r3.meta.n0, o: r3.meta.o0 }, { n: r3.meta.n1, o: r3.meta.o1 }]);
+          var n2 = ["lt", "lte", "eq", "gte", "gt"];
+          return t2.map((e3) => [isNaN(e3[0].n) || null == e3[0].n ? null : e3[0], isNaN(e3[1].n) || null == e3[1].n ? null : e3[1]].filter((e4) => null != e4)).sort((e3, t3) => {
+            if (e3[0].n < t3[0].n)
+              return -1;
+            if (t3[0].n < e3[0].n)
+              return 1;
+            var r3 = n2.indexOf(e3[0].o), s2 = n2.indexOf(t3[0].o);
+            if (r3 < s2)
+              return -1;
+            if (s2 < r3)
+              return 1;
+            if (e3[1].n < t3[1].n)
+              return -1;
+            if (t3[1].n < e3[1].n)
+              return 1;
+            var i2 = n2.indexOf(e3[1].o), o2 = n2.indexOf(t3[1].o);
+            return i2 < o2 ? -1 : o2 < i2 ? 1 : 0;
+          }).reduce((e3, t3) => e3.concat(...t3), []);
+        }
+      }
+      f.IntervalMatcher = c, t = /* @__PURE__ */ new WeakMap(), n = /* @__PURE__ */ new WeakMap(), r2 = /* @__PURE__ */ new WeakMap(), s = /* @__PURE__ */ new WeakMap(), i = /* @__PURE__ */ new WeakMap(), o = /* @__PURE__ */ new WeakMap(), l = /* @__PURE__ */ new WeakMap(), u = /* @__PURE__ */ new WeakMap(), a = /* @__PURE__ */ new WeakMap(), c.normop = (e2) => null == e2 ? null : ((e2.match(/([<>\(\)\[\]])/) || [])[1] || "") + ((e2.match(/(=)/) || [])[1] || "");
+      var d = { exports: {} };
+      function g(t2) {
+        var n2 = {}, r3 = {};
+        let s2 = [];
+        return (t2 = t2 || {}).gex && s2.push(new f.GexMatcher()), t2.interval && s2.push(new f.IntervalMatcher()), n2.top = function() {
+          return r3;
+        }, n2.add = function(e2, i2) {
+          e2 = __spreadValues({}, e2);
+          var o2 = "function" == typeof t2 ? t2.call(n2, e2, i2) : null, l2 = Object.keys(e2).filter((t3) => null != e2[t3]).sort();
+          l2.forEach(function(t3) {
+            e2[t3] = String(e2[t3]);
+          });
+          for (var u2, a2 = r3, f2 = 0; f2 < l2.length; f2++) {
+            var p2 = l2[f2], h2 = e2[p2];
+            let t3 = s2.reduce((e3, t4) => e3 || t4.make(p2, h2), void 0);
+            if ((u2 = a2.v) && p2 == a2.k)
+              if (t3) {
+                var c2 = (g2 = a2.g = a2.g || {})[p2] = g2[p2] || [];
+                a2 = (t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3)).keymap || (t3.keymap = {});
+              } else
+                a2 = u2[h2] || (u2[h2] = {});
+            else if (a2.k)
+              if (p2 < a2.k) {
+                var d2 = a2.s;
+                g2 = a2.g, a2.s = { k: a2.k, v: a2.v }, d2 && (a2.s.s = d2), g2 && (a2.s.g = g2), a2.g && (a2.g = {}), a2.k = p2, a2.v = {}, t3 ? (c2 = (g2 = a2.g = a2.g || {})[p2] = g2[p2] || [], a2 = (t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3)).keymap || (t3.keymap = {})) : a2 = a2.v[h2] = {};
+              } else
+                a2 = a2.s || (a2.s = {}), f2--;
+            else if (a2.k = p2, a2.v = {}, t3) {
+              var g2;
+              c2 = (g2 = a2.g = a2.g || {})[p2] = g2[p2] || [];
+              a2 = (t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3)).keymap || (t3.keymap = {});
+            } else
+              a2 = a2.v[h2] = {};
+          }
+          return void 0 !== i2 && a2 && (a2.d = i2, o2 && (a2.f = "function" == typeof o2 ? o2 : o2.find, a2.r = "function" == typeof o2.remove ? o2.remove : void 0)), n2;
+        }, n2.findexact = function(e2) {
+          return n2.find(e2, true);
+        }, n2.find = function(e2, t3, s3) {
+          if (null == e2)
+            return null;
+          var i2 = r3, o2 = void 0 === r3.d ? null : r3.d, l2 = r3.f, u2 = null, a2 = [], f2 = {}, p2 = Object.keys(e2).length, h2 = [];
+          void 0 !== r3.d && h2.push(r3.d);
+          do {
+            if (u2 = i2.k, i2.v) {
+              var c2 = e2[u2], d2 = i2.v[c2];
+              if (!d2 && i2.g && i2.g[u2]) {
+                for (var g2 = i2.g[u2], m2 = 0; m2 < g2.length; m2++)
+                  if (g2[m2].match(c2)) {
+                    d2 = g2[m2].keymap;
+                    break;
+                  }
+              }
+              d2 ? (f2[u2] = true, i2.s && a2.push(i2.s), o2 = void 0 === d2.d ? t3 ? null : o2 : d2.d, s3 && void 0 !== d2.d && h2.push(d2.d), l2 = d2.f, i2 = d2) : i2 = i2.s;
+            } else
+              i2 = null;
+            null == i2 && 0 < a2.length && (null == o2 || s3 && !t3) && (i2 = a2.pop());
+          } while (i2);
+          return t3 ? Object.keys(f2).length !== p2 && (o2 = null) : null == o2 && void 0 !== r3.d && (o2 = r3.d), l2 && (o2 = l2.call(n2, e2, o2)), s3 ? h2 : o2;
+        }, n2.remove = function(e2) {
+          var t3, n3 = r3, s3 = null, i2 = [];
+          do {
+            if (t3 = n3.k, n3.v || n3.g) {
+              if (n3.v) {
+                var o2 = n3.v[e2[t3]];
+                o2 && i2.push({ km: n3, v: e2[t3] });
+              }
+              if (null == o2 && n3.g) {
+                let r4 = n3.g[t3] || [];
+                for (let s4 = 0; s4 < r4.length; s4++)
+                  if (r4[s4].fix === e2[t3]) {
+                    i2.push({ km: n3, v: e2[t3], mv: r4[s4] }), o2 = r4[s4].keymap;
+                    break;
+                  }
+              }
+              o2 ? (s3 = o2.d, n3 = o2) : n3 = n3.s;
+            } else
+              n3 = null;
+          } while (n3);
+          if (void 0 !== s3) {
+            var l2 = i2[i2.length - 1];
+            if (l2 && l2.km && l2.km.v) {
+              var u2 = l2.km.v[l2.v] || l2.mv && l2.mv.keymap;
+              !u2 || u2.r && !u2.r(e2, u2.d) || delete u2.d;
+            }
+          }
+        }, n2.list = function(t3, n3) {
+          t3 = t3 || {};
+          var s3 = [];
+          return r3.d && s3.push({ match: {}, data: r3.d, find: r3.f }), function r4(s4, i2, o2, l2) {
+            if (s4.v) {
+              var u2, a2 = s4.k, f2 = (0, e.Gex)(t3 ? null == t3[a2] ? n3 ? null : "*" : t3[a2] : "*"), p2 = __spreadValues({}, i2), h2 = __spreadValues({}, o2);
+              for (var c2 in s4.v)
+                if (c2 === t3[a2] || !n3 && null == t3[a2] || f2.on(c2)) {
+                  var d2 = __spreadValues({}, p2);
+                  d2[a2] = c2;
+                  var g2 = __spreadValues({}, h2);
+                  delete g2[a2], u2 = s4.v[c2], 0 === Object.keys(g2).length && u2 && u2.d && l2.push({ match: d2, data: u2.d, find: u2.f }), u2 && null != u2.v && r4(u2, __spreadValues({}, d2), __spreadValues({}, g2), l2);
+                }
+              (u2 = s4.s) && r4(u2, __spreadValues({}, p2), __spreadValues({}, h2), l2);
+            }
+          }(r3, {}, __spreadValues({}, t3), s3), s3;
+        }, n2.toString = function(e2, t3) {
+          var n3 = true === e2 || !!t3, s3 = "function" == typeof e2 ? e2 : function(e3) {
+            return "function" == typeof e3 ? "<" + e3.name + ">" : "<" + e3 + ">";
+          };
+          function i2(e3, t4) {
+            for (var n4 = 0; n4 < t4; n4++)
+              e3.push(" ");
+          }
+          var o2 = [], l2 = [];
+          return function e3(t4, n4, r4, l3) {
+            var u2;
+            if (void 0 !== t4.d && (n4.push(" " + s3(t4.d)), o2.push(l3.join(", ") + " -> " + s3(t4.d))), t4.k && (n4.push("\n"), i2(n4, r4), n4.push(t4.k + ":")), (t4.v || t4.s || t4.g) && r4++, t4.v)
+              for (var a2 = Object.keys(t4.v).sort(), f2 = 0; f2 < a2.length; f2++) {
+                var p2 = a2[f2];
+                n4.push("\n"), i2(n4, r4), n4.push(p2 + " ->"), (u2 = l3.slice()).push(t4.k + "=" + p2), e3(t4.v[p2], n4, r4 + 1, u2);
+              }
+            if (t4.g)
+              for (a2 = Object.keys(t4.g).sort(), f2 = 0; f2 < a2.length; f2++)
+                for (var h2 = t4.g[a2[f2]], c2 = 0; c2 < h2.length; c2++) {
+                  var d2 = h2[c2];
+                  n4.push("\n"), i2(n4, r4), n4.push(d2.fix + " ~>"), (u2 = l3.slice()).push(t4.k + "~" + d2.fix), e3(d2.keymap, n4, r4 + 1, u2);
+                }
+            t4.s && (n4.push("\n"), i2(n4, r4), n4.push("|"), u2 = l3.slice(), e3(t4.s, n4, r4 + 1, u2));
+          }(r3, l2, 0, []), n3 ? l2.join("") : o2.join("\n");
+        }, n2.inspect = n2.toString, n2.toJSON = function(e2) {
+          return JSON.stringify(r3, function(e3, t3) {
+            return "function" == typeof t3 ? "[Function]" : t3;
+          }, e2);
+        }, n2;
+      }
+      function m(e2) {
+        return new g(e2);
+      }
+      return Object.defineProperty(d.exports, "__esModule", { value: true }), d.exports.Gex = d.exports.Patrun = void 0, Object.defineProperty(d.exports, "Gex", { enumerable: true, get: function() {
+        return e.Gex;
+      } }), d.exports.Patrun = g, d.exports = m, d.exports.Patrun = g, d.exports.Gex = e.Gex, d.exports.default = m, d = d.exports;
+    });
+  })(patrun_min, patrun_minExports);
+  const Patrun = /* @__PURE__ */ getDefaultExportFromCjs(patrun_minExports);
+  var jsonicExports = {};
+  var jsonic = {
+    get exports() {
+      return jsonicExports;
+    },
+    set exports(v) {
+      jsonicExports = v;
+    }
+  };
+  var types = {};
+  "use strict";
+  Object.defineProperty(types, "__esModule", { value: true });
+  var STRING = types.STRING = INSPECT = types.INSPECT = EMPTY = types.EMPTY = AFTER = types.AFTER = BEFORE = types.BEFORE = CLOSE = types.CLOSE = OPEN = types.OPEN = void 0;
+  var OPEN = types.OPEN = "o";
+  var CLOSE = types.CLOSE = "c";
+  var BEFORE = types.BEFORE = "b";
+  var AFTER = types.AFTER = "a";
+  var EMPTY = types.EMPTY = "";
+  var INSPECT = types.INSPECT = Symbol.for("nodejs.util.inspect.custom");
+  STRING = types.STRING = "string";
+  var utility = {};
+  var lexer = {};
+  var hasRequiredLexer;
+  function requireLexer() {
+    if (hasRequiredLexer)
+      return lexer;
+    hasRequiredLexer = 1;
+    "use strict";
+    Object.defineProperty(lexer, "__esModule", { value: true });
+    lexer.makeTextMatcher = lexer.makeNumberMatcher = lexer.makeCommentMatcher = lexer.makeStringMatcher = lexer.makeLineMatcher = lexer.makeSpaceMatcher = lexer.makeFixedMatcher = lexer.makeMatchMatcher = lexer.makeToken = lexer.makePoint = lexer.makeLex = lexer.makeNoToken = void 0;
+    const types_12 = types;
+    const utility_12 = requireUtility();
+    class PointImpl {
+      constructor(len, sI, rI, cI) {
+        this.len = -1;
+        this.sI = 0;
+        this.rI = 1;
+        this.cI = 1;
+        this.token = [];
+        this.len = len;
+        if (null != sI) {
+          this.sI = sI;
+        }
+        if (null != rI) {
+          this.rI = rI;
+        }
+        if (null != cI) {
+          this.cI = cI;
+        }
+      }
+      toString() {
+        return "Point[" + [this.sI + "/" + this.len, this.rI, this.cI] + (0 < this.token.length ? " " + this.token : "") + "]";
+      }
+      [types_12.INSPECT]() {
+        return this.toString();
+      }
+    }
+    const makePoint = (...params) => new PointImpl(...params);
+    lexer.makePoint = makePoint;
+    class TokenImpl {
+      constructor(name, tin, val, src, pnt, use, why) {
+        this.isToken = true;
+        this.name = types_12.EMPTY;
+        this.tin = -1;
+        this.val = void 0;
+        this.src = types_12.EMPTY;
+        this.sI = -1;
+        this.rI = -1;
+        this.cI = -1;
+        this.len = -1;
+        this.name = name;
+        this.tin = tin;
+        this.src = src;
+        this.val = val;
+        this.sI = pnt.sI;
+        this.rI = pnt.rI;
+        this.cI = pnt.cI;
+        this.use = use;
+        this.why = why;
+        this.len = null == src ? 0 : src.length;
+      }
+      resolveVal(rule, ctx) {
+        let out = "function" === typeof this.val ? this.val(rule, ctx) : this.val;
+        return out;
+      }
+      bad(err, details) {
+        this.err = err;
+        if (null != details) {
+          this.use = (0, utility_12.deep)(this.use || {}, details);
+        }
+        return this;
+      }
+      toString() {
+        return "Token[" + this.name + "=" + this.tin + " " + (0, utility_12.snip)(this.src) + (void 0 === this.val || "#ST" === this.name || "#TX" === this.name ? "" : "=" + (0, utility_12.snip)(this.val)) + " " + [this.sI, this.rI, this.cI] + (null == this.use ? "" : " " + (0, utility_12.snip)("" + JSON.stringify(this.use).replace(/"/g, ""), 22)) + (null == this.err ? "" : " " + this.err) + (null == this.why ? "" : " " + (0, utility_12.snip)("" + this.why, 22)) + "]";
+      }
+      [types_12.INSPECT]() {
+        return this.toString();
+      }
+    }
+    const makeToken = (...params) => new TokenImpl(...params);
+    lexer.makeToken = makeToken;
+    const makeNoToken = () => makeToken("", -1, void 0, types_12.EMPTY, makePoint(-1));
+    lexer.makeNoToken = makeNoToken;
+    let makeFixedMatcher = (cfg, _opts) => {
+      let fixed = (0, utility_12.regexp)(null, "^(", cfg.rePart.fixed, ")");
+      return function fixedMatcher(lex) {
+        let mcfg = cfg.fixed;
+        if (!mcfg.lex)
+          return void 0;
+        if (cfg.fixed.check) {
+          let check = cfg.fixed.check(lex);
+          if (check && check.done) {
+            return check.token;
+          }
+        }
+        let pnt = lex.pnt;
+        let fwd = lex.src.substring(pnt.sI);
+        let m = fwd.match(fixed);
+        if (m) {
+          let msrc = m[1];
+          let mlen = msrc.length;
+          if (0 < mlen) {
+            let tkn = void 0;
+            let tin = mcfg.token[msrc];
+            if (null != tin) {
+              tkn = lex.token(tin, void 0, msrc, pnt);
+              pnt.sI += mlen;
+              pnt.cI += mlen;
+            }
+            return tkn;
+          }
+        }
+      };
+    };
+    lexer.makeFixedMatcher = makeFixedMatcher;
+    let makeMatchMatcher = (cfg, _opts) => {
+      let valueMatchers = (0, utility_12.values)(cfg.match.value);
+      let tokenMatchers = (0, utility_12.values)(cfg.match.token);
+      if (0 === valueMatchers.length && 0 === tokenMatchers.length) {
+        return null;
+      }
+      return function matchMatcher(lex, rule, tI = 0) {
+        let mcfg = cfg.match;
+        if (!mcfg.lex)
+          return void 0;
+        if (cfg.match.check) {
+          let check = cfg.match.check(lex);
+          if (check && check.done) {
+            return check.token;
+          }
+        }
+        let pnt = lex.pnt;
+        let fwd = lex.src.substring(pnt.sI);
+        let oc = "o" === rule.state ? 0 : 1;
+        for (let valueMatcher of valueMatchers) {
+          if (valueMatcher.match instanceof RegExp) {
+            let m = fwd.match(valueMatcher.match);
+            if (m) {
+              let msrc = m[0];
+              let mlen = msrc.length;
+              if (0 < mlen) {
+                let tkn = void 0;
+                let val = valueMatcher.val ? valueMatcher.val(m) : msrc;
+                tkn = lex.token("#VL", val, msrc, pnt);
+                pnt.sI += mlen;
+                pnt.cI += mlen;
+                return tkn;
+              }
+            }
+          } else {
+            let tkn = valueMatcher.match(lex, rule);
+            if (null != tkn) {
+              return tkn;
+            }
+          }
+        }
+        for (let tokenMatcher of tokenMatchers) {
+          if (tokenMatcher.tin$ && !rule.spec.def.tcol[oc][tI].includes(tokenMatcher.tin$)) {
+            continue;
+          }
+          if (tokenMatcher instanceof RegExp) {
+            let m = fwd.match(tokenMatcher);
+            if (m) {
+              let msrc = m[0];
+              let mlen = msrc.length;
+              if (0 < mlen) {
+                let tkn = void 0;
+                let tin = tokenMatcher.tin$;
+                tkn = lex.token(tin, msrc, msrc, pnt);
+                pnt.sI += mlen;
+                pnt.cI += mlen;
+                return tkn;
+              }
+            }
+          } else {
+            let tkn = tokenMatcher(lex, rule);
+            if (null != tkn) {
+              return tkn;
+            }
+          }
+        }
+      };
+    };
+    lexer.makeMatchMatcher = makeMatchMatcher;
+    let makeCommentMatcher = (cfg, opts) => {
+      let oc = opts.comment;
+      cfg.comment = {
+        lex: oc ? !!oc.lex : false,
+        def: ((oc === null || oc === void 0 ? void 0 : oc.def) ? (0, utility_12.entries)(oc.def) : []).reduce((def, [name, om]) => {
+          if (null == om || false === om) {
+            return def;
+          }
+          let cm = {
+            name,
+            start: om.start,
+            end: om.end,
+            line: !!om.line,
+            lex: !!om.lex,
+            eatline: !!om.eatline
+          };
+          def[name] = cm;
+          return def;
+        }, {})
+      };
+      let lineComments = cfg.comment.lex ? (0, utility_12.values)(cfg.comment.def).filter((c) => c.lex && c.line) : [];
+      let blockComments = cfg.comment.lex ? (0, utility_12.values)(cfg.comment.def).filter((c) => c.lex && !c.line) : [];
+      return function matchComment(lex, _rule) {
+        let mcfg = cfg.comment;
+        if (!mcfg.lex)
+          return void 0;
+        if (cfg.comment.check) {
+          let check = cfg.comment.check(lex);
+          if (check && check.done) {
+            return check.token;
+          }
+        }
+        let pnt = lex.pnt;
+        let fwd = lex.src.substring(pnt.sI);
+        let rI = pnt.rI;
+        let cI = pnt.cI;
+        for (let mc of lineComments) {
+          if (fwd.startsWith(mc.start)) {
+            let fwdlen = fwd.length;
+            let fI = mc.start.length;
+            cI += mc.start.length;
+            while (fI < fwdlen && !cfg.line.chars[fwd[fI]]) {
+              cI++;
+              fI++;
+            }
+            if (mc.eatline) {
+              while (fI < fwdlen && cfg.line.chars[fwd[fI]]) {
+                if (cfg.line.rowChars[fwd[fI]]) {
+                  rI++;
+                }
+                fI++;
+              }
+            }
+            let csrc = fwd.substring(0, fI);
+            let tkn = lex.token("#CM", void 0, csrc, pnt);
+            pnt.sI += csrc.length;
+            pnt.cI = cI;
+            pnt.rI = rI;
+            return tkn;
+          }
+        }
+        for (let mc of blockComments) {
+          if (fwd.startsWith(mc.start)) {
+            let fwdlen = fwd.length;
+            let fI = mc.start.length;
+            let end2 = mc.end;
+            cI += mc.start.length;
+            while (fI < fwdlen && !fwd.substring(fI).startsWith(end2)) {
+              if (cfg.line.rowChars[fwd[fI]]) {
+                rI++;
+                cI = 0;
+              }
+              cI++;
+              fI++;
+            }
+            if (fwd.substring(fI).startsWith(end2)) {
+              cI += end2.length;
+              if (mc.eatline) {
+                while (fI < fwdlen && cfg.line.chars[fwd[fI]]) {
+                  if (cfg.line.rowChars[fwd[fI]]) {
+                    rI++;
+                  }
+                  fI++;
+                }
+              }
+              let csrc = fwd.substring(0, fI + end2.length);
+              let tkn = lex.token("#CM", void 0, csrc, pnt);
+              pnt.sI += csrc.length;
+              pnt.rI = rI;
+              pnt.cI = cI;
+              return tkn;
+            } else {
+              return lex.bad(utility_12.S.unterminated_comment, pnt.sI, pnt.sI + 9 * mc.start.length);
+            }
+          }
+        }
+      };
+    };
+    lexer.makeCommentMatcher = makeCommentMatcher;
+    let makeTextMatcher = (cfg, opts) => {
+      let ender = (0, utility_12.regexp)(cfg.line.lex ? null : "s", "^(.*?)", ...cfg.rePart.ender);
+      return function textMatcher(lex) {
+        if (cfg.text.check) {
+          let check = cfg.text.check(lex);
+          if (check && check.done) {
+            return check.token;
+          }
+        }
+        let mcfg = cfg.text;
+        let pnt = lex.pnt;
+        let fwd = lex.src.substring(pnt.sI);
+        let def = cfg.value.def;
+        let defre = cfg.value.defre;
+        let m = fwd.match(ender);
+        if (m) {
+          let msrc = m[1];
+          let tsrc = m[2];
+          let out = void 0;
+          if (null != msrc) {
+            let mlen = msrc.length;
+            if (0 < mlen) {
+              let vs = void 0;
+              if (cfg.value.lex) {
+                if (void 0 !== (vs = def[msrc])) {
+                  out = lex.token("#VL", vs.val, msrc, pnt);
+                  pnt.sI += mlen;
+                  pnt.cI += mlen;
+                } else {
+                  for (let vname in defre) {
+                    let vspec = defre[vname];
+                    if (vspec.match) {
+                      let res = vspec.match.exec(vspec.consume ? fwd : msrc);
+                      if (res && (vspec.consume || res[0].length === msrc.length)) {
+                        let remsrc = res[0];
+                        if (null == vspec.val) {
+                          out = lex.token("#VL", remsrc, remsrc, pnt);
+                        } else {
+                          let val = vspec.val(res);
+                          out = lex.token("#VL", val, remsrc, pnt);
+                        }
+                        pnt.sI += remsrc.length;
+                        pnt.cI += remsrc.length;
+                      }
+                    }
+                  }
+                }
+              }
+              if (null == out && mcfg.lex) {
+                out = lex.token("#TX", msrc, msrc, pnt);
+                pnt.sI += mlen;
+                pnt.cI += mlen;
+              }
+            }
+          }
+          if (out) {
+            out = subMatchFixed(lex, out, tsrc);
+          }
+          if (out && 0 < cfg.text.modify.length) {
+            const modify = cfg.text.modify;
+            for (let mI = 0; mI < modify.length; mI++) {
+              out.val = modify[mI](out.val, lex, cfg, opts);
+            }
+          }
+          return out;
+        }
+      };
+    };
+    lexer.makeTextMatcher = makeTextMatcher;
+    let makeNumberMatcher = (cfg, _opts) => {
+      let mcfg = cfg.number;
+      let ender = (0, utility_12.regexp)(null, [
+        "^([-+]?(0(",
+        [
+          mcfg.hex ? "x[0-9a-fA-F_]+" : null,
+          mcfg.oct ? "o[0-7_]+" : null,
+          mcfg.bin ? "b[01_]+" : null
+        ].filter((s) => null != s).join("|"),
+        // ')|[.0-9]+([0-9_]*[0-9])?)',
+        ")|\\.?[0-9]+([0-9_]*[0-9])?)",
+        "(\\.[0-9]?([0-9_]*[0-9])?)?",
+        "([eE][-+]?[0-9]+([0-9_]*[0-9])?)?"
+      ].join("").replace(/_/g, mcfg.sep ? (0, utility_12.escre)(mcfg.sepChar) : ""), ")", ...cfg.rePart.ender);
+      let numberSep = mcfg.sep ? (0, utility_12.regexp)("g", (0, utility_12.escre)(mcfg.sepChar)) : void 0;
+      return function matchNumber(lex) {
+        mcfg = cfg.number;
+        if (!mcfg.lex)
+          return void 0;
+        if (cfg.number.check) {
+          let check = cfg.number.check(lex);
+          if (check && check.done) {
+            return check.token;
+          }
+        }
+        let pnt = lex.pnt;
+        let fwd = lex.src.substring(pnt.sI);
+        let valdef = cfg.value.def;
+        let m = fwd.match(ender);
+        if (m) {
+          let msrc = m[1];
+          let tsrc = m[9];
+          let out = void 0;
+          let included = true;
+          if (null != msrc && (included = !cfg.number.exclude || !msrc.match(cfg.number.exclude))) {
+            let mlen = msrc.length;
+            if (0 < mlen) {
+              let vs = void 0;
+              if (cfg.value.lex && void 0 !== (vs = valdef[msrc])) {
+                out = lex.token("#VL", vs.val, msrc, pnt);
+              } else {
+                let nstr = numberSep ? msrc.replace(numberSep, "") : msrc;
+                let num = +nstr;
+                if (isNaN(num)) {
+                  let first = nstr[0];
+                  if ("-" === first || "+" === first) {
+                    num = ("-" === first ? -1 : 1) * +nstr.substring(1);
+                  }
+                }
+                if (!isNaN(num)) {
+                  out = lex.token("#NR", num, msrc, pnt);
+                  pnt.sI += mlen;
+                  pnt.cI += mlen;
+                }
+              }
+            }
+          }
+          if (included) {
+            out = subMatchFixed(lex, out, tsrc);
+          }
+          return out;
+        }
+      };
+    };
+    lexer.makeNumberMatcher = makeNumberMatcher;
+    let makeStringMatcher = (cfg, opts) => {
+      let os = opts.string || {};
+      cfg.string = cfg.string || {};
+      cfg.string = (0, utility_12.deep)(cfg.string, {
+        lex: !!(os === null || os === void 0 ? void 0 : os.lex),
+        quoteMap: (0, utility_12.charset)(os.chars),
+        multiChars: (0, utility_12.charset)(os.multiChars),
+        escMap: __spreadValues({}, os.escape),
+        escChar: os.escapeChar,
+        escCharCode: null == os.escapeChar ? void 0 : os.escapeChar.charCodeAt(0),
+        allowUnknown: !!os.allowUnknown,
+        replaceCodeMap: (0, utility_12.omap)((0, utility_12.clean)(__spreadValues({}, os.replace)), ([c, r2]) => [
+          c.charCodeAt(0),
+          r2
+        ]),
+        hasReplace: false,
+        abandon: !!os.abandon
+      });
+      cfg.string.escMap = (0, utility_12.clean)(cfg.string.escMap);
+      cfg.string.hasReplace = 0 < (0, utility_12.keys)(cfg.string.replaceCodeMap).length;
+      return function stringMatcher(lex) {
+        let mcfg = cfg.string;
+        if (!mcfg.lex)
+          return void 0;
+        if (cfg.string.check) {
+          let check = cfg.string.check(lex);
+          if (check && check.done) {
+            return check.token;
+          }
+        }
+        let { quoteMap, escMap, escChar, escCharCode, multiChars, allowUnknown, replaceCodeMap, hasReplace } = mcfg;
+        let { pnt, src } = lex;
+        let { sI, rI, cI } = pnt;
+        let srclen = src.length;
+        if (quoteMap[src[sI]]) {
+          const q = src[sI];
+          const qI = sI;
+          const qrI = rI;
+          const isMultiLine = multiChars[q];
+          ++sI;
+          ++cI;
+          let s = [];
+          let rs;
+          for (sI; sI < srclen; sI++) {
+            cI++;
+            let c = src[sI];
+            rs = void 0;
+            if (q === c) {
+              sI++;
+              break;
+            } else if (escChar === c) {
+              sI++;
+              cI++;
+              let es = escMap[src[sI]];
+              if (null != es) {
+                s.push(es);
+              } else if ("x" === src[sI]) {
+                sI++;
+                let cc = parseInt(src.substring(sI, sI + 2), 16);
+                if (isNaN(cc)) {
+                  if (mcfg.abandon) {
+                    return void 0;
+                  }
+                  sI = sI - 2;
+                  cI -= 2;
+                  pnt.sI = sI;
+                  pnt.cI = cI;
+                  return lex.bad(utility_12.S.invalid_ascii, sI, sI + 4);
+                }
+                let us = String.fromCharCode(cc);
+                s.push(us);
+                sI += 1;
+                cI += 2;
+              } else if ("u" === src[sI]) {
+                sI++;
+                let ux = "{" === src[sI] ? (sI++, 1) : 0;
+                let ulen = ux ? 6 : 4;
+                let cc = parseInt(src.substring(sI, sI + ulen), 16);
+                if (isNaN(cc)) {
+                  if (mcfg.abandon) {
+                    return void 0;
+                  }
+                  sI = sI - 2 - ux;
+                  cI -= 2;
+                  pnt.sI = sI;
+                  pnt.cI = cI;
+                  return lex.bad(utility_12.S.invalid_unicode, sI, sI + ulen + 2 + 2 * ux);
+                }
+                let us = String.fromCodePoint(cc);
+                s.push(us);
+                sI += ulen - 1 + ux;
+                cI += ulen + ux;
+              } else if (allowUnknown) {
+                s.push(src[sI]);
+              } else {
+                if (mcfg.abandon) {
+                  return void 0;
+                }
+                pnt.sI = sI;
+                pnt.cI = cI - 1;
+                return lex.bad(utility_12.S.unexpected, sI, sI + 1);
+              }
+            } else if (hasReplace && void 0 !== (rs = replaceCodeMap[src.charCodeAt(sI)])) {
+              s.push(rs);
+              cI++;
+            } else {
+              let bI = sI;
+              let qc = q.charCodeAt(0);
+              let cc = src.charCodeAt(sI);
+              while ((!hasReplace || void 0 === (rs = replaceCodeMap[cc])) && sI < srclen && 32 <= cc && qc !== cc && escCharCode !== cc) {
+                cc = src.charCodeAt(++sI);
+                cI++;
+              }
+              cI--;
+              if (void 0 === rs && cc < 32) {
+                if (isMultiLine && cfg.line.chars[src[sI]]) {
+                  if (cfg.line.rowChars[src[sI]]) {
+                    pnt.rI = ++rI;
+                  }
+                  cI = 1;
+                  s.push(src.substring(bI, sI + 1));
+                } else {
+                  if (mcfg.abandon) {
+                    return void 0;
+                  }
+                  pnt.sI = sI;
+                  pnt.cI = cI;
+                  return lex.bad(utility_12.S.unprintable, sI, sI + 1);
+                }
+              } else {
+                s.push(src.substring(bI, sI));
+                sI--;
+              }
+            }
+          }
+          if (src[sI - 1] !== q || pnt.sI === sI - 1) {
+            if (mcfg.abandon) {
+              return void 0;
+            }
+            pnt.rI = qrI;
+            return lex.bad(utility_12.S.unterminated_string, qI, sI);
+          }
+          const tkn = lex.token("#ST", s.join(types_12.EMPTY), src.substring(pnt.sI, sI), pnt);
+          pnt.sI = sI;
+          pnt.rI = rI;
+          pnt.cI = cI;
+          return tkn;
+        }
+      };
+    };
+    lexer.makeStringMatcher = makeStringMatcher;
+    let makeLineMatcher = (cfg, _opts) => {
+      return function matchLine(lex) {
+        if (!cfg.line.lex)
+          return void 0;
+        if (cfg.line.check) {
+          let check = cfg.line.check(lex);
+          if (check && check.done) {
+            return check.token;
+          }
+        }
+        let { chars: chars2, rowChars } = cfg.line;
+        let { pnt, src } = lex;
+        let { sI, rI } = pnt;
+        let single = cfg.line.single;
+        let counts = void 0;
+        if (single) {
+          counts = {};
+        }
+        while (chars2[src[sI]]) {
+          if (counts) {
+            counts[src[sI]] = (counts[src[sI]] || 0) + 1;
+            if (single) {
+              if (1 < counts[src[sI]]) {
+                break;
+              }
+            }
+          }
+          rI += rowChars[src[sI]] ? 1 : 0;
+          sI++;
+        }
+        if (pnt.sI < sI) {
+          let msrc = src.substring(pnt.sI, sI);
+          const tkn = lex.token("#LN", void 0, msrc, pnt);
+          pnt.sI += msrc.length;
+          pnt.rI = rI;
+          pnt.cI = 1;
+          return tkn;
+        }
+      };
+    };
+    lexer.makeLineMatcher = makeLineMatcher;
+    let makeSpaceMatcher = (cfg, _opts) => {
+      return function spaceMatcher(lex) {
+        if (!cfg.space.lex)
+          return void 0;
+        if (cfg.space.check) {
+          let check = cfg.space.check(lex);
+          if (check && check.done) {
+            return check.token;
+          }
+        }
+        let { chars: chars2 } = cfg.space;
+        let { pnt, src } = lex;
+        let { sI, cI } = pnt;
+        while (chars2[src[sI]]) {
+          sI++;
+          cI++;
+        }
+        if (pnt.sI < sI) {
+          let msrc = src.substring(pnt.sI, sI);
+          const tkn = lex.token("#SP", void 0, msrc, pnt);
+          pnt.sI += msrc.length;
+          pnt.cI = cI;
+          return tkn;
+        }
+      };
+    };
+    lexer.makeSpaceMatcher = makeSpaceMatcher;
+    function subMatchFixed(lex, first, tsrc) {
+      let pnt = lex.pnt;
+      let out = first;
+      if (lex.cfg.fixed.lex && null != tsrc) {
+        let tknlen = tsrc.length;
+        if (0 < tknlen) {
+          let tkn = void 0;
+          let tin = lex.cfg.fixed.token[tsrc];
+          if (null != tin) {
+            tkn = lex.token(tin, void 0, tsrc, pnt);
+          }
+          if (null != tkn) {
+            pnt.sI += tkn.src.length;
+            pnt.cI += tkn.src.length;
+            if (null == first) {
+              out = tkn;
+            } else {
+              pnt.token.push(tkn);
+            }
+          }
+        }
+      }
+      return out;
+    }
+    class LexImpl {
+      constructor(ctx) {
+        this.src = types_12.EMPTY;
+        this.ctx = {};
+        this.cfg = {};
+        this.pnt = makePoint(-1);
+        this.ctx = ctx;
+        this.src = ctx.src();
+        this.cfg = ctx.cfg;
+        this.pnt = makePoint(this.src.length);
+      }
+      token(ref, val, src, pnt, use, why) {
+        let tin;
+        let name;
+        if ("string" === typeof ref) {
+          name = ref;
+          tin = (0, utility_12.tokenize)(name, this.cfg);
+        } else {
+          tin = ref;
+          name = (0, utility_12.tokenize)(ref, this.cfg);
+        }
+        let tkn = makeToken(name, tin, val, src, pnt || this.pnt, use, why);
+        return tkn;
+      }
+      next(rule, alt, altI, tI) {
+        let tkn;
+        let pnt = this.pnt;
+        let sI = pnt.sI;
+        let match2 = void 0;
+        if (pnt.end) {
+          tkn = pnt.end;
+        } else if (0 < pnt.token.length) {
+          tkn = pnt.token.shift();
+        } else if (pnt.len <= pnt.sI) {
+          pnt.end = this.token("#ZZ", void 0, "", pnt);
+          tkn = pnt.end;
+        } else {
+          try {
+            for (let mat of this.cfg.lex.match) {
+              if (tkn = mat(this, rule, tI)) {
+                match2 = mat;
+                break;
+              }
+            }
+          } catch (err) {
+            tkn = tkn || this.token("#BD", void 0, this.src[pnt.sI], pnt, { err }, err.code || utility_12.S.unexpected);
+          }
+          tkn = tkn || this.token("#BD", void 0, this.src[pnt.sI], pnt, void 0, utility_12.S.unexpected);
+        }
+        this.ctx.log && this.ctx.log(utility_12.S.lex, this.ctx, rule, this, pnt, sI, match2, tkn, alt, altI, tI);
+        if (this.ctx.sub.lex) {
+          this.ctx.sub.lex.map((sub) => sub(tkn, rule, this.ctx));
+        }
+        return tkn;
+      }
+      tokenize(ref) {
+        return (0, utility_12.tokenize)(ref, this.cfg);
+      }
+      bad(why, pstart, pend) {
+        return this.token("#BD", void 0, 0 <= pstart && pstart <= pend ? this.src.substring(pstart, pend) : this.src[this.pnt.sI], void 0, void 0, why);
+      }
+    }
+    const makeLex = (...params) => new LexImpl(...params);
+    lexer.makeLex = makeLex;
+    return lexer;
+  }
+  var hasRequiredUtility;
+  function requireUtility() {
+    if (hasRequiredUtility)
+      return utility;
+    hasRequiredUtility = 1;
+    "use strict";
+    Object.defineProperty(utility, "__esModule", { value: true });
+    utility.modlist = utility.findTokenSet = utility.values = utility.keys = utility.omap = utility.str = utility.prop = utility.parserwrap = utility.trimstk = utility.tokenize = utility.srcfmt = utility.snip = utility.regexp = utility.mesc = utility.makelog = utility.isarr = utility.filterRules = utility.extract = utility.escre = utility.errinject = utility.errdesc = utility.entries = utility.defprop = utility.deep = utility.configure = utility.clone = utility.clean = utility.charset = utility.badlex = utility.assign = utility.S = utility.JsonicError = void 0;
+    const types_12 = types;
+    const lexer_12 = requireLexer();
+    const keys = (x) => null == x ? [] : Object.keys(x);
+    utility.keys = keys;
+    const values2 = (x) => null == x ? [] : Object.values(x);
+    utility.values = values2;
+    const entries = (x) => null == x ? [] : Object.entries(x);
+    utility.entries = entries;
+    const assign2 = (x, ...r2) => Object.assign(null == x ? {} : x, ...r2);
+    utility.assign = assign2;
+    const isarr = (x) => Array.isArray(x);
+    utility.isarr = isarr;
+    const defprop = Object.defineProperty;
+    utility.defprop = defprop;
+    const omap = (o, f) => {
+      return Object.entries(o || {}).reduce((o2, e) => {
+        let me = f ? f(e) : e;
+        if (void 0 === me[0]) {
+          delete o2[e[0]];
+        } else {
+          o2[me[0]] = me[1];
+        }
+        let i = 2;
+        while (void 0 !== me[i]) {
+          o2[me[i]] = me[i + 1];
+          i += 2;
+        }
+        return o2;
+      }, {});
+    };
+    utility.omap = omap;
+    const S = {
+      indent: ". ",
+      logindent: "  ",
+      space: " ",
+      gap: "  ",
+      Object: "Object",
+      Array: "Array",
+      object: "object",
+      string: "string",
+      function: "function",
+      unexpected: "unexpected",
+      map: "map",
+      list: "list",
+      elem: "elem",
+      pair: "pair",
+      val: "val",
+      node: "node",
+      no_re_flags: types_12.EMPTY,
+      unprintable: "unprintable",
+      invalid_ascii: "invalid_ascii",
+      invalid_unicode: "invalid_unicode",
+      invalid_lex_state: "invalid_lex_state",
+      unterminated_string: "unterminated_string",
+      unterminated_comment: "unterminated_comment",
+      lex: "lex",
+      parse: "parse",
+      error: "error",
+      none: "none",
+      imp_map: "imp,map",
+      imp_list: "imp,list",
+      imp_null: "imp,null",
+      end: "end",
+      open: "open",
+      close: "close",
+      rule: "rule",
+      stack: "stack",
+      nUll: "null",
+      name: "name",
+      make: "make",
+      colon: ":"
+    };
+    utility.S = S;
+    class JsonicError extends SyntaxError {
+      constructor(code, details, token2, rule, ctx) {
+        details = deep({}, details);
+        let desc = errdesc(code, details, token2, rule, ctx);
+        super(desc.message);
+        assign2(this, desc);
+        trimstk(this);
+      }
+      toJSON() {
+        return __spreadProps(__spreadValues({}, this), {
+          __error: true,
+          name: this.name,
+          message: this.message,
+          stack: this.stack
+        });
+      }
+    }
+    utility.JsonicError = JsonicError;
+    function configure(jsonic2, incfg, opts) {
+      var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _o, _p, _q, _r, _s, _t7, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26;
+      const cfg = incfg || {};
+      cfg.t = cfg.t || {};
+      cfg.tI = cfg.tI || 1;
+      const t = (tn) => tokenize2(tn, cfg);
+      if (false !== opts.standard$) {
+        t("#BD");
+        t("#ZZ");
+        t("#UK");
+        t("#AA");
+        t("#SP");
+        t("#LN");
+        t("#CM");
+        t("#NR");
+        t("#ST");
+        t("#TX");
+        t("#VL");
+      }
+      cfg.safe = {
+        key: false === ((_a = opts.safe) === null || _a === void 0 ? void 0 : _a.key) ? false : true
+      };
+      cfg.fixed = {
+        lex: !!((_b = opts.fixed) === null || _b === void 0 ? void 0 : _b.lex),
+        token: opts.fixed ? omap(clean(opts.fixed.token), ([name, src]) => [
+          src,
+          tokenize2(name, cfg)
+        ]) : {},
+        ref: void 0,
+        check: (_c = opts.fixed) === null || _c === void 0 ? void 0 : _c.check
+      };
+      cfg.fixed.ref = omap(cfg.fixed.token, ([tin, src]) => [
+        tin,
+        src
+      ]);
+      cfg.fixed.ref = Object.assign(cfg.fixed.ref, omap(cfg.fixed.ref, ([tin, src]) => [src, tin]));
+      cfg.match = {
+        lex: !!((_d = opts.match) === null || _d === void 0 ? void 0 : _d.lex),
+        value: opts.match ? omap(clean(opts.match.value), ([name, spec]) => [
+          name,
+          spec
+        ]) : {},
+        token: opts.match ? omap(clean(opts.match.token), ([name, matcher]) => [
+          tokenize2(name, cfg),
+          matcher
+        ]) : {},
+        check: (_e = opts.match) === null || _e === void 0 ? void 0 : _e.check
+      };
+      omap(cfg.match.token, ([tin, matcher]) => [
+        tin,
+        (matcher.tin$ = +tin, matcher)
+      ]);
+      const tokenSet = opts.tokenSet ? Object.keys(opts.tokenSet).reduce((a, n) => (a[n] = opts.tokenSet[n].filter((x) => null != x).map((n2) => t(n2)), a), {}) : {};
+      cfg.tokenSet = cfg.tokenSet || {};
+      entries(tokenSet).map((entry) => {
+        let name = entry[0];
+        let tinset = entry[1];
+        if (cfg.tokenSet[name]) {
+          cfg.tokenSet[name].length = 0;
+          cfg.tokenSet[name].push(...tinset);
+        } else {
+          cfg.tokenSet[name] = tinset;
+        }
+      });
+      cfg.tokenSetTins = entries(cfg.tokenSet).reduce((a, en) => (a[en[0]] = a[en[0]] || {}, en[1].map((tin) => a[en[0]][tin] = true), a), {});
+      cfg.tokenSetTins.IGNORE = cfg.tokenSetTins.IGNORE || {};
+      cfg.space = {
+        lex: !!((_f = opts.space) === null || _f === void 0 ? void 0 : _f.lex),
+        chars: charset((_g = opts.space) === null || _g === void 0 ? void 0 : _g.chars),
+        check: (_h = opts.space) === null || _h === void 0 ? void 0 : _h.check
+      };
+      cfg.line = {
+        lex: !!((_j = opts.line) === null || _j === void 0 ? void 0 : _j.lex),
+        chars: charset((_k = opts.line) === null || _k === void 0 ? void 0 : _k.chars),
+        rowChars: charset((_l = opts.line) === null || _l === void 0 ? void 0 : _l.rowChars),
+        single: !!((_o = opts.line) === null || _o === void 0 ? void 0 : _o.single),
+        check: (_p = opts.line) === null || _p === void 0 ? void 0 : _p.check
+      };
+      cfg.text = {
+        lex: !!((_q = opts.text) === null || _q === void 0 ? void 0 : _q.lex),
+        modify: (((_r = cfg.text) === null || _r === void 0 ? void 0 : _r.modify) || []).concat([(_s = opts.text) === null || _s === void 0 ? void 0 : _s.modify].flat()).filter((m) => null != m),
+        check: (_t7 = opts.text) === null || _t7 === void 0 ? void 0 : _t7.check
+      };
+      cfg.number = {
+        lex: !!((_u = opts.number) === null || _u === void 0 ? void 0 : _u.lex),
+        hex: !!((_v = opts.number) === null || _v === void 0 ? void 0 : _v.hex),
+        oct: !!((_w = opts.number) === null || _w === void 0 ? void 0 : _w.oct),
+        bin: !!((_x = opts.number) === null || _x === void 0 ? void 0 : _x.bin),
+        sep: null != ((_y = opts.number) === null || _y === void 0 ? void 0 : _y.sep) && "" !== opts.number.sep,
+        exclude: (_z = opts.number) === null || _z === void 0 ? void 0 : _z.exclude,
+        sepChar: (_0 = opts.number) === null || _0 === void 0 ? void 0 : _0.sep,
+        check: (_1 = opts.number) === null || _1 === void 0 ? void 0 : _1.check
+      };
+      cfg.value = {
+        lex: !!((_2 = opts.value) === null || _2 === void 0 ? void 0 : _2.lex),
+        def: entries(((_3 = opts.value) === null || _3 === void 0 ? void 0 : _3.def) || {}).reduce((a, e) => (null == e[1] || false === e[1] || e[1].match || (a[e[0]] = e[1]), a), {}),
+        defre: entries(((_4 = opts.value) === null || _4 === void 0 ? void 0 : _4.def) || {}).reduce((a, e) => (e[1] && e[1].match && (a[e[0]] = e[1], a[e[0]].consume = !!a[e[0]].consume), a), {})
+        // TODO: just testing, move to a plugin for extended values
+        // 'undefined': { v: undefined },
+        // 'NaN': { v: NaN },
+        // 'Infinity': { v: Infinity },
+        // '+Infinity': { v: +Infinity },
+        // '-Infinity': { v: -Infinity },
+      };
+      cfg.rule = {
+        start: null == ((_5 = opts.rule) === null || _5 === void 0 ? void 0 : _5.start) ? "val" : opts.rule.start,
+        maxmul: null == ((_6 = opts.rule) === null || _6 === void 0 ? void 0 : _6.maxmul) ? 3 : opts.rule.maxmul,
+        finish: !!((_7 = opts.rule) === null || _7 === void 0 ? void 0 : _7.finish),
+        include: ((_8 = opts.rule) === null || _8 === void 0 ? void 0 : _8.include) ? opts.rule.include.split(/\s*,+\s*/).filter((g) => "" !== g) : [],
+        exclude: ((_9 = opts.rule) === null || _9 === void 0 ? void 0 : _9.exclude) ? opts.rule.exclude.split(/\s*,+\s*/).filter((g) => "" !== g) : []
+      };
+      cfg.map = {
+        extend: !!((_10 = opts.map) === null || _10 === void 0 ? void 0 : _10.extend),
+        merge: (_11 = opts.map) === null || _11 === void 0 ? void 0 : _11.merge
+      };
+      cfg.list = {
+        property: !!((_12 = opts.list) === null || _12 === void 0 ? void 0 : _12.property)
+      };
+      let fixedSorted = Object.keys(cfg.fixed.token).sort((a, b) => b.length - a.length);
+      let fixedRE = fixedSorted.map((fixed) => escre(fixed)).join("|");
+      let commentStartRE = ((_13 = opts.comment) === null || _13 === void 0 ? void 0 : _13.lex) ? (opts.comment.def ? values2(opts.comment.def) : []).filter((c) => c && c.lex).map((c) => escre(c.start)).join("|") : "";
+      let enderRE = [
+        "([",
+        escre(keys(charset(cfg.space.lex && cfg.space.chars, cfg.line.lex && cfg.line.chars)).join("")),
+        "]",
+        ("string" === typeof opts.ender ? opts.ender.split("") : Array.isArray(opts.ender) ? opts.ender : []).map((c) => "|" + escre(c)).join(""),
+        "" === fixedRE ? "" : "|",
+        fixedRE,
+        "" === commentStartRE ? "" : "|",
+        commentStartRE,
+        "|$)"
+        // EOF case
+      ];
+      cfg.rePart = {
+        fixed: fixedRE,
+        ender: enderRE,
+        commentStart: commentStartRE
+      };
+      cfg.re = {
+        ender: regexp(null, ...enderRE),
+        // TODO: prebuild these using a property on matcher?
+        rowChars: regexp(null, escre((_14 = opts.line) === null || _14 === void 0 ? void 0 : _14.rowChars)),
+        columns: regexp(null, "[" + escre((_15 = opts.line) === null || _15 === void 0 ? void 0 : _15.chars) + "]", "(.*)$")
+      };
+      cfg.lex = {
+        empty: !!((_16 = opts.lex) === null || _16 === void 0 ? void 0 : _16.empty),
+        emptyResult: (_17 = opts.lex) === null || _17 === void 0 ? void 0 : _17.emptyResult,
+        match: ((_18 = opts.lex) === null || _18 === void 0 ? void 0 : _18.match) ? entries(opts.lex.match).reduce((list, entry) => {
+          let name = entry[0];
+          let matchspec = entry[1];
+          if (matchspec) {
+            let matcher = matchspec.make(cfg, opts);
+            if (matcher) {
+              matcher.matcher = name;
+              matcher.make = matchspec.make;
+              matcher.order = matchspec.order;
+            }
+            list.push(matcher);
+          }
+          return list;
+        }, []).filter((m) => null != m && false !== m && -1 < +m.order).sort((a, b) => a.order - b.order) : []
+      };
+      cfg.parse = {
+        prepare: values2((_19 = opts.parse) === null || _19 === void 0 ? void 0 : _19.prepare)
+      };
+      cfg.debug = {
+        get_console: ((_20 = opts.debug) === null || _20 === void 0 ? void 0 : _20.get_console) || (() => console),
+        maxlen: null == ((_21 = opts.debug) === null || _21 === void 0 ? void 0 : _21.maxlen) ? 99 : opts.debug.maxlen,
+        print: {
+          config: !!((_23 = (_22 = opts.debug) === null || _22 === void 0 ? void 0 : _22.print) === null || _23 === void 0 ? void 0 : _23.config),
+          src: (_25 = (_24 = opts.debug) === null || _24 === void 0 ? void 0 : _24.print) === null || _25 === void 0 ? void 0 : _25.src
+        }
+      };
+      cfg.error = opts.error || {};
+      cfg.hint = opts.hint || {};
+      if ((_26 = opts.config) === null || _26 === void 0 ? void 0 : _26.modify) {
+        keys(opts.config.modify).forEach((modifer) => opts.config.modify[modifer](cfg, opts));
+      }
+      if (cfg.debug.print.config) {
+        cfg.debug.get_console().dir(cfg, { depth: null });
+      }
+      cfg.result = {
+        fail: []
+      };
+      if (opts.result) {
+        cfg.result.fail = [...opts.result.fail];
+      }
+      assign2(jsonic2.options, opts);
+      assign2(jsonic2.token, cfg.t);
+      assign2(jsonic2.tokenSet, cfg.tokenSet);
+      assign2(jsonic2.fixed, cfg.fixed.ref);
+      return cfg;
+    }
+    utility.configure = configure;
+    function tokenize2(ref, cfg, jsonic2) {
+      let tokenmap = cfg.t;
+      let token2 = tokenmap[ref];
+      if (null == token2 && types_12.STRING === typeof ref) {
+        token2 = cfg.tI++;
+        tokenmap[token2] = ref;
+        tokenmap[ref] = token2;
+        tokenmap[ref.substring(1)] = token2;
+        if (null != jsonic2) {
+          assign2(jsonic2.token, cfg.t);
+        }
+      }
+      return token2;
+    }
+    utility.tokenize = tokenize2;
+    function findTokenSet(ref, cfg) {
+      let tokenSetMap = cfg.tokenSet;
+      let found = tokenSetMap[ref];
+      return found;
+    }
+    utility.findTokenSet = findTokenSet;
+    function mesc(s, _2) {
+      return _2 = new String(s), _2.esc = true, _2;
+    }
+    utility.mesc = mesc;
+    function regexp(flags, ...parts) {
+      return new RegExp(parts.map((p) => p.esc ? (
+        //p.replace(/[-\\|\]{}()[^$+*?.!=]/g, '\\$&')
+        escre(p.toString())
+      ) : p).join(types_12.EMPTY), null == flags ? "" : flags);
+    }
+    utility.regexp = regexp;
+    function escre(s) {
+      return null == s ? "" : s.replace(/[-\\|\]{}()[^$+*?.!=]/g, "\\$&").replace(/\t/g, "\\t").replace(/\r/g, "\\r").replace(/\n/g, "\\n");
+    }
+    utility.escre = escre;
+    function deep(base, ...rest) {
+      let base_isf = S.function === typeof base;
+      let base_iso = null != base && (S.object === typeof base || base_isf);
+      for (let over of rest) {
+        let over_isf = S.function === typeof over;
+        let over_iso = null != over && (S.object === typeof over || over_isf);
+        let over_ctor;
+        if (base_iso && over_iso && !over_isf && Array.isArray(base) === Array.isArray(over)) {
+          for (let k in over) {
+            base[k] = deep(base[k], over[k]);
+          }
+        } else {
+          base = void 0 === over ? base : over_isf ? over : over_iso ? S.function === typeof (over_ctor = over.constructor) && S.Object !== over_ctor.name && S.Array !== over_ctor.name ? over : deep(Array.isArray(over) ? [] : {}, over) : over;
+          base_isf = S.function === typeof base;
+          base_iso = null != base && (S.object === typeof base || base_isf);
+        }
+      }
+      return base;
+    }
+    utility.deep = deep;
+    function errinject(s, code, details, token2, rule, ctx) {
+      let ref = { code, details, token: token2, rule, ctx };
+      return null == s ? "" : s.replace(/\$(\{?)([\w_0-9]+)(\}?)/g, (_m, ob, name, cb) => {
+        let inject = null != ref[name] ? ref[name] : null != details[name] ? details[name] : ctx.meta && null != ctx.meta[name] ? ctx.meta[name] : null != token2[name] ? token2[name] : null != rule[name] ? rule[name] : null != ctx.opts[name] ? ctx.opts[name] : null != ctx.cfg[name] ? ctx.cfg[name] : null != ctx[name] ? ctx[name] : "$" + name;
+        let instr = ob && cb ? inject : JSON.stringify(inject);
+        instr = null == instr ? "" : instr;
+        return instr.replace(/\n/g, "\n  ");
+      });
+    }
+    utility.errinject = errinject;
+    function trimstk(err) {
+      if (err.stack) {
+        err.stack = err.stack.split("\n").filter((s) => !s.includes("jsonic/jsonic")).map((s) => s.replace(/    at /, "at ")).join("\n");
+      }
+    }
+    utility.trimstk = trimstk;
+    function extract(src, errtxt, token2) {
+      let loc = 0 < token2.sI ? token2.sI : 0;
+      let row = 0 < token2.rI ? token2.rI : 1;
+      let col = 0 < token2.cI ? token2.cI : 1;
+      let tsrc = null == token2.src ? types_12.EMPTY : token2.src;
+      let behind = src.substring(Math.max(0, loc - 333), loc).split("\n");
+      let ahead = src.substring(loc, loc + 333).split("\n");
+      let pad = 2 + (types_12.EMPTY + (row + 2)).length;
+      let rc = row < 3 ? 1 : row - 2;
+      let ln = (s) => "\x1B[34m" + (types_12.EMPTY + rc++).padStart(pad, " ") + " | \x1B[0m" + (null == s ? types_12.EMPTY : s);
+      let blen = behind.length;
+      let lines = [
+        2 < blen ? ln(behind[blen - 3]) : null,
+        1 < blen ? ln(behind[blen - 2]) : null,
+        ln(behind[blen - 1] + ahead[0]),
+        " ".repeat(pad) + "   " + " ".repeat(col - 1) + "\x1B[31m" + "^".repeat(tsrc.length || 1) + " " + errtxt + "\x1B[0m",
+        ln(ahead[1]),
+        ln(ahead[2])
+      ].filter((line2) => null != line2).join("\n");
+      return lines;
+    }
+    utility.extract = extract;
+    function errdesc(code, details, token2, rule, ctx) {
+      var _a, _b, _c;
+      try {
+        let cfg = ctx.cfg;
+        let meta = ctx.meta;
+        let errtxt = errinject(cfg.error[code] || ((_a = details === null || details === void 0 ? void 0 : details.use) === null || _a === void 0 ? void 0 : _a.err) && (details.use.err.code || details.use.err.message) || cfg.error.unknown, code, details, token2, rule, ctx);
+        if (S.function === typeof cfg.hint) {
+          cfg.hint = __spreadValues(__spreadValues({}, cfg.hint()), cfg.hint);
+        }
+        let message = [
+          "\x1B[31m[jsonic/" + code + "]:\x1B[0m " + errtxt,
+          "  \x1B[34m-->\x1B[0m " + (meta && meta.fileName || "<no-file>") + ":" + token2.rI + ":" + token2.cI,
+          extract(ctx.src(), errtxt, token2),
+          "",
+          errinject((cfg.hint[code] || ((_c = (_b = details.use) === null || _b === void 0 ? void 0 : _b.err) === null || _c === void 0 ? void 0 : _c.message) || cfg.hint.unknown || "").trim().split("\n").map((s) => "  " + s).join("\n"), code, details, token2, rule, ctx),
+          "",
+          "  \x1B[2mhttps://jsonic.senecajs.org\x1B[0m",
+          "  \x1B[2m--internal: rule=" + rule.name + "~" + rule.state + "; token=" + tokenize2(token2.tin, ctx.cfg) + (null == token2.why ? "" : "~" + token2.why) + "; plugins=" + ctx.plgn().map((p) => p.name).join(",") + "--\x1B[0m\n"
+        ].join("\n");
+        let desc = {
+          internal: {
+            token: token2,
+            ctx
+          }
+        };
+        desc = __spreadProps(__spreadValues({}, Object.create(desc)), {
+          message,
+          code,
+          details,
+          meta,
+          fileName: meta ? meta.fileName : void 0,
+          lineNumber: token2.rI,
+          columnNumber: token2.cI
+        });
+        return desc;
+      } catch (e) {
+        console.log(e);
+        return {};
+      }
+    }
+    utility.errdesc = errdesc;
+    function badlex(lex, BD, ctx) {
+      let next2 = lex.next.bind(lex);
+      lex.next = (rule, alt, altI, tI) => {
+        let token2 = next2(rule, alt, altI, tI);
+        if (BD === token2.tin) {
+          let details = {};
+          if (null != token2.use) {
+            details.use = token2.use;
+          }
+          throw new JsonicError(token2.why || S.unexpected, details, token2, rule, ctx);
+        }
+        return token2;
+      };
+      return lex;
+    }
+    utility.badlex = badlex;
+    function makelog(ctx, meta) {
+      var _a, _b, _c;
+      let trace = (_c = (_b = (_a = ctx.opts) === null || _a === void 0 ? void 0 : _a.plugin) === null || _b === void 0 ? void 0 : _b.debug) === null || _c === void 0 ? void 0 : _c.trace;
+      if (meta || trace) {
+        if ("number" === typeof (meta === null || meta === void 0 ? void 0 : meta.log) || trace) {
+          let exclude_objects = false;
+          let logdepth = meta === null || meta === void 0 ? void 0 : meta.log;
+          if (-1 === logdepth || trace) {
+            logdepth = 1;
+            exclude_objects = true;
+          }
+          ctx.log = (...rest) => {
+            if (exclude_objects) {
+              let logstr = rest.filter((item) => S.object != typeof item).map((item) => S.function == typeof item ? item.name : item).join(S.gap);
+              ctx.cfg.debug.get_console().log(logstr);
+            } else {
+              ctx.cfg.debug.get_console().dir(rest, { depth: logdepth });
+            }
+            return void 0;
+          };
+        } else if ("function" === typeof meta.log) {
+          ctx.log = meta.log;
+        }
+      }
+      return ctx.log;
+    }
+    utility.makelog = makelog;
+    function srcfmt(config2) {
+      return "function" === typeof config2.debug.print.src ? config2.debug.print.src : (s) => {
+        let out = null == s ? types_12.EMPTY : Array.isArray(s) ? JSON.stringify(s).replace(/]$/, entries(s).filter((en) => isNaN(en[0])).map((en, i) => (0 === i ? ", " : "") + en[0] + ": " + JSON.stringify(en[1])) + // Just one level of array props!
+        "]") : JSON.stringify(s);
+        out = out.substring(0, config2.debug.maxlen) + (config2.debug.maxlen < out.length ? "..." : types_12.EMPTY);
+        return out;
+      };
+    }
+    utility.srcfmt = srcfmt;
+    function str(o, len = 44) {
+      let s;
+      try {
+        s = "object" === typeof o ? JSON.stringify(o) : "" + o;
+      } catch (e) {
+        s = "" + o;
+      }
+      return snip(len < s.length ? s.substring(0, len - 3) + "..." : s, len);
+    }
+    utility.str = str;
+    function snip(s, len = 5) {
+      return void 0 === s ? "" : ("" + s).substring(0, len).replace(/[\r\n\t]/g, ".");
+    }
+    utility.snip = snip;
+    function clone(class_instance) {
+      return deep(Object.create(Object.getPrototypeOf(class_instance)), class_instance);
+    }
+    utility.clone = clone;
+    function charset(...parts) {
+      return null == parts ? {} : parts.filter((p) => false !== p).map((p) => "object" === typeof p ? keys(p).join(types_12.EMPTY) : p).join(types_12.EMPTY).split(types_12.EMPTY).reduce((a, c) => (a[c] = c.charCodeAt(0), a), {});
+    }
+    utility.charset = charset;
+    function clean(o) {
+      for (let p in o) {
+        if (null == o[p]) {
+          delete o[p];
+        }
+      }
+      return o;
+    }
+    utility.clean = clean;
+    function filterRules(rs, cfg) {
+      let rsnames = ["open", "close"];
+      for (let rsn of rsnames) {
+        ;
+        rs.def[rsn] = rs.def[rsn].map((as) => (as.g = "string" === typeof as.g ? (as.g || "").split(/\s*,+\s*/) : as.g || [], as)).filter((as) => cfg.rule.include.reduce((a, g) => a || null != as.g && -1 !== as.g.indexOf(g), 0 === cfg.rule.include.length)).filter((as) => cfg.rule.exclude.reduce((a, g) => a && (null == as.g || -1 === as.g.indexOf(g)), true));
+      }
+      return rs;
+    }
+    utility.filterRules = filterRules;
+    function prop(obj, path, val) {
+      let root = obj;
+      try {
+        let parts = path.split(".");
+        let pn;
+        for (let pI = 0; pI < parts.length; pI++) {
+          pn = parts[pI];
+          if (pI < parts.length - 1) {
+            obj = obj[pn] = obj[pn] || {};
+          }
+        }
+        if (void 0 !== val) {
+          obj[pn] = val;
+        }
+        return obj[pn];
+      } catch (e) {
+        throw new Error("Cannot " + (void 0 === val ? "get" : "set") + " path " + path + " on object: " + str(root) + (void 0 === val ? "" : " to value: " + str(val, 22)));
+      }
+    }
+    utility.prop = prop;
+    function modlist(list, mods) {
+      if (mods && list) {
+        if (0 < list.length) {
+          if (mods.delete && 0 < mods.delete.length) {
+            for (let i = 0; i < mods.delete.length; i++) {
+              let mdI = mods.delete[i];
+              if (mdI < 0 ? -1 * mdI <= list.length : mdI < list.length) {
+                let dI = (list.length + mdI) % list.length;
+                list[dI] = null;
+              }
+            }
+          }
+          if (mods.move) {
+            for (let i = 0; i < mods.move.length; i += 2) {
+              let fromI = (list.length + mods.move[i]) % list.length;
+              let toI = (list.length + mods.move[i + 1]) % list.length;
+              let entry = list[fromI];
+              list.splice(fromI, 1);
+              list.splice(toI, 0, entry);
+            }
+          }
+          let filtered = list.filter((entry) => null != entry);
+          if (filtered.length !== list.length) {
+            list.length = 0;
+            list.push(...filtered);
+          }
+        }
+        if (mods.custom) {
+          let newlist = mods.custom(list);
+          if (null != newlist) {
+            list = newlist;
+          }
+        }
+      }
+      return list;
+    }
+    utility.modlist = modlist;
+    function parserwrap(parser2) {
+      return {
+        start: function(src, jsonic2, meta, parent_ctx) {
+          try {
+            return parser2.start(src, jsonic2, meta, parent_ctx);
+          } catch (ex) {
+            if ("SyntaxError" === ex.name) {
+              let loc = 0;
+              let row = 0;
+              let col = 0;
+              let tsrc = types_12.EMPTY;
+              let errloc = ex.message.match(/^Unexpected token (.) .*position\s+(\d+)/i);
+              if (errloc) {
+                tsrc = errloc[1];
+                loc = parseInt(errloc[2]);
+                row = src.substring(0, loc).replace(/[^\n]/g, types_12.EMPTY).length;
+                let cI = loc - 1;
+                while (-1 < cI && "\n" !== src.charAt(cI))
+                  cI--;
+                col = Math.max(src.substring(cI, loc).length, 0);
+              }
+              let token2 = ex.token || (0, lexer_12.makeToken)(
+                "#UK",
+                // tokenize('#UK', jsonic.config),
+                tokenize2("#UK", jsonic2.internal().config),
+                void 0,
+                tsrc,
+                (0, lexer_12.makePoint)(tsrc.length, loc, ex.lineNumber || row, ex.columnNumber || col)
+              );
+              throw new JsonicError(
+                ex.code || "json",
+                ex.details || {
+                  msg: ex.message
+                },
+                token2,
+                {},
+                // TODO: this smells
+                ex.ctx || {
+                  uI: -1,
+                  opts: jsonic2.options,
+                  cfg: jsonic2.internal().config,
+                  token: token2,
+                  meta,
+                  src: () => src,
+                  root: () => void 0,
+                  plgn: () => jsonic2.internal().plugins,
+                  inst: () => jsonic2,
+                  rule: { name: "no-rule" },
+                  sub: {},
+                  xs: -1,
+                  v2: token2,
+                  v1: token2,
+                  t0: token2,
+                  t1: token2,
+                  tC: -1,
+                  kI: -1,
+                  rs: [],
+                  rsI: 0,
+                  rsm: {},
+                  n: {},
+                  log: meta ? meta.log : void 0,
+                  F: srcfmt(jsonic2.internal().config),
+                  use: {},
+                  NORULE: { name: "no-rule" },
+                  NOTOKEN: { name: "no-token" }
+                }
+              );
+            } else {
+              throw ex;
+            }
+          }
+        }
+      };
+    }
+    utility.parserwrap = parserwrap;
+    return utility;
+  }
+  var defaults$1 = {};
+  "use strict";
+  Object.defineProperty(defaults$1, "__esModule", { value: true });
+  var defaults_2 = defaults$1.defaults = void 0;
+  const lexer_1 = requireLexer();
+  const defaults = {
+    // Prevent prototype pollution
+    safe: {
+      key: true
+    },
+    // Default tag - set your own!
+    tag: "-",
+    // Fixed token lexing.
+    fixed: {
+      // Recognize fixed tokens in the Lexer.
+      lex: true,
+      // Token names.
+      token: {
+        "#OB": "{",
+        "#CB": "}",
+        "#OS": "[",
+        "#CS": "]",
+        "#CL": ":",
+        "#CA": ","
+      }
+    },
+    match: {
+      lex: true,
+      token: {}
+    },
+    // Token sets.
+    tokenSet: {
+      IGNORE: ["#SP", "#LN", "#CM"],
+      VAL: ["#TX", "#NR", "#ST", "#VL"],
+      KEY: ["#TX", "#NR", "#ST", "#VL"]
+    },
+    // Recognize space characters in the lexer.
+    space: {
+      // Recognize space in the Lexer.
+      lex: true,
+      // Space characters are kept to a minimal set.
+      // Add more from https://en.wikipedia.org/wiki/Whitespace_character as needed.
+      chars: " 	"
+    },
+    // Line lexing.
+    line: {
+      // Recognize lines in the Lexer.
+      lex: true,
+      // Line characters.
+      chars: "\r\n",
+      // Increments row (aka line) counter.
+      rowChars: "\n",
+      // Generate separate lexer tokens for each newline.
+      // Note: '\r\n' counts as one newline.
+      single: false
+    },
+    // Text formats.
+    text: {
+      // Recognize text (non-quoted strings) in the Lexer.
+      lex: true
+    },
+    // Control number formats.
+    number: {
+      // Recognize numbers in the Lexer.
+      lex: true,
+      // Recognize hex numbers (eg. 10 === 0x0a).
+      hex: true,
+      // Recognize octal numbers (eg. 10 === 0o12).
+      oct: true,
+      // Recognize ninary numbers (eg. 10 === 0b1010).
+      bin: true,
+      // All possible number chars. |+-|0|xob|0-9a-fA-F|.e|+-|0-9a-fA-F|
+      // digital: '-1023456789._xoeEaAbBcCdDfF+',
+      // Allow embedded separator. `null` to disable.
+      sep: "_",
+      // Exclude number strings matching this RegExp
+      exclude: void 0
+    },
+    // Comment markers.
+    // <mark-char>: true -> single line comments
+    // <mark-start>: <mark-end> -> multiline comments
+    comment: {
+      // Recognize comments in the Lexer.
+      lex: true,
+      // TODO: plugin
+      // Balance multiline comments.
+      // balance: true,
+      // Comment markers.
+      def: {
+        hash: { line: true, start: "#", lex: true, eatline: false },
+        slash: { line: true, start: "//", lex: true, eatline: false },
+        multi: {
+          line: false,
+          start: "/*",
+          end: "*/",
+          lex: true,
+          eatline: false
+        }
+      }
+    },
+    // String formats.
+    string: {
+      // Recognize strings in the Lexer.
+      lex: true,
+      // Quote characters
+      chars: "'\"`",
+      // Multiline quote chars.
+      multiChars: "`",
+      // Escape character.
+      escapeChar: "\\",
+      // String escape chars.
+      // Denoting char (follows escape char) => actual char.
+      escape: {
+        b: "\b",
+        f: "\f",
+        n: "\n",
+        r: "\r",
+        t: "	",
+        v: "\v",
+        // These preserve standard escapes when allowUnknown=false.
+        '"': '"',
+        "'": "'",
+        "`": "`",
+        "\\": "\\",
+        "/": "/"
+      },
+      // Allow unknown escape characters - they are copied to output: '\w' -> 'w'.
+      allowUnknown: true,
+      // If string lexing fails, instead of error, allow other matchers to try.
+      abandon: false
+    },
+    // Object formats.
+    map: {
+      // TODO: or trigger error?
+      // Later duplicates extend earlier ones, rather than replacing them.
+      extend: true,
+      // Custom merge function for duplicates (optional).
+      // TODO: needs function signature
+      merge: void 0
+    },
+    // Array formats.
+    list: {
+      // Allow arrays to have properties: `[a:9,0,1]`
+      property: true
+    },
+    // Keyword values.
+    value: {
+      lex: true,
+      def: {
+        true: { val: true },
+        false: { val: false },
+        null: { val: null }
+      }
+    },
+    // Additional text ending characters
+    ender: [],
+    // Plugin custom options, (namespace by plugin name).
+    plugin: {},
+    // Debug settings
+    debug: {
+      // Default console for logging.
+      get_console: () => console,
+      // Max length of parse value to print.
+      maxlen: 99,
+      // Print internal structures
+      print: {
+        // Print config built from options.
+        config: false,
+        // Custom string formatter for src and node values.
+        src: void 0
+      }
+    },
+    // Error messages.
+    error: {
+      unknown: "unknown error: $code",
+      unexpected: "unexpected character(s): $src",
+      invalid_unicode: "invalid unicode escape: $src",
+      invalid_ascii: "invalid ascii escape: $src",
+      unprintable: "unprintable character: $src",
+      unterminated_string: "unterminated string: $src",
+      unterminated_comment: "unterminated comment: $src",
+      unknown_rule: "unknown rule: $rulename"
+    },
+    // Error hints: {error-code: hint-text}.
+    hint: make_hint,
+    // Lexer
+    lex: {
+      match: {
+        match: { order: 1e6, make: lexer_1.makeMatchMatcher },
+        fixed: { order: 2e6, make: lexer_1.makeFixedMatcher },
+        space: { order: 3e6, make: lexer_1.makeSpaceMatcher },
+        line: { order: 4e6, make: lexer_1.makeLineMatcher },
+        string: { order: 5e6, make: lexer_1.makeStringMatcher },
+        comment: { order: 6e6, make: lexer_1.makeCommentMatcher },
+        number: { order: 7e6, make: lexer_1.makeNumberMatcher },
+        text: { order: 8e6, make: lexer_1.makeTextMatcher }
+      },
+      // Empty string is allowed and returns undefined
+      empty: true,
+      emptyResult: void 0
+    },
+    // Parser
+    parse: {
+      // Plugin custom functions to prepare parser context.
+      prepare: {}
+    },
+    // Parser rule options.
+    rule: {
+      // Name of the starting rule.
+      start: "val",
+      // Automatically close remaining structures at EOF.
+      finish: true,
+      // Multiplier to increase the maximum number of rule occurences.
+      maxmul: 3,
+      // Include only those alts with matching group tags (comma sep).
+      // NOTE: applies universally, thus also for subsequent rules.
+      include: "",
+      // Exclude alts with matching group tags (comma sep).
+      // NOTE: applies universally, thus also for subsequent rules.
+      exclude: ""
+    },
+    // Result value options.
+    result: {
+      // Fail if result matches any of these.
+      fail: []
+    },
+    // Configuration options.
+    config: {
+      // Configuration modifiers.
+      modify: {}
+    },
+    // Provide a custom parser.
+    parser: {
+      start: void 0
+    }
+  };
+  defaults_2 = defaults$1.defaults = defaults;
+  function make_hint(d = (t, r2 = "replace") => t[r2](/[A-Z]/g, (m) => " " + m.toLowerCase())[r2](/[~%][a-z]/g, (m) => ("~" == m[0] ? " " : "") + m[1].toUpperCase()), s = "~sinceTheErrorIsUnknown,ThisIsProbablyABugInsideJsonic\nitself,OrAPlugin.~pleaseConsiderPostingAGithubIssue -Thanks!\n\n~code: $code,~details: \n$details|~theCharacter(s) $srcWereNotExpectedAtThisPointAsTheyDoNot\nmatchTheExpectedSyntax,EvenUnderTheRelaxedJsonicRules.~ifIt\nisNotObviouslyWrong,TheActualSyntaxErrorMayBeElsewhere.~try\ncommentingOutLargerAreasAroundThisPointUntilYouGetNoErrors,\nthenRemoveTheCommentsInSmallSectionsUntilYouFindThe\noffendingSyntax.~n%o%t%e:~alsoCheckIfAnyPluginsYouAreUsing\nexpectDifferentSyntaxInThisCase.|~theEscapeSequence $srcDoesNotEncodeAValidUnicodeCodePoint\nnumber.~youMayNeedToValidateYourStringDataManuallyUsingTest\ncodeToSeeHow~javaScriptWillInterpretIt.~alsoConsiderThatYour\ndataMayHaveBecomeCorrupted,OrTheEscapeSequenceHasNotBeen\ngeneratedCorrectly.|~theEscapeSequence $srcDoesNotEncodeAValid~a%s%c%i%iCharacter.~you\nmayNeedToValidateYourStringDataManuallyUsingTestCodeToSee\nhow~javaScriptWillInterpretIt.~alsoConsiderThatYourDataMay\nhaveBecomeCorrupted,OrTheEscapeSequenceHasNotBeenGenerated\ncorrectly.|~stringValuesCannotContainUnprintableCharacters (characterCodes\nbelow 32).~theCharacter $srcIsUnprintable.~youMayNeedToRemove\ntheseCharactersFromYourSourceData.~alsoCheckThatItHasNot\nbecomeCorrupted.|~thisStringHasNoEndQuote.|~thisCommentIsNeverClosed.|~noRuleNamed $rulenameIsDefined.~thisIsProbablyAnErrorInThe\ngrammarOfAPlugin.".split("|")) {
+    return "unknown|unexpected|invalid_unicode|invalid_ascii|unprintable|unterminated_string|unterminated_comment|unknown_rule".split("|").reduce((a, n, i) => (a[n] = d(s[i]), a), {});
+  }
+  var parser$1 = {};
+  var rules = {};
+  "use strict";
+  Object.defineProperty(rules, "__esModule", { value: true });
+  var makeRuleSpec_1 = rules.makeRuleSpec = makeNoRule_1 = rules.makeNoRule = makeRule_1 = rules.makeRule = void 0;
+  const types_1 = types;
+  const utility_1 = requireUtility();
+  class RuleImpl {
+    constructor(spec, ctx, node2) {
+      this.i = -1;
+      this.name = types_1.EMPTY;
+      this.node = null;
+      this.state = types_1.OPEN;
+      this.n = /* @__PURE__ */ Object.create(null);
+      this.d = -1;
+      this.use = /* @__PURE__ */ Object.create(null);
+      this.keep = /* @__PURE__ */ Object.create(null);
+      this.bo = false;
+      this.ao = false;
+      this.bc = false;
+      this.ac = false;
+      this.os = 0;
+      this.cs = 0;
+      this.need = 0;
+      this.i = ctx.uI++;
+      this.name = spec.name;
+      this.spec = spec;
+      this.child = ctx.NORULE;
+      this.parent = ctx.NORULE;
+      this.prev = ctx.NORULE;
+      this.o0 = ctx.NOTOKEN;
+      this.o1 = ctx.NOTOKEN;
+      this.c0 = ctx.NOTOKEN;
+      this.c1 = ctx.NOTOKEN;
+      this.node = node2;
+      this.d = ctx.rsI;
+      this.bo = null != spec.def.bo;
+      this.ao = null != spec.def.ao;
+      this.bc = null != spec.def.bc;
+      this.ac = null != spec.def.ac;
+    }
+    process(ctx, lex) {
+      let rule = this.spec.process(this, ctx, lex, this.state);
+      return rule;
+    }
+    toString() {
+      return "[Rule " + this.name + "~" + this.i + "]";
+    }
+  }
+  const makeRule = (...params) => new RuleImpl(...params);
+  var makeRule_1 = rules.makeRule = makeRule;
+  const makeNoRule = (ctx) => makeRule(makeRuleSpec(ctx.cfg, {}), ctx);
+  var makeNoRule_1 = rules.makeNoRule = makeNoRule;
+  class AltMatchImpl {
+    constructor() {
+      this.p = types_1.EMPTY;
+      this.r = types_1.EMPTY;
+      this.b = 0;
+    }
+  }
+  const makeAltMatch = (...params) => new AltMatchImpl(...params);
+  const PALT = makeAltMatch();
+  const EMPTY_ALT = makeAltMatch();
+  class RuleSpecImpl {
+    // TODO: is def param used?
+    constructor(cfg, def) {
+      this.name = types_1.EMPTY;
+      this.def = {
+        open: [],
+        close: [],
+        bo: [],
+        bc: [],
+        ao: [],
+        ac: [],
+        tcol: []
+      };
+      this.cfg = cfg;
+      this.def = Object.assign(this.def, def);
+      this.def.open = (this.def.open || []).filter((alt) => null != alt);
+      this.def.close = (this.def.close || []).filter((alt) => null != alt);
+      for (let alt of [...this.def.open, ...this.def.close]) {
+        normalt(alt);
+      }
+    }
+    // Convenience access to token Tins
+    tin(ref) {
+      return (0, utility_1.tokenize)(ref, this.cfg);
+    }
+    add(state, a, mods) {
+      let inject = (mods === null || mods === void 0 ? void 0 : mods.append) ? "push" : "unshift";
+      let aa = ((0, utility_1.isarr)(a) ? a : [a]).filter((alt) => null != alt && "object" === typeof alt).map((a2) => normalt(a2));
+      let altState = "o" === state ? "open" : "close";
+      let alts = this.def[altState];
+      alts[inject](...aa);
+      alts = this.def[altState] = (0, utility_1.modlist)(alts, mods);
+      (0, utility_1.filterRules)(this, this.cfg);
+      this.norm();
+      return this;
+    }
+    open(a, mods) {
+      return this.add("o", a, mods);
+    }
+    close(a, mods) {
+      return this.add("c", a, mods);
+    }
+    action(append2, step, state, action) {
+      let actions = this.def[step + state];
+      if (append2) {
+        actions.push(action);
+      } else {
+        actions.unshift(action);
+      }
+      return this;
+    }
+    bo(append2, action) {
+      return this.action(action ? !!append2 : true, types_1.BEFORE, types_1.OPEN, action || append2);
+    }
+    ao(append2, action) {
+      return this.action(action ? !!append2 : true, types_1.AFTER, types_1.OPEN, action || append2);
+    }
+    bc(first, second) {
+      return this.action(second ? !!first : true, types_1.BEFORE, types_1.CLOSE, second || first);
+    }
+    ac(first, second) {
+      return this.action(second ? !!first : true, types_1.AFTER, types_1.CLOSE, second || first);
+    }
+    clear() {
+      this.def.open.length = 0;
+      this.def.close.length = 0;
+      this.def.bo.length = 0;
+      this.def.ao.length = 0;
+      this.def.bc.length = 0;
+      this.def.ac.length = 0;
+      return this;
+    }
+    norm() {
+      this.def.open.map((alt) => normalt(alt));
+      this.def.close.map((alt) => normalt(alt));
+      const columns = [];
+      this.def.open.reduce(...collate(0, 0, columns));
+      this.def.open.reduce(...collate(0, 1, columns));
+      this.def.close.reduce(...collate(1, 0, columns));
+      this.def.close.reduce(...collate(1, 1, columns));
+      this.def.tcol = columns;
+      function collate(stateI, tokenI, columns2) {
+        columns2[stateI] = columns2[stateI] || [];
+        let tins = columns2[stateI][tokenI] = columns2[stateI][tokenI] || [];
+        return [
+          function(tins2, alt) {
+            if (alt.s && alt.s[tokenI]) {
+              let newtins = [...new Set(tins2.concat(alt.s[tokenI]))];
+              tins2.length = 0;
+              tins2.push(...newtins);
+            }
+            return tins2;
+          },
+          tins
+        ];
+      }
+      return this;
+    }
+    process(rule, ctx, lex, state) {
+      ctx.log && ctx.log(utility_1.S.rule, ctx, rule, lex);
+      let is_open = state === "o";
+      let next2 = is_open ? rule : ctx.NORULE;
+      let why = is_open ? "O" : "C";
+      let def = this.def;
+      let alts = is_open ? def.open : def.close;
+      let befores = is_open ? rule.bo ? def.bo : null : rule.bc ? def.bc : null;
+      if (befores) {
+        let bout = void 0;
+        for (let bI = 0; bI < befores.length; bI++) {
+          bout = befores[bI].call(this, rule, ctx, next2, bout);
+          if ((bout === null || bout === void 0 ? void 0 : bout.isToken) && (bout === null || bout === void 0 ? void 0 : bout.err)) {
+            return this.bad(bout, rule, ctx, { is_open });
+          }
+        }
+      }
+      let alt = 0 < alts.length ? parse_alts(is_open, alts, lex, rule, ctx) : EMPTY_ALT;
+      if (alt.h) {
+        alt = alt.h(rule, ctx, alt, next2) || alt;
+        why += "H";
+      }
+      if (alt.e) {
+        return this.bad(alt.e, rule, ctx, { is_open });
+      }
+      if (alt.n) {
+        for (let cn in alt.n) {
+          rule.n[cn] = // 0 reverts counter to 0.
+          0 === alt.n[cn] ? 0 : (
+            // First seen, set to 0.
+            (null == rule.n[cn] ? 0 : (
+              // Increment counter.
+              rule.n[cn]
+            )) + alt.n[cn]
+          );
+        }
+      }
+      if (alt.u) {
+        rule.use = Object.assign(rule.use, alt.u);
+      }
+      if (alt.k) {
+        rule.keep = Object.assign(rule.keep, alt.k);
+      }
+      if (alt.a) {
+        why += "A";
+        let tout = alt.a(rule, ctx, alt);
+        if (tout && tout.isToken && tout.err) {
+          return this.bad(tout, rule, ctx, { is_open });
+        }
+      }
+      if (alt.p) {
+        ctx.rs[ctx.rsI++] = rule;
+        let rulespec = ctx.rsm[alt.p];
+        if (rulespec) {
+          next2 = rule.child = makeRule(rulespec, ctx, rule.node);
+          next2.parent = rule;
+          next2.n = __spreadValues({}, rule.n);
+          if (0 < Object.keys(rule.keep).length) {
+            next2.keep = __spreadValues({}, rule.keep);
+          }
+          why += "P`" + alt.p + "`";
+        } else
+          return this.bad(this.unknownRule(ctx.t0, alt.p), rule, ctx, { is_open });
+      } else if (alt.r) {
+        let rulespec = ctx.rsm[alt.r];
+        if (rulespec) {
+          next2 = makeRule(rulespec, ctx, rule.node);
+          next2.parent = rule.parent;
+          next2.prev = rule;
+          next2.n = __spreadValues({}, rule.n);
+          if (0 < Object.keys(rule.keep).length) {
+            next2.keep = __spreadValues({}, rule.keep);
+          }
+          why += "R`" + alt.r + "`";
+        } else
+          return this.bad(this.unknownRule(ctx.t0, alt.r), rule, ctx, { is_open });
+      } else if (!is_open) {
+        next2 = ctx.rs[--ctx.rsI] || ctx.NORULE;
+      }
+      let afters = is_open ? rule.ao ? def.ao : null : rule.ac ? def.ac : null;
+      if (afters) {
+        let aout = void 0;
+        for (let aI = 0; aI < afters.length; aI++) {
+          aout = afters[aI](rule, ctx, next2, aout);
+          if ((aout === null || aout === void 0 ? void 0 : aout.isToken) && (aout === null || aout === void 0 ? void 0 : aout.err)) {
+            return this.bad(aout, rule, ctx, { is_open });
+          }
+        }
+      }
+      next2.why = why;
+      ctx.log && ctx.log(utility_1.S.node, ctx, rule, lex, next2);
+      if (types_1.OPEN === rule.state) {
+        rule.state = types_1.CLOSE;
+      }
+      let consumed = rule[is_open ? "os" : "cs"] - (alt.b || 0);
+      if (1 === consumed) {
+        ctx.v2 = ctx.v1;
+        ctx.v1 = ctx.t0;
+        ctx.t0 = ctx.t1;
+        ctx.t1 = ctx.NOTOKEN;
+      } else if (2 == consumed) {
+        ctx.v2 = ctx.t1;
+        ctx.v1 = ctx.t0;
+        ctx.t0 = ctx.NOTOKEN;
+        ctx.t1 = ctx.NOTOKEN;
+      }
+      return next2;
+    }
+    bad(tkn, rule, ctx, parse2) {
+      throw new utility_1.JsonicError(tkn.err || utility_1.S.unexpected, __spreadProps(__spreadValues({}, tkn.use), {
+        state: parse2.is_open ? utility_1.S.open : utility_1.S.close
+      }), tkn, rule, ctx);
+    }
+    unknownRule(tkn, name) {
+      tkn.err = "unknown_rule";
+      tkn.use = tkn.use || {};
+      tkn.use.rulename = name;
+      return tkn;
+    }
+  }
+  const makeRuleSpec = (...params) => new RuleSpecImpl(...params);
+  makeRuleSpec_1 = rules.makeRuleSpec = makeRuleSpec;
+  function parse_alts(is_open, alts, lex, rule, ctx) {
+    let out = PALT;
+    out.b = 0;
+    out.p = types_1.EMPTY;
+    out.r = types_1.EMPTY;
+    out.n = void 0;
+    out.h = void 0;
+    out.a = void 0;
+    out.u = void 0;
+    out.k = void 0;
+    out.e = void 0;
+    let alt = null;
+    let altI = 0;
+    let t = ctx.cfg.t;
+    let cond = true;
+    let bitAA = 1 << t.AA - 1;
+    let IGNORE = ctx.cfg.tokenSetTins.IGNORE;
+    function next2(r2, alt2, altI2, tI) {
+      let tkn;
+      do {
+        tkn = lex.next(r2, alt2, altI2, tI);
+        ctx.tC++;
+      } while (IGNORE[tkn.tin]);
+      return tkn;
+    }
+    let len = alts.length;
+    for (altI = 0; altI < len; altI++) {
+      alt = alts[altI];
+      let has0 = false;
+      let has1 = false;
+      cond = true;
+      if (alt.S0) {
+        let tin0 = (ctx.t0 = ctx.NOTOKEN !== ctx.t0 ? ctx.t0 : ctx.t0 = next2(rule, alt, altI, 0)).tin;
+        has0 = true;
+        cond = !!(alt.S0[tin0 / 31 | 0] & (1 << tin0 % 31 - 1 | bitAA));
+        if (cond) {
+          has1 = null != alt.S1;
+          if (alt.S1) {
+            let tin1 = (ctx.t1 = ctx.NOTOKEN !== ctx.t1 ? ctx.t1 : ctx.t1 = next2(rule, alt, altI, 1)).tin;
+            has1 = true;
+            cond = !!(alt.S1[tin1 / 31 | 0] & (1 << tin1 % 31 - 1 | bitAA));
+          }
+        }
+      }
+      if (is_open) {
+        rule.o0 = has0 ? ctx.t0 : ctx.NOTOKEN;
+        rule.o1 = has1 ? ctx.t1 : ctx.NOTOKEN;
+        rule.os = (has0 ? 1 : 0) + (has1 ? 1 : 0);
+      } else {
+        rule.c0 = has0 ? ctx.t0 : ctx.NOTOKEN;
+        rule.c1 = has1 ? ctx.t1 : ctx.NOTOKEN;
+        rule.cs = (has0 ? 1 : 0) + (has1 ? 1 : 0);
+      }
+      if (cond && alt.c) {
+        cond = cond && alt.c(rule, ctx, out);
+      }
+      if (cond) {
+        break;
+      } else {
+        alt = null;
+      }
+    }
+    if (!cond) {
+      out.e = ctx.t0;
+    }
+    if (alt) {
+      out.n = null != alt.n ? alt.n : out.n;
+      out.h = null != alt.h ? alt.h : out.h;
+      out.a = null != alt.a ? alt.a : out.a;
+      out.u = null != alt.u ? alt.u : out.u;
+      out.k = null != alt.k ? alt.k : out.k;
+      out.g = null != alt.g ? alt.g : out.g;
+      out.e = alt.e && alt.e(rule, ctx, out) || void 0;
+      out.p = null != alt.p && false !== alt.p ? "string" === typeof alt.p ? alt.p : alt.p(rule, ctx, out) : out.p;
+      out.r = null != alt.r && false !== alt.r ? "string" === typeof alt.r ? alt.r : alt.r(rule, ctx, out) : out.r;
+      out.b = null != alt.b && false !== alt.b ? "number" === typeof alt.b ? alt.b : alt.b(rule, ctx, out) : out.b;
+    }
+    let match2 = altI < alts.length;
+    ctx.log && ctx.log(utility_1.S.parse, ctx, rule, lex, match2, cond, altI, alt, out);
+    return out;
+  }
+  function normalt(a) {
+    if (null != a.c) {
+      let counters = a.c.n;
+      let depth = a.c.d;
+      if (null != counters || null != depth) {
+        a.c = function(rule) {
+          let pass = true;
+          if (null != counters) {
+            for (let cn in counters) {
+              pass = pass && (null == rule.n[cn] || rule.n[cn] <= (null == counters[cn] ? 0 : counters[cn]));
+            }
+          }
+          if (null != depth) {
+            pass = pass && rule.d <= depth;
+          }
+          return pass;
+        };
+        if (null != counters) {
+          ;
+          a.c.n = counters;
+        }
+        if (null != depth) {
+          ;
+          a.c.d = depth;
+        }
+      }
+    }
+    if (types_1.STRING === typeof a.g) {
+      a.g = a.g.split(/\s*,\s*/);
+    } else if (null == a.g) {
+      a.g = [];
+    }
+    a.g = a.g.sort();
+    if (!a.s || 0 === a.s.length) {
+      a.s = null;
+    } else {
+      const tinsify = (s) => s.flat().filter((tin) => "number" === typeof tin);
+      const partify = (tins, part) => tins.filter((tin) => 31 * part <= tin && tin < 31 * (part + 1));
+      const bitify = (s, part) => s.reduce((bits, tin) => 1 << tin - (31 * part + 1) | bits, 0);
+      const tins0 = tinsify([a.s[0]]);
+      const tins1 = tinsify([a.s[1]]);
+      const aa = a;
+      aa.S0 = 0 < tins0.length ? new Array(Math.max(...tins0.map((tin) => 1 + tin / 31 | 0))).fill(null).map((_2, i) => i).map((part) => bitify(partify(tins0, part), part)) : null;
+      aa.S1 = 0 < tins1.length ? new Array(Math.max(...tins1.map((tin) => 1 + tin / 31 | 0))).fill(null).map((_2, i) => i).map((part) => bitify(partify(tins1, part), part)) : null;
+    }
+    if (!a.p) {
+      a.p = null;
+    }
+    if (!a.r) {
+      a.r = null;
+    }
+    if (!a.b) {
+      a.b = null;
+    }
+    return a;
+  }
+  (function(exports3) {
+    "use strict";
+    Object.defineProperty(exports3, "__esModule", { value: true });
+    exports3.makeParser = exports3.makeRuleSpec = exports3.makeRule = void 0;
+    const types_12 = types;
+    const utility_12 = requireUtility();
+    const lexer_12 = requireLexer();
+    const rules_1 = rules;
+    Object.defineProperty(exports3, "makeRule", { enumerable: true, get: function() {
+      return rules_1.makeRule;
+    } });
+    Object.defineProperty(exports3, "makeRuleSpec", { enumerable: true, get: function() {
+      return rules_1.makeRuleSpec;
+    } });
+    class ParserImpl {
+      constructor(options, cfg) {
+        this.rsm = {};
+        this.options = options;
+        this.cfg = cfg;
+      }
+      // TODO: ensure chains properly, both for create and extend rule
+      // Multi-functional get/set for rules.
+      rule(name, define2) {
+        if (null == name) {
+          return this.rsm;
+        }
+        let rs = this.rsm[name];
+        if (null === define2) {
+          delete this.rsm[name];
+        } else if (void 0 !== define2) {
+          rs = this.rsm[name] = this.rsm[name] || (0, rules_1.makeRuleSpec)(this.cfg, {});
+          rs = this.rsm[name] = define2(this.rsm[name], this) || this.rsm[name];
+          rs.name = name;
+          return void 0;
+        }
+        return rs;
+      }
+      start(src, jsonic2, meta, parent_ctx) {
+        let root;
+        let endtkn = (0, lexer_12.makeToken)("#ZZ", (0, utility_12.tokenize)("#ZZ", this.cfg), void 0, types_12.EMPTY, (0, lexer_12.makePoint)(-1));
+        let notoken = (0, lexer_12.makeNoToken)();
+        let ctx = {
+          uI: 0,
+          opts: this.options,
+          cfg: this.cfg,
+          meta: meta || {},
+          src: () => src,
+          root: () => root,
+          plgn: () => jsonic2.internal().plugins,
+          inst: () => jsonic2,
+          rule: {},
+          sub: jsonic2.internal().sub,
+          xs: -1,
+          v2: endtkn,
+          v1: endtkn,
+          t0: notoken,
+          t1: notoken,
+          tC: -2,
+          kI: -1,
+          rs: [],
+          rsI: 0,
+          rsm: this.rsm,
+          log: void 0,
+          F: (0, utility_12.srcfmt)(this.cfg),
+          use: {},
+          NOTOKEN: notoken,
+          NORULE: {}
+        };
+        ctx = (0, utility_12.deep)(ctx, parent_ctx);
+        let norule = (0, rules_1.makeNoRule)(ctx);
+        ctx.NORULE = norule;
+        ctx.rule = norule;
+        if (meta && utility_12.S.function === typeof meta.log) {
+          ctx.log = meta.log;
+        }
+        this.cfg.parse.prepare.forEach((prep) => prep(jsonic2, ctx, meta));
+        if ("" === src) {
+          if (this.cfg.lex.empty) {
+            return this.cfg.lex.emptyResult;
+          } else {
+            throw new utility_12.JsonicError(utility_12.S.unexpected, { src }, ctx.t0, norule, ctx);
+          }
+        }
+        let lex = (0, utility_12.badlex)((0, lexer_12.makeLex)(ctx), (0, utility_12.tokenize)("#BD", this.cfg), ctx);
+        let startspec = this.rsm[this.cfg.rule.start];
+        if (null == startspec) {
+          return void 0;
+        }
+        let rule = (0, rules_1.makeRule)(startspec, ctx);
+        root = rule;
+        let maxr = 2 * (0, utility_12.keys)(this.rsm).length * lex.src.length * 2 * ctx.cfg.rule.maxmul;
+        let kI = 0;
+        while (norule !== rule && kI < maxr) {
+          ctx.kI = kI;
+          ctx.rule = rule;
+          ctx.log && ctx.log("", ctx.kI + ":");
+          if (ctx.sub.rule) {
+            ctx.sub.rule.map((sub) => sub(rule, ctx));
+          }
+          rule = rule.process(ctx, lex);
+          ctx.log && ctx.log(utility_12.S.stack, ctx, rule, lex);
+          kI++;
+        }
+        if (endtkn.tin !== lex.next(rule).tin) {
+          throw new utility_12.JsonicError(utility_12.S.unexpected, {}, ctx.t0, norule, ctx);
+        }
+        const result = ctx.root().node;
+        if (this.cfg.result.fail.includes(result)) {
+          throw new utility_12.JsonicError(utility_12.S.unexpected, {}, ctx.t0, norule, ctx);
+        }
+        return result;
+      }
+      clone(options, config2) {
+        let parser2 = new ParserImpl(options, config2);
+        parser2.rsm = Object.keys(this.rsm).reduce((a, rn) => (a[rn] = (0, utility_12.filterRules)(this.rsm[rn], this.cfg), a), {});
+        parser2.norm();
+        return parser2;
+      }
+      norm() {
+        (0, utility_12.values)(this.rsm).map((rs) => rs.norm());
+      }
+    }
+    const makeParser = (...params) => new ParserImpl(...params);
+    exports3.makeParser = makeParser;
+  })(parser$1);
+  const parser = /* @__PURE__ */ getDefaultExportFromCjs(parser$1);
+  var grammar$1 = {};
+  "use strict";
+  Object.defineProperty(grammar$1, "__esModule", { value: true });
+  var makeJSON_1 = grammar$1.makeJSON = grammar_2 = grammar$1.grammar = void 0;
+  function grammar(jsonic2) {
+    const { deep } = jsonic2.util;
+    const {
+      // Fixed tokens
+      OB,
+      // Open Brace `{`
+      CB,
+      // Close Brace `}`
+      OS,
+      // Open Square `[`
+      CS,
+      // Close Square `]`
+      CL,
+      // Colon `:`
+      CA,
+      // Comma `,`
+      // Complex tokens
+      TX,
+      // Text (unquoted character sequence)
+      ST,
+      // String (quoted character sequence)
+      // Control tokens
+      ZZ
+      // End-of-source
+    } = jsonic2.token;
+    const {
+      VAL,
+      // All tokens that make up values
+      KEY
+      // All tokens that make up keys
+    } = jsonic2.tokenSet;
+    const finish = (_rule, ctx) => {
+      if (!ctx.cfg.rule.finish) {
+        ctx.t0.src = "END_OF_SOURCE";
+        return ctx.t0;
+      }
+    };
+    const pairkey = (r2) => {
+      const key_token = r2.o0;
+      const key = ST === key_token.tin || TX === key_token.tin ? key_token.val : key_token.src;
+      r2.use.key = key;
+    };
+    jsonic2.rule("val", (rs) => {
+      rs.bo((rule) => rule.node = void 0).open([
+        // A map: `{ ...`
+        { s: [OB], p: "map", b: 1, g: "map,json" },
+        // A list: `[ ...`
+        { s: [OS], p: "list", b: 1, g: "list,json" },
+        // A plain value: `x` `"x"` `1` `true` ....
+        { s: [VAL], g: "val,json" }
+      ]).close([
+        // End of input.
+        { s: [ZZ], g: "end,json" },
+        // There's more JSON.
+        { b: 1, g: "more,json" }
+      ]).bc((r2, ctx) => {
+        r2.node = // If there's no node,
+        void 0 === r2.node ? (
+          // ... or no child node (child map or list),
+          void 0 === r2.child.node ? (
+            // ... or no matched tokens,
+            0 === r2.os ? (
+              // ... then the node has no value
+              void 0
+            ) : (
+              // .. otherwise use the token value
+              r2.o0.resolveVal(r2, ctx)
+            )
+          ) : r2.child.node
+        ) : r2.node;
+      });
+    });
+    jsonic2.rule("map", (rs) => {
+      rs.bo((r2) => {
+        r2.node = /* @__PURE__ */ Object.create(null);
+      }).open([
+        // An empty map: {}.
+        { s: [OB, CB], b: 1, n: { pk: 0 }, g: "map,json" },
+        // Start matching map key-value pairs: a:1.
+        // Reset counter n.pk as new map (for extensions).
+        { s: [OB], p: "pair", n: { pk: 0 }, g: "map,json,pair" }
+      ]).close([
+        // End of map.
+        { s: [CB], g: "end,json" }
+      ]);
+    });
+    jsonic2.rule("list", (rs) => {
+      rs.bo((r2) => {
+        r2.node = [];
+      }).open([
+        // An empty list: [].
+        { s: [OS, CS], b: 1, g: "list,json" },
+        // Start matching list elements: 1,2.
+        { s: [OS], p: "elem", g: "list,elem,json" }
+      ]).close([
+        // End of map.
+        { s: [CS], g: "end,json" }
+      ]);
+    });
+    jsonic2.rule("pair", (rs) => {
+      rs.open([
+        // Match key-colon start of pair. Marker `pair=true` allows flexibility.
+        {
+          s: [KEY, CL],
+          p: "val",
+          u: { pair: true },
+          a: pairkey,
+          g: "map,pair,key,json"
+        }
+      ]).bc((r2, _ctx) => {
+        if (r2.use.pair) {
+          r2.use.prev = r2.node[r2.use.key];
+          r2.node[r2.use.key] = r2.child.node;
+        }
+      }).close([
+        // Comma means a new pair at same pair-key level.
+        { s: [CA], r: "pair", g: "map,pair,json" },
+        // End of map.
+        { s: [CB], b: 1, g: "map,pair,json" }
+      ]);
+    });
+    jsonic2.rule("elem", (rs) => {
+      rs.open([
+        // List elements are values.
+        { p: "val", g: "list,elem,val,json" }
+      ]).bc((r2) => {
+        if (true !== r2.use.done) {
+          r2.node.push(r2.child.node);
+        }
+      }).close([
+        // Next element.
+        { s: [CA], r: "elem", g: "list,elem,json" },
+        // End of list.
+        { s: [CS], b: 1, g: "list,elem,json" }
+      ]);
+    });
+    const pairval = (r2, ctx) => {
+      let key = r2.use.key;
+      let val = r2.child.node;
+      const prev2 = r2.use.prev;
+      val = void 0 === val ? null : val;
+      if (r2.use.list && ctx.cfg.safe.key) {
+        if ("__proto__" === key || "constructor" === key) {
+          return;
+        }
+      }
+      r2.node[key] = null == prev2 ? val : ctx.cfg.map.merge ? ctx.cfg.map.merge(prev2, val, r2, ctx) : ctx.cfg.map.extend ? deep(prev2, val) : val;
+    };
+    jsonic2.rule("val", (rs) => {
+      rs.open([
+        // A pair key: `a: ...`
+        // Increment counter n.pk to indicate pair-key state (for extensions).
+        {
+          s: [KEY, CL],
+          p: "map",
+          b: 2,
+          n: { pk: 1 },
+          g: "pair,jsonic"
+        },
+        // A plain value: `x` `"x"` `1` `true` ....
+        { s: [VAL], g: "val,json" },
+        // Implicit ends `{a:}` -> {"a":null}, `[a:]` -> [{"a":null}]
+        {
+          s: [[CB, CS]],
+          b: 1,
+          c: (r2) => 0 < r2.d,
+          g: "val,imp,null,jsonic"
+        },
+        // Implicit list at top level: a,b.
+        {
+          s: [CA],
+          c: (r2) => 0 === r2.d,
+          // c: { n: { dlist: 0 } },
+          p: "list",
+          b: 1,
+          g: "list,imp,jsonic"
+        },
+        // Value is implicitly null when empty before commas.
+        { s: [CA], b: 1, g: "list,val,imp,null,jsonic" },
+        { s: [ZZ], g: "jsonic" }
+      ], { append: true, delete: [2] }).close([
+        // Explicitly close map or list: `}`, `]`
+        {
+          s: [[CB, CS]],
+          b: 1,
+          g: "val,json,close",
+          e: (r2, c) => 0 === r2.d ? c.t0 : void 0
+        },
+        // Implicit list (comma sep) only allowed at top level: `1,2`.
+        {
+          s: [CA],
+          c: { n: { dlist: 0, dmap: 0 } },
+          r: "list",
+          u: { implist: true },
+          g: "list,val,imp,comma,jsonic"
+        },
+        // Implicit list (space sep) only allowed at top level: `1 2`.
+        {
+          c: { n: { dlist: 0, dmap: 0 } },
+          r: "list",
+          u: { implist: true },
+          g: "list,val,imp,space,jsonic",
+          b: 1
+        },
+        { s: [ZZ], g: "jsonic" }
+      ], {
+        append: true,
+        // Move "There's more JSON" to end.
+        move: [1, -1]
+      });
+    });
+    jsonic2.rule("map", (rs) => {
+      rs.bo((r2) => {
+        r2.n.dmap = 1 + (r2.n.dmap ? r2.n.dmap : 0);
+      }).open([
+        // Auto-close; fail if rule.finish option is false.
+        { s: [OB, ZZ], b: 1, e: finish, g: "end,jsonic" }
+      ]).open([
+        // Pair from implicit map.
+        { s: [KEY, CL], p: "pair", b: 2, g: "pair,list,val,imp,jsonic" }
+      ], { append: true }).close([
+        // Normal end of map, no path dive.
+        { s: [CB], c: { n: { pk: 0 } }, g: "end,json" },
+        // Not yet at end of path dive, keep ascending.
+        { s: [CB], b: 1, g: "path,jsonic" },
+        // End of implicit path
+        { s: [[CA, CS, ...VAL]], b: 1, g: "end,path,jsonic" },
+        // Auto-close; fail if rule.finish option is false.
+        { s: [ZZ], e: finish, g: "end,jsonic" }
+      ], { append: true, delete: [0] });
+    });
+    jsonic2.rule("list", (rs) => {
+      rs.bo((r2) => {
+        r2.n.dlist = 1 + (r2.n.dlist ? r2.n.dlist : 0);
+        if (r2.prev.use.implist) {
+          r2.node.push(r2.prev.node);
+          r2.prev.node = r2.node;
+        }
+      }).open({
+        c: (r2) => r2.prev.use.implist,
+        p: "elem"
+      }).open([
+        // Initial comma [, will insert null as [null,
+        { s: [CA], p: "elem", b: 1, g: "list,elem,val,imp,jsonic" },
+        // Another element.
+        { p: "elem", g: "list,elem.jsonic" }
+      ], { append: true }).close([
+        // Fail if rule.finish option is false.
+        { s: [ZZ], e: finish, g: "end,jsonic" }
+      ], { append: true });
+    });
+    jsonic2.rule("pair", (rs, _p) => {
+      rs.open([
+        // Ignore initial comma: {,a:1.
+        { s: [CA], g: "map,pair,comma,jsonic" }
+      ], { append: true }).bc((r2, ctx) => {
+        if (r2.use.pair) {
+          pairval(r2, ctx);
+        }
+      }).close([
+        // End of map, reset implicit depth counter so that
+        // a:b:c:1,d:2 -> {a:{b:{c:1}},d:2}
+        { s: [CB], c: { n: { pk: 0 } }, b: 1, g: "map,pair,json" },
+        // Ignore trailing comma at end of map.
+        {
+          s: [CA, CB],
+          c: { n: { pk: 0 } },
+          b: 1,
+          g: "map,pair,comma,jsonic"
+        },
+        { s: [CA, ZZ], g: "end,jsonic" },
+        // Comma means a new pair at same pair-key level.
+        { s: [CA], c: { n: { pk: 0 } }, r: "pair", g: "map,pair,json" },
+        // TODO: try CA VAL ? works anywhere?
+        // Comma means a new pair if implicit top level map.
+        {
+          s: [CA],
+          c: { n: { dmap: 1 } },
+          r: "pair",
+          g: "map,pair,jsonic"
+        },
+        // TODO: try VAL CL ? works anywhere?
+        // Value means a new pair if implicit top level map.
+        {
+          // s: [VAL],
+          s: [KEY],
+          c: { n: { dmap: 1 } },
+          r: "pair",
+          b: 1,
+          g: "map,pair,imp,jsonic"
+        },
+        // End of implicit path (eg. a:b:1), keep closing until pk=0.
+        {
+          s: [[CB, CA, CS, ...KEY]],
+          b: 1,
+          g: "map,pair,imp,path,jsonic",
+          c: (r2) => 0 < r2.n.pk
+        },
+        // Can't close a map with `]`
+        { s: [CS], e: (r2) => r2.c0, g: "end,jsonic" },
+        // Fail if auto-close option is false.
+        { s: [ZZ], e: finish, g: "map,pair,json" },
+        // Who needs commas anyway?
+        {
+          // c: { n: { pk: 0 } },
+          r: "pair",
+          b: 1,
+          g: "map,pair,imp,jsonic"
+        }
+      ], { append: true, delete: [0, 1] });
+    });
+    jsonic2.rule("elem", (rs, p) => {
+      rs.open([
+        // Empty commas insert null elements.
+        // Note that close consumes a comma, so b:2 works.
+        {
+          s: [CA, CA],
+          b: 2,
+          u: { done: true },
+          a: (r2) => r2.node.push(null),
+          g: "list,elem,imp,null,jsonic"
+        },
+        {
+          s: [CA],
+          u: { done: true },
+          a: (r2) => r2.node.push(null),
+          g: "list,elem,imp,null,jsonic"
+        },
+        {
+          s: [KEY, CL],
+          e: p.cfg.list.property ? void 0 : (_r, ctx) => ctx.t0,
+          p: "val",
+          n: { pk: 1, dmap: 1 },
+          u: { done: true, pair: true, list: true },
+          a: pairkey,
+          g: "elem,pair,jsonic"
+        }
+      ]).bc((r2, ctx) => {
+        if (true === r2.use.pair) {
+          r2.use.prev = r2.node[r2.use.key];
+          pairval(r2, ctx);
+        }
+      }).close([
+        // Ignore trailing comma.
+        { s: [CA, [CS, ZZ]], b: 1, g: "list,elem,comma,jsonic" },
+        // Next element.
+        { s: [CA], r: "elem", g: "list,elem,json" },
+        // End of list.
+        { s: [CS], b: 1, g: "list,elem,json" },
+        // Fail if auto-close option is false.
+        { s: [ZZ], e: finish, g: "list,elem,json" },
+        // Can't close a list with `}`
+        { s: [CB], e: (r2) => r2.c0, g: "end,jsonic" },
+        // Who needs commas anyway?
+        { r: "elem", b: 1, g: "list,elem,imp,jsonic" }
+      ], { delete: [-1, -2] });
+    });
+  }
+  var grammar_2 = grammar$1.grammar = grammar;
+  function makeJSON(jsonic2) {
+    let justJSON = jsonic2.make({
+      grammar$: false,
+      text: { lex: false },
+      number: {
+        hex: false,
+        oct: false,
+        bin: false,
+        sep: null,
+        exclude: /^00+/
+      },
+      string: {
+        chars: '"',
+        multiChars: "",
+        allowUnknown: false,
+        escape: { v: null }
+      },
+      comment: { lex: false },
+      map: { extend: false },
+      lex: { empty: false },
+      rule: { finish: false, include: "json" },
+      result: { fail: [void 0, NaN] },
+      tokenSet: {
+        KEY: ["#ST", null, null, null]
+      }
+    });
+    grammar(justJSON);
+    return justJSON;
+  }
+  makeJSON_1 = grammar$1.makeJSON = makeJSON;
+  (function(module2, exports3) {
+    "use strict";
+    Object.defineProperty(exports3, "__esModule", { value: true });
+    exports3.root = exports3.S = exports3.EMPTY = exports3.AFTER = exports3.BEFORE = exports3.CLOSE = exports3.OPEN = exports3.makeTextMatcher = exports3.makeNumberMatcher = exports3.makeCommentMatcher = exports3.makeStringMatcher = exports3.makeLineMatcher = exports3.makeSpaceMatcher = exports3.makeFixedMatcher = exports3.makeParser = exports3.makeLex = exports3.makeRuleSpec = exports3.makeRule = exports3.makePoint = exports3.makeToken = exports3.make = exports3.util = exports3.JsonicError = exports3.Jsonic = void 0;
+    const types_12 = types;
+    Object.defineProperty(exports3, "OPEN", { enumerable: true, get: function() {
+      return types_12.OPEN;
+    } });
+    Object.defineProperty(exports3, "CLOSE", { enumerable: true, get: function() {
+      return types_12.CLOSE;
+    } });
+    Object.defineProperty(exports3, "BEFORE", { enumerable: true, get: function() {
+      return types_12.BEFORE;
+    } });
+    Object.defineProperty(exports3, "AFTER", { enumerable: true, get: function() {
+      return types_12.AFTER;
+    } });
+    Object.defineProperty(exports3, "EMPTY", { enumerable: true, get: function() {
+      return types_12.EMPTY;
+    } });
+    const utility_12 = requireUtility();
+    Object.defineProperty(exports3, "JsonicError", { enumerable: true, get: function() {
+      return utility_12.JsonicError;
+    } });
+    Object.defineProperty(exports3, "S", { enumerable: true, get: function() {
+      return utility_12.S;
+    } });
+    const defaults_1 = defaults$1;
+    const lexer_12 = requireLexer();
+    Object.defineProperty(exports3, "makePoint", { enumerable: true, get: function() {
+      return lexer_12.makePoint;
+    } });
+    Object.defineProperty(exports3, "makeToken", { enumerable: true, get: function() {
+      return lexer_12.makeToken;
+    } });
+    Object.defineProperty(exports3, "makeLex", { enumerable: true, get: function() {
+      return lexer_12.makeLex;
+    } });
+    Object.defineProperty(exports3, "makeFixedMatcher", { enumerable: true, get: function() {
+      return lexer_12.makeFixedMatcher;
+    } });
+    Object.defineProperty(exports3, "makeSpaceMatcher", { enumerable: true, get: function() {
+      return lexer_12.makeSpaceMatcher;
+    } });
+    Object.defineProperty(exports3, "makeLineMatcher", { enumerable: true, get: function() {
+      return lexer_12.makeLineMatcher;
+    } });
+    Object.defineProperty(exports3, "makeStringMatcher", { enumerable: true, get: function() {
+      return lexer_12.makeStringMatcher;
+    } });
+    Object.defineProperty(exports3, "makeCommentMatcher", { enumerable: true, get: function() {
+      return lexer_12.makeCommentMatcher;
+    } });
+    Object.defineProperty(exports3, "makeNumberMatcher", { enumerable: true, get: function() {
+      return lexer_12.makeNumberMatcher;
+    } });
+    Object.defineProperty(exports3, "makeTextMatcher", { enumerable: true, get: function() {
+      return lexer_12.makeTextMatcher;
+    } });
+    const parser_1 = parser$1;
+    Object.defineProperty(exports3, "makeRule", { enumerable: true, get: function() {
+      return parser_1.makeRule;
+    } });
+    Object.defineProperty(exports3, "makeRuleSpec", { enumerable: true, get: function() {
+      return parser_1.makeRuleSpec;
+    } });
+    Object.defineProperty(exports3, "makeParser", { enumerable: true, get: function() {
+      return parser_1.makeParser;
+    } });
+    const grammar_1 = grammar$1;
+    const util2 = {
+      tokenize: utility_12.tokenize,
+      srcfmt: utility_12.srcfmt,
+      clone: utility_12.clone,
+      charset: utility_12.charset,
+      trimstk: utility_12.trimstk,
+      makelog: utility_12.makelog,
+      badlex: utility_12.badlex,
+      extract: utility_12.extract,
+      errinject: utility_12.errinject,
+      errdesc: utility_12.errdesc,
+      configure: utility_12.configure,
+      parserwrap: utility_12.parserwrap,
+      mesc: utility_12.mesc,
+      escre: utility_12.escre,
+      regexp: utility_12.regexp,
+      prop: utility_12.prop,
+      str: utility_12.str,
+      clean: utility_12.clean,
+      // TODO: validated to include in util API:
+      deep: utility_12.deep,
+      omap: utility_12.omap,
+      keys: utility_12.keys,
+      values: utility_12.values,
+      entries: utility_12.entries
+    };
+    exports3.util = util2;
+    function make(param_options, parent) {
+      let injectFullAPI = true;
+      if ("jsonic" === param_options) {
+        injectFullAPI = false;
+      } else if ("json" === param_options) {
+        return (0, grammar_1.makeJSON)(root);
+      }
+      param_options = "string" === typeof param_options ? {} : param_options;
+      let internal = {
+        parser: null,
+        config: null,
+        plugins: [],
+        sub: {
+          lex: void 0,
+          rule: void 0
+        },
+        mark: Math.random()
+      };
+      let merged_options = (0, utility_12.deep)({}, parent ? __spreadValues({}, parent.options) : false === (param_options === null || param_options === void 0 ? void 0 : param_options.defaults$) ? {} : defaults_1.defaults, param_options ? param_options : {});
+      let jsonic2 = function Jsonic3(src, meta, parent_ctx) {
+        var _a;
+        if (utility_12.S.string === typeof src) {
+          let internal2 = jsonic2.internal();
+          let parser2 = ((_a = options.parser) === null || _a === void 0 ? void 0 : _a.start) ? (0, utility_12.parserwrap)(options.parser) : internal2.parser;
+          return parser2.start(src, jsonic2, meta, parent_ctx);
+        }
+        return src;
+      };
+      let options = (change_options) => {
+        if (null != change_options && utility_12.S.object === typeof change_options) {
+          (0, utility_12.deep)(merged_options, change_options);
+          (0, utility_12.configure)(jsonic2, internal.config, merged_options);
+          let parser2 = jsonic2.internal().parser;
+          internal.parser = parser2.clone(merged_options, internal.config);
+        }
+        return __spreadValues({}, jsonic2.options);
+      };
+      let api = {
+        token: (ref) => (0, utility_12.tokenize)(ref, internal.config, jsonic2),
+        tokenSet: (ref) => (0, utility_12.findTokenSet)(ref, internal.config),
+        fixed: (ref) => internal.config.fixed.ref[ref],
+        options: (0, utility_12.deep)(options, merged_options),
+        config: () => (0, utility_12.deep)(internal.config),
+        parse: jsonic2,
+        // TODO: how to handle null plugin?
+        use: function use(plugin, plugin_options) {
+          if (utility_12.S.function !== typeof plugin) {
+            throw new Error("Jsonic.use: the first argument must be a function defining a plugin. See https://jsonic.senecajs.org/plugin");
+          }
+          const plugin_name = plugin.name.toLowerCase();
+          const full_plugin_options = (0, utility_12.deep)({}, plugin.defaults || {}, plugin_options || {});
+          jsonic2.options({
+            plugin: {
+              [plugin_name]: full_plugin_options
+            }
+          });
+          let merged_plugin_options = jsonic2.options.plugin[plugin_name];
+          jsonic2.internal().plugins.push(plugin);
+          plugin.options = merged_plugin_options;
+          return plugin(jsonic2, merged_plugin_options) || jsonic2;
+        },
+        rule: (name, define2) => {
+          return jsonic2.internal().parser.rule(name, define2) || jsonic2;
+        },
+        // lex: (matchmaker: MakeLexMatcher) => {
+        //   let match = merged_options.lex.match
+        //   match.unshift(matchmaker)
+        //   jsonic.options({
+        //     lex: { match },
+        //   })
+        // },
+        make: (options2) => {
+          return make(options2, jsonic2);
+        },
+        empty: (options2) => make(__spreadValues({
+          defaults$: false,
+          standard$: false,
+          grammar$: false
+        }, options2 || {})),
+        id: "Jsonic/" + Date.now() + "/" + ("" + Math.random()).substring(2, 8).padEnd(6, "0") + (null == options.tag ? "" : "/" + options.tag),
+        toString: () => {
+          return api.id;
+        },
+        sub: (spec) => {
+          if (spec.lex) {
+            internal.sub.lex = internal.sub.lex || [];
+            internal.sub.lex.push(spec.lex);
+          }
+          if (spec.rule) {
+            internal.sub.rule = internal.sub.rule || [];
+            internal.sub.rule.push(spec.rule);
+          }
+          return jsonic2;
+        },
+        util: util2
+      };
+      (0, utility_12.defprop)(api.make, utility_12.S.name, { value: utility_12.S.make });
+      if (injectFullAPI) {
+        (0, utility_12.assign)(jsonic2, api);
+      } else {
+        (0, utility_12.assign)(jsonic2, {
+          empty: api.empty,
+          parse: api.parse,
+          sub: api.sub,
+          id: api.id,
+          toString: api.toString
+        });
+      }
+      (0, utility_12.defprop)(jsonic2, "internal", { value: () => internal });
+      if (parent) {
+        for (let k in parent) {
+          if (void 0 === jsonic2[k]) {
+            jsonic2[k] = parent[k];
+          }
+        }
+        jsonic2.parent = parent;
+        let parent_internal = parent.internal();
+        internal.config = (0, utility_12.deep)({}, parent_internal.config);
+        (0, utility_12.configure)(jsonic2, internal.config, merged_options);
+        (0, utility_12.assign)(jsonic2.token, internal.config.t);
+        internal.plugins = [...parent_internal.plugins];
+        internal.parser = parent_internal.parser.clone(merged_options, internal.config);
+      } else {
+        let rootWithAPI = __spreadValues(__spreadValues({}, jsonic2), api);
+        internal.config = (0, utility_12.configure)(rootWithAPI, void 0, merged_options);
+        internal.plugins = [];
+        internal.parser = (0, parser_1.makeParser)(merged_options, internal.config);
+        if (false !== merged_options.grammar$) {
+          (0, grammar_1.grammar)(rootWithAPI);
+        }
+      }
+      return jsonic2;
+    }
+    exports3.make = make;
+    let root = void 0;
+    exports3.root = root;
+    let Jsonic2 = exports3.root = root = make("jsonic");
+    exports3.Jsonic = Jsonic2;
+    root.Jsonic = root;
+    root.JsonicError = utility_12.JsonicError;
+    root.makeLex = lexer_12.makeLex;
+    root.makeParser = parser_1.makeParser;
+    root.makeToken = lexer_12.makeToken;
+    root.makePoint = lexer_12.makePoint;
+    root.makeRule = parser_1.makeRule;
+    root.makeRuleSpec = parser_1.makeRuleSpec;
+    root.makeFixedMatcher = lexer_12.makeFixedMatcher;
+    root.makeSpaceMatcher = lexer_12.makeSpaceMatcher;
+    root.makeLineMatcher = lexer_12.makeLineMatcher;
+    root.makeStringMatcher = lexer_12.makeStringMatcher;
+    root.makeCommentMatcher = lexer_12.makeCommentMatcher;
+    root.makeNumberMatcher = lexer_12.makeNumberMatcher;
+    root.makeTextMatcher = lexer_12.makeTextMatcher;
+    root.OPEN = types_12.OPEN;
+    root.CLOSE = types_12.CLOSE;
+    root.BEFORE = types_12.BEFORE;
+    root.AFTER = types_12.AFTER;
+    root.EMPTY = types_12.EMPTY;
+    root.util = util2;
+    root.make = make;
+    root.S = utility_12.S;
+    exports3.default = Jsonic2;
+    if (true) {
+      module2.exports = Jsonic2;
+    }
+  })(jsonic, jsonicExports);
+  const Jsonic = /* @__PURE__ */ getDefaultExportFromCjs(jsonicExports);
+  const config_defaults = {};
+  const util = {};
+  class Vxg {
+    constructor(config2) {
+      __publicField(this, "match");
+      __publicField(this, "cmp");
+      __publicField(this, "util");
+      this.match = {
+        allow: new Patrun({ gex: true })
+      };
+      this.cmp = {};
+      this.config(config2);
+      this.util = util;
+    }
+    config(custom_config) {
+      Object.assign(this.config, config_defaults, custom_config || {});
+      this.config.allow = this.config.allow || {};
+      this.config.allow.modify = this.config.allow.modify || ((x) => x);
+      this.config.allow.match = this.config.allow.match || [];
+      for (let entry of this.config.allow.match) {
+        this.match.allow.add(entry, { allow: true });
+      }
+    }
+    allow(match2) {
+      let mm = Jsonic(match2);
+      let ms = Array.isArray(match2) ? match2 : Object.keys(mm).map((x) => mm[x]);
+      let found = null;
+      for (let m of ms) {
+        let pat = this.config.allow.modify(__spreadValues({}, m || {}));
+        found = this.match.allow.find(pat);
+        if (found) {
+          break;
+        }
+      }
+      return found ? !!found.allow : false;
+    }
   }
   const html = (theme, enableColorScheme) => _extends$2({
     WebkitFontSmoothing: "antialiased",
@@ -47544,7 +50432,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }
   exports2.BasicAdmin = BasicAdmin;
+  exports2.BasicAppBar = BasicAppBar;
   exports2.BasicAuth = BasicAuth;
+  exports2.BasicButton = BasicEdit;
+  exports2.BasicDrawer = BasicDrawer;
+  exports2.BasicDrawerHeader = BasicDrawerHeader;
   exports2.BasicEdit = BasicEdit;
   exports2.BasicFoot = BasicFoot;
   exports2.BasicHead = BasicHead;
@@ -47552,5 +50444,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   exports2.BasicList = BasicList;
   exports2.BasicMain = BasicMain;
   exports2.BasicSide = BasicSide;
+  exports2.Vxg = Vxg;
   Object.defineProperty(exports2, Symbol.toStringTag, { value: "Module" });
 });
