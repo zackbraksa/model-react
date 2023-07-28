@@ -169,14 +169,13 @@ function BasicSide(props: any) {
       >
         {
           sortViews(viewdefs, viewOrder).map((view:any) => (
-            <ToggleButton
+           allow(vxg, view) ? <ToggleButton
               value="check"
               selected={ viewPath == view.name }
               sx={
                 {
-                  display: allow(vxg, view) ? null : 'none',
                   width: '100%',
-                  // display: 'flex',
+                  display: 'flex',
                   justifyContent: 'flex-start',
                   marginBottom: '10px',
                   border: 0,
@@ -206,7 +205,7 @@ function BasicSide(props: any) {
                <div>
                  <span>{ view.title }</span>
                </div>
-             </ToggleButton>
+             </ToggleButton> : null
           ))
         }  
        </ToggleButtonGroup>
