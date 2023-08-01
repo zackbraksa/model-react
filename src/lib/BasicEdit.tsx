@@ -68,7 +68,6 @@ function BasicEdit(props: any) {
           {
             itemFields.map((field: any, index: any) => {
               // console.log('register: ', item )
-                
               return (
                 <Grid item xs={field.size} key={index}>
                   <Controller
@@ -126,7 +125,7 @@ function BasicEdit(props: any) {
                           select = { 'status' == field.type }
                           disabled={ !!!field.edit }
                           onChange={onChange}
-                          value={value}
+                          value={item[field.field] || value}
                           onBlur={onBlur}
                           error={!!error}
                           helperText={error ? error.message : null}
