@@ -125,7 +125,7 @@ function BasicEdit(props: any) {
                           select = { 'status' == field.type }
                           disabled={ !!!field.edit }
                           onChange={onChange}
-                          value={item[field.field] || value}
+                          value={ value }
                           onBlur={onBlur}
                           error={!!error}
                           helperText={error ? error.message : null}
