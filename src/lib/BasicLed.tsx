@@ -58,7 +58,6 @@ function BasicLed(props: any) {
   const location = useLocation()
 
   // console.log('entlist',entlist)
-  console.log('entstate: ', entstate)
   if('none'===entstate) {
     let q = custom.BasicLed.query(spec,cmpstate)
     seneca.entity(def.ent).list$(q)
@@ -83,7 +82,6 @@ function BasicLed(props: any) {
     )
   
   let data = rows //.slice(0, 10)
-  console.log('data: ', data)
   
   useEffect(() => {
     setItem({})
