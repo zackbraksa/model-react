@@ -72,7 +72,7 @@ function BasicLed(props: any) {
   const columns = 
     itemFields.map((field: any) => 
       ({
-        accessorFn: (row: any) => ( 'status' === field.type ? field.options[row[field.field]]?.title : row[field.field] ),
+        accessorFn: (row: any) => ( 'status' === field.type ? field.kind[row[field.field]]?.title : row[field.field] ),
         accessorKey: field.field,
         header: field.headerName,
         Header: () => <span>{ field.headerName }</span>,
