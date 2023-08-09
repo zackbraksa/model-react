@@ -9,30 +9,28 @@ import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
 
 function fields (spec: any) {
-  // console.log('layout: ', spec.content.def.cols)
   
   try {
     let fds = []
-    let fns = spec.content.def.list.layout.order.replace(/\s+/g, '').split(/,/)
+    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, '').split(/,/)
     for(let fn of fns) {
-      let fd = { ...spec.content.def.cols.find((f: any)=> f.field == fn), } || {}
-      // console.log('fd: ', fd)
+      let fd = { ...spec.content.def.ent.primary.field[fn] } || {}
       
-      // fd.name = fn
       // fd.title = fd.title ? fd.title : fd.name
-      
-      // fd = { ...fd, ...(spec.edit.layout.field[fn] || {} ) }
+      fd.name = fn
+      fd.headerName = fd.title
+      fd = { ...fd, ...(spec.content.def.edit.layout.field[fn] || {} ) }
       
       fds.push(fd)
     }
-    // console.log('fds: ', fds)
+    
     return fds
   }
   catch(err) {
    // console.log(err)
   }
   
-  return spec.content.def.cols
+  return []
 }
 
 function BasicLed(props: any) {
@@ -47,20 +45,23 @@ function BasicLed(props: any) {
 
   const [item, setItem] = useState( {} as any)
   
+  
   const def = spec.content.def
   const { ent, cols } = def
+  
+  const canon = ent.canon
 
   const cmpstate = useSelector((state:any)=>state.main.vxg.cmp)
   
-  const entstate = useSelector((state:any)=>state.main.vxg.ent.meta.main[ent].state)
-  const entlist = useSelector((state:any)=>state.main.vxg.ent.list.main[ent])
+  const entstate = useSelector((state:any)=>state.main.vxg.ent.meta.main[canon].state)
+  const entlist = useSelector((state:any)=>state.main.vxg.ent.list.main[canon])
   
   const location = useLocation()
 
   // console.log('entlist',entlist)
   if('none'===entstate) {
     let q = custom.BasicLed.query(spec,cmpstate)
-    seneca.entity(def.ent).list$(q)
+    seneca.entity(canon).list$(q)
   }
 
   
@@ -72,8 +73,8 @@ function BasicLed(props: any) {
   const columns = 
     itemFields.map((field: any) => 
       ({
-        accessorFn: (row: any) => ( 'status' === field.type ? field.kind[row[field.field]]?.title : row[field.field] ),
-        accessorKey: field.field,
+        accessorFn: (row: any) => ( 'status' === field.type ? field.kind[row[field.name]]?.title : row[field.name] ),
+        accessorKey: field.name,
         header: field.headerName,
         Header: () => <span>{ field.headerName }</span>,
         // muiTableHeadCellProps: { sx: { color: 'green' } },
@@ -100,19 +101,18 @@ function BasicLed(props: any) {
     setTriggerLed(++triggerLed)
   }, [ led_add ])
   
-  console.log('item::: ', item, def.ent)
   
   return (
     <div className="BasicLed">
     {
-      '-/' + def.ent !==  item.entity$ ? 
+      '-/' + canon !==  item.entity$ ?
         <BasicList
           ctx={ ctx }
           spec={ spec }
           data={ data }
           columns={ columns }
           onRowClick = { (event: any, item: any) => {
-            console.log('item: ', item)
+            // console.log('item: ', item)
 	    setItem(item)
           } }
         /> : 
@@ -123,7 +123,7 @@ function BasicLed(props: any) {
             setItem({})
           } }
           onSubmit = { async (item: any) => {
-            await seneca.entity(def.ent).save$(item)
+            await seneca.entity(canon).save$(item)
             setItem({})
           } }
           item = { item }
