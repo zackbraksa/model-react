@@ -36,7 +36,7 @@ function BasicEdit(props: any) {
   
   useEffect( () => {
     for(let field of itemFields as any) {
-      setValue(field.field, item[field.field] || field.defaultValue || '')
+      setValue(field.name, item[field.name] || field.defaultValue || '')
     }
   }, [ item ])
   
@@ -71,11 +71,11 @@ function BasicEdit(props: any) {
               return (
                 <Grid item xs={field.size} key={index}>
                   <Controller
-                    name={field.field}
+                    name={field.name}
                     control={control}
-                    defaultValue = { item[field.field] || ''}
+                    defaultValue = { item[field.name] || ''}
                     render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-                      'combobox' === field.type ? 
+                      'selection' === field.type ? 
                         <Autocomplete
                           freeSolo
                           id="combo-box"
@@ -119,7 +119,7 @@ function BasicEdit(props: any) {
                         />
                         :
                         <TextField
-                          key={ field.field }
+                          key={ field.name }
                           label={ field.headerName }
                           fullWidth
                           select = { 'status' === field.type }
