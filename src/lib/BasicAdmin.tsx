@@ -8,7 +8,11 @@ import BasicFoot from './BasicFoot'
 
 
 function BasicAdmin(props: any) {
-  const { ctx, spec } = props
+  const {
+    vxg,
+    ctx,
+    spec,
+  } = props
   const model = ctx().model
 
   const { frame } = spec
@@ -33,10 +37,10 @@ function BasicAdmin(props: any) {
   
   return (
     <div>
-      <BasicHead ctx={ctx} spec={headSpec} />
-      <BasicSide ctx={ctx} spec={sideSpec} />
-      <BasicMain ctx={ctx} spec={mainSpec} />
-      <BasicFoot ctx={ctx} spec={footSpec} />
+      <BasicHead vxg={vxg} ctx={ctx} spec={headSpec} />
+      <BasicSide vxg={vxg} ctx={ctx} spec={sideSpec} />
+      <BasicMain vxg={vxg} ctx={ctx} spec={mainSpec} />
+      <BasicFoot vxg={vxg} ctx={ctx} spec={footSpec} />
     </div>
   )
 }

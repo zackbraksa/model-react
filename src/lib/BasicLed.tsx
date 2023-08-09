@@ -1,133 +1,137 @@
-
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
+import { useLocation } from 'react-router-dom'
 
-import TextField from '@mui/material/TextField';
-import FormGroup from '@mui/material/FormGroup';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import MuiGrid from '@mui/material/Grid';
+import { MaterialReactTable } from 'material-react-table'
 
+import BasicList from './BasicList'
+import BasicEdit from './BasicEdit'
 
-import { DataGrid } from '@mui/x-data-grid';
-
-
+function fields (spec: any) {
+  
+  try {
+    let fds = []
+    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, '').split(/,/)
+    for(let fn of fns) {
+      let fd = { ...spec.content.def.ent.primary.field[fn] } || {}
+      
+      // fd.title = fd.title ? fd.title : fd.name
+      fd.name = fn
+      fd.headerName = fd.title
+      fd = { ...fd, ...(spec.content.def.edit.layout.field[fn] || {} ) }
+      
+      fds.push(fd)
+    }
+    
+    return fds
+  }
+  catch(err) {
+   // console.log(err)
+  }
+  
+  return []
+}
 
 function BasicLed(props: any) {
-  const { ctx, spec } = props
+  const {
+    vxg,
+    ctx,
+    spec
+  } = props
   const { model, seneca, custom } = ctx()
 
-  // console.log('spec',spec)
+  const vxgState = useSelector((state: any) => state.main.vxg)
+
+  const [item, setItem] = useState( {} as any)
+  
   
   const def = spec.content.def
   const { ent, cols } = def
+  
+  const canon = ent.canon
 
   const cmpstate = useSelector((state:any)=>state.main.vxg.cmp)
   
-  const entstate = useSelector((state:any)=>state.main.vxg.ent.meta.main[ent].state)
-  const entlist = useSelector((state:any)=>state.main.vxg.ent.list.main[ent])
+  const entstate = useSelector((state:any)=>state.main.vxg.ent.meta.main[canon].state)
+  const entlist = useSelector((state:any)=>state.main.vxg.ent.list.main[canon])
+  
+  const location = useLocation()
 
   // console.log('entlist',entlist)
-  
   if('none'===entstate) {
     let q = custom.BasicLed.query(spec,cmpstate)
-    seneca.entity(def.ent).list$(q)
+    seneca.entity(canon).list$(q)
   }
 
   
   const rows = entlist
   
-  let [editRow, setEditRow] = useState()
+  const itemFields: any = fields(spec)
   
-  let selectRow = (ids:any) => {
-    let id = ids[0]
-    let row: any = rows.find((r:any)=>r.id===id)
+  
+  const columns = 
+    itemFields.map((field: any) => 
+      ({
+        accessorFn: (row: any) => ( 'status' === field.type ? field.kind[row[field.name]]?.title : row[field.name] ),
+        accessorKey: field.name,
+        header: field.headerName,
+        Header: () => <span>{ field.headerName }</span>,
+        // muiTableHeadCellProps: { sx: { color: 'green' } },
+        Cell: ({ cell }: any) => <span>{ cell.getValue() }</span>,
+      })
+    )
+  
+  let data = rows //.slice(0, 10)
+  
+  useEffect(() => {
+    setItem({})
+  }, [ location.pathname ])
+  
+  let led_add = vxgState.trigger.led.add
+  let [triggerLed, setTriggerLed] = useState(0)
+  useEffect( ()=> {
 
-    if(row) {
-      setEditRow(row)
+    // a workaround to prevent 
+    // 'useEffect' to trigger when re-rendered
+    if(triggerLed >= 2) {
+      setItem( { entity$: '-/' + def.ent } )
     }
-  }
-  
-  const open=()=>{}
-  const processValueChange=()=>{}
-  const applyChanges=()=>{}
-  const cancelChanges=()=>{
-    setEditRow(undefined)
-  }
 
+    setTriggerLed(++triggerLed)
+  }, [ led_add ])
+  
   
   return (
-    <div style={{ height:'calc(100vh - 6rem)', width: 'calc(100vw - 18rem)' }}>
-
-      { editRow &&
-        <Popup
-          open={open}
-          row={editRow}
-          columns={cols}
-          onChange={processValueChange}
-          onApplyChanges={applyChanges}
-          onCancelChanges={cancelChanges}
-        />      
-      }
-      
-      <DataGrid
-        rows={rows}
-        columns={cols}
-        onSelectionModelChange={selectRow}
-      />
-      
+    <div className="BasicLed">
+    {
+      '-/' + canon !==  item.entity$ ?
+        <BasicList
+          ctx={ ctx }
+          spec={ spec }
+          data={ data }
+          columns={ columns }
+          onRowClick = { (event: any, item: any) => {
+            // console.log('item: ', item)
+	    setItem(item)
+          } }
+        /> : 
+        <BasicEdit
+          ctx={ ctx }
+          spec={ spec }
+          onClose = { () => {
+            setItem({})
+          } }
+          onSubmit = { async (item: any) => {
+            await seneca.entity(canon).save$(item)
+            setItem({})
+          } }
+          item = { item }
+          itemFields = { itemFields }
+        />
+    }
     </div>
   )
-}
-
-
-function Popup(props:any) {
-  let {
-    row,
-    columns,
-    onChange,
-    onApplyChanges,
-    onCancelChanges,
-    open
-  } = props
-  
-  return <Dialog
-    fullWidth
-    open={open}
-    onClose={onCancelChanges}
-    aria-labelledby="form-dialog-title">
-    <DialogTitle id="form-dialog-title">Edit Details</DialogTitle>
-    <DialogContent>
-      <MuiGrid container spacing={3}>
-        <MuiGrid item xs={6}>
-          <FormGroup>
-            { columns.map((col:any)=>(
-              <TextField
-                key={col.field}
-                margin="normal"
-                name={col.field}
-                label={col.headerName}
-                value={row[col.field]}
-                onChange={onChange}
-              />
-            ))}
-          </FormGroup>
-        </MuiGrid>
-      </MuiGrid>
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={onCancelChanges} color="secondary">
-        Cancel
-      </Button>
-      <Button onClick={onApplyChanges} color="primary">
-        Save
-      </Button>
-    </DialogActions>
-  </Dialog>
 }
 
 

@@ -1,17 +1,19 @@
-
 import React, { useState } from 'react'
 
-import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import {
   AppBar,
   Box,
   Button,
   ButtonGroup,
+  ToggleButton,
+  ToggleButtonGroup,
   Container,
   CssBaseline,
   Divider,
-  Drawer,
   Grid,
   List,
   ListItem,
@@ -20,28 +22,35 @@ import {
   ListItemText,
   Toolbar,
   Typography,
+  IconButton,
 } from "@mui/material"
 
+
 import {
+  ChevronLeft,
   MoveToInbox as InboxIcon,
   Mail as MailIcon,
-
-  // mdiAccount,
-  // mdiHistory,
-  // mdiFactory,
-  // mdiGate,
-  // mdiKeyChain,
-  // mdiMapLegend,
-  // mdiFileDocumentOutline,
-
+  
   FactoryOutlined,
   KeyOutlined,
   AssignmentTurnedInOutlined,
   TextSnippetOutlined,  
   HighlightAlt,
+  SupervisorAccount as AccountIcon,
   Map as MapIcon,
+  Tablet as TabletIcon,
+  Update as UpdateIcon,
+  Security as AdminIcon,
+  ContentPaste as ClipBoardIcon,
+  FitScreen,
+  Apps as DotsSquareIcon,
 
 } from "@mui/icons-material"
+
+import {
+  BasicDrawer,
+  BasicDrawerHeader
+} from './BasicDrawer'
 
 
 
@@ -52,6 +61,13 @@ const iconmap: any = {
   'docs': TextSnippetOutlined,
   'hightlight': HighlightAlt,
   'map': MapIcon,
+  'account': AccountIcon,
+  'tablet': TabletIcon,
+  'update': UpdateIcon,
+  'admin': AdminIcon,
+  'clipboard': ClipBoardIcon,
+  'fitscreen': FitScreen,
+  'dots-square': DotsSquareIcon,
 }
 
 function makeIcon(name: string) {
@@ -59,14 +75,37 @@ function makeIcon(name: string) {
   return <Icon />
 }
 
+function onClose(seneca: any) {
+
+  seneca.act('aim:app,set:state', {
+    section: 'vxg.cmp.BasicSide.show',
+    content: false
+  })
+
+}
+
+function allow(vxg: any, item: any) {
+  let out = (item && item.allow) ? vxg.allow( item.allow ) : true
+  return out
+}
+    
+    
 function BasicSide(props: any) {
-  const { ctx, spec } = props
-  const model = ctx().model
+  const {
+    vxg,
+    ctx,
+    spec
+  } = props
+  const { model, seneca, } = ctx()
 
+  const vxgState = useSelector((state: any) => state.main.vxg)
+  const open = vxgState.cmp.BasicSide.show
+  
+  
+  
   const navigate = useNavigate()
-
-  // show first section view by default
-  const [showViewsData, setShowViewsData] = useState([true])
+  const location = useLocation()
+  
   
   const { frame } = spec
   
@@ -78,13 +117,23 @@ function BasicSide(props: any) {
 
   const sectiondefs = Object.entries(part.section || [])
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
-
-  let drawerWidth = '16rem'
-
+  
+  const viewPath: any = location.pathname.split('/')[2]
+  
+  const [showViewsData, setShowViewsData] = useState(sectiondefs.map((section: any, sectionNumber: number) => {
+    return viewPath == section.name || (section.view && viewPath in section.view)
+  }))
+  const [toogleSelections, setToogleSelections] = useState({[viewPath]: true} as any)
+  
+  const drawerwidth = '16rem'
 
   function selectView(view:any) {
     return function(_event:any) {
       // TODO: use named route
+      if(view.default) {
+        navigate('/view/'+view.default)
+        return
+      }
       navigate('/view/'+view.name)
     }
   }
@@ -113,21 +162,54 @@ function BasicSide(props: any) {
     const { viewdefs, viewOrder } = props
     return (
       <Box sx={{ overflow: 'auto' }}>
-        <List>
-          {sortViews(viewdefs, viewOrder).map((view:any) => (
-                <ListItem key={view.name} disablePadding>
-                  <ListItemButton
-                    onClick={selectView(view)}
-                  >
-                    <ListItemIcon>
-                      { makeIcon(view.icon) }
-                    </ListItemIcon>
-                    <ListItemText primary={view.title} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-        </List>
-      </Box>
+       <ToggleButtonGroup
+        orientation="vertical"
+        aria-label="text alignment"
+        sx={{ width: '100%' }}
+      >
+        {
+          sortViews(viewdefs, viewOrder).map((view:any) => (
+           allow(vxg, view) ? <ToggleButton
+              value="check"
+              selected={ viewPath == view.name }
+              sx={
+                {
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  marginBottom: '10px',
+                  border: 0,
+                  '&.MuiToggleButtonGroup-grouped': {
+                    borderRadius: '20px !important',
+                  },
+                  textTransform: 'none'
+                }
+              } 
+              key={view.name}
+              aria-label="centered"
+              onClick={(event: any) => {
+                /*
+                setToogleSelections((prev: any)=>{
+                  for(let name in prev) {
+                    prev[name] = false
+                  }
+                  prev[view.name] = true
+                  return prev
+                })
+                */
+                selectView(view)(event)
+              }}
+             >
+                
+               { makeIcon(view.icon) }
+               <div>
+                 <span>{ view.title }</span>
+               </div>
+             </ToggleButton> : null
+          ))
+        }  
+       </ToggleButtonGroup>
+     </Box>
     )
   }
 
@@ -138,19 +220,28 @@ function BasicSide(props: any) {
     }
 
     return (
-      <Box sx= {{ display: 'flex' }}>
-        <ButtonGroup size="large" aria-label="large button group">
+      <Box sx= {{ display: 'flex', width: '100%' }}>
+        <ButtonGroup sx={{ width: '100%',}}>
           {
             sections.map((section: any, sectionNumber: number) => (
-              <Button key={section.name} onClick={ (event)=>{
-                toggle(sectionNumber)(event)
-                selectView(section)(event)
-              }}>
+              <ToggleButton
+                value="check"
+                selected={showViewsData[sectionNumber]}
+                sx={{
+                  padding: '0.5em',
+                  width: '100%',
+                }} 
+                key={section.name}
+                onChange={(event: any) => {
+                  toggle(sectionNumber)(event)
+                  selectView(section)(event)
+                }}
+              >
                 <div>
                   { makeIcon(section.button.icon) }
                   <span className="iconText">{ section.button.text }</span>
                 </div>
-              </Button>
+              </ToggleButton>
             ))}
         </ButtonGroup>
       </Box>
@@ -158,31 +249,39 @@ function BasicSide(props: any) {
   }
 
   return (
-    <Drawer
+    <BasicDrawer
       variant="permanent"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-      }}
+      drawerwidth = { drawerwidth }
+      open={ open }
     >
-      <Toolbar />
+      <BasicDrawerHeader>
+        <img src={part.logo.img}
+          style={ { width: '11rem' } } />
+        <IconButton onClick={()=>onClose(seneca)}>
+          <ChevronLeft sx={{ color: 'black' }} />
+        </IconButton>
+      </BasicDrawerHeader>
+        
+        
       <SectionButtons sections={ sectiondefs }/>
-      {sectiondefs.map((section: any, sectionNumber: number) => {
-        const showCurrentSection = showViewsData[sectionNumber]
-        if('navmenu' === section.kind) {
-          return (
-            showCurrentSection && <DefaultNavMenu viewOrder={section.view} viewdefs={viewdefs}/>
-          )
-        }
+        {
+          sectiondefs.map((section: any, sectionNumber: number) => {
+            if(viewPath == section.name || (section.view && viewPath in section.view) ) {
+      
+              if('navmenu' === section.kind) {
+                return (
+                  <DefaultNavMenu key={section.name} viewOrder={section.view} viewdefs={viewdefs}/>
+                )
+              }
 
-        const Cmp:any = ctx().cmp[section.cmp]
-        return (
-          showCurrentSection && <Cmp ctx={ctx} spec={spec}/>
-        )
-        })
-      }
-    </Drawer>
+              const Cmp:any = ctx().cmp[section.cmp]
+              return (
+                <Cmp key={section.name} ctx={ctx} spec={spec}/>
+              )
+            }
+          })
+        }
+    </BasicDrawer>
     )
 }
 

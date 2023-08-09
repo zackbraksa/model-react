@@ -28,13 +28,18 @@
     "repo-publish-quick": "npm run repo-check && npm run build && npm run repo-tag && npm publish --registry https://registry.npmjs.org --access=public"
   },
   "peerDependencies": {
+    "react-hook-form": "^7.43.5",
+    "patrun": "7.2.5",
+    "@jsonic/jsonic-next": "2.10.0",
     "@emotion/react": ">=11",
     "@emotion/styled": ">=11",
     "@fontsource/roboto": ">=4",
+    "@seneca/search-mini": "0.1.6",
     "@mdi/js": ">=7",
     "@mdi/react": ">=1",
     "@mui/icons-material": ">=5",
     "@mui/material": ">=5",
+    "material-react-table": "^1.14.0",
     "@mui/x-data-grid": ">=5",
     "react": ">=18",
     "react-dom": ">=18",

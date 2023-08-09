@@ -1,5 +1,7 @@
 
-import React from 'react'
+import React, { Fragment } from 'react'
+
+import { useSelector } from 'react-redux'
 
 import {
   Routes,
@@ -28,7 +30,11 @@ function makeCmp(view: any, ctx: any) {
 
 
 function BasicMain(props: any) {
-  const { ctx, spec } = props
+  const {
+    vxg,
+    ctx,
+    spec,
+  } = props
   const { model, content } = ctx()
   
   const { frame } = spec
@@ -37,27 +43,49 @@ function BasicMain(props: any) {
 
   const views = Object.values(model.app.web.frame.private.view)
   
+  const sideOpen = useSelector((state: any) => state.main.vxg.cmp.BasicSide.show)
+  
+  
+  const divStyle = {
+    'paddingLeft': sideOpen ? '12.0em' : '0em',
+    'paddingRight': 0,
+  }
+  const mainDiv = {
+    height: 'calc(100vh - 6rem)',
+    width: sideOpen ? 'calc(100vw - 19rem)' : 'calc(100vw - 4rem)',
+    padding: '84px ' + (sideOpen ? '4.5em' : '0') + ' 4.5em ' + (sideOpen ? '4.5em' : '0.5em')
+  }
+  
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100vh",
-        paddingTop: "4rem",
-        paddingLeft: "16rem",
-        paddingBottom: "1rem",
-      }}
-    >
-      <div style={{width:'100%',height:'100%',padding:'1rem'}}>
+    <div className="BasicMain" style = { mainDiv }>
+      <div style={{width:'100%',height:'100%', ...divStyle }}>
         <Routes>
           <Route path="/view">
-            { views.map((view:any)=> {
-              const Cmp:any = makeCmp(view, ctx)
-              return <Route
-                key={view.name}
-                path={'/view/'+view.name}
-                element={<Cmp ctx={ctx} spec={view}/>}
-              />
-            })}
+            {
+              views.map((view:any) => {
+                const Cmp:any = makeCmp(view, ctx)
+                if(view.paramId) {
+                  return (
+                    <Fragment key={view.name}>
+                      <Route
+                        key={view.name}
+                        path={ '/view/'+view.name }
+                        element={<Cmp vxg={vxg} ctx={ctx} spec={view}/>}
+                      />
+                      <Route
+                        key={view.name}
+                        path={ '/view/' + view.name + '/:' + view.paramId }
+                        element={<Cmp vxg={vxg} ctx={ctx} spec={view}/>}
+                      />   
+                    </Fragment>)
+                }
+                return <Route
+                  key={view.name}
+                  path={'/view/'+view.name}
+                  element={<Cmp vxg={vxg} ctx={ctx} spec={view}/>}
+                />
+              })
+            }
         </Route>
       </Routes>
       </div>
