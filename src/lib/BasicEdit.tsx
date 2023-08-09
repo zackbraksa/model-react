@@ -75,7 +75,7 @@ function BasicEdit(props: any) {
                     control={control}
                     defaultValue = { item[field.field] || ''}
                     render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-                      field.cmp === 'combobox' && 'status' != field.type ? 
+                      'combobox' === field.type ? 
                         <Autocomplete
                           freeSolo
                           id="combo-box"
@@ -122,7 +122,7 @@ function BasicEdit(props: any) {
                           key={ field.field }
                           label={ field.headerName }
                           fullWidth
-                          select = { 'status' == field.type }
+                          select = { 'status' === field.type }
                           disabled={ !!!field.edit }
                           onChange={onChange}
                           value={ value }
@@ -134,7 +134,7 @@ function BasicEdit(props: any) {
                           } }
                         >	
                         {
-                         field.type == 'status' ?
+                         'status' === field.type ?
                            Object.keys(field.kind).map((option)=>
                              <MenuItem key={option} value={option} >
                                { field.kind[option]?.title }
