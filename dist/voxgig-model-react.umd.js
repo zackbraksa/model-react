@@ -94,10 +94,7 @@ var __async = (__this, __arguments, generator) => {
     if (typeof f == "function") {
       var a = function a2() {
         if (this instanceof a2) {
-          var args = [null];
-          args.push.apply(args, arguments);
-          var Ctor = Function.bind.apply(f, args);
-          return new Ctor();
+          return Reflect.construct(f, arguments, this.constructor);
         }
         return f.apply(this, arguments);
       };
@@ -116,15 +113,7 @@ var __async = (__this, __arguments, generator) => {
     });
     return a;
   }
-  var jsxRuntimeExports = {};
-  var jsxRuntime$2 = {
-    get exports() {
-      return jsxRuntimeExports;
-    },
-    set exports(v) {
-      jsxRuntimeExports = v;
-    }
-  };
+  var jsxRuntime$2 = { exports: {} };
   var reactJsxRuntime_production_min = {};
   /**
    * @license React
@@ -1039,43 +1028,27 @@ var __async = (__this, __arguments, generator) => {
             return jsxWithValidation(type, props, key, false);
           }
         }
-        var jsx2 = jsxWithValidationDynamic;
-        var jsxs2 = jsxWithValidationStatic;
+        var jsx = jsxWithValidationDynamic;
+        var jsxs = jsxWithValidationStatic;
         reactJsxRuntime_development.Fragment = REACT_FRAGMENT_TYPE;
-        reactJsxRuntime_development.jsx = jsx2;
-        reactJsxRuntime_development.jsxs = jsxs2;
+        reactJsxRuntime_development.jsx = jsx;
+        reactJsxRuntime_development.jsxs = jsxs;
       })();
     }
     return reactJsxRuntime_development;
   }
-  (function(module2) {
-    "use strict";
-    if (process.env.NODE_ENV === "production") {
-      module2.exports = requireReactJsxRuntime_production_min();
-    } else {
-      module2.exports = requireReactJsxRuntime_development();
-    }
-  })(jsxRuntime$2);
+  var jsxRuntime = jsxRuntime$2.exports;
+  "use strict";
+  if (process.env.NODE_ENV === "production") {
+    jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
+  } else {
+    jsxRuntime$2.exports = requireReactJsxRuntime_development();
+  }
+  var jsxRuntimeExports = jsxRuntime$2.exports;
   const jsxRuntime$1 = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
-  const Fragment = jsxRuntimeExports.Fragment;
-  const jsx = jsxRuntimeExports.jsx;
-  const jsxs = jsxRuntimeExports.jsxs;
-  const jsxRuntime = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-    __proto__: null,
-    Fragment,
-    jsx,
-    jsxs
-  }, Symbol.toStringTag, { value: "Module" }));
   var ChevronRight = {};
-  var interopRequireDefaultExports = {};
-  var interopRequireDefault$1 = {
-    get exports() {
-      return interopRequireDefaultExports;
-    },
-    set exports(v) {
-      interopRequireDefaultExports = v;
-    }
-  };
+  var interopRequireDefault$2 = { exports: {} };
+  var interopRequireDefault = interopRequireDefault$2.exports;
   (function(module2) {
     function _interopRequireDefault2(obj) {
       return obj && obj.__esModule ? obj : {
@@ -1083,8 +1056,9 @@ var __async = (__this, __arguments, generator) => {
       };
     }
     module2.exports = _interopRequireDefault2, module2.exports.__esModule = true, module2.exports["default"] = module2.exports;
-  })(interopRequireDefault$1);
-  const interopRequireDefault = /* @__PURE__ */ getDefaultExportFromCjs(interopRequireDefaultExports);
+  })(interopRequireDefault$2);
+  var interopRequireDefaultExports = interopRequireDefault$2.exports;
+  const interopRequireDefault$1 = /* @__PURE__ */ getDefaultExportFromCjs(interopRequireDefaultExports);
   var createSvgIcon$1 = {};
   function chainPropTypes(propType1, propType2) {
     if (process.env.NODE_ENV === "production") {
@@ -1093,6 +1067,20 @@ var __async = (__this, __arguments, generator) => {
     return function validate(...args) {
       return propType1(...args) || propType2(...args);
     };
+  }
+  function _extends$2() {
+    _extends$2 = Object.assign ? Object.assign.bind() : function(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    };
+    return _extends$2.apply(this, arguments);
   }
   function isPlainObject$1(item) {
     return item !== null && typeof item === "object" && item.constructor === Object;
@@ -1110,7 +1098,7 @@ var __async = (__this, __arguments, generator) => {
   function deepmerge(target, source, options = {
     clone: true
   }) {
-    const output = options.clone ? __spreadValues({}, target) : target;
+    const output = options.clone ? _extends$2({}, target) : target;
     if (isPlainObject$1(target) && isPlainObject$1(source)) {
       Object.keys(source).forEach((key) => {
         if (key === "__proto__") {
@@ -1127,24 +1115,8 @@ var __async = (__this, __arguments, generator) => {
     }
     return output;
   }
-  var propTypesExports = {};
-  var propTypes = {
-    get exports() {
-      return propTypesExports;
-    },
-    set exports(v) {
-      propTypesExports = v;
-    }
-  };
-  var reactIsExports$1 = {};
-  var reactIs$1 = {
-    get exports() {
-      return reactIsExports$1;
-    },
-    set exports(v) {
-      reactIsExports$1 = v;
-    }
-  };
+  var propTypes$1 = { exports: {} };
+  var reactIs$3 = { exports: {} };
   var reactIs_production_min$1 = {};
   /** @license React v16.13.1
    * react-is.production.min.js
@@ -1330,7 +1302,7 @@ var __async = (__this, __arguments, generator) => {
         var ContextProvider = REACT_PROVIDER_TYPE;
         var Element2 = REACT_ELEMENT_TYPE;
         var ForwardRef = REACT_FORWARD_REF_TYPE;
-        var Fragment2 = REACT_FRAGMENT_TYPE;
+        var Fragment = REACT_FRAGMENT_TYPE;
         var Lazy = REACT_LAZY_TYPE;
         var Memo = REACT_MEMO_TYPE;
         var Portal2 = REACT_PORTAL_TYPE;
@@ -1389,7 +1361,7 @@ var __async = (__this, __arguments, generator) => {
         reactIs_development$1.ContextProvider = ContextProvider;
         reactIs_development$1.Element = Element2;
         reactIs_development$1.ForwardRef = ForwardRef;
-        reactIs_development$1.Fragment = Fragment2;
+        reactIs_development$1.Fragment = Fragment;
         reactIs_development$1.Lazy = Lazy;
         reactIs_development$1.Memo = Memo;
         reactIs_development$1.Portal = Portal2;
@@ -1415,20 +1387,19 @@ var __async = (__this, __arguments, generator) => {
     }
     return reactIs_development$1;
   }
+  var reactIs$2 = reactIs$3.exports;
   var hasRequiredReactIs;
   function requireReactIs() {
     if (hasRequiredReactIs)
-      return reactIsExports$1;
+      return reactIs$3.exports;
     hasRequiredReactIs = 1;
-    (function(module2) {
-      "use strict";
-      if (process.env.NODE_ENV === "production") {
-        module2.exports = requireReactIs_production_min$1();
-      } else {
-        module2.exports = requireReactIs_development$1();
-      }
-    })(reactIs$1);
-    return reactIsExports$1;
+    "use strict";
+    if (process.env.NODE_ENV === "production") {
+      reactIs$3.exports = requireReactIs_production_min$1();
+    } else {
+      reactIs$3.exports = requireReactIs_development$1();
+    }
+    return reactIs$3.exports;
   }
   /*
   object-assign
@@ -2095,13 +2066,16 @@ var __async = (__this, __arguments, generator) => {
     };
     return factoryWithThrowingShims;
   }
+  var propTypes = propTypes$1.exports;
   if (process.env.NODE_ENV !== "production") {
     var ReactIs = requireReactIs();
     var throwOnDirectAccess = true;
-    propTypes.exports = requireFactoryWithTypeCheckers()(ReactIs.isElement, throwOnDirectAccess);
+    propTypes$1.exports = requireFactoryWithTypeCheckers()(ReactIs.isElement, throwOnDirectAccess);
   } else {
-    propTypes.exports = requireFactoryWithThrowingShims()();
+    propTypes$1.exports = requireFactoryWithThrowingShims()();
   }
+  var propTypesExports = propTypes$1.exports;
+  const PropTypes = /* @__PURE__ */ getDefaultExportFromCjs(propTypesExports);
   function isClassComponent$2(elementType) {
     const {
       prototype = {}
@@ -2128,8 +2102,8 @@ var __async = (__this, __arguments, generator) => {
     }
     return null;
   }
-  const elementAcceptingRef = chainPropTypes(propTypesExports.element, acceptingRef);
-  elementAcceptingRef.isRequired = chainPropTypes(propTypesExports.element.isRequired, acceptingRef);
+  const elementAcceptingRef = chainPropTypes(PropTypes.element, acceptingRef);
+  elementAcceptingRef.isRequired = chainPropTypes(PropTypes.element.isRequired, acceptingRef);
   function isClassComponent$1(elementType) {
     const {
       prototype = {}
@@ -2155,13 +2129,13 @@ var __async = (__this, __arguments, generator) => {
     }
     return null;
   }
-  const elementTypeAcceptingRef$1 = chainPropTypes(propTypesExports.elementType, elementTypeAcceptingRef);
+  const elementTypeAcceptingRef$1 = chainPropTypes(PropTypes.elementType, elementTypeAcceptingRef);
   const specialProperty = "exact-prop: ​";
   function exactProp(propTypes2) {
     if (process.env.NODE_ENV === "production") {
       return propTypes2;
     }
-    return __spreadProps(__spreadValues({}, propTypes2), {
+    return _extends$2({}, propTypes2, {
       [specialProperty]: (props) => {
         const unsupportedProps = Object.keys(props).filter((prop) => !propTypes2.hasOwnProperty(prop));
         if (unsupportedProps.length > 0) {
@@ -2178,15 +2152,7 @@ var __async = (__this, __arguments, generator) => {
     }
     return "Minified MUI error #" + code + "; visit " + url + " for the full message.";
   }
-  var reactIsExports = {};
-  var reactIs = {
-    get exports() {
-      return reactIsExports;
-    },
-    set exports(v) {
-      reactIsExports = v;
-    }
-  };
+  var reactIs$1 = { exports: {} };
   var reactIs_production_min = {};
   /**
    * @license React
@@ -2392,7 +2358,7 @@ var __async = (__this, __arguments, generator) => {
         var ContextProvider = REACT_PROVIDER_TYPE;
         var Element2 = REACT_ELEMENT_TYPE;
         var ForwardRef = REACT_FORWARD_REF_TYPE;
-        var Fragment2 = REACT_FRAGMENT_TYPE;
+        var Fragment = REACT_FRAGMENT_TYPE;
         var Lazy = REACT_LAZY_TYPE;
         var Memo = REACT_MEMO_TYPE;
         var Portal2 = REACT_PORTAL_TYPE;
@@ -2460,7 +2426,7 @@ var __async = (__this, __arguments, generator) => {
         reactIs_development.ContextProvider = ContextProvider;
         reactIs_development.Element = Element2;
         reactIs_development.ForwardRef = ForwardRef;
-        reactIs_development.Fragment = Fragment2;
+        reactIs_development.Fragment = Fragment;
         reactIs_development.Lazy = Lazy;
         reactIs_development.Memo = Memo;
         reactIs_development.Portal = Portal2;
@@ -2488,14 +2454,14 @@ var __async = (__this, __arguments, generator) => {
     }
     return reactIs_development;
   }
-  (function(module2) {
-    "use strict";
-    if (process.env.NODE_ENV === "production") {
-      module2.exports = requireReactIs_production_min();
-    } else {
-      module2.exports = requireReactIs_development();
-    }
-  })(reactIs);
+  var reactIs = reactIs$1.exports;
+  "use strict";
+  if (process.env.NODE_ENV === "production") {
+    reactIs$1.exports = requireReactIs_production_min();
+  } else {
+    reactIs$1.exports = requireReactIs_development();
+  }
+  var reactIsExports = reactIs$1.exports;
   const index = /* @__PURE__ */ getDefaultExportFromCjs(reactIsExports);
   const fnNameMatchRegex = /^\s*function(?:\s|\s*\/\*.*\*\/\s*)+([^(\s/]*)\s*/;
   function getFunctionName(fn) {
@@ -2547,7 +2513,7 @@ var __async = (__this, __arguments, generator) => {
     return null;
   }
   const ponyfillGlobal = typeof window != "undefined" && window.Math == Math ? window : typeof self != "undefined" && self.Math == Math ? self : Function("return this")();
-  const refType = propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]);
+  const refType = PropTypes.oneOfType([PropTypes.func, PropTypes.object]);
   function capitalize(string) {
     if (typeof string !== "string") {
       throw new Error(process.env.NODE_ENV !== "production" ? `MUI: \`capitalize(string)\` expects a string argument.` : formatMuiErrorMessage(7));
@@ -2607,7 +2573,7 @@ var __async = (__this, __arguments, generator) => {
     if (process.env.NODE_ENV === "production") {
       return () => null;
     }
-    const prevPropTypes = Component ? __spreadValues({}, Component.propTypes) : null;
+    const prevPropTypes = Component ? _extends$2({}, Component.propTypes) : null;
     const requireProp = (requiredProp) => (props, propName, componentName, location, propFullName, ...args) => {
       const propFullNameSafe = propFullName || propName;
       const defaultTypeChecker = prevPropTypes == null ? void 0 : prevPropTypes[propFullNameSafe];
@@ -2631,7 +2597,10 @@ var __async = (__this, __arguments, generator) => {
       ref.current = value;
     }
   }
+  "use client";
   const useEnhancedEffect = typeof window !== "undefined" ? React__namespace.useLayoutEffect : React__namespace.useEffect;
+  "use client";
+  "use client";
   let globalId = 0;
   function useGlobalId(idOverride) {
     const [defaultId, setDefaultId] = React__namespace.useState(idOverride);
@@ -2652,6 +2621,7 @@ var __async = (__this, __arguments, generator) => {
     }
     return useGlobalId(idOverride);
   }
+  "use client";
   function unsupportedProp(props, propName, componentName, location, propFullName) {
     if (process.env.NODE_ENV === "production") {
       return null;
@@ -2662,6 +2632,7 @@ var __async = (__this, __arguments, generator) => {
     }
     return null;
   }
+  "use client";
   function useControlled({
     controlled,
     default: defaultProp,
@@ -2695,6 +2666,8 @@ var __async = (__this, __arguments, generator) => {
     }, []);
     return [value, setValueIfUncontrolled];
   }
+  "use client";
+  "use client";
   function useEventCallback(fn) {
     const ref = React__namespace.useRef(fn);
     useEnhancedEffect(() => {
@@ -2706,6 +2679,8 @@ var __async = (__this, __arguments, generator) => {
       (0, ref.current)(...args)
     ), []);
   }
+  "use client";
+  "use client";
   function useForkRef(...refs) {
     return React__namespace.useMemo(() => {
       if (refs.every((ref) => ref == null)) {
@@ -2718,6 +2693,8 @@ var __async = (__this, __arguments, generator) => {
       };
     }, refs);
   }
+  "use client";
+  "use client";
   let hadKeyboardEvent = true;
   let hadFocusVisibleRecently = false;
   let hadFocusVisibleRecentlyTimeout;
@@ -2874,6 +2851,7 @@ var __async = (__this, __arguments, generator) => {
         return scrollLeft;
     }
   }
+  "use client";
   const usePreviousProps = (value) => {
     const ref = React__namespace.useRef({});
     React__namespace.useEffect(() => {
@@ -2941,10 +2919,10 @@ var __async = (__this, __arguments, generator) => {
   validatorNoop.isRequired = validatorNoop;
   const integerPropType = process.env.NODE_ENV === "production" ? validatorNoop : validator;
   function resolveProps(defaultProps2, props) {
-    const output = __spreadValues({}, props);
+    const output = _extends$2({}, props);
     Object.keys(defaultProps2).forEach((propName) => {
       if (propName.toString().match(/^(components|slots)$/)) {
-        output[propName] = __spreadValues(__spreadValues({}, defaultProps2[propName]), output[propName]);
+        output[propName] = _extends$2({}, defaultProps2[propName], output[propName]);
       } else if (propName.toString().match(/^(componentsProps|slotProps)$/)) {
         const defaultSlotProps = defaultProps2[propName] || {};
         const slotProps = props[propName];
@@ -2954,7 +2932,7 @@ var __async = (__this, __arguments, generator) => {
         } else if (!defaultSlotProps || !Object.keys(defaultSlotProps)) {
           output[propName] = slotProps;
         } else {
-          output[propName] = __spreadValues({}, slotProps);
+          output[propName] = _extends$2({}, slotProps);
           Object.keys(defaultSlotProps).forEach((slotPropName) => {
             output[propName][slotPropName] = resolveProps(defaultSlotProps[slotPropName], slotProps[slotPropName]);
           });
@@ -2968,7 +2946,7 @@ var __async = (__this, __arguments, generator) => {
   function composeClasses(slots, getUtilityClass, classes = void 0) {
     const output = {};
     Object.keys(slots).forEach(
-      // `Objet.keys(slots)` can't be wider than `T` because we infer `T` from `slots`.
+      // `Object.keys(slots)` can't be wider than `T` because we infer `T` from `slots`.
       // @ts-expect-error https://github.com/microsoft/TypeScript/pull/12253#issuecomment-263132208
       (slot) => {
         output[slot] = slots[slot].reduce((acc, key) => {
@@ -3027,20 +3005,7 @@ var __async = (__this, __arguments, generator) => {
     });
     return result;
   }
-  function _extends$2() {
-    _extends$2 = Object.assign ? Object.assign.bind() : function(target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i];
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-      return target;
-    };
-    return _extends$2.apply(this, arguments);
-  }
+  "use client";
   function _objectWithoutPropertiesLoose(source, excluded) {
     if (source == null)
       return {};
@@ -3055,22 +3020,22 @@ var __async = (__this, __arguments, generator) => {
     }
     return target;
   }
-  function r(e) {
+  function r$1(e) {
     var t, f, n = "";
     if ("string" == typeof e || "number" == typeof e)
       n += e;
     else if ("object" == typeof e)
       if (Array.isArray(e))
         for (t = 0; t < e.length; t++)
-          e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+          e[t] && (f = r$1(e[t])) && (n && (n += " "), n += f);
       else
         for (t in e)
           e[t] && (n && (n += " "), n += t);
     return n;
   }
-  function clsx() {
+  function clsx$1() {
     for (var e, t, f = 0, n = ""; f < arguments.length; )
-      (e = arguments[f++]) && (t = r(e)) && (n && (n += " "), n += t);
+      (e = arguments[f++]) && (t = r$1(e)) && (n && (n += " "), n += t);
     return n;
   }
   function isHostComponent(element) {
@@ -3122,7 +3087,7 @@ var __async = (__this, __arguments, generator) => {
       className
     } = parameters;
     if (!getSlotProps) {
-      const joinedClasses2 = clsx(externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className, className, additionalProps == null ? void 0 : additionalProps.className);
+      const joinedClasses2 = clsx$1(externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className, className, additionalProps == null ? void 0 : additionalProps.className);
       const mergedStyle2 = _extends$2({}, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
       const props2 = _extends$2({}, additionalProps, externalForwardedProps, externalSlotProps);
       if (joinedClasses2.length > 0) {
@@ -3140,7 +3105,7 @@ var __async = (__this, __arguments, generator) => {
     const componentsPropsWithoutEventHandlers = omitEventHandlers(externalSlotProps);
     const otherPropsWithoutEventHandlers = omitEventHandlers(externalForwardedProps);
     const internalSlotProps = getSlotProps(eventHandlers);
-    const joinedClasses = clsx(internalSlotProps == null ? void 0 : internalSlotProps.className, additionalProps == null ? void 0 : additionalProps.className, className, externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className);
+    const joinedClasses = clsx$1(internalSlotProps == null ? void 0 : internalSlotProps.className, additionalProps == null ? void 0 : additionalProps.className, className, externalForwardedProps == null ? void 0 : externalForwardedProps.className, externalSlotProps == null ? void 0 : externalSlotProps.className);
     const mergedStyle = _extends$2({}, internalSlotProps == null ? void 0 : internalSlotProps.style, additionalProps == null ? void 0 : additionalProps.style, externalForwardedProps == null ? void 0 : externalForwardedProps.style, externalSlotProps == null ? void 0 : externalSlotProps.style);
     const props = _extends$2({}, internalSlotProps, additionalProps, otherPropsWithoutEventHandlers, componentsPropsWithoutEventHandlers);
     if (joinedClasses.length > 0) {
@@ -4148,8 +4113,8 @@ var __async = (__this, __arguments, generator) => {
       ownerState,
       className: classes.badge
     });
-    return /* @__PURE__ */ jsxs(Root, _extends$2({}, rootProps, {
-      children: [children, /* @__PURE__ */ jsx(Badge2, _extends$2({}, badgeProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Root, _extends$2({}, rootProps, {
+      children: [children, /* @__PURE__ */ jsxRuntimeExports.jsx(Badge2, _extends$2({}, badgeProps, {
         children: displayValue
       }))]
     }));
@@ -4162,47 +4127,47 @@ var __async = (__this, __arguments, generator) => {
     /**
      * The content rendered within the badge.
      */
-    badgeContent: propTypesExports.node,
+    badgeContent: PropTypes.node,
     /**
      * The badge will be added relative to this node.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the badge is invisible.
      * @default false
      */
-    invisible: propTypesExports.bool,
+    invisible: PropTypes.bool,
     /**
      * Max count to show.
      * @default 99
      */
-    max: propTypesExports.number,
+    max: PropTypes.number,
     /**
      * Controls whether the badge is hidden when `badgeContent` is zero.
      * @default false
      */
-    showZero: propTypesExports.bool,
+    showZero: PropTypes.bool,
     /**
      * The props used for each slot inside the Badge.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      badge: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      badge: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Badge.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      badge: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      badge: PropTypes.elementType,
+      root: PropTypes.elementType
     })
   } : void 0;
   function getButtonUnstyledUtilityClass(slot) {
@@ -4418,7 +4383,7 @@ var __async = (__this, __arguments, generator) => {
       ownerState,
       className: classes.root
     });
-    return /* @__PURE__ */ jsx(Root, _extends$2({}, rootProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends$2({}, rootProps, {
       children
     }));
   });
@@ -4430,81 +4395,81 @@ var __async = (__this, __arguments, generator) => {
     /**
      * A ref for imperative actions. It currently only supports `focusVisible()` action.
      */
-    action: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.shape({
-      current: propTypesExports.shape({
-        focusVisible: propTypesExports.func.isRequired
+    action: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
+      current: PropTypes.shape({
+        focusVisible: PropTypes.func.isRequired
       })
     })]),
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, allows a disabled button to receive focus.
      * @default false
      */
-    focusableWhenDisabled: propTypesExports.bool,
+    focusableWhenDisabled: PropTypes.bool,
     /**
      * @ignore
      */
-    href: propTypesExports.string,
+    href: PropTypes.string,
     /**
      * @ignore
      */
-    onBlur: propTypesExports.func,
+    onBlur: PropTypes.func,
     /**
      * @ignore
      */
-    onClick: propTypesExports.func,
+    onClick: PropTypes.func,
     /**
      * @ignore
      */
-    onFocus: propTypesExports.func,
+    onFocus: PropTypes.func,
     /**
      * @ignore
      */
-    onFocusVisible: propTypesExports.func,
+    onFocusVisible: PropTypes.func,
     /**
      * @ignore
      */
-    onKeyDown: propTypesExports.func,
+    onKeyDown: PropTypes.func,
     /**
      * @ignore
      */
-    onKeyUp: propTypesExports.func,
+    onKeyUp: PropTypes.func,
     /**
      * @ignore
      */
-    onMouseLeave: propTypesExports.func,
+    onMouseLeave: PropTypes.func,
     /**
      * The props used for each slot inside the Button.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Button.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     }),
     /**
      * @ignore
      */
-    to: propTypesExports.string
+    to: PropTypes.string
   } : void 0;
   function mapEventPropToEvent(eventProp) {
     return eventProp.substring(2).toLowerCase();
@@ -4607,7 +4572,7 @@ var __async = (__this, __arguments, generator) => {
       }
       return void 0;
     }, [handleClickAway, mouseEvent]);
-    return /* @__PURE__ */ jsx(React__namespace.Fragment, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(React__namespace.Fragment, {
       children: /* @__PURE__ */ React__namespace.cloneElement(children, childrenProps)
     });
   }
@@ -4625,21 +4590,21 @@ var __async = (__this, __arguments, generator) => {
      * This prop changes how portaled elements are handled.
      * @default false
      */
-    disableReactTree: propTypesExports.bool,
+    disableReactTree: PropTypes.bool,
     /**
      * The mouse event to listen to. You can disable the listener by providing `false`.
      * @default 'onClick'
      */
-    mouseEvent: propTypesExports.oneOf(["onClick", "onMouseDown", "onMouseUp", "onPointerDown", "onPointerUp", false]),
+    mouseEvent: PropTypes.oneOf(["onClick", "onMouseDown", "onMouseUp", "onPointerDown", "onPointerUp", false]),
     /**
      * Callback fired when a "click away" event is detected.
      */
-    onClickAway: propTypesExports.func.isRequired,
+    onClickAway: PropTypes.func.isRequired,
     /**
      * The touch event to listen to. You can disable the listener by providing `false`.
      * @default 'onTouchEnd'
      */
-    touchEvent: propTypesExports.oneOf(["onTouchEnd", "onTouchStart", false])
+    touchEvent: PropTypes.oneOf(["onTouchEnd", "onTouchStart", false])
   } : void 0;
   if (process.env.NODE_ENV !== "production") {
     ClickAwayListener["propTypes"] = exactProp(ClickAwayListener.propTypes);
@@ -4837,8 +4802,8 @@ var __async = (__this, __arguments, generator) => {
       }
       activated.current = true;
     };
-    return /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-      children: [/* @__PURE__ */ jsx("div", {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx("div", {
         tabIndex: open ? 0 : -1,
         onFocus: handleFocusSentinel,
         ref: sentinelStart,
@@ -4846,7 +4811,7 @@ var __async = (__this, __arguments, generator) => {
       }), /* @__PURE__ */ React__namespace.cloneElement(children, {
         ref: handleRef,
         onFocus
-      }), /* @__PURE__ */ jsx("div", {
+      }), /* @__PURE__ */ jsxRuntimeExports.jsx("div", {
         tabIndex: open ? 0 : -1,
         onFocus: handleFocusSentinel,
         ref: sentinelEnd,
@@ -4872,7 +4837,7 @@ var __async = (__this, __arguments, generator) => {
      * accessible to assistive technologies, like screen readers.
      * @default false
      */
-    disableAutoFocus: propTypesExports.bool,
+    disableAutoFocus: PropTypes.bool,
     /**
      * If `true`, the focus trap will not prevent focus from leaving the focus trap while open.
      *
@@ -4880,19 +4845,19 @@ var __async = (__this, __arguments, generator) => {
      * accessible to assistive technologies, like screen readers.
      * @default false
      */
-    disableEnforceFocus: propTypesExports.bool,
+    disableEnforceFocus: PropTypes.bool,
     /**
      * If `true`, the focus trap will not restore focus to previously focused element once
      * focus trap is hidden or unmounted.
      * @default false
      */
-    disableRestoreFocus: propTypesExports.bool,
+    disableRestoreFocus: PropTypes.bool,
     /**
      * Returns an array of ordered tabbable nodes (i.e. in tab order) within the root.
      * For instance, you can provide the "tabbable" npm dependency.
      * @param {HTMLElement} root
      */
-    getTabbable: propTypesExports.func,
+    getTabbable: PropTypes.func,
     /**
      * This prop extends the `open` prop.
      * It allows to toggle the open state without having to wait for a rerender when changing the `open` prop.
@@ -4902,11 +4867,11 @@ var __async = (__this, __arguments, generator) => {
      *   return true;
      * }
      */
-    isEnabled: propTypesExports.func,
+    isEnabled: PropTypes.func,
     /**
      * If `true`, focus is locked.
      */
-    open: propTypesExports.bool.isRequired
+    open: PropTypes.bool.isRequired
   } : void 0;
   if (process.env.NODE_ENV !== "production") {
     FocusTrap["propTypes"] = exactProp(FocusTrap.propTypes);
@@ -5006,9 +4971,9 @@ var __async = (__this, __arguments, generator) => {
       ownerState,
       className: classes.root
     });
-    return /* @__PURE__ */ jsx(FormControlUnstyledContext.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(FormControlUnstyledContext.Provider, {
       value: childContext,
-      children: /* @__PURE__ */ jsx(Root, _extends$2({}, rootProps))
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends$2({}, rootProps))
     });
   });
   process.env.NODE_ENV !== "production" ? FormControlUnstyled.propTypes = {
@@ -5019,54 +4984,54 @@ var __async = (__this, __arguments, generator) => {
     /**
      * The content of the component.
      */
-    children: propTypesExports.oneOfType([propTypesExports.node, propTypesExports.func]),
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * @ignore
      */
-    defaultValue: propTypesExports.any,
+    defaultValue: PropTypes.any,
     /**
      * If `true`, the label, input and helper text should be displayed in a disabled state.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the label is displayed in an error state.
      * @default false
      */
-    error: propTypesExports.bool,
+    error: PropTypes.bool,
     /**
      * @ignore
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * If `true`, the label will indicate that the `input` is required.
      * @default false
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * The props used for each slot inside the FormControl.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the FormControl.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     }),
     /**
      * @ignore
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
   function useFormControlUnstyledContext() {
     return React__namespace.useContext(FormControlUnstyledContext);
@@ -5337,8 +5302,8 @@ var __async = (__this, __arguments, generator) => {
         }
       }
     }
-    return /* @__PURE__ */ jsxs(Root, _extends$2({}, rootProps, {
-      children: [startAdornment, /* @__PURE__ */ jsx(Input2, _extends$2({}, inputProps)), endAdornment]
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Root, _extends$2({}, rootProps, {
+      children: [startAdornment, /* @__PURE__ */ jsxRuntimeExports.jsx(Input2, _extends$2({}, inputProps)), endAdornment]
     }));
   });
   process.env.NODE_ENV !== "production" ? InputUnstyled.propTypes = {
@@ -5349,150 +5314,150 @@ var __async = (__this, __arguments, generator) => {
     /**
      * @ignore
      */
-    "aria-describedby": propTypesExports.string,
+    "aria-describedby": PropTypes.string,
     /**
      * @ignore
      */
-    "aria-label": propTypesExports.string,
+    "aria-label": PropTypes.string,
     /**
      * @ignore
      */
-    "aria-labelledby": propTypesExports.string,
+    "aria-labelledby": PropTypes.string,
     /**
      * This prop helps users to fill forms faster, especially on mobile devices.
      * The name can be confusing, as it's more like an autofill.
      * You can learn more about it [following the specification](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill).
      */
-    autoComplete: propTypesExports.string,
+    autoComplete: PropTypes.string,
     /**
      * If `true`, the `input` element is focused during the first mount.
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Class name applied to the root element.
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.any,
+    defaultValue: PropTypes.any,
     /**
      * If `true`, the component is disabled.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * Trailing adornment for this input.
      */
-    endAdornment: propTypesExports.node,
+    endAdornment: PropTypes.node,
     /**
      * If `true`, the `input` will indicate an error by setting the `aria-invalid` attribute on the input and the `Mui-error` class on the root element.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    error: propTypesExports.bool,
+    error: PropTypes.bool,
     /**
      * The id of the `input` element.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * Maximum number of rows to display when multiline option is set to true.
      */
-    maxRows: propTypesExports.number,
+    maxRows: PropTypes.number,
     /**
      * Minimum number of rows to display when multiline option is set to true.
      */
-    minRows: propTypesExports.number,
+    minRows: PropTypes.number,
     /**
      * If `true`, a `textarea` element is rendered.
      * @default false
      */
-    multiline: propTypesExports.bool,
+    multiline: PropTypes.bool,
     /**
      * Name attribute of the `input` element.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * @ignore
      */
-    onBlur: propTypesExports.func,
+    onBlur: PropTypes.func,
     /**
      * @ignore
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * @ignore
      */
-    onClick: propTypesExports.func,
+    onClick: PropTypes.func,
     /**
      * @ignore
      */
-    onFocus: propTypesExports.func,
+    onFocus: PropTypes.func,
     /**
      * @ignore
      */
-    onKeyDown: propTypesExports.func,
+    onKeyDown: PropTypes.func,
     /**
      * @ignore
      */
-    onKeyUp: propTypesExports.func,
+    onKeyUp: PropTypes.func,
     /**
      * The short hint displayed in the `input` before the user enters a value.
      */
-    placeholder: propTypesExports.string,
+    placeholder: PropTypes.string,
     /**
      * It prevents the user from changing the value of the field
      * (not from interacting with the field).
      */
-    readOnly: propTypesExports.bool,
+    readOnly: PropTypes.bool,
     /**
      * If `true`, the `input` element is required.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * Number of rows to display when multiline option is set to true.
      */
-    rows: propTypesExports.number,
+    rows: PropTypes.number,
     /**
      * The props used for each slot inside the Input.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      input: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      input: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the InputBase.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      input: propTypesExports.elementType,
-      root: propTypesExports.elementType,
-      textarea: propTypesExports.elementType
+    slots: PropTypes.shape({
+      input: PropTypes.elementType,
+      root: PropTypes.elementType,
+      textarea: PropTypes.elementType
     }),
     /**
      * Leading adornment for this input.
      */
-    startAdornment: propTypesExports.node,
+    startAdornment: PropTypes.node,
     /**
      * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
      * @default 'text'
      */
-    type: propTypesExports.oneOf(["button", "checkbox", "color", "date", "datetime-local", "email", "file", "hidden", "image", "month", "number", "password", "radio", "range", "reset", "search", "submit", "tel", "text", "time", "url", "week"]),
+    type: PropTypes.oneOf(["button", "checkbox", "color", "date", "datetime-local", "email", "file", "hidden", "image", "month", "number", "password", "radio", "range", "reset", "search", "submit", "tel", "text", "time", "url", "week"]),
     /**
      * The value of the `input` element, required for a controlled component.
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
   var ActionTypes;
   (function(ActionTypes2) {
@@ -7635,11 +7600,11 @@ var __async = (__this, __arguments, generator) => {
         };
         return /* @__PURE__ */ React__namespace.cloneElement(children, newProps);
       }
-      return /* @__PURE__ */ jsx(React__namespace.Fragment, {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(React__namespace.Fragment, {
         children
       });
     }
-    return /* @__PURE__ */ jsx(React__namespace.Fragment, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(React__namespace.Fragment, {
       children: mountNode ? /* @__PURE__ */ ReactDOM__namespace.createPortal(children, mountNode) : mountNode
     });
   });
@@ -7651,7 +7616,7 @@ var __async = (__this, __arguments, generator) => {
     /**
      * The children to render into the `container`.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * An HTML element or function that returns one.
      * The `container` will have the portal children appended to it.
@@ -7659,12 +7624,12 @@ var __async = (__this, __arguments, generator) => {
      * By default, it uses the body of the top-level document object,
      * so it's simply `document.body` most of the time.
      */
-    container: propTypesExports.oneOfType([HTMLElementType, propTypesExports.func]),
+    container: PropTypes.oneOfType([HTMLElementType, PropTypes.func]),
     /**
      * The `children` will be under the DOM hierarchy of the parent component.
      * @default false
      */
-    disablePortal: propTypesExports.bool
+    disablePortal: PropTypes.bool
   } : void 0;
   if (process.env.NODE_ENV !== "production") {
     Portal["propTypes"] = exactProp(Portal.propTypes);
@@ -7818,7 +7783,7 @@ var __async = (__this, __arguments, generator) => {
       ownerState: _extends$2({}, props, ownerState),
       className: classes.root
     });
-    return /* @__PURE__ */ jsx(Root, _extends$2({}, rootProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends$2({}, rootProps, {
       children: typeof children === "function" ? children(childProps) : children
     }));
   });
@@ -7863,10 +7828,10 @@ var __async = (__this, __arguments, generator) => {
       onEnter: handleEnter,
       onExited: handleExited
     } : void 0;
-    return /* @__PURE__ */ jsx(Portal, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Portal, {
       disablePortal,
       container,
-      children: /* @__PURE__ */ jsx(PopperTooltip, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(PopperTooltip, _extends$2({
         anchorEl,
         direction,
         disablePortal,
@@ -7903,7 +7868,7 @@ var __async = (__this, __arguments, generator) => {
      * It's used to set the position of the popper.
      * The return value will passed as the reference object of the Popper instance.
      */
-    anchorEl: chainPropTypes(propTypesExports.oneOfType([HTMLElementType, propTypesExports.object, propTypesExports.func]), (props) => {
+    anchorEl: chainPropTypes(PropTypes.oneOfType([HTMLElementType, PropTypes.object, PropTypes.func]), (props) => {
       if (props.open) {
         const resolvedAnchorEl = resolveAnchorEl$1(props.anchorEl);
         if (resolvedAnchorEl && isHTMLElement$1(resolvedAnchorEl) && resolvedAnchorEl.nodeType === 1) {
@@ -7920,7 +7885,7 @@ var __async = (__this, __arguments, generator) => {
     /**
      * Popper render function or node.
      */
-    children: propTypesExports.oneOfType([propTypesExports.node, propTypesExports.func]),
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     /**
      * An HTML element or function that returns one.
      * The `container` will have the portal children appended to it.
@@ -7928,24 +7893,24 @@ var __async = (__this, __arguments, generator) => {
      * By default, it uses the body of the top-level document object,
      * so it's simply `document.body` most of the time.
      */
-    container: propTypesExports.oneOfType([HTMLElementType, propTypesExports.func]),
+    container: PropTypes.oneOfType([HTMLElementType, PropTypes.func]),
     /**
      * Direction of the text.
      * @default 'ltr'
      */
-    direction: propTypesExports.oneOf(["ltr", "rtl"]),
+    direction: PropTypes.oneOf(["ltr", "rtl"]),
     /**
      * The `children` will be under the DOM hierarchy of the parent component.
      * @default false
      */
-    disablePortal: propTypesExports.bool,
+    disablePortal: PropTypes.bool,
     /**
      * Always keep the children in the DOM.
      * This prop can be useful in SEO situation or
      * when you want to maximize the responsiveness of the Popper.
      * @default false
      */
-    keepMounted: propTypesExports.bool,
+    keepMounted: PropTypes.bool,
     /**
      * Popper.js is based on a "plugin-like" architecture,
      * most of its features are fully encapsulated "modifiers".
@@ -7955,35 +7920,35 @@ var __async = (__this, __arguments, generator) => {
      * For this reason, modifiers should be very performant to avoid bottlenecks.
      * To learn how to create a modifier, [read the modifiers documentation](https://popper.js.org/docs/v2/modifiers/).
      */
-    modifiers: propTypesExports.arrayOf(propTypesExports.shape({
-      data: propTypesExports.object,
-      effect: propTypesExports.func,
-      enabled: propTypesExports.bool,
-      fn: propTypesExports.func,
-      name: propTypesExports.any,
-      options: propTypesExports.object,
-      phase: propTypesExports.oneOf(["afterMain", "afterRead", "afterWrite", "beforeMain", "beforeRead", "beforeWrite", "main", "read", "write"]),
-      requires: propTypesExports.arrayOf(propTypesExports.string),
-      requiresIfExists: propTypesExports.arrayOf(propTypesExports.string)
+    modifiers: PropTypes.arrayOf(PropTypes.shape({
+      data: PropTypes.object,
+      effect: PropTypes.func,
+      enabled: PropTypes.bool,
+      fn: PropTypes.func,
+      name: PropTypes.any,
+      options: PropTypes.object,
+      phase: PropTypes.oneOf(["afterMain", "afterRead", "afterWrite", "beforeMain", "beforeRead", "beforeWrite", "main", "read", "write"]),
+      requires: PropTypes.arrayOf(PropTypes.string),
+      requiresIfExists: PropTypes.arrayOf(PropTypes.string)
     })),
     /**
      * If `true`, the component is shown.
      */
-    open: propTypesExports.bool.isRequired,
+    open: PropTypes.bool.isRequired,
     /**
      * Popper placement.
      * @default 'bottom'
      */
-    placement: propTypesExports.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
+    placement: PropTypes.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
     /**
      * Options provided to the [`Popper.js`](https://popper.js.org/docs/v2/constructors/#options) instance.
      * @default {}
      */
-    popperOptions: propTypesExports.shape({
-      modifiers: propTypesExports.array,
-      onFirstUpdate: propTypesExports.func,
-      placement: propTypesExports.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
-      strategy: propTypesExports.oneOf(["absolute", "fixed"])
+    popperOptions: PropTypes.shape({
+      modifiers: PropTypes.array,
+      onFirstUpdate: PropTypes.func,
+      placement: PropTypes.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
+      strategy: PropTypes.oneOf(["absolute", "fixed"])
     }),
     /**
      * A ref that points to the used popper instance.
@@ -7993,26 +7958,26 @@ var __async = (__this, __arguments, generator) => {
      * The props used for each slot inside the Popper.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Popper.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     }),
     /**
      * @ignore
      */
-    style: propTypesExports.object,
+    style: PropTypes.object,
     /**
      * Help supporting a react-transition-group/Transition component.
      * @default false
      */
-    transition: propTypesExports.bool
+    transition: PropTypes.bool
   } : void 0;
   const _excluded$1C = ["actions", "anchorEl", "children", "component", "keepMounted", "listboxId", "onClose", "open", "slotProps", "slots"];
   function getUtilityClasses$1(ownerState) {
@@ -8083,9 +8048,9 @@ var __async = (__this, __arguments, generator) => {
     const menuContextValue = React__namespace.useMemo(() => _extends$2({}, contextValue, {
       open
     }), [contextValue, open]);
-    return /* @__PURE__ */ jsx(Root, _extends$2({}, rootProps, {
-      children: /* @__PURE__ */ jsx(Listbox, _extends$2({}, listboxProps, {
-        children: /* @__PURE__ */ jsx(MenuUnstyledContext.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends$2({}, rootProps, {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Listbox, _extends$2({}, listboxProps, {
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(MenuUnstyledContext.Provider, {
           value: menuContextValue,
           children
         })
@@ -8107,52 +8072,52 @@ var __async = (__this, __arguments, generator) => {
      * or a function that returns either.
      * It's used to set the position of the popper.
      */
-    anchorEl: propTypesExports.oneOfType([HTMLElementType, propTypesExports.object, propTypesExports.func]),
+    anchorEl: PropTypes.oneOfType([HTMLElementType, PropTypes.object, PropTypes.func]),
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * Always keep the menu in the DOM.
      * This prop can be useful in SEO situation or when you want to maximize the responsiveness of the Menu.
      *
      * @default false
      */
-    keepMounted: propTypesExports.bool,
+    keepMounted: PropTypes.bool,
     /**
      * @ignore
      */
-    listboxId: propTypesExports.string,
+    listboxId: PropTypes.string,
     /**
      * Triggered when focus leaves the menu and the menu should close.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * Controls whether the menu is displayed.
      * @default false
      */
-    open: propTypesExports.bool,
+    open: PropTypes.bool,
     /**
      * The props used for each slot inside the Menu.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      listbox: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      listbox: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Menu.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      listbox: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      listbox: PropTypes.elementType,
+      root: PropTypes.elementType
     })
   } : void 0;
   function getMenuItemUnstyledUtilityClass(slot) {
@@ -8310,7 +8275,7 @@ var __async = (__this, __arguments, generator) => {
       className: classes.root,
       ownerState
     });
-    return /* @__PURE__ */ jsx(Root, _extends$2({}, rootProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends$2({}, rootProps, {
       children
     }));
   });
@@ -8322,36 +8287,36 @@ var __async = (__this, __arguments, generator) => {
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the menu item will be disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * A text representation of the menu item's content.
      * Used for keyboard text navigation matching.
      */
-    label: propTypesExports.string,
+    label: PropTypes.string,
     /**
      * The props used for each slot inside the MenuItem.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the MenuItem.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     })
   } : void 0;
   function isOverflowing(container) {
@@ -8732,14 +8697,14 @@ var __async = (__this, __arguments, generator) => {
     if (!keepMounted && !open && (!hasTransition || exited)) {
       return null;
     }
-    return /* @__PURE__ */ jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
       Portal,
       {
         ref: handlePortalRef,
         container,
         disablePortal,
-        children: /* @__PURE__ */ jsxs(Root, _extends$2({}, rootProps, {
-          children: [!hideBackdrop && BackdropComponent ? /* @__PURE__ */ jsx(BackdropComponent, _extends$2({}, backdropProps)) : null, /* @__PURE__ */ jsx(FocusTrap, {
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Root, _extends$2({}, rootProps, {
+          children: [!hideBackdrop && BackdropComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(BackdropComponent, _extends$2({}, backdropProps)) : null, /* @__PURE__ */ jsxRuntimeExports.jsx(FocusTrap, {
             disableEnforceFocus,
             disableAutoFocus,
             disableRestoreFocus,
@@ -8763,17 +8728,17 @@ var __async = (__this, __arguments, generator) => {
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * When set to true the Modal waits until a nested Transition is completed before closing.
      * @default false
      */
-    closeAfterTransition: propTypesExports.bool,
+    closeAfterTransition: PropTypes.bool,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * An HTML element or function that returns one.
      * The `container` will have the portal children appended to it.
@@ -8781,7 +8746,7 @@ var __async = (__this, __arguments, generator) => {
      * By default, it uses the body of the top-level document object,
      * so it's simply `document.body` most of the time.
      */
-    container: propTypesExports.oneOfType([HTMLElementType, propTypesExports.func]),
+    container: PropTypes.oneOfType([HTMLElementType, PropTypes.func]),
     /**
      * If `true`, the modal will not automatically shift focus to itself when it opens, and
      * replace it to the last focused element when it closes.
@@ -8791,7 +8756,7 @@ var __async = (__this, __arguments, generator) => {
      * accessible to assistive technologies, like screen readers.
      * @default false
      */
-    disableAutoFocus: propTypesExports.bool,
+    disableAutoFocus: PropTypes.bool,
     /**
      * If `true`, the modal will not prevent focus from leaving the modal while open.
      *
@@ -8799,45 +8764,45 @@ var __async = (__this, __arguments, generator) => {
      * accessible to assistive technologies, like screen readers.
      * @default false
      */
-    disableEnforceFocus: propTypesExports.bool,
+    disableEnforceFocus: PropTypes.bool,
     /**
      * If `true`, hitting escape will not fire the `onClose` callback.
      * @default false
      */
-    disableEscapeKeyDown: propTypesExports.bool,
+    disableEscapeKeyDown: PropTypes.bool,
     /**
      * The `children` will be under the DOM hierarchy of the parent component.
      * @default false
      */
-    disablePortal: propTypesExports.bool,
+    disablePortal: PropTypes.bool,
     /**
      * If `true`, the modal will not restore focus to previously focused element once
      * modal is hidden or unmounted.
      * @default false
      */
-    disableRestoreFocus: propTypesExports.bool,
+    disableRestoreFocus: PropTypes.bool,
     /**
      * Disable the scroll lock behavior.
      * @default false
      */
-    disableScrollLock: propTypesExports.bool,
+    disableScrollLock: PropTypes.bool,
     /**
      * If `true`, the backdrop is not rendered.
      * @default false
      */
-    hideBackdrop: propTypesExports.bool,
+    hideBackdrop: PropTypes.bool,
     /**
      * Always keep the children in the DOM.
      * This prop can be useful in SEO situation or
      * when you want to maximize the responsiveness of the Modal.
      * @default false
      */
-    keepMounted: propTypesExports.bool,
+    keepMounted: PropTypes.bool,
     /**
      * Callback fired when the backdrop is clicked.
      * @deprecated Use the `onClose` prop with the `reason` argument to handle the `backdropClick` events.
      */
-    onBackdropClick: propTypesExports.func,
+    onBackdropClick: PropTypes.func,
     /**
      * Callback fired when the component requests to be closed.
      * The `reason` parameter can optionally be used to control the response to `onClose`.
@@ -8845,31 +8810,31 @@ var __async = (__this, __arguments, generator) => {
      * @param {object} event The event source of the callback.
      * @param {string} reason Can be: `"escapeKeyDown"`, `"backdropClick"`.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * @ignore
      */
-    onKeyDown: propTypesExports.func,
+    onKeyDown: PropTypes.func,
     /**
      * If `true`, the component is shown.
      */
-    open: propTypesExports.bool.isRequired,
+    open: PropTypes.bool.isRequired,
     /**
      * The props used for each slot inside the Modal.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      backdrop: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      backdrop: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Modal.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      backdrop: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      backdrop: PropTypes.elementType,
+      root: PropTypes.elementType
     })
   } : void 0;
   function isOptionGroup(child) {
@@ -9209,7 +9174,7 @@ var __async = (__this, __arguments, generator) => {
   const selectUnstyledClasses = generateUtilityClasses("MuiSelect", ["root", "button", "listbox", "popper", "active", "expanded", "disabled", "focusVisible"]);
   const _excluded$1z = ["autoFocus", "children", "component", "defaultListboxOpen", "defaultValue", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "name", "onChange", "onListboxOpenChange", "optionStringifier", "renderValue", "slotProps", "slots", "value"];
   function defaultRenderMultipleValues(selectedOptions) {
-    return /* @__PURE__ */ jsx(React__namespace.Fragment, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(React__namespace.Fragment, {
       children: selectedOptions.map((o) => o.label).join(", ")
     });
   }
@@ -9359,17 +9324,17 @@ var __async = (__this, __arguments, generator) => {
     const context = React__namespace.useMemo(() => _extends$2({}, contextValue, {
       listboxRef
     }), [contextValue]);
-    return /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-      children: [/* @__PURE__ */ jsx(Button2, _extends$2({}, buttonProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(Button2, _extends$2({}, buttonProps, {
         children: renderValue(selectedOptions)
-      })), buttonDefined && /* @__PURE__ */ jsx(Popper2, _extends$2({}, popperProps, {
-        children: /* @__PURE__ */ jsx(ListboxRoot, _extends$2({}, listboxProps, {
-          children: /* @__PURE__ */ jsx(SelectUnstyledContext.Provider, {
+      })), buttonDefined && /* @__PURE__ */ jsxRuntimeExports.jsx(Popper2, _extends$2({}, popperProps, {
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(ListboxRoot, _extends$2({}, listboxProps, {
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectUnstyledContext.Provider, {
             value: context,
             children
           })
         }))
-      })), name && /* @__PURE__ */ jsx("input", {
+      })), name && /* @__PURE__ */ jsxRuntimeExports.jsx("input", {
         type: "hidden",
         name,
         value: getSerializedValue(selectedOptions)
@@ -9385,61 +9350,61 @@ var __async = (__this, __arguments, generator) => {
      * If `true`, the select element is focused during the first mount
      * @default false
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the select will be initially open.
      * @default false
      */
-    defaultListboxOpen: propTypesExports.bool,
+    defaultListboxOpen: PropTypes.bool,
     /**
      * The default selected values. Use when the component is not controlled.
      * @default []
      */
-    defaultValue: propTypesExports.array,
+    defaultValue: PropTypes.array,
     /**
      * If `true`, the select is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * A function to convert the currently selected values to a type accepted by HTML input.
      * Used to set a value of a hidden input associated with the select,
      * so that the selected values can be posted with a form.
      */
-    getSerializedValue: propTypesExports.func,
+    getSerializedValue: PropTypes.func,
     /**
      * `id` attribute of the listbox element.
      * Also used to derive the `id` attributes of options.
      */
-    listboxId: propTypesExports.string,
+    listboxId: PropTypes.string,
     /**
      * Controls the open state of the select's listbox.
      * @default undefined
      */
-    listboxOpen: propTypesExports.bool,
+    listboxOpen: PropTypes.bool,
     /**
      * Name of the element. For example used by the server to identify the fields in form submits.
      * If the name is provided, the component will render a hidden input element that can be submitted to a server.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * Callback fired when an option is selected.
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * Callback fired when the component requests to be opened.
      * Use in controlled mode (see listboxOpen).
      */
-    onListboxOpenChange: propTypesExports.func,
+    onListboxOpenChange: PropTypes.func,
     /**
      * A function used to convert the option label to a string.
      * It's useful when labels are elements and need to be converted to plain text
@@ -9447,35 +9412,35 @@ var __async = (__this, __arguments, generator) => {
      *
      * @default defaultOptionStringifier
      */
-    optionStringifier: propTypesExports.func,
+    optionStringifier: PropTypes.func,
     /**
      * Function that customizes the rendering of the selected values.
      */
-    renderValue: propTypesExports.func,
+    renderValue: PropTypes.func,
     /**
      * The props used for each slot inside the MultiSelect.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      listbox: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      popper: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      listbox: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      popper: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the MultiSelect.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      listbox: propTypesExports.elementType,
-      popper: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      listbox: PropTypes.elementType,
+      popper: PropTypes.elementType,
+      root: PropTypes.elementType
     }),
     /**
      * The selected values.
      * Set to an empty array to deselect all options.
      */
-    value: propTypesExports.array
+    value: PropTypes.array
   } : void 0;
   function NoSsr(props) {
     const {
@@ -9494,7 +9459,7 @@ var __async = (__this, __arguments, generator) => {
         setMountedState(true);
       }
     }, [defer]);
-    return /* @__PURE__ */ jsx(React__namespace.Fragment, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(React__namespace.Fragment, {
       children: mountedState ? children : fallback
     });
   }
@@ -9506,18 +9471,18 @@ var __async = (__this, __arguments, generator) => {
     /**
      * You can wrap a node.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * If `true`, the component will not only prevent server-side rendering.
      * It will also defer the rendering of the children into a different screen frame.
      * @default false
      */
-    defer: propTypesExports.bool,
+    defer: PropTypes.bool,
     /**
      * The fallback content to display.
      * @default null
      */
-    fallback: propTypesExports.node
+    fallback: PropTypes.node
   } : void 0;
   if (process.env.NODE_ENV !== "production") {
     NoSsr["propTypes"] = exactProp(NoSsr.propTypes);
@@ -9568,10 +9533,10 @@ var __async = (__this, __arguments, generator) => {
       ownerState: props,
       className: classes.list
     });
-    return /* @__PURE__ */ jsxs(Root, _extends$2({}, rootProps, {
-      children: [/* @__PURE__ */ jsx(Label, _extends$2({}, labelProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Root, _extends$2({}, rootProps, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(Label, _extends$2({}, labelProps, {
         children: props.label
-      })), /* @__PURE__ */ jsx(List2, _extends$2({}, listProps, {
+      })), /* @__PURE__ */ jsxRuntimeExports.jsx(List2, _extends$2({}, listProps, {
         children: props.children
       }))]
     }));
@@ -9584,39 +9549,39 @@ var __async = (__this, __arguments, generator) => {
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true` all the options in the group will be disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * The human-readable description of the group.
      */
-    label: propTypesExports.node,
+    label: PropTypes.node,
     /**
      * The props used for each slot inside the Input.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      label: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      list: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      label: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      list: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the OptionGroupUnstyled.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      label: propTypesExports.elementType,
-      list: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      label: PropTypes.elementType,
+      list: PropTypes.elementType,
+      root: PropTypes.elementType
     })
   } : void 0;
   function getOptionUnstyledUtilityClass(slot) {
@@ -9751,7 +9716,7 @@ var __async = (__this, __arguments, generator) => {
       className: classes.root,
       ownerState
     });
-    return /* @__PURE__ */ jsx(Root, _extends$2({}, rootProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends$2({}, rootProps, {
       children
     }));
   });
@@ -9763,41 +9728,41 @@ var __async = (__this, __arguments, generator) => {
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the option will be disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * A text representation of the option's content.
      * Used for keyboard text navigation matching.
      */
-    label: propTypesExports.string,
+    label: PropTypes.string,
     /**
      * The props used for each slot inside the OptionUnstyled.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the OptionUnstyled.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     }),
     /**
      * The value of the option.
      */
-    value: propTypesExports.any.isRequired
+    value: PropTypes.any.isRequired
   } : void 0;
   const OptionUnstyled$1 = /* @__PURE__ */ React__namespace.memo(OptionUnstyled);
   const _excluded$1w = ["autoFocus", "children", "component", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "name", "onChange", "onListboxOpenChange", "optionStringifier", "renderValue", "slotProps", "slots", "value"];
@@ -9946,17 +9911,17 @@ var __async = (__this, __arguments, generator) => {
       ownerState,
       className: classes.popper
     });
-    return /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-      children: [/* @__PURE__ */ jsx(Button2, _extends$2({}, buttonProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(Button2, _extends$2({}, buttonProps, {
         children: renderValue(selectedOption)
-      })), buttonDefined && /* @__PURE__ */ jsx(Popper2, _extends$2({}, popperProps, {
-        children: /* @__PURE__ */ jsx(ListboxRoot, _extends$2({}, listboxProps, {
-          children: /* @__PURE__ */ jsx(SelectUnstyledContext.Provider, {
+      })), buttonDefined && /* @__PURE__ */ jsxRuntimeExports.jsx(Popper2, _extends$2({}, popperProps, {
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(ListboxRoot, _extends$2({}, listboxProps, {
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectUnstyledContext.Provider, {
             value: contextValue,
             children
           })
         }))
-      })), name && /* @__PURE__ */ jsx("input", {
+      })), name && /* @__PURE__ */ jsxRuntimeExports.jsx("input", {
         type: "hidden",
         name,
         value: getSerializedValue(selectedOption)
@@ -9972,60 +9937,60 @@ var __async = (__this, __arguments, generator) => {
      * If `true`, the select element is focused during the first mount
      * @default false
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the select will be initially open.
      * @default false
      */
-    defaultListboxOpen: propTypesExports.bool,
+    defaultListboxOpen: PropTypes.bool,
     /**
      * The default selected value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.any,
+    defaultValue: PropTypes.any,
     /**
      * If `true`, the select is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * A function to convert the currently selected value to a string.
      * Used to set a value of a hidden input associated with the select,
      * so that the selected value can be posted with a form.
      */
-    getSerializedValue: propTypesExports.func,
+    getSerializedValue: PropTypes.func,
     /**
      * `id` attribute of the listbox element.
      * Also used to derive the `id` attributes of options.
      */
-    listboxId: propTypesExports.string,
+    listboxId: PropTypes.string,
     /**
      * Controls the open state of the select's listbox.
      * @default undefined
      */
-    listboxOpen: propTypesExports.bool,
+    listboxOpen: PropTypes.bool,
     /**
      * Name of the element. For example used by the server to identify the fields in form submits.
      * If the name is provided, the component will render a hidden input element that can be submitted to a server.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * Callback fired when an option is selected.
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * Callback fired when the component requests to be opened.
      * Use in controlled mode (see listboxOpen).
      */
-    onListboxOpenChange: propTypesExports.func,
+    onListboxOpenChange: PropTypes.func,
     /**
      * A function used to convert the option label to a string.
      * It's useful when labels are elements and need to be converted to plain text
@@ -10033,35 +9998,35 @@ var __async = (__this, __arguments, generator) => {
      *
      * @default defaultOptionStringifier
      */
-    optionStringifier: propTypesExports.func,
+    optionStringifier: PropTypes.func,
     /**
      * Function that customizes the rendering of the selected value.
      */
-    renderValue: propTypesExports.func,
+    renderValue: PropTypes.func,
     /**
      * The props used for each slot inside the Input.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      listbox: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      popper: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      listbox: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      popper: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Select.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      listbox: propTypesExports.elementType,
-      popper: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      listbox: PropTypes.elementType,
+      popper: PropTypes.elementType,
+      root: PropTypes.elementType
     }),
     /**
      * The selected value.
      * Set to `null` to deselect all options.
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
   function getSliderUtilityClass$1(slot) {
     return generateUtilityClass("MuiSlider", slot);
@@ -10762,8 +10727,8 @@ var __async = (__this, __arguments, generator) => {
       externalSlotProps: slotProps.input,
       ownerState
     });
-    return /* @__PURE__ */ jsxs(Root, _extends$2({}, rootProps, {
-      children: [/* @__PURE__ */ jsx(Rail, _extends$2({}, railProps)), /* @__PURE__ */ jsx(Track, _extends$2({}, trackProps)), marks.filter((mark) => mark.value >= min2 && mark.value <= max2).map((mark, index2) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Root, _extends$2({}, rootProps, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(Rail, _extends$2({}, railProps)), /* @__PURE__ */ jsxRuntimeExports.jsx(Track, _extends$2({}, trackProps)), marks.filter((mark) => mark.value >= min2 && mark.value <= max2).map((mark, index2) => {
         const percent = valueToPercent$1(mark.value, min2, max2);
         const style2 = axisProps2[axis].offset(percent);
         let markActive;
@@ -10772,44 +10737,44 @@ var __async = (__this, __arguments, generator) => {
         } else {
           markActive = track === "normal" && (range ? mark.value >= values2[0] && mark.value <= values2[values2.length - 1] : mark.value <= values2[0]) || track === "inverted" && (range ? mark.value <= values2[0] || mark.value >= values2[values2.length - 1] : mark.value >= values2[0]);
         }
-        return /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-          children: [/* @__PURE__ */ jsx(Mark, _extends$2({
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+          children: [/* @__PURE__ */ jsxRuntimeExports.jsx(Mark, _extends$2({
             "data-index": index2
           }, markProps, !isHostComponent(Mark) && {
             markActive
           }, {
             style: _extends$2({}, style2, markProps.style),
-            className: clsx(markProps.className, markActive && classes.markActive)
-          })), mark.label != null ? /* @__PURE__ */ jsx(MarkLabel, _extends$2({
+            className: clsx$1(markProps.className, markActive && classes.markActive)
+          })), mark.label != null ? /* @__PURE__ */ jsxRuntimeExports.jsx(MarkLabel, _extends$2({
             "aria-hidden": true,
             "data-index": index2
           }, markLabelProps, !isHostComponent(MarkLabel) && {
             markLabelActive: markActive
           }, {
             style: _extends$2({}, style2, markLabelProps.style),
-            className: clsx(classes.markLabel, markLabelProps.className, markActive && classes.markLabelActive),
+            className: clsx$1(classes.markLabel, markLabelProps.className, markActive && classes.markLabelActive),
             children: mark.label
           })) : null]
         }, index2);
       }), values2.map((value, index2) => {
         const percent = valueToPercent$1(value, min2, max2);
         const style2 = axisProps2[axis].offset(percent);
-        return /* @__PURE__ */ jsxs(Thumb, _extends$2({
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(Thumb, _extends$2({
           "data-index": index2,
           "data-focusvisible": focusedThumbIndex === index2
         }, thumbProps, {
-          className: clsx(classes.thumb, thumbProps.className, active === index2 && classes.active, focusedThumbIndex === index2 && classes.focusVisible),
+          className: clsx$1(classes.thumb, thumbProps.className, active === index2 && classes.active, focusedThumbIndex === index2 && classes.focusVisible),
           style: _extends$2({}, style2, {
             pointerEvents: disableSwap && active !== index2 ? "none" : void 0
           }, thumbProps.style),
-          children: [/* @__PURE__ */ jsx(Input2, _extends$2({
+          children: [/* @__PURE__ */ jsxRuntimeExports.jsx(Input2, _extends$2({
             "data-index": index2,
             "aria-label": getAriaLabel ? getAriaLabel(index2) : ariaLabel,
             "aria-valuenow": scale(value),
             "aria-labelledby": ariaLabelledby,
             "aria-valuetext": getAriaValueText ? getAriaValueText(scale(value), index2) : ariaValuetext,
             value: values2[index2]
-          }, inputProps)), ValueLabel ? /* @__PURE__ */ jsx(ValueLabel, _extends$2({}, !isHostComponent(ValueLabel) && {
+          }, inputProps)), ValueLabel ? /* @__PURE__ */ jsxRuntimeExports.jsx(ValueLabel, _extends$2({}, !isHostComponent(ValueLabel) && {
             valueLabelFormat,
             index: index2,
             disabled
@@ -10828,7 +10793,7 @@ var __async = (__this, __arguments, generator) => {
     /**
      * The label of the slider.
      */
-    "aria-label": chainPropTypes(propTypesExports.string, (props) => {
+    "aria-label": chainPropTypes(PropTypes.string, (props) => {
       const range = Array.isArray(props.value || props.defaultValue);
       if (range && props["aria-label"] != null) {
         return new Error("MUI: You need to use the `getAriaLabel` prop instead of `aria-label` when using a range slider.");
@@ -10838,11 +10803,11 @@ var __async = (__this, __arguments, generator) => {
     /**
      * The id of the element containing a label for the slider.
      */
-    "aria-labelledby": propTypesExports.string,
+    "aria-labelledby": PropTypes.string,
     /**
      * A string value that provides a user-friendly name for the current value of the slider.
      */
-    "aria-valuetext": chainPropTypes(propTypesExports.string, (props) => {
+    "aria-valuetext": chainPropTypes(PropTypes.string, (props) => {
       const range = Array.isArray(props.value || props.defaultValue);
       if (range && props["aria-valuetext"] != null) {
         return new Error("MUI: You need to use the `getAriaValueText` prop instead of `aria-valuetext` when using a range slider.");
@@ -10852,41 +10817,41 @@ var __async = (__this, __arguments, generator) => {
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.number), propTypesExports.number]),
+    defaultValue: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the active thumb doesn't swap when moving pointer over a thumb while dragging another thumb.
      * @default false
      */
-    disableSwap: propTypesExports.bool,
+    disableSwap: PropTypes.bool,
     /**
      * Accepts a function which returns a string value that provides a user-friendly name for the thumb labels of the slider.
      * This is important for screen reader users.
      * @param {number} index The thumb label's index to format.
      * @returns {string}
      */
-    getAriaLabel: propTypesExports.func,
+    getAriaLabel: PropTypes.func,
     /**
      * Accepts a function which returns a string value that provides a user-friendly name for the current value of the slider.
      * This is important for screen reader users.
@@ -10894,38 +10859,38 @@ var __async = (__this, __arguments, generator) => {
      * @param {number} index The thumb label's index to format.
      * @returns {string}
      */
-    getAriaValueText: propTypesExports.func,
+    getAriaValueText: PropTypes.func,
     /**
      * If `true` the Slider will be rendered right-to-left (with the lowest value on the right-hand side).
      * @default false
      */
-    isRtl: propTypesExports.bool,
+    isRtl: PropTypes.bool,
     /**
      * Marks indicate predetermined values to which the user can move the slider.
      * If `true` the marks are spaced according the value of the `step` prop.
      * If an array, it should contain objects with `value` and an optional `label` keys.
      * @default false
      */
-    marks: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.shape({
-      label: propTypesExports.node,
-      value: propTypesExports.number.isRequired
-    })), propTypesExports.bool]),
+    marks: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.node,
+      value: PropTypes.number.isRequired
+    })), PropTypes.bool]),
     /**
      * The maximum allowed value of the slider.
      * Should not be equal to min.
      * @default 100
      */
-    max: propTypesExports.number,
+    max: PropTypes.number,
     /**
      * The minimum allowed value of the slider.
      * Should not be equal to max.
      * @default 0
      */
-    min: propTypesExports.number,
+    min: PropTypes.number,
     /**
      * Name attribute of the hidden `input` element.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * Callback function that is fired when the slider's value changed.
      *
@@ -10935,19 +10900,19 @@ var __async = (__this, __arguments, generator) => {
      * @param {number | number[]} value The new value.
      * @param {number} activeThumb Index of the currently moved thumb.
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * Callback function that is fired when the `mouseup` is triggered.
      *
      * @param {React.SyntheticEvent | Event} event The event source of the callback. **Warning**: This is a generic event not a change event.
      * @param {number | number[]} value The new value.
      */
-    onChangeCommitted: propTypesExports.func,
+    onChangeCommitted: PropTypes.func,
     /**
      * The component orientation.
      * @default 'horizontal'
      */
-    orientation: propTypesExports.oneOf(["horizontal", "vertical"]),
+    orientation: PropTypes.oneOf(["horizontal", "vertical"]),
     /**
      * A transformation function, to change the scale of the slider.
      * @param {any} x
@@ -10956,35 +10921,35 @@ var __async = (__this, __arguments, generator) => {
      *   return x;
      * }
      */
-    scale: propTypesExports.func,
+    scale: PropTypes.func,
     /**
      * The props used for each slot inside the Slider.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      input: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      mark: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      markLabel: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      rail: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      thumb: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      track: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      valueLabel: propTypesExports.oneOfType([propTypesExports.any, propTypesExports.func])
+    slotProps: PropTypes.shape({
+      input: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      mark: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      markLabel: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      rail: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      thumb: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      track: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      valueLabel: PropTypes.oneOfType([PropTypes.any, PropTypes.func])
     }),
     /**
      * The components used for each slot inside the Slider.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      input: propTypesExports.elementType,
-      mark: propTypesExports.elementType,
-      markLabel: propTypesExports.elementType,
-      rail: propTypesExports.elementType,
-      root: propTypesExports.elementType,
-      thumb: propTypesExports.elementType,
-      track: propTypesExports.elementType,
-      valueLabel: propTypesExports.elementType
+    slots: PropTypes.shape({
+      input: PropTypes.elementType,
+      mark: PropTypes.elementType,
+      markLabel: PropTypes.elementType,
+      rail: PropTypes.elementType,
+      root: PropTypes.elementType,
+      thumb: PropTypes.elementType,
+      track: PropTypes.elementType,
+      valueLabel: PropTypes.elementType
     }),
     /**
      * The granularity with which the slider can step through values. (A "discrete" slider.)
@@ -10994,11 +10959,11 @@ var __async = (__this, __arguments, generator) => {
      * When step is `null`, the thumb can only be slid onto marks provided with the `marks` prop.
      * @default 1
      */
-    step: propTypesExports.number,
+    step: PropTypes.number,
     /**
      * Tab index attribute of the hidden `input` element.
      */
-    tabIndex: propTypesExports.number,
+    tabIndex: PropTypes.number,
     /**
      * The track presentation:
      *
@@ -11007,12 +10972,12 @@ var __async = (__this, __arguments, generator) => {
      * - `false` the track will render without a bar.
      * @default 'normal'
      */
-    track: propTypesExports.oneOf(["inverted", "normal", false]),
+    track: PropTypes.oneOf(["inverted", "normal", false]),
     /**
      * The value of the slider.
      * For ranged sliders, provide an array with two values.
      */
-    value: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.number), propTypesExports.number]),
+    value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     /**
      * The format function the value label's value.
      *
@@ -11026,7 +10991,7 @@ var __async = (__this, __arguments, generator) => {
      *   return x;
      * }
      */
-    valueLabelFormat: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.string])
+    valueLabelFormat: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
   } : void 0;
   function getSnackbarUnstyledUtilityClass(slot) {
     return generateUtilityClass("MuiSnackbar", slot);
@@ -11197,8 +11162,8 @@ var __async = (__this, __arguments, generator) => {
     if (!open && exited) {
       return null;
     }
-    return /* @__PURE__ */ jsx(ClickAwayListener, _extends$2({}, clickAwayListenerProps, {
-      children: /* @__PURE__ */ jsx(Root, _extends$2({}, rootProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ClickAwayListener, _extends$2({}, clickAwayListenerProps, {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends$2({}, rootProps, {
         children
       }))
     }));
@@ -11215,30 +11180,30 @@ var __async = (__this, __arguments, generator) => {
      * the `null` value.
      * @default null
      */
-    autoHideDuration: propTypesExports.number,
+    autoHideDuration: PropTypes.number,
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the `autoHideDuration` timer will expire even if the window is not focused.
      * @default false
      */
-    disableWindowBlurListener: propTypesExports.bool,
+    disableWindowBlurListener: PropTypes.bool,
     /**
      * The prop used to handle exited transition and unmount the component.
      * @default true
      */
-    exited: propTypesExports.bool,
+    exited: PropTypes.bool,
     /**
      * @ignore
      */
-    onBlur: propTypesExports.func,
+    onBlur: PropTypes.func,
     /**
      * Callback fired when the component requests to be closed.
      * Typically `onClose` is used to set state in the parent component,
@@ -11249,51 +11214,51 @@ var __async = (__this, __arguments, generator) => {
      * @param {React.SyntheticEvent<any> | Event} event The event source of the callback.
      * @param {string} reason Can be: `"timeout"` (`autoHideDuration` expired), `"clickaway"`, or `"escapeKeyDown"`.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * @ignore
      */
-    onFocus: propTypesExports.func,
+    onFocus: PropTypes.func,
     /**
      * @ignore
      */
-    onMouseEnter: propTypesExports.func,
+    onMouseEnter: PropTypes.func,
     /**
      * @ignore
      */
-    onMouseLeave: propTypesExports.func,
+    onMouseLeave: PropTypes.func,
     /**
      * If `true`, the component is shown.
      */
-    open: propTypesExports.bool,
+    open: PropTypes.bool,
     /**
      * The number of milliseconds to wait before dismissing after user interaction.
      * If `autoHideDuration` prop isn't specified, it does nothing.
      * If `autoHideDuration` prop is specified but `resumeHideDuration` isn't,
      * we default to `autoHideDuration / 2` ms.
      */
-    resumeHideDuration: propTypesExports.number,
+    resumeHideDuration: PropTypes.number,
     /**
      * The props used for each slot inside the Snackbar.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      clickAwayListener: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.shape({
-        children: propTypesExports.element.isRequired,
-        disableReactTree: propTypesExports.bool,
-        mouseEvent: propTypesExports.oneOf(["onClick", "onMouseDown", "onMouseUp", "onPointerDown", "onPointerUp", false]),
-        onClickAway: propTypesExports.func,
-        touchEvent: propTypesExports.oneOf(["onTouchEnd", "onTouchStart", false])
+    slotProps: PropTypes.shape({
+      clickAwayListener: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
+        children: PropTypes.element.isRequired,
+        disableReactTree: PropTypes.bool,
+        mouseEvent: PropTypes.oneOf(["onClick", "onMouseDown", "onMouseUp", "onPointerDown", "onPointerUp", false]),
+        onClickAway: PropTypes.func,
+        touchEvent: PropTypes.oneOf(["onTouchEnd", "onTouchStart", false])
       })]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Snackbar.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     })
   } : void 0;
   function useSwitch(props) {
@@ -11473,8 +11438,8 @@ var __async = (__this, __arguments, generator) => {
       ownerState,
       className: classes.track
     });
-    return /* @__PURE__ */ jsxs(Root, _extends$2({}, rootProps, {
-      children: [/* @__PURE__ */ jsx(Track, _extends$2({}, trackProps)), /* @__PURE__ */ jsx(Thumb, _extends$2({}, thumbProps)), /* @__PURE__ */ jsx(Input2, _extends$2({}, inputProps))]
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Root, _extends$2({}, rootProps, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(Track, _extends$2({}, trackProps)), /* @__PURE__ */ jsxRuntimeExports.jsx(Thumb, _extends$2({}, thumbProps)), /* @__PURE__ */ jsxRuntimeExports.jsx(Input2, _extends$2({}, inputProps))]
     }));
   });
   process.env.NODE_ENV !== "production" ? SwitchUnstyled.propTypes = {
@@ -11485,28 +11450,28 @@ var __async = (__this, __arguments, generator) => {
     /**
      * If `true`, the component is checked.
      */
-    checked: propTypesExports.bool,
+    checked: PropTypes.bool,
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The default checked state. Use when the component is not controlled.
      */
-    defaultChecked: propTypesExports.bool,
+    defaultChecked: PropTypes.bool,
     /**
      * If `true`, the component is disabled.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * @ignore
      */
-    onBlur: propTypesExports.func,
+    onBlur: PropTypes.func,
     /**
      * Callback fired when the state is changed.
      *
@@ -11514,64 +11479,64 @@ var __async = (__this, __arguments, generator) => {
      * You can pull out the new value by accessing `event.target.value` (string).
      * You can pull out the new checked state by accessing `event.target.checked` (boolean).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * @ignore
      */
-    onFocus: propTypesExports.func,
+    onFocus: PropTypes.func,
     /**
      * @ignore
      */
-    onFocusVisible: propTypesExports.func,
+    onFocusVisible: PropTypes.func,
     /**
      * If `true`, the component is read only.
      */
-    readOnly: propTypesExports.bool,
+    readOnly: PropTypes.bool,
     /**
      * If `true`, the `input` element is required.
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * The props used for each slot inside the Switch.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      input: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      thumb: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      track: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      input: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      thumb: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      track: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Switch.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      input: propTypesExports.elementType,
-      root: propTypesExports.elementType,
-      thumb: propTypesExports.elementType,
-      track: propTypesExports.oneOfType([propTypesExports.elementType, propTypesExports.oneOf([null])])
+    slots: PropTypes.shape({
+      input: PropTypes.elementType,
+      root: PropTypes.elementType,
+      thumb: PropTypes.elementType,
+      track: PropTypes.oneOfType([PropTypes.elementType, PropTypes.oneOf([null])])
     })
   } : void 0;
   const _excluded$1s = ["component", "count", "getItemAriaLabel", "onPageChange", "page", "rowsPerPage", "showFirstButton", "showLastButton", "direction", "ownerState", "slotProps", "slots"];
   var _span$4, _span2, _span3, _span4;
   function LastPageIconDefault() {
-    return _span$4 || (_span$4 = /* @__PURE__ */ jsx("span", {
+    return _span$4 || (_span$4 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
       children: "⇾|"
     }));
   }
   function FirstPageIconDefault() {
-    return _span2 || (_span2 = /* @__PURE__ */ jsx("span", {
+    return _span2 || (_span2 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
       children: "|⇽"
     }));
   }
   function NextPageIconDefault() {
-    return _span3 || (_span3 = /* @__PURE__ */ jsx("span", {
+    return _span3 || (_span3 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
       children: "⇾"
     }));
   }
   function BackPageIconDefault() {
-    return _span4 || (_span4 = /* @__PURE__ */ jsx("span", {
+    return _span4 || (_span4 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
       children: "⇽"
     }));
   }
@@ -11668,15 +11633,15 @@ var __async = (__this, __arguments, generator) => {
     const FirstPageIcon2 = (_slots$firstPageIcon = slots.firstPageIcon) != null ? _slots$firstPageIcon : FirstPageIconDefault;
     const NextPageIcon = (_slots$nextPageIcon = slots.nextPageIcon) != null ? _slots$nextPageIcon : NextPageIconDefault;
     const BackPageIcon = (_slots$backPageIcon = slots.backPageIcon) != null ? _slots$backPageIcon : BackPageIconDefault;
-    return /* @__PURE__ */ jsxs(Root, _extends$2({}, rootProps, {
-      children: [showFirstButton && /* @__PURE__ */ jsx(FirstButton, _extends$2({}, firstButtonProps, {
-        children: direction === "rtl" ? /* @__PURE__ */ jsx(LastPageIcon2, {}) : /* @__PURE__ */ jsx(FirstPageIcon2, {})
-      })), /* @__PURE__ */ jsx(BackButton, _extends$2({}, backButtonProps, {
-        children: direction === "rtl" ? /* @__PURE__ */ jsx(NextPageIcon, {}) : /* @__PURE__ */ jsx(BackPageIcon, {})
-      })), /* @__PURE__ */ jsx(NextButton, _extends$2({}, nextButtonProps, {
-        children: direction === "rtl" ? /* @__PURE__ */ jsx(BackPageIcon, {}) : /* @__PURE__ */ jsx(NextPageIcon, {})
-      })), showLastButton && /* @__PURE__ */ jsx(LastButton, _extends$2({}, lastButtonProps, {
-        children: direction === "rtl" ? /* @__PURE__ */ jsx(FirstPageIcon2, {}) : /* @__PURE__ */ jsx(LastPageIcon2, {})
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Root, _extends$2({}, rootProps, {
+      children: [showFirstButton && /* @__PURE__ */ jsxRuntimeExports.jsx(FirstButton, _extends$2({}, firstButtonProps, {
+        children: direction === "rtl" ? /* @__PURE__ */ jsxRuntimeExports.jsx(LastPageIcon2, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(FirstPageIcon2, {})
+      })), /* @__PURE__ */ jsxRuntimeExports.jsx(BackButton, _extends$2({}, backButtonProps, {
+        children: direction === "rtl" ? /* @__PURE__ */ jsxRuntimeExports.jsx(NextPageIcon, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(BackPageIcon, {})
+      })), /* @__PURE__ */ jsxRuntimeExports.jsx(NextButton, _extends$2({}, nextButtonProps, {
+        children: direction === "rtl" ? /* @__PURE__ */ jsxRuntimeExports.jsx(BackPageIcon, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(NextPageIcon, {})
+      })), showLastButton && /* @__PURE__ */ jsxRuntimeExports.jsx(LastButton, _extends$2({}, lastButtonProps, {
+        children: direction === "rtl" ? /* @__PURE__ */ jsxRuntimeExports.jsx(FirstPageIcon2, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(LastPageIcon2, {})
       }))]
     }));
   });
@@ -11824,23 +11789,23 @@ var __async = (__this, __arguments, generator) => {
       ownerState,
       className: classes.spacer
     });
-    return /* @__PURE__ */ jsx(Root, _extends$2({}, rootProps, {
-      children: /* @__PURE__ */ jsxs(Toolbar2, _extends$2({}, toolbarProps, {
-        children: [/* @__PURE__ */ jsx(Spacer, _extends$2({}, spacerProps)), rowsPerPageOptions.length > 1 && /* @__PURE__ */ jsx(SelectLabel, _extends$2({}, selectLabelProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends$2({}, rootProps, {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar2, _extends$2({}, toolbarProps, {
+        children: [/* @__PURE__ */ jsxRuntimeExports.jsx(Spacer, _extends$2({}, spacerProps)), rowsPerPageOptions.length > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx(SelectLabel, _extends$2({}, selectLabelProps, {
           children: labelRowsPerPage
-        })), rowsPerPageOptions.length > 1 && /* @__PURE__ */ jsx(Select2, _extends$2({}, selectProps, {
+        })), rowsPerPageOptions.length > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx(Select2, _extends$2({}, selectProps, {
           children: rowsPerPageOptions.map((rowsPerPageOption) => /* @__PURE__ */ React.createElement(MenuItem2, _extends$2({}, menuItemProps, {
             key: typeof rowsPerPageOption !== "number" && rowsPerPageOption.label ? rowsPerPageOption.label : rowsPerPageOption,
             value: typeof rowsPerPageOption !== "number" && rowsPerPageOption.value ? rowsPerPageOption.value : rowsPerPageOption
           }), typeof rowsPerPageOption !== "number" && rowsPerPageOption.label ? rowsPerPageOption.label : rowsPerPageOption))
-        })), /* @__PURE__ */ jsx(DisplayedRows, _extends$2({}, displayedRowsProps, {
+        })), /* @__PURE__ */ jsxRuntimeExports.jsx(DisplayedRows, _extends$2({}, displayedRowsProps, {
           children: labelDisplayedRows({
             from: count2 === 0 ? 0 : page * rowsPerPage + 1,
             to: getLabelDisplayedRowsTo(),
             count: count2 === -1 ? -1 : count2,
             page
           })
-        })), /* @__PURE__ */ jsx(Actions, _extends$2({}, actionsProps))]
+        })), /* @__PURE__ */ jsxRuntimeExports.jsx(Actions, _extends$2({}, actionsProps))]
       }))
     }));
   });
@@ -11852,22 +11817,22 @@ var __async = (__this, __arguments, generator) => {
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * @ignore
      */
-    colSpan: propTypesExports.number,
+    colSpan: PropTypes.number,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The total number of rows.
      *
      * To enable server side pagination for an unknown number of items, provide -1.
      */
-    count: propTypesExports.number.isRequired,
+    count: PropTypes.number.isRequired,
     /**
      * Accepts a function which returns a string value that provides a user-friendly name for the current page.
      * This is important for screen reader users.
@@ -11879,7 +11844,7 @@ var __async = (__this, __arguments, generator) => {
      *   return `Go to ${type} page`;
      * }
      */
-    getItemAriaLabel: propTypesExports.func,
+    getItemAriaLabel: PropTypes.func,
     /**
      * Customize the displayed rows label. Invoked with a `{ from, to, count, page }`
      * object.
@@ -11889,31 +11854,31 @@ var __async = (__this, __arguments, generator) => {
      *   return `${from}–${to} of ${count !== -1 ? count : `more than ${to}`}`;
      * }
      */
-    labelDisplayedRows: propTypesExports.func,
+    labelDisplayedRows: PropTypes.func,
     /**
      * Id of the label element within the pagination.
      */
-    labelId: propTypesExports.string,
+    labelId: PropTypes.string,
     /**
      * Customize the rows per page label.
      *
      * For localization purposes, you can use the provided [translations](/material-ui/guides/localization/).
      * @default 'Rows per page:'
      */
-    labelRowsPerPage: propTypesExports.node,
+    labelRowsPerPage: PropTypes.node,
     /**
      * Callback fired when the page is changed.
      *
      * @param {React.MouseEvent<HTMLButtonElement> | null} event The event source of the callback.
      * @param {number} page The page selected.
      */
-    onPageChange: propTypesExports.func.isRequired,
+    onPageChange: PropTypes.func.isRequired,
     /**
      * Callback fired when the number of rows per page is changed.
      *
      * @param {React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>} event The event source of the callback.
      */
-    onRowsPerPageChange: propTypesExports.func,
+    onRowsPerPageChange: PropTypes.func,
     /**
      * The zero-based index of the current page.
      */
@@ -11944,42 +11909,42 @@ var __async = (__this, __arguments, generator) => {
      * Use -1 for the value with a custom label to show all the rows.
      * @default [10, 25, 50, 100]
      */
-    rowsPerPageOptions: propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.number, propTypesExports.shape({
-      label: propTypesExports.string.isRequired,
-      value: propTypesExports.number.isRequired
+    rowsPerPageOptions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired
     })]).isRequired),
     /**
      * Id of the select element within the pagination.
      */
-    selectId: propTypesExports.string,
+    selectId: PropTypes.string,
     /**
      * The props used for each slot inside the TablePagination.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      actions: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      displayedRows: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      menuItem: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      select: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      selectLabel: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      spacer: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      toolbar: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      actions: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      displayedRows: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      menuItem: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      select: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      selectLabel: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      spacer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      toolbar: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the TablePagination.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      actions: propTypesExports.elementType,
-      displayedRows: propTypesExports.elementType,
-      menuItem: propTypesExports.elementType,
-      root: propTypesExports.elementType,
-      select: propTypesExports.elementType,
-      selectLabel: propTypesExports.elementType,
-      spacer: propTypesExports.elementType,
-      toolbar: propTypesExports.elementType
+    slots: PropTypes.shape({
+      actions: PropTypes.elementType,
+      displayedRows: PropTypes.elementType,
+      menuItem: PropTypes.elementType,
+      root: PropTypes.elementType,
+      select: PropTypes.elementType,
+      selectLabel: PropTypes.elementType,
+      spacer: PropTypes.elementType,
+      toolbar: PropTypes.elementType
     })
   } : void 0;
   function getTabPanelUnstyledUtilityClass(slot) {
@@ -12090,8 +12055,8 @@ var __async = (__this, __arguments, generator) => {
       ownerState,
       className: classes.root
     });
-    return /* @__PURE__ */ jsx(TabsRoot, _extends$2({}, tabsRootProps, {
-      children: /* @__PURE__ */ jsx(Context.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TabsRoot, _extends$2({}, tabsRootProps, {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Context.Provider, {
         value: tabsContextValue,
         children
       })
@@ -12105,55 +12070,55 @@ var __async = (__this, __arguments, generator) => {
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.oneOfType([propTypesExports.oneOf([false]), propTypesExports.number, propTypesExports.string]),
+    defaultValue: PropTypes.oneOfType([PropTypes.oneOf([false]), PropTypes.number, PropTypes.string]),
     /**
      * The direction of the text.
      * @default 'ltr'
      */
-    direction: propTypesExports.oneOf(["ltr", "rtl"]),
+    direction: PropTypes.oneOf(["ltr", "rtl"]),
     /**
      * Callback invoked when new value is being set.
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * The component orientation (layout flow direction).
      * @default 'horizontal'
      */
-    orientation: propTypesExports.oneOf(["horizontal", "vertical"]),
+    orientation: PropTypes.oneOf(["horizontal", "vertical"]),
     /**
      * If `true` the selected tab changes on focus. Otherwise it only
      * changes on activation.
      */
-    selectionFollowsFocus: propTypesExports.bool,
+    selectionFollowsFocus: PropTypes.bool,
     /**
      * The props used for each slot inside the Tabs.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Tabs.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     }),
     /**
      * The value of the currently selected `Tab`.
      * If you don't want any selected `Tab`, you can set this prop to `false`.
      */
-    value: propTypesExports.oneOfType([propTypesExports.oneOf([false]), propTypesExports.number, propTypesExports.string])
+    value: PropTypes.oneOfType([PropTypes.oneOf([false]), PropTypes.number, PropTypes.string])
   } : void 0;
   function useTabPanel(parameters) {
     const {
@@ -12217,7 +12182,7 @@ var __async = (__this, __arguments, generator) => {
       ownerState,
       className: classes.root
     });
-    return /* @__PURE__ */ jsx(TabPanelRoot, _extends$2({}, tabPanelRootProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TabPanelRoot, _extends$2({}, tabPanelRootProps, {
       children: !hidden && children
     }));
   });
@@ -12229,31 +12194,31 @@ var __async = (__this, __arguments, generator) => {
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The props used for each slot inside the TabPanel.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the TabPanel.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     }),
     /**
      * The value of the TabPanel. It will be shown when the Tab with the corresponding value is selected.
      */
-    value: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]).isRequired
+    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
   } : void 0;
   function getTabsListUnstyledUtilityClass(slot) {
     return generateUtilityClass("MuiTabsList", slot);
@@ -12448,7 +12413,7 @@ var __async = (__this, __arguments, generator) => {
       className: classes.root
     });
     const processedChildren = processChildren();
-    return /* @__PURE__ */ jsx(TabsListRoot, _extends$2({}, tabsListRootProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TabsListRoot, _extends$2({}, tabsListRootProps, {
       children: processedChildren
     }));
   });
@@ -12460,26 +12425,26 @@ var __async = (__this, __arguments, generator) => {
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The props used for each slot inside the TabsList.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the TabsList.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     })
   } : void 0;
   function getTabUnstyledUtilityClass(slot) {
@@ -12614,7 +12579,7 @@ var __async = (__this, __arguments, generator) => {
       ownerState,
       className: classes.root
     });
-    return /* @__PURE__ */ jsx(TabRoot, _extends$2({}, tabRootProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TabRoot, _extends$2({}, tabRootProps, {
       children
     }));
   });
@@ -12626,56 +12591,56 @@ var __async = (__this, __arguments, generator) => {
     /**
      * A ref for imperative actions. It currently only supports `focusVisible()` action.
      */
-    action: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.shape({
-      current: propTypesExports.shape({
-        focusVisible: propTypesExports.func.isRequired
+    action: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
+      current: PropTypes.shape({
+        focusVisible: PropTypes.func.isRequired
       })
     })]),
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * Callback invoked when new value is being set.
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * @ignore
      */
-    onClick: propTypesExports.func,
+    onClick: PropTypes.func,
     /**
      * @ignore
      */
-    onFocus: propTypesExports.func,
+    onFocus: PropTypes.func,
     /**
      * The props used for each slot inside the Tab.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Tab.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     }),
     /**
      * You can provide your own value. Otherwise, we fall back to the child position index.
      */
-    value: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])
+    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
   } : void 0;
   const _excluded$1l = ["onChange", "maxRows", "minRows", "style", "value"];
   function getStyleValue$1(computedStyle, property) {
@@ -12825,8 +12790,8 @@ var __async = (__this, __arguments, generator) => {
         onChange(event);
       }
     };
-    return /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-      children: [/* @__PURE__ */ jsx("textarea", _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx("textarea", _extends$2({
         value,
         onChange: handleChange,
         ref: handleRef,
@@ -12837,7 +12802,7 @@ var __async = (__this, __arguments, generator) => {
           // This prevents infinite rendering loop.
           overflow: state.overflow ? "hidden" : null
         }, style2)
-      }, other)), /* @__PURE__ */ jsx("textarea", {
+      }, other)), /* @__PURE__ */ jsxRuntimeExports.jsx("textarea", {
         "aria-hidden": true,
         className: props.className,
         readOnly: true,
@@ -12857,32 +12822,32 @@ var __async = (__this, __arguments, generator) => {
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * Maximum number of rows to display.
      */
-    maxRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    maxRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * Minimum number of rows to display.
      * @default 1
      */
-    minRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    minRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * @ignore
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * @ignore
      */
-    placeholder: propTypesExports.string,
+    placeholder: PropTypes.string,
     /**
      * @ignore
      */
-    style: propTypesExports.object,
+    style: PropTypes.object,
     /**
      * @ignore
      */
-    value: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.string), propTypesExports.number, propTypesExports.string])
+    value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.number, PropTypes.string])
   } : void 0;
   /**
    * @mui/base v5.0.0-alpha.118
@@ -13991,7 +13956,7 @@ var __async = (__this, __arguments, generator) => {
       injectFirst,
       children
     } = props;
-    return injectFirst && cache ? /* @__PURE__ */ jsx(react.CacheProvider, {
+    return injectFirst && cache ? /* @__PURE__ */ jsxRuntimeExports.jsx(react.CacheProvider, {
       value: cache,
       children
     }) : children;
@@ -14000,13 +13965,13 @@ var __async = (__this, __arguments, generator) => {
     /**
      * Your component tree.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * By default, the styles are injected last in the <head> element of the page.
      * As a result, they gain more specificity than any other style sheet.
      * If you want to override MUI's styles, set this prop.
      */
-    injectFirst: propTypesExports.bool
+    injectFirst: PropTypes.bool
   } : void 0;
   function isEmpty$3(obj) {
     return obj === void 0 || obj === null || Object.keys(obj).length === 0;
@@ -14017,13 +13982,13 @@ var __async = (__this, __arguments, generator) => {
       defaultTheme: defaultTheme2 = {}
     } = props;
     const globalStyles = typeof styles2 === "function" ? (themeInput) => styles2(isEmpty$3(themeInput) ? defaultTheme2 : themeInput) : styles2;
-    return /* @__PURE__ */ jsx(react.Global, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(react.Global, {
       styles: globalStyles
     });
   }
   process.env.NODE_ENV !== "production" ? GlobalStyles$2.propTypes = {
-    defaultTheme: propTypesExports.object,
-    styles: propTypesExports.oneOfType([propTypesExports.array, propTypesExports.string, propTypesExports.object, propTypesExports.func])
+    defaultTheme: PropTypes.object,
+    styles: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.object, PropTypes.func])
   } : void 0;
   /**
    * @mui/styled-engine v5.13.2
@@ -14129,7 +14094,7 @@ var __async = (__this, __arguments, generator) => {
   const shape = {
     borderRadius: 4
   };
-  const responsivePropType = process.env.NODE_ENV !== "production" ? propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string, propTypesExports.object, propTypesExports.array]) : {};
+  const responsivePropType = process.env.NODE_ENV !== "production" ? PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object, PropTypes.array]) : {};
   function merge(acc, item) {
     if (!item) {
       return acc;
@@ -14199,11 +14164,11 @@ var __async = (__this, __arguments, generator) => {
       return merge(base, extended);
     };
     newStyleFunction.propTypes = process.env.NODE_ENV !== "production" ? _extends$2({}, styleFunction.propTypes, {
-      xs: propTypesExports.object,
-      sm: propTypesExports.object,
-      md: propTypesExports.object,
-      lg: propTypesExports.object,
-      xl: propTypesExports.object
+      xs: PropTypes.object,
+      sm: PropTypes.object,
+      md: PropTypes.object,
+      lg: PropTypes.object,
+      xl: PropTypes.object
     }) : {};
     newStyleFunction.filterProps = ["xs", "sm", "md", "lg", "xl", ...styleFunction.filterProps];
     return newStyleFunction;
@@ -14694,8 +14659,8 @@ var __async = (__this, __arguments, generator) => {
   const maxWidth = (props) => {
     if (props.maxWidth !== void 0 && props.maxWidth !== null) {
       const styleFromPropValue = (propValue) => {
-        var _props$theme, _props$theme$breakpoi, _props$theme$breakpoi2;
-        const breakpoint = ((_props$theme = props.theme) == null ? void 0 : (_props$theme$breakpoi = _props$theme.breakpoints) == null ? void 0 : (_props$theme$breakpoi2 = _props$theme$breakpoi.values) == null ? void 0 : _props$theme$breakpoi2[propValue]) || values$1[propValue];
+        var _props$theme;
+        const breakpoint = ((_props$theme = props.theme) == null || (_props$theme = _props$theme.breakpoints) == null || (_props$theme = _props$theme.values) == null ? void 0 : _props$theme[propValue]) || values$1[propValue];
         return {
           maxWidth: breakpoint || sizingTransform(propValue)
         };
@@ -15153,6 +15118,7 @@ var __async = (__this, __arguments, generator) => {
     };
     return muiTheme;
   }
+  "use client";
   function isObjectEmpty(obj) {
     return Object.keys(obj).length === 0;
   }
@@ -15160,10 +15126,12 @@ var __async = (__this, __arguments, generator) => {
     const contextTheme = React__namespace.useContext(react.ThemeContext);
     return !contextTheme || isObjectEmpty(contextTheme) ? defaultTheme2 : contextTheme;
   }
+  "use client";
   const systemDefaultTheme$1 = createTheme$1();
   function useTheme$2(defaultTheme2 = systemDefaultTheme$1) {
     return useTheme$3(defaultTheme2);
   }
+  "use client";
   function GlobalStyles$1({
     styles: styles2,
     themeId,
@@ -15171,7 +15139,7 @@ var __async = (__this, __arguments, generator) => {
   }) {
     const upperTheme = useTheme$2(defaultTheme2);
     const globalStyles = typeof styles2 === "function" ? styles2(themeId ? upperTheme[themeId] || upperTheme : upperTheme) : styles2;
-    return /* @__PURE__ */ jsx(GlobalStyles$2, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(GlobalStyles$2, {
       styles: globalStyles
     });
   }
@@ -15183,16 +15151,17 @@ var __async = (__this, __arguments, generator) => {
     /**
      * @ignore
      */
-    defaultTheme: propTypesExports.object,
+    defaultTheme: PropTypes.object,
     /**
      * @ignore
      */
-    styles: propTypesExports.oneOfType([propTypesExports.array, propTypesExports.func, propTypesExports.number, propTypesExports.object, propTypesExports.string, propTypesExports.bool]),
+    styles: PropTypes.oneOfType([PropTypes.array, PropTypes.func, PropTypes.number, PropTypes.object, PropTypes.string, PropTypes.bool]),
     /**
      * @ignore
      */
-    themeId: propTypesExports.string
+    themeId: PropTypes.string
   } : void 0;
+  "use client";
   const displayPrint = style$3({
     prop: "displayPrint",
     cssProperty: false,
@@ -15323,7 +15292,7 @@ var __async = (__this, __arguments, generator) => {
       systemProps: {},
       otherProps: {}
     };
-    const config2 = (_props$theme$unstable = props == null ? void 0 : (_props$theme = props.theme) == null ? void 0 : _props$theme.unstable_sxConfig) != null ? _props$theme$unstable : defaultSxConfig;
+    const config2 = (_props$theme$unstable = props == null || (_props$theme = props.theme) == null ? void 0 : _props$theme.unstable_sxConfig) != null ? _props$theme$unstable : defaultSxConfig;
     Object.keys(props).forEach((prop) => {
       if (config2[prop]) {
         result.systemProps[prop] = props[prop];
@@ -15399,6 +15368,25 @@ var __async = (__this, __arguments, generator) => {
       [prop]: value
     };
   }
+  function r(e) {
+    var t, f, n = "";
+    if ("string" == typeof e || "number" == typeof e)
+      n += e;
+    else if ("object" == typeof e)
+      if (Array.isArray(e))
+        for (t = 0; t < e.length; t++)
+          e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+      else
+        for (t in e)
+          e[t] && (n && (n += " "), n += t);
+    return n;
+  }
+  function clsx() {
+    for (var e, t, f = 0, n = ""; f < arguments.length; )
+      (e = arguments[f++]) && (t = r(e)) && (n && (n += " "), n += t);
+    return n;
+  }
+  "use client";
   const _excluded$1h = ["className", "component"];
   function createBox(options = {}) {
     const {
@@ -15416,7 +15404,7 @@ var __async = (__this, __arguments, generator) => {
         className,
         component = "div"
       } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$1h);
-      return /* @__PURE__ */ jsx(BoxRoot, _extends$2({
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(BoxRoot, _extends$2({
         as: component,
         ref,
         className: clsx(className, generateClassName ? generateClassName(defaultClassName) : defaultClassName),
@@ -15425,6 +15413,7 @@ var __async = (__this, __arguments, generator) => {
     });
     return Box2;
   }
+  "use client";
   const Box$1 = createBox();
   process.env.NODE_ENV !== "production" ? Box$1.propTypes = {
     // ----------------------------- Warning --------------------------------
@@ -15434,17 +15423,18 @@ var __async = (__this, __arguments, generator) => {
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
+  "use client";
   const _excluded$1g = ["variant"];
   function isEmpty$2(string) {
     return string.length === 0;
@@ -15492,12 +15482,12 @@ var __async = (__this, __arguments, generator) => {
     return variantsStyles;
   };
   const variantsResolver = (props, styles2, theme, name) => {
-    var _theme$components, _theme$components$nam;
+    var _theme$components;
     const {
       ownerState = {}
     } = props;
     const variantsStyles = [];
-    const themeVariants = theme == null ? void 0 : (_theme$components = theme.components) == null ? void 0 : (_theme$components$nam = _theme$components[name]) == null ? void 0 : _theme$components$nam.variants;
+    const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[name]) == null ? void 0 : _theme$components.variants;
     if (themeVariants) {
       themeVariants.forEach((themeVariant) => {
         let isMatch = true;
@@ -15518,6 +15508,9 @@ var __async = (__this, __arguments, generator) => {
   }
   const systemDefaultTheme = createTheme$1();
   const lowercaseFirstLetter = (string) => {
+    if (!string) {
+      return string;
+    }
     return string.charAt(0).toLowerCase() + string.slice(1);
   };
   function resolveTheme({
@@ -15526,6 +15519,12 @@ var __async = (__this, __arguments, generator) => {
     themeId
   }) {
     return isEmpty$1(theme) ? defaultTheme2 : theme[themeId] || theme;
+  }
+  function defaultOverridesResolver(slot) {
+    if (!slot) {
+      return null;
+    }
+    return (props, styles2) => styles2[slot];
   }
   function createStyled(input = {}) {
     const {
@@ -15550,9 +15549,15 @@ var __async = (__this, __arguments, generator) => {
         slot: componentSlot,
         skipVariantsResolver: inputSkipVariantsResolver,
         skipSx: inputSkipSx,
-        overridesResolver: overridesResolver2
+        // TODO v6: remove `lowercaseFirstLetter()` in the next major release
+        // For more details: https://github.com/mui/material-ui/pull/37908
+        overridesResolver: overridesResolver2 = defaultOverridesResolver(lowercaseFirstLetter(componentSlot))
       } = inputOptions, options = _objectWithoutPropertiesLoose(inputOptions, _excluded$1f);
-      const skipVariantsResolver = inputSkipVariantsResolver !== void 0 ? inputSkipVariantsResolver : componentSlot && componentSlot !== "Root" || false;
+      const skipVariantsResolver = inputSkipVariantsResolver !== void 0 ? inputSkipVariantsResolver : (
+        // TODO v6: remove `Root` in the next major release
+        // For more details: https://github.com/mui/material-ui/pull/37908
+        componentSlot && componentSlot !== "Root" && componentSlot !== "root" || false
+      );
       const skipSx = inputSkipSx || false;
       let label;
       if (process.env.NODE_ENV !== "production") {
@@ -15561,7 +15566,7 @@ var __async = (__this, __arguments, generator) => {
         }
       }
       let shouldForwardPropOption = shouldForwardProp;
-      if (componentSlot === "Root") {
+      if (componentSlot === "Root" || componentSlot === "root") {
         shouldForwardPropOption = rootShouldForwardProp2;
       } else if (componentSlot) {
         shouldForwardPropOption = slotShouldForwardProp2;
@@ -15635,7 +15640,7 @@ var __async = (__this, __arguments, generator) => {
         if (process.env.NODE_ENV !== "production") {
           let displayName;
           if (componentName) {
-            displayName = `${componentName}${componentSlot || ""}`;
+            displayName = `${componentName}${capitalize(componentSlot || "")}`;
           }
           if (displayName === void 0) {
             displayName = `Styled(${getDisplayName(tag)})`;
@@ -15665,6 +15670,7 @@ var __async = (__this, __arguments, generator) => {
     }
     return resolveProps(theme.components[name].defaultProps, props);
   }
+  "use client";
   function useThemeProps$1({
     props,
     name,
@@ -15682,6 +15688,7 @@ var __async = (__this, __arguments, generator) => {
     });
     return mergedProps;
   }
+  "use client";
   function clamp(value, min2 = 0, max2 = 1) {
     if (process.env.NODE_ENV !== "production") {
       if (value < min2 || value > max2) {
@@ -15928,7 +15935,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       }
       return mergedTheme;
     }
-    return __spreadValues(__spreadValues({}, outerTheme), localTheme);
+    return _extends$2({}, outerTheme, localTheme);
   }
   function ThemeProvider$1(props) {
     const {
@@ -15948,7 +15955,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       }
       return output;
     }, [localTheme, outerTheme]);
-    return /* @__PURE__ */ jsx(ThemeContext.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeContext.Provider, {
       value: theme,
       children
     });
@@ -15957,22 +15964,23 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     /**
      * Your component tree.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * A theme object. You can provide a function to extend the outer theme.
      */
-    theme: propTypesExports.oneOfType([propTypesExports.object, propTypesExports.func]).isRequired
+    theme: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired
   } : void 0;
   if (process.env.NODE_ENV !== "production") {
     process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
   }
   /**
-   * @mui/private-theming v5.13.1
+   * @mui/private-theming v5.14.5
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
    * LICENSE file in the root directory of this source tree.
    */
+  "use client";
   const EMPTY_THEME = {};
   function useThemeScoping(themeId, upperTheme, localTheme, isPrivate = false) {
     return React__namespace.useMemo(() => {
@@ -16007,9 +16015,9 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     }
     const engineTheme = useThemeScoping(themeId, upperTheme, localTheme);
     const privateTheme = useThemeScoping(themeId, upperPrivateTheme, localTheme, true);
-    return /* @__PURE__ */ jsx(ThemeProvider$1, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$1, {
       theme: privateTheme,
-      children: /* @__PURE__ */ jsx(react.ThemeContext.Provider, {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(react.ThemeContext.Provider, {
         value: engineTheme,
         children
       })
@@ -16023,19 +16031,20 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     /**
      * Your component tree.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * A theme object. You can provide a function to extend the outer theme.
      */
-    theme: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]).isRequired,
+    theme: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
     /**
      * The design system's unique id for getting the corresponded theme when there are multiple design systems.
      */
-    themeId: propTypesExports.string
+    themeId: PropTypes.string
   } : void 0;
   if (process.env.NODE_ENV !== "production") {
     process.env.NODE_ENV !== "production" ? ThemeProvider.propTypes = exactProp(ThemeProvider.propTypes) : void 0;
   }
+  "use client";
   const DEFAULT_MODE_STORAGE_KEY = "mode";
   const DEFAULT_COLOR_SCHEME_STORAGE_KEY = "color-scheme";
   const DEFAULT_ATTRIBUTE = "data-color-scheme";
@@ -16049,7 +16058,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       attribute = DEFAULT_ATTRIBUTE,
       colorSchemeNode = "document.documentElement"
     } = options || {};
-    return /* @__PURE__ */ jsx("script", {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("script", {
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML: {
         __html: `(function() { try {
@@ -16080,6 +16089,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       }
     }, "mui-color-scheme-init");
   }
+  "use client";
   function getSystemMode(mode) {
     if (typeof window !== "undefined" && mode === "system") {
       const mql = window.matchMedia("(prefers-color-scheme: dark)");
@@ -16476,18 +16486,18 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       if (disableStyleSheetGeneration || nested2 && (upperTheme == null ? void 0 : upperTheme.cssVarPrefix) === cssVarPrefix) {
         shouldGenerateStyleSheet = false;
       }
-      const element = /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-        children: [shouldGenerateStyleSheet && /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-          children: [/* @__PURE__ */ jsx(GlobalStyles$2, {
+      const element = /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+        children: [shouldGenerateStyleSheet && /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+          children: [/* @__PURE__ */ jsxRuntimeExports.jsx(GlobalStyles$2, {
             styles: {
               [colorSchemeSelector]: rootCss
             }
-          }), /* @__PURE__ */ jsx(GlobalStyles$2, {
+          }), /* @__PURE__ */ jsxRuntimeExports.jsx(GlobalStyles$2, {
             styles: defaultColorSchemeStyleSheet
-          }), /* @__PURE__ */ jsx(GlobalStyles$2, {
+          }), /* @__PURE__ */ jsxRuntimeExports.jsx(GlobalStyles$2, {
             styles: otherColorSchemesStyleSheet
           })]
-        }), /* @__PURE__ */ jsx(ThemeProvider, {
+        }), /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, {
           themeId: scopedTheme ? themeId : void 0,
           theme: resolveTheme2 ? resolveTheme2(theme) : theme,
           children
@@ -16496,7 +16506,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       if (nested2) {
         return element;
       }
-      return /* @__PURE__ */ jsx(ColorSchemeContext.Provider, {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ColorSchemeContext.Provider, {
         value: contextValue,
         children: element
       });
@@ -16505,62 +16515,62 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       /**
        * The body attribute name to attach colorScheme.
        */
-      attribute: propTypesExports.string,
+      attribute: PropTypes.string,
       /**
        * The component tree.
        */
-      children: propTypesExports.node,
+      children: PropTypes.node,
       /**
        * The node used to attach the color-scheme attribute
        */
-      colorSchemeNode: propTypesExports.any,
+      colorSchemeNode: PropTypes.any,
       /**
        * The CSS selector for attaching the generated custom properties
        */
-      colorSchemeSelector: propTypesExports.string,
+      colorSchemeSelector: PropTypes.string,
       /**
        * localStorage key used to store `colorScheme`
        */
-      colorSchemeStorageKey: propTypesExports.string,
+      colorSchemeStorageKey: PropTypes.string,
       /**
        * The initial color scheme used.
        */
-      defaultColorScheme: propTypesExports.oneOfType([propTypesExports.string, propTypesExports.object]),
+      defaultColorScheme: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
       /**
        * The initial mode used.
        */
-      defaultMode: propTypesExports.string,
+      defaultMode: PropTypes.string,
       /**
        * If `true`, the provider creates its own context and generate stylesheet as if it is a root `CssVarsProvider`.
        */
-      disableNestedContext: propTypesExports.bool,
+      disableNestedContext: PropTypes.bool,
       /**
        * If `true`, the style sheet won't be generated.
        *
        * This is useful for controlling nested CssVarsProvider behavior.
        */
-      disableStyleSheetGeneration: propTypesExports.bool,
+      disableStyleSheetGeneration: PropTypes.bool,
       /**
        * Disable CSS transitions when switching between modes or color schemes
        */
-      disableTransitionOnChange: propTypesExports.bool,
+      disableTransitionOnChange: PropTypes.bool,
       /**
        * The document to attach the attribute to
        */
-      documentNode: propTypesExports.any,
+      documentNode: PropTypes.any,
       /**
        * The key in the local storage used to store current color scheme.
        */
-      modeStorageKey: propTypesExports.string,
+      modeStorageKey: PropTypes.string,
       /**
        * The window that attaches the 'storage' event listener
        * @default window
        */
-      storageWindow: propTypesExports.any,
+      storageWindow: PropTypes.any,
       /**
        * The calculated theme object that will be passed through context.
        */
-      theme: propTypesExports.object
+      theme: PropTypes.object
     } : void 0;
     const defaultLightColorScheme = typeof designSystemColorScheme === "string" ? designSystemColorScheme : designSystemColorScheme.light;
     const defaultDarkColorScheme = typeof designSystemColorScheme === "string" ? designSystemColorScheme : designSystemColorScheme.dark;
@@ -16841,7 +16851,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       const classes = useUtilityClasses$V(ownerState, componentName);
       return (
         // @ts-ignore theme is injected by the styled util
-        /* @__PURE__ */ jsx(ContainerRoot, _extends$2({
+        /* @__PURE__ */ jsxRuntimeExports.jsx(ContainerRoot, _extends$2({
           as: component,
           ownerState,
           className: clsx(classes.root, className),
@@ -16850,17 +16860,18 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       );
     });
     process.env.NODE_ENV !== "production" ? Container2.propTypes = {
-      children: propTypesExports.node,
-      classes: propTypesExports.object,
-      className: propTypesExports.string,
-      component: propTypesExports.elementType,
-      disableGutters: propTypesExports.bool,
-      fixed: propTypesExports.bool,
-      maxWidth: propTypesExports.oneOfType([propTypesExports.oneOf(["xs", "sm", "md", "lg", "xl", false]), propTypesExports.string]),
-      sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+      children: PropTypes.node,
+      classes: PropTypes.object,
+      className: PropTypes.string,
+      component: PropTypes.elementType,
+      disableGutters: PropTypes.bool,
+      fixed: PropTypes.bool,
+      maxWidth: PropTypes.oneOfType([PropTypes.oneOf(["xs", "sm", "md", "lg", "xl", false]), PropTypes.string]),
+      sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
     } : void 0;
     return Container2;
   }
+  "use client";
   const Container$1 = createContainer();
   process.env.NODE_ENV !== "production" ? Container$1.propTypes = {
     // ----------------------------- Warning --------------------------------
@@ -16870,21 +16881,21 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the left and right padding is removed.
      * @default false
      */
-    disableGutters: propTypesExports.bool,
+    disableGutters: PropTypes.bool,
     /**
      * Set the max-width to match the min-width of the current breakpoint.
      * This is useful if you'd prefer to design for a fixed set of sizes
@@ -16892,23 +16903,24 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
      * It's fluid by default.
      * @default false
      */
-    fixed: propTypesExports.bool,
+    fixed: PropTypes.bool,
     /**
      * Determine the max-width of the container.
      * The container width grows with the size of the screen.
      * Set to `false` to disable `maxWidth`.
      * @default 'lg'
      */
-    maxWidth: propTypesExports.oneOfType([propTypesExports.oneOf(["xs", "sm", "md", "lg", "xl", false]), propTypesExports.string]),
+    maxWidth: PropTypes.oneOfType([PropTypes.oneOf(["xs", "sm", "md", "lg", "xl", false]), PropTypes.string]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getContainerUtilityClass$1(slot) {
     return generateUtilityClass("MuiContainer", slot);
   }
   const containerClasses$1 = generateUtilityClasses("MuiContainer", ["root", "disableGutters", "fixed", "maxWidthXs", "maxWidthSm", "maxWidthMd", "maxWidthLg", "maxWidthXl"]);
+  "use client";
   const filterBreakpointKeys = (breakpointsKeys, responsiveKeys) => breakpointsKeys.filter((key) => responsiveKeys.includes(key));
   const traverseBreakpoints = (breakpoints2, responsive, iterator) => {
     const smallestBreakpoint = breakpoints2.keys[0];
@@ -17261,7 +17273,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
         // for nested grid
       });
       const classes = useUtilityClasses2(ownerState, theme);
-      let result = /* @__PURE__ */ jsx(GridRoot, _extends$2({
+      let result = /* @__PURE__ */ jsxRuntimeExports.jsx(GridRoot, _extends$2({
         ref,
         as: component,
         ownerState,
@@ -17278,7 +17290,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
         })
       }));
       if (disableEqualOverflow !== void 0 && disableEqualOverflow !== (overflow2 != null ? overflow2 : false)) {
-        result = /* @__PURE__ */ jsx(OverflowContext.Provider, {
+        result = /* @__PURE__ */ jsxRuntimeExports.jsx(OverflowContext.Provider, {
           value: disableEqualOverflow,
           children: result
         });
@@ -17286,32 +17298,33 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       return result;
     });
     process.env.NODE_ENV !== "production" ? Grid2.propTypes = {
-      children: propTypesExports.node,
-      className: propTypesExports.string,
-      columns: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.number), propTypesExports.number, propTypesExports.object]),
-      columnSpacing: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])), propTypesExports.number, propTypesExports.object, propTypesExports.string]),
-      component: propTypesExports.elementType,
-      container: propTypesExports.bool,
-      direction: propTypesExports.oneOfType([propTypesExports.oneOf(["column-reverse", "column", "row-reverse", "row"]), propTypesExports.arrayOf(propTypesExports.oneOf(["column-reverse", "column", "row-reverse", "row"])), propTypesExports.object]),
-      disableEqualOverflow: propTypesExports.bool,
-      lg: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
-      lgOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number]),
-      md: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
-      mdOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number]),
-      rowSpacing: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])), propTypesExports.number, propTypesExports.object, propTypesExports.string]),
-      sm: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
-      smOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number]),
-      spacing: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])), propTypesExports.number, propTypesExports.object, propTypesExports.string]),
-      sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
-      wrap: propTypesExports.oneOf(["nowrap", "wrap-reverse", "wrap"]),
-      xl: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
-      xlOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number]),
-      xs: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
-      xsOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number])
+      children: PropTypes.node,
+      className: PropTypes.string,
+      columns: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number, PropTypes.object]),
+      columnSpacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
+      component: PropTypes.elementType,
+      container: PropTypes.bool,
+      direction: PropTypes.oneOfType([PropTypes.oneOf(["column-reverse", "column", "row-reverse", "row"]), PropTypes.arrayOf(PropTypes.oneOf(["column-reverse", "column", "row-reverse", "row"])), PropTypes.object]),
+      disableEqualOverflow: PropTypes.bool,
+      lg: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.bool]),
+      lgOffset: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number]),
+      md: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.bool]),
+      mdOffset: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number]),
+      rowSpacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
+      sm: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.bool]),
+      smOffset: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number]),
+      spacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
+      sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
+      wrap: PropTypes.oneOf(["nowrap", "wrap-reverse", "wrap"]),
+      xl: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.bool]),
+      xlOffset: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number]),
+      xs: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.bool]),
+      xsOffset: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number])
     } : void 0;
     Grid2.muiName = "Grid";
     return Grid2;
   }
+  "use client";
   const Grid = createGrid();
   process.env.NODE_ENV !== "production" ? Grid.propTypes = {
     // ----------------------------- Warning --------------------------------
@@ -17321,33 +17334,33 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The number of columns.
      * @default 12
      */
-    columns: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.number), propTypesExports.number, propTypesExports.object]),
+    columns: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number, PropTypes.object]),
     /**
      * Defines the horizontal space between the type `item` components.
      * It overrides the value of the `spacing` prop.
      */
-    columnSpacing: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])), propTypesExports.number, propTypesExports.object, propTypesExports.string]),
+    columnSpacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
     /**
      * If `true`, the component will have the flex *container* behavior.
      * You should be wrapping *items* with a *container*.
      * @default false
      */
-    container: propTypesExports.bool,
+    container: PropTypes.bool,
     /**
      * Defines the `flex-direction` style property.
      * It is applied for all screen sizes.
      * @default 'row'
      */
-    direction: propTypesExports.oneOfType([propTypesExports.oneOf(["column-reverse", "column", "row-reverse", "row"]), propTypesExports.arrayOf(propTypesExports.oneOf(["column-reverse", "column", "row-reverse", "row"])), propTypesExports.object]),
+    direction: PropTypes.oneOfType([PropTypes.oneOf(["column-reverse", "column", "row-reverse", "row"]), PropTypes.arrayOf(PropTypes.oneOf(["column-reverse", "column", "row-reverse", "row"])), PropTypes.object]),
     /**
      * If `true`, the negative margin and padding are apply only to the top and left sides of the grid.
      */
-    disableEqualOverflow: propTypesExports.bool,
+    disableEqualOverflow: PropTypes.bool,
     /**
      * If a number, it sets the number of columns the grid item uses.
      * It can't be greater than the total number of columns of the container (12 by default).
@@ -17357,13 +17370,13 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
      * The value is applied for the `lg` breakpoint and wider screens if not overridden.
      * @default false
      */
-    lg: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
+    lg: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.bool]),
     /**
      * If a number, it sets the margin-left equals to the number of columns the grid item uses.
      * If 'auto', the grid item push itself to the right-end of the container.
      * The value is applied for the `lg` breakpoint and wider screens if not overridden.
      */
-    lgOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number]),
+    lgOffset: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number]),
     /**
      * If a number, it sets the number of columns the grid item uses.
      * It can't be greater than the total number of columns of the container (12 by default).
@@ -17373,18 +17386,18 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
      * The value is applied for the `md` breakpoint and wider screens if not overridden.
      * @default false
      */
-    md: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
+    md: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.bool]),
     /**
      * If a number, it sets the margin-left equals to the number of columns the grid item uses.
      * If 'auto', the grid item push itself to the right-end of the container.
      * The value is applied for the `md` breakpoint and wider screens if not overridden.
      */
-    mdOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number]),
+    mdOffset: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number]),
     /**
      * Defines the vertical space between the type `item` components.
      * It overrides the value of the `spacing` prop.
      */
-    rowSpacing: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])), propTypesExports.number, propTypesExports.object, propTypesExports.string]),
+    rowSpacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
     /**
      * If a number, it sets the number of columns the grid item uses.
      * It can't be greater than the total number of columns of the container (12 by default).
@@ -17394,29 +17407,52 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
      * The value is applied for the `sm` breakpoint and wider screens if not overridden.
      * @default false
      */
-    sm: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
+    sm: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.bool]),
     /**
      * If a number, it sets the margin-left equals to the number of columns the grid item uses.
      * If 'auto', the grid item push itself to the right-end of the container.
      * The value is applied for the `sm` breakpoint and wider screens if not overridden.
      */
-    smOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number]),
+    smOffset: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number]),
     /**
      * Defines the space between the type `item` components.
      * It can only be used on a type `container` component.
      * @default 0
      */
-    spacing: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])), propTypesExports.number, propTypesExports.object, propTypesExports.string]),
+    spacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
     /**
      * @ignore
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
+    /**
+     * @internal
+     * The level of the grid starts from `0`
+     * and increases when the grid nests inside another grid regardless of container or item.
+     *
+     * ```js
+     * <Grid> // level 0
+     *   <Grid> // level 1
+     *     <Grid> // level 2
+     *   <Grid> // level 1
+     * ```
+     *
+     * Only consecutive grid is considered nesting.
+     * A grid container will start at `0` if there are non-Grid element above it.
+     *
+     * ```js
+     * <Grid> // level 0
+     *   <div>
+     *     <Grid> // level 0
+     *       <Grid> // level 1
+     * ```
+     */
+    unstable_level: PropTypes.number,
     /**
      * Defines the `flex-wrap` style property.
      * It's applied for all screen sizes.
      * @default 'wrap'
      */
-    wrap: propTypesExports.oneOf(["nowrap", "wrap-reverse", "wrap"]),
+    wrap: PropTypes.oneOf(["nowrap", "wrap-reverse", "wrap"]),
     /**
      * If a number, it sets the number of columns the grid item uses.
      * It can't be greater than the total number of columns of the container (12 by default).
@@ -17426,13 +17462,13 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
      * The value is applied for the `xl` breakpoint and wider screens if not overridden.
      * @default false
      */
-    xl: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
+    xl: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.bool]),
     /**
      * If a number, it sets the margin-left equals to the number of columns the grid item uses.
      * If 'auto', the grid item push itself to the right-end of the container.
      * The value is applied for the `xl` breakpoint and wider screens if not overridden.
      */
-    xlOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number]),
+    xlOffset: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number]),
     /**
      * If a number, it sets the number of columns the grid item uses.
      * It can't be greater than the total number of columns of the container (12 by default).
@@ -17442,13 +17478,13 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
      * The value is applied for all the screen sizes with the lowest priority.
      * @default false
      */
-    xs: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
+    xs: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.bool]),
     /**
      * If a number, it sets the margin-left equals to the number of columns the grid item uses.
      * If 'auto', the grid item push itself to the right-end of the container.
      * The value is applied for the `xs` breakpoint and wider screens if not overridden.
      */
-    xsOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number])
+    xsOffset: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number])
   } : void 0;
   function getGridUtilityClass(slot) {
     return generateUtilityClass("MuiGrid", slot);
@@ -17474,6 +17510,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     ...GRID_SIZES.map((size) => `grid-lg-${size}`),
     ...GRID_SIZES.map((size) => `grid-xl-${size}`)
   ]);
+  "use client";
   const _excluded$19 = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
   const defaultTheme$3 = createTheme$1();
   const defaultCreateStyledComponent = styled$1("div", {
@@ -17555,8 +17592,12 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
           };
         }
         return {
-          "& > :not(style) + :not(style)": {
-            margin: 0,
+          // The useFlexGap={false} implement relies on each child to give up control of the margin.
+          // We need to reset the margin to avoid double spacing.
+          "& > :not(style):not(style)": {
+            margin: 0
+          },
+          "& > :not(style) ~ :not(style)": {
             [`margin${getSideFromDirection$1(breakpoint ? directionValues[breakpoint] : ownerState.direction)}`]: getValue(transformer, propValue)
           }
         };
@@ -17600,7 +17641,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
         useFlexGap
       };
       const classes = useUtilityClasses2();
-      return /* @__PURE__ */ jsx(StackRoot2, _extends$2({
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(StackRoot2, _extends$2({
         as: component,
         ownerState,
         ref,
@@ -17610,14 +17651,15 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       }));
     });
     process.env.NODE_ENV !== "production" ? Stack2.propTypes = {
-      children: propTypesExports.node,
-      direction: propTypesExports.oneOfType([propTypesExports.oneOf(["column-reverse", "column", "row-reverse", "row"]), propTypesExports.arrayOf(propTypesExports.oneOf(["column-reverse", "column", "row-reverse", "row"])), propTypesExports.object]),
-      divider: propTypesExports.node,
-      spacing: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])), propTypesExports.number, propTypesExports.object, propTypesExports.string]),
-      sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+      children: PropTypes.node,
+      direction: PropTypes.oneOfType([PropTypes.oneOf(["column-reverse", "column", "row-reverse", "row"]), PropTypes.arrayOf(PropTypes.oneOf(["column-reverse", "column", "row-reverse", "row"])), PropTypes.object]),
+      divider: PropTypes.node,
+      spacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
+      sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
     } : void 0;
     return Stack2;
   }
+  "use client";
   const Stack$1 = createStack();
   process.env.NODE_ENV !== "production" ? Stack$1.propTypes = {
     // ----------------------------- Warning --------------------------------
@@ -17627,31 +17669,31 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * Defines the `flex-direction` style property.
      * It is applied for all screen sizes.
      * @default 'column'
      */
-    direction: propTypesExports.oneOfType([propTypesExports.oneOf(["column-reverse", "column", "row-reverse", "row"]), propTypesExports.arrayOf(propTypesExports.oneOf(["column-reverse", "column", "row-reverse", "row"])), propTypesExports.object]),
+    direction: PropTypes.oneOfType([PropTypes.oneOf(["column-reverse", "column", "row-reverse", "row"]), PropTypes.arrayOf(PropTypes.oneOf(["column-reverse", "column", "row-reverse", "row"])), PropTypes.object]),
     /**
      * Add an element between each child.
      */
-    divider: propTypesExports.node,
+    divider: PropTypes.node,
     /**
      * Defines the space between immediate children.
      * @default 0
      */
-    spacing: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])), propTypesExports.number, propTypesExports.object, propTypesExports.string]),
+    spacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
     /**
      * The system prop, which allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * If `true`, the CSS flexbox `gap` is used instead of applying `margin` to children.
      *
@@ -17661,12 +17703,14 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
      * To enable this flag globally, follow the theme's default props configuration.
      * @default false
      */
-    useFlexGap: propTypesExports.bool
+    useFlexGap: PropTypes.bool
   } : void 0;
   function getStackUtilityClass(slot) {
     return generateUtilityClass("MuiStack", slot);
   }
   const stackClasses = generateUtilityClasses("MuiStack", ["root"]);
+  "use client";
+  "use client";
   function experimental_sx$1() {
     throw new Error(process.env.NODE_ENV !== "production" ? `MUI: The \`experimental_sx\` has been moved to \`theme.unstable_sx\`.For more details, see https://github.com/mui/material-ui/pull/35150.` : formatMuiErrorMessage(20));
   }
@@ -18421,9 +18465,9 @@ Please use another name.` : formatMuiErrorMessage(18));
       more.viewBox = viewBox;
     }
     const classes = useUtilityClasses$U(ownerState);
-    return /* @__PURE__ */ jsxs(SvgIconRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(SvgIconRoot, _extends$2({
       as: component,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       focusable: "false",
       color: htmlColor,
       "aria-hidden": titleAccess ? void 0 : true,
@@ -18431,7 +18475,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       ref
     }, more, other, {
       ownerState,
-      children: [children, titleAccess ? /* @__PURE__ */ jsx("title", {
+      children: [children, titleAccess ? /* @__PURE__ */ jsxRuntimeExports.jsx("title", {
         children: titleAccess
       }) : null]
     }));
@@ -18444,15 +18488,15 @@ Please use another name.` : formatMuiErrorMessage(18));
     /**
      * Node passed into the SVG element.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
@@ -18460,21 +18504,21 @@ Please use another name.` : formatMuiErrorMessage(18));
      * You can use the `htmlColor` prop to apply a color attribute to the SVG element.
      * @default 'inherit'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["inherit", "action", "disabled", "primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["inherit", "action", "disabled", "primary", "secondary", "error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.
      * @default 'medium'
      */
-    fontSize: propTypesExports.oneOfType([propTypesExports.oneOf(["inherit", "large", "medium", "small"]), propTypesExports.string]),
+    fontSize: PropTypes.oneOfType([PropTypes.oneOf(["inherit", "large", "medium", "small"]), PropTypes.string]),
     /**
      * Applies a color attribute to the SVG element.
      */
-    htmlColor: propTypesExports.string,
+    htmlColor: PropTypes.string,
     /**
      * If `true`, the root node will inherit the custom `component`'s viewBox and the `viewBox`
      * prop will be ignored.
@@ -18482,22 +18526,22 @@ Please use another name.` : formatMuiErrorMessage(18));
      * `component`'s viewBox to the root node.
      * @default false
      */
-    inheritViewBox: propTypesExports.bool,
+    inheritViewBox: PropTypes.bool,
     /**
      * The shape-rendering attribute. The behavior of the different options is described on the
      * [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering).
      * If you are having issues with blurry icons you should investigate this prop.
      */
-    shapeRendering: propTypesExports.string,
+    shapeRendering: PropTypes.string,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * Provides a human-readable title for the element that contains it.
      * https://www.w3.org/TR/SVG-access/#Equivalent
      */
-    titleAccess: propTypesExports.string,
+    titleAccess: PropTypes.string,
     /**
      * Allows you to redefine what the coordinates without units mean inside an SVG element.
      * For example, if the SVG element is 500 (width) by 200 (height),
@@ -18506,12 +18550,12 @@ Please use another name.` : formatMuiErrorMessage(18));
      * to bottom right (50,20) and each unit will be worth 10px.
      * @default '0 0 24 24'
      */
-    viewBox: propTypesExports.string
+    viewBox: PropTypes.string
   } : void 0;
   SvgIcon.muiName = "SvgIcon";
   function createSvgIcon(path, displayName) {
     function Component(props, ref) {
-      return /* @__PURE__ */ jsx(SvgIcon, _extends$2({
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(SvgIcon, _extends$2({
         "data-testid": `${displayName}Icon`,
         ref
       }, props, {
@@ -18574,7 +18618,6 @@ Please use another name.` : formatMuiErrorMessage(18));
     })(createSvgIcon$1);
     return createSvgIcon$1;
   }
-  const require$$2 = /* @__PURE__ */ getAugmentedNamespace(jsxRuntime);
   "use strict";
   var _interopRequireDefault$s = interopRequireDefaultExports;
   Object.defineProperty(ChevronRight, "__esModule", {
@@ -18582,7 +18625,7 @@ Please use another name.` : formatMuiErrorMessage(18));
   });
   var default_1$s = ChevronRight.default = void 0;
   var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-  var _jsxRuntime$s = require$$2;
+  var _jsxRuntime$s = jsxRuntimeExports;
   var _default$s = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
     d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
   }), "ChevronRight");
@@ -19192,10 +19235,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         console.error([`MUI: The elevation provided <Paper elevation={${elevation}}> is not available in the theme.`, `Please make sure that \`theme.shadows[${elevation}]\` is defined.`].join("\n"));
       }
     }
-    return /* @__PURE__ */ jsx(PaperRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(PaperRoot, _extends$2({
       as: component,
       ownerState,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       ref
     }, other));
   });
@@ -19207,20 +19250,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * Shadow depth, corresponds to `dp` in the spec.
      * It accepts values between 0 and 24 inclusive.
@@ -19240,16 +19283,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * If `true`, rounded corners are disabled.
      * @default false
      */
-    square: propTypesExports.bool,
+    square: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The variant to use.
      * @default 'elevation'
      */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["elevation", "outlined"]), propTypesExports.string])
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["elevation", "outlined"]), PropTypes.string])
   } : void 0;
   function getAppBarUtilityClass(slot) {
     return generateUtilityClass("MuiAppBar", slot);
@@ -19364,12 +19407,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       enableColorOnDark
     });
     const classes = useUtilityClasses$S(ownerState);
-    return /* @__PURE__ */ jsx(AppBarRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(AppBarRoot, _extends$2({
       square: true,
       component: "header",
       ownerState,
       elevation: 4,
-      className: clsx(classes.root, className, position2 === "fixed" && "mui-fixed"),
+      className: clsx$1(classes.root, className, position2 === "fixed" && "mui-fixed"),
       ref
     }, other));
   });
@@ -19381,38 +19424,38 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'primary'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["default", "inherit", "primary", "secondary", "transparent"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["default", "inherit", "primary", "secondary", "transparent"]), PropTypes.string]),
     /**
      * If true, the `color` prop is applied in dark mode.
      * @default false
      */
-    enableColorOnDark: propTypesExports.bool,
+    enableColorOnDark: PropTypes.bool,
     /**
      * The positioning type. The behavior of the different options is described
      * [in the MDN web docs](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Positioning).
      * Note: `sticky` is not universally supported and will fall back to `static` when unavailable.
      * @default 'fixed'
      */
-    position: propTypesExports.oneOf(["absolute", "fixed", "relative", "static", "sticky"]),
+    position: PropTypes.oneOf(["absolute", "fixed", "relative", "static", "sticky"]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   const BasicAppBar = styled(AppBar, {
     shouldForwardProp: (prop) => prop !== "open"
@@ -19495,7 +19538,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const viewPath = location.pathname.split("/")[2];
     let add = model.app.web.frame.private.view[viewPath].content.def.add || { active: false };
     let drawerwidth = "16rem";
-    return /* @__PURE__ */ jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicAppBar,
       {
         drawerwidth,
@@ -19504,8 +19547,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           color: "black",
           bgcolor: "white"
         },
-        children: /* @__PURE__ */ jsxs(material.Toolbar, { children: [
-          /* @__PURE__ */ jsx(
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Toolbar, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
             material.IconButton,
             {
               "aria-label": "open drawer",
@@ -19514,13 +19557,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               sx: __spreadValues({
                 marginRight: 2
               }, open && { display: "none" }),
-              children: /* @__PURE__ */ jsx(default_1$s, {})
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$s, {})
             }
           ),
           tooldefs.map(
             (tooldef) => {
               if ("autocomplete" === tooldef.kind) {
-                return /* @__PURE__ */ jsx(
+                return /* @__PURE__ */ jsxRuntimeExports.jsx(
                   material.Autocomplete,
                   {
                     freeSolo: true,
@@ -19536,7 +19579,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                       const filtered = filter$1(options, params);
                       return filtered;
                     },
-                    renderInput: (params) => /* @__PURE__ */ jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
+                    renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
                     onChange: (event, newval) => {
                       seneca.act("aim:app,set:state", {
                         section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
@@ -19551,7 +19594,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                   tooldef.name
                 );
               } else if ("addbutton" === tooldef.kind) {
-                return /* @__PURE__ */ jsx(
+                return /* @__PURE__ */ jsxRuntimeExports.jsx(
                   BasicButton,
                   {
                     variant: "outlined",
@@ -19568,8 +19611,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               }
             }
           ),
-          /* @__PURE__ */ jsx("div", { style: { flexGrow: 1 } }),
-          /* @__PURE__ */ jsx(material.Typography, { variant: "h6", children: userName })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flexGrow: 1 } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "h6", children: userName })
         ] })
       }
     );
@@ -19615,22 +19658,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const config = {
     disabled: false
   };
-  var timeoutsShape = process.env.NODE_ENV !== "production" ? propTypesExports.oneOfType([propTypesExports.number, propTypesExports.shape({
-    enter: propTypesExports.number,
-    exit: propTypesExports.number,
-    appear: propTypesExports.number
+  var timeoutsShape = process.env.NODE_ENV !== "production" ? PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+    enter: PropTypes.number,
+    exit: PropTypes.number,
+    appear: PropTypes.number
   }).isRequired]) : null;
-  var classNamesShape = process.env.NODE_ENV !== "production" ? propTypesExports.oneOfType([propTypesExports.string, propTypesExports.shape({
-    enter: propTypesExports.string,
-    exit: propTypesExports.string,
-    active: propTypesExports.string
-  }), propTypesExports.shape({
-    enter: propTypesExports.string,
-    enterDone: propTypesExports.string,
-    enterActive: propTypesExports.string,
-    exit: propTypesExports.string,
-    exitDone: propTypesExports.string,
-    exitActive: propTypesExports.string
+  var classNamesShape = process.env.NODE_ENV !== "production" ? PropTypes.oneOfType([PropTypes.string, PropTypes.shape({
+    enter: PropTypes.string,
+    exit: PropTypes.string,
+    active: PropTypes.string
+  }), PropTypes.shape({
+    enter: PropTypes.string,
+    enterDone: PropTypes.string,
+    enterActive: PropTypes.string,
+    exit: PropTypes.string,
+    exitDone: PropTypes.string,
+    exitActive: PropTypes.string
   })]) : null;
   const TransitionGroupContext = React.createContext(null);
   var forceReflow = function forceReflow2(node2) {
@@ -19864,10 +19907,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *     (see
      *     [test/CSSTransition-test.js](https://github.com/reactjs/react-transition-group/blob/13435f897b3ab71f6e19d724f145596f5910581c/test/CSSTransition-test.js#L362-L437)).
      */
-    nodeRef: propTypesExports.shape({
-      current: typeof Element === "undefined" ? propTypesExports.any : function(propValue, key, componentName, location, propFullName, secret) {
+    nodeRef: PropTypes.shape({
+      current: typeof Element === "undefined" ? PropTypes.any : function(propValue, key, componentName, location, propFullName, secret) {
         var value = propValue[key];
-        return propTypesExports.instanceOf(value && "ownerDocument" in value ? value.ownerDocument.defaultView.Element : Element)(propValue, key, componentName, location, propFullName, secret);
+        return PropTypes.instanceOf(value && "ownerDocument" in value ? value.ownerDocument.defaultView.Element : Element)(propValue, key, componentName, location, propFullName, secret);
       }
     }),
     /**
@@ -19884,23 +19927,23 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * </Transition>
      * ```
      */
-    children: propTypesExports.oneOfType([propTypesExports.func.isRequired, propTypesExports.element.isRequired]).isRequired,
+    children: PropTypes.oneOfType([PropTypes.func.isRequired, PropTypes.element.isRequired]).isRequired,
     /**
      * Show the component; triggers the enter or exit states
      */
-    in: propTypesExports.bool,
+    in: PropTypes.bool,
     /**
      * By default the child component is mounted immediately along with
      * the parent `Transition` component. If you want to "lazy mount" the component on the
      * first `in={true}` you can set `mountOnEnter`. After the first enter transition the component will stay
      * mounted, even on "exited", unless you also specify `unmountOnExit`.
      */
-    mountOnEnter: propTypesExports.bool,
+    mountOnEnter: PropTypes.bool,
     /**
      * By default the child component stays mounted after it reaches the `'exited'` state.
      * Set `unmountOnExit` if you'd prefer to unmount the component after it finishes exiting.
      */
-    unmountOnExit: propTypesExports.bool,
+    unmountOnExit: PropTypes.bool,
     /**
      * By default the child component does not perform the enter transition when
      * it first mounts, regardless of the value of `in`. If you want this
@@ -19912,15 +19955,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * > additional `.appear-*` classes, that way you can choose to style it
      * > differently.
      */
-    appear: propTypesExports.bool,
+    appear: PropTypes.bool,
     /**
      * Enable or disable enter transitions.
      */
-    enter: propTypesExports.bool,
+    enter: PropTypes.bool,
     /**
      * Enable or disable exit transitions.
      */
-    exit: propTypesExports.bool,
+    exit: PropTypes.bool,
     /**
      * The duration of the transition, in milliseconds.
      * Required unless `addEndListener` is provided.
@@ -19970,7 +20013,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * }}
      * ```
      */
-    addEndListener: propTypesExports.func,
+    addEndListener: PropTypes.func,
     /**
      * Callback fired before the "entering" status is applied. An extra parameter
      * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
@@ -19979,7 +20022,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement, isAppearing: bool) -> void
      */
-    onEnter: propTypesExports.func,
+    onEnter: PropTypes.func,
     /**
      * Callback fired after the "entering" status is applied. An extra parameter
      * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
@@ -19988,7 +20031,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement, isAppearing: bool)
      */
-    onEntering: propTypesExports.func,
+    onEntering: PropTypes.func,
     /**
      * Callback fired after the "entered" status is applied. An extra parameter
      * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
@@ -19997,7 +20040,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement, isAppearing: bool) -> void
      */
-    onEntered: propTypesExports.func,
+    onEntered: PropTypes.func,
     /**
      * Callback fired before the "exiting" status is applied.
      *
@@ -20005,7 +20048,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement) -> void
      */
-    onExit: propTypesExports.func,
+    onExit: PropTypes.func,
     /**
      * Callback fired after the "exiting" status is applied.
      *
@@ -20013,7 +20056,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement) -> void
      */
-    onExiting: propTypesExports.func,
+    onExiting: PropTypes.func,
     /**
      * Callback fired after the "exited" status is applied.
      *
@@ -20021,7 +20064,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement) -> void
      */
-    onExited: propTypesExports.func
+    onExited: PropTypes.func
   } : {};
   function noop$1() {
   }
@@ -20257,7 +20300,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement, isAppearing: bool)
      */
-    onEnter: propTypesExports.func,
+    onEnter: PropTypes.func,
     /**
      * A `<Transition>` callback fired immediately after the 'enter-active' or
      * 'appear-active' class is applied.
@@ -20266,7 +20309,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement, isAppearing: bool)
      */
-    onEntering: propTypesExports.func,
+    onEntering: PropTypes.func,
     /**
      * A `<Transition>` callback fired immediately after the 'enter' or
      * 'appear' classes are **removed** and the `done` class is added to the DOM node.
@@ -20275,7 +20318,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement, isAppearing: bool)
      */
-    onEntered: propTypesExports.func,
+    onEntered: PropTypes.func,
     /**
      * A `<Transition>` callback fired immediately after the 'exit' class is
      * applied.
@@ -20284,7 +20327,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement)
      */
-    onExit: propTypesExports.func,
+    onExit: PropTypes.func,
     /**
      * A `<Transition>` callback fired immediately after the 'exit-active' is applied.
      *
@@ -20292,7 +20335,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement)
      */
-    onExiting: propTypesExports.func,
+    onExiting: PropTypes.func,
     /**
      * A `<Transition>` callback fired immediately after the 'exit' classes
      * are **removed** and the `exit-done` class is added to the DOM node.
@@ -20301,7 +20344,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(node: HtmlElement)
      */
-    onExited: propTypesExports.func
+    onExited: PropTypes.func
   }) : {};
   function _assertThisInitialized(self2) {
     if (self2 === void 0) {
@@ -20491,7 +20534,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * you can pass in `component={null}`. This is useful if the wrapping div
      * borks your css styles.
      */
-    component: propTypesExports.any,
+    component: PropTypes.any,
     /**
      * A set of `<Transition>` components, that are toggled `in` and out as they
      * leave. the `<TransitionGroup>` will inject specific transition props, so
@@ -20505,25 +20548,25 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * the transition child as you change its content, this will cause
      * `TransitionGroup` to transition the child out and back in.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * A convenience prop that enables or disables appear animations
      * for all children. Note that specifying this will override any defaults set
      * on individual children Transitions.
      */
-    appear: propTypesExports.bool,
+    appear: PropTypes.bool,
     /**
      * A convenience prop that enables or disables enter animations
      * for all children. Note that specifying this will override any defaults set
      * on individual children Transitions.
      */
-    enter: propTypesExports.bool,
+    enter: PropTypes.bool,
     /**
      * A convenience prop that enables or disables exit animations
      * for all children. Note that specifying this will override any defaults set
      * on individual children Transitions.
      */
-    exit: propTypesExports.bool,
+    exit: PropTypes.bool,
     /**
      * You may need to apply reactive updates to a child as it is exiting.
      * This is generally done by using `cloneElement` however in the case of an exiting
@@ -20534,7 +20577,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type Function(child: ReactElement) -> ReactElement
      */
-    childFactory: propTypesExports.func
+    childFactory: PropTypes.func
   } : {};
   TransitionGroup.defaultProps = defaultProps;
   var ReplaceTransition = /* @__PURE__ */ function(_React$Component) {
@@ -20619,7 +20662,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return ReplaceTransition2;
   }(React.Component);
   ReplaceTransition.propTypes = process.env.NODE_ENV !== "production" ? {
-    in: propTypesExports.bool.isRequired,
+    in: PropTypes.bool.isRequired,
     children: function children(props, propName) {
       if (React.Children.count(props[propName]) !== 2)
         return new Error('"' + propName + '" must be exactly two transition components.');
@@ -20771,11 +20814,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @type {'out-in'|'in-out'}
      */
-    mode: propTypesExports.oneOf([modes.in, modes.out]),
+    mode: PropTypes.oneOf([modes.in, modes.out]),
     /**
      * Any `Transition` or `CSSTransition` component.
      */
-    children: propTypesExports.oneOfType([propTypesExports.element.isRequired])
+    children: PropTypes.oneOfType([PropTypes.element.isRequired])
   } : {};
   SwitchTransition.defaultProps = {
     mode: modes.out
@@ -20877,7 +20920,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         addEndListener(nodeRef.current, next2);
       }
     };
-    return /* @__PURE__ */ jsx(TransitionComponent, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionComponent, _extends$2({
       appear,
       in: inProp,
       nodeRef: enableStrictModeCompat ? nodeRef : void 0,
@@ -20911,13 +20954,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * node and a done callback. Allows for more fine grained transition end
      * logic. Note: Timeouts are still used as a fallback if provided.
      */
-    addEndListener: propTypesExports.func,
+    addEndListener: PropTypes.func,
     /**
      * Perform the enter transition when it first mounts if `in` is also `true`.
      * Set this to `false` to disable this behavior.
      * @default true
      */
-    appear: propTypesExports.bool,
+    appear: PropTypes.bool,
     /**
      * A single child content element.
      */
@@ -20926,42 +20969,42 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The transition timing function.
      * You may specify a single easing or a object containing enter and exit values.
      */
-    easing: propTypesExports.oneOfType([propTypesExports.shape({
-      enter: propTypesExports.string,
-      exit: propTypesExports.string
-    }), propTypesExports.string]),
+    easing: PropTypes.oneOfType([PropTypes.shape({
+      enter: PropTypes.string,
+      exit: PropTypes.string
+    }), PropTypes.string]),
     /**
      * If `true`, the component will transition in.
      */
-    in: propTypesExports.bool,
+    in: PropTypes.bool,
     /**
      * @ignore
      */
-    onEnter: propTypesExports.func,
+    onEnter: PropTypes.func,
     /**
      * @ignore
      */
-    onEntered: propTypesExports.func,
+    onEntered: PropTypes.func,
     /**
      * @ignore
      */
-    onEntering: propTypesExports.func,
+    onEntering: PropTypes.func,
     /**
      * @ignore
      */
-    onExit: propTypesExports.func,
+    onExit: PropTypes.func,
     /**
      * @ignore
      */
-    onExited: propTypesExports.func,
+    onExited: PropTypes.func,
     /**
      * @ignore
      */
-    onExiting: propTypesExports.func,
+    onExiting: PropTypes.func,
     /**
      * @ignore
      */
-    style: propTypesExports.object,
+    style: PropTypes.object,
     /**
      * The duration for the transition, in milliseconds.
      * You may specify a single timeout for all transitions, or individually with an object.
@@ -20970,10 +21013,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   exit: theme.transitions.duration.leavingScreen,
      * }
      */
-    timeout: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.shape({
-      appear: propTypesExports.number,
-      enter: propTypesExports.number,
-      exit: propTypesExports.number
+    timeout: PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+      appear: PropTypes.number,
+      enter: PropTypes.number,
+      exit: PropTypes.number
     })])
   } : void 0;
   function getBackdropUtilityClass(slot) {
@@ -21041,15 +21084,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const classes = useUtilityClasses$R(ownerState);
     const rootSlotProps = (_slotProps$root = slotProps.root) != null ? _slotProps$root : componentsProps.root;
-    return /* @__PURE__ */ jsx(TransitionComponent, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionComponent, _extends$2({
       in: open,
       timeout: transitionDuration
     }, other, {
-      children: /* @__PURE__ */ jsx(BackdropRoot, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(BackdropRoot, _extends$2({
         "aria-hidden": true
       }, rootSlotProps, {
         as: (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : component,
-        className: clsx(classes.root, className, rootSlotProps == null ? void 0 : rootSlotProps.className),
+        className: clsx$1(classes.root, className, rootSlotProps == null ? void 0 : rootSlotProps.className),
         ownerState: _extends$2({}, ownerState, rootSlotProps == null ? void 0 : rootSlotProps.ownerState),
         classes,
         ref,
@@ -21065,20 +21108,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The components used for each slot inside.
      *
@@ -21087,8 +21130,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    components: propTypesExports.shape({
-      Root: propTypesExports.elementType
+    components: PropTypes.shape({
+      Root: PropTypes.elementType
     }),
     /**
      * The extra props for the slot components.
@@ -21099,19 +21142,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    componentsProps: propTypesExports.shape({
-      root: propTypesExports.object
+    componentsProps: PropTypes.shape({
+      root: PropTypes.object
     }),
     /**
      * If `true`, the backdrop is invisible.
      * It can be used when rendering a popover or a custom select component.
      * @default false
      */
-    invisible: propTypesExports.bool,
+    invisible: PropTypes.bool,
     /**
      * If `true`, the component is shown.
      */
-    open: propTypesExports.bool.isRequired,
+    open: PropTypes.bool.isRequired,
     /**
      * The extra props for the slot components.
      * You can override the existing props or add new ones.
@@ -21120,8 +21163,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      root: propTypesExports.object
+    slotProps: PropTypes.shape({
+      root: PropTypes.object
     }),
     /**
      * The components used for each slot inside.
@@ -21130,27 +21173,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     }),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The component used for the transition.
      * [Follow this guide](/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
      * @default Fade
      */
-    TransitionComponent: propTypesExports.elementType,
+    TransitionComponent: PropTypes.elementType,
     /**
      * The duration for the transition, in milliseconds.
      * You may specify a single timeout for all transitions, or individually with an object.
      */
-    transitionDuration: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.shape({
-      appear: propTypesExports.number,
-      enter: propTypesExports.number,
-      exit: propTypesExports.number
+    transitionDuration: PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+      appear: PropTypes.number,
+      enter: PropTypes.number,
+      exit: PropTypes.number
     })])
   } : void 0;
   const _excluded$Z = ["BackdropComponent", "BackdropProps", "closeAfterTransition", "children", "component", "components", "componentsProps", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "slotProps", "slots", "theme"];
@@ -21236,7 +21279,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const BackdropSlot = (_ref2 = (_slots$backdrop = slots == null ? void 0 : slots.backdrop) != null ? _slots$backdrop : components.Backdrop) != null ? _ref2 : BackdropComponent;
     const rootSlotProps = (_slotProps$root = slotProps == null ? void 0 : slotProps.root) != null ? _slotProps$root : componentsProps.root;
     const backdropSlotProps = (_slotProps$backdrop = slotProps == null ? void 0 : slotProps.backdrop) != null ? _slotProps$backdrop : componentsProps.backdrop;
-    return /* @__PURE__ */ jsx(ModalUnstyled, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ModalUnstyled, _extends$2({
       slots: {
         root: RootSlot,
         backdrop: BackdropSlot
@@ -21276,12 +21319,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   zIndex: -1,
      * })
      */
-    BackdropComponent: propTypesExports.elementType,
+    BackdropComponent: PropTypes.elementType,
     /**
      * Props applied to the [`Backdrop`](/material-ui/api/backdrop/) element.
      * @deprecated Use `slotProps.backdrop` instead.
      */
-    BackdropProps: propTypesExports.object,
+    BackdropProps: PropTypes.object,
     /**
      * A single child content element.
      */
@@ -21289,17 +21332,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * When set to true the Modal waits until a nested Transition is completed before closing.
      * @default false
      */
-    closeAfterTransition: propTypesExports.bool,
+    closeAfterTransition: PropTypes.bool,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The components used for each slot inside.
      *
@@ -21308,9 +21351,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    components: propTypesExports.shape({
-      Backdrop: propTypesExports.elementType,
-      Root: propTypesExports.elementType
+    components: PropTypes.shape({
+      Backdrop: PropTypes.elementType,
+      Root: PropTypes.elementType
     }),
     /**
      * The extra props for the slot components.
@@ -21321,9 +21364,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    componentsProps: propTypesExports.shape({
-      backdrop: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    componentsProps: PropTypes.shape({
+      backdrop: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * An HTML element or function that returns one.
@@ -21332,7 +21375,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * By default, it uses the body of the top-level document object,
      * so it's simply `document.body` most of the time.
      */
-    container: propTypesExports.oneOfType([HTMLElementType, propTypesExports.func]),
+    container: PropTypes.oneOfType([HTMLElementType, PropTypes.func]),
     /**
      * If `true`, the modal will not automatically shift focus to itself when it opens, and
      * replace it to the last focused element when it closes.
@@ -21342,7 +21385,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * accessible to assistive technologies, like screen readers.
      * @default false
      */
-    disableAutoFocus: propTypesExports.bool,
+    disableAutoFocus: PropTypes.bool,
     /**
      * If `true`, the modal will not prevent focus from leaving the modal while open.
      *
@@ -21350,45 +21393,45 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * accessible to assistive technologies, like screen readers.
      * @default false
      */
-    disableEnforceFocus: propTypesExports.bool,
+    disableEnforceFocus: PropTypes.bool,
     /**
      * If `true`, hitting escape will not fire the `onClose` callback.
      * @default false
      */
-    disableEscapeKeyDown: propTypesExports.bool,
+    disableEscapeKeyDown: PropTypes.bool,
     /**
      * The `children` will be under the DOM hierarchy of the parent component.
      * @default false
      */
-    disablePortal: propTypesExports.bool,
+    disablePortal: PropTypes.bool,
     /**
      * If `true`, the modal will not restore focus to previously focused element once
      * modal is hidden or unmounted.
      * @default false
      */
-    disableRestoreFocus: propTypesExports.bool,
+    disableRestoreFocus: PropTypes.bool,
     /**
      * Disable the scroll lock behavior.
      * @default false
      */
-    disableScrollLock: propTypesExports.bool,
+    disableScrollLock: PropTypes.bool,
     /**
      * If `true`, the backdrop is not rendered.
      * @default false
      */
-    hideBackdrop: propTypesExports.bool,
+    hideBackdrop: PropTypes.bool,
     /**
      * Always keep the children in the DOM.
      * This prop can be useful in SEO situation or
      * when you want to maximize the responsiveness of the Modal.
      * @default false
      */
-    keepMounted: propTypesExports.bool,
+    keepMounted: PropTypes.bool,
     /**
      * Callback fired when the backdrop is clicked.
      * @deprecated Use the `onClose` prop with the `reason` argument to handle the `backdropClick` events.
      */
-    onBackdropClick: propTypesExports.func,
+    onBackdropClick: PropTypes.func,
     /**
      * Callback fired when the component requests to be closed.
      * The `reason` parameter can optionally be used to control the response to `onClose`.
@@ -21396,32 +21439,32 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * @param {object} event The event source of the callback.
      * @param {string} reason Can be: `"escapeKeyDown"`, `"backdropClick"`.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * If `true`, the component is shown.
      */
-    open: propTypesExports.bool.isRequired,
+    open: PropTypes.bool.isRequired,
     /**
      * The props used for each slot inside the Modal.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      backdrop: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      backdrop: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Modal.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      backdrop: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      backdrop: PropTypes.elementType,
+      root: PropTypes.elementType
     }),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   const _excluded$Y = ["addEndListener", "appear", "children", "container", "direction", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
   function getTranslateValue(direction, node2, resolvedContainer) {
@@ -21594,7 +21637,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         updatePosition();
       }
     }, [inProp, updatePosition]);
-    return /* @__PURE__ */ jsx(TransitionComponent, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionComponent, _extends$2({
       nodeRef: childrenRef,
       onEnter: handleEnter,
       onEntered: handleEntered,
@@ -21627,13 +21670,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * node and a done callback. Allows for more fine grained transition end
      * logic. Note: Timeouts are still used as a fallback if provided.
      */
-    addEndListener: propTypesExports.func,
+    addEndListener: PropTypes.func,
     /**
      * Perform the enter transition when it first mounts if `in` is also `true`.
      * Set this to `false` to disable this behavior.
      * @default true
      */
-    appear: propTypesExports.bool,
+    appear: PropTypes.bool,
     /**
      * A single child content element.
      */
@@ -21642,7 +21685,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * An HTML element, or a function that returns one.
      * It's used to set the container the Slide is transitioning from.
      */
-    container: chainPropTypes(propTypesExports.oneOfType([HTMLElementType, propTypesExports.func]), (props) => {
+    container: chainPropTypes(PropTypes.oneOfType([HTMLElementType, PropTypes.func]), (props) => {
       if (props.open) {
         const resolvedContainer = resolveContainer(props.container);
         if (resolvedContainer && resolvedContainer.nodeType === 1) {
@@ -21660,7 +21703,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Direction the child node will enter from.
      * @default 'down'
      */
-    direction: propTypesExports.oneOf(["down", "left", "right", "up"]),
+    direction: PropTypes.oneOf(["down", "left", "right", "up"]),
     /**
      * The transition timing function.
      * You may specify a single easing or a object containing enter and exit values.
@@ -21669,42 +21712,42 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   exit: theme.transitions.easing.sharp,
      * }
      */
-    easing: propTypesExports.oneOfType([propTypesExports.shape({
-      enter: propTypesExports.string,
-      exit: propTypesExports.string
-    }), propTypesExports.string]),
+    easing: PropTypes.oneOfType([PropTypes.shape({
+      enter: PropTypes.string,
+      exit: PropTypes.string
+    }), PropTypes.string]),
     /**
      * If `true`, the component will transition in.
      */
-    in: propTypesExports.bool,
+    in: PropTypes.bool,
     /**
      * @ignore
      */
-    onEnter: propTypesExports.func,
+    onEnter: PropTypes.func,
     /**
      * @ignore
      */
-    onEntered: propTypesExports.func,
+    onEntered: PropTypes.func,
     /**
      * @ignore
      */
-    onEntering: propTypesExports.func,
+    onEntering: PropTypes.func,
     /**
      * @ignore
      */
-    onExit: propTypesExports.func,
+    onExit: PropTypes.func,
     /**
      * @ignore
      */
-    onExited: propTypesExports.func,
+    onExited: PropTypes.func,
     /**
      * @ignore
      */
-    onExiting: propTypesExports.func,
+    onExiting: PropTypes.func,
     /**
      * @ignore
      */
-    style: propTypesExports.object,
+    style: PropTypes.object,
     /**
      * The duration for the transition, in milliseconds.
      * You may specify a single timeout for all transitions, or individually with an object.
@@ -21713,10 +21756,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   exit: theme.transitions.duration.leavingScreen,
      * }
      */
-    timeout: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.shape({
-      appear: propTypesExports.number,
-      enter: propTypesExports.number,
-      exit: propTypesExports.number
+    timeout: PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+      appear: PropTypes.number,
+      enter: PropTypes.number,
+      exit: PropTypes.number
     })])
   } : void 0;
   function getDrawerUtilityClass(slot) {
@@ -21870,24 +21913,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       variant
     }, other);
     const classes = useUtilityClasses$Q(ownerState);
-    const drawer = /* @__PURE__ */ jsx(DrawerPaper, _extends$2({
+    const drawer = /* @__PURE__ */ jsxRuntimeExports.jsx(DrawerPaper, _extends$2({
       elevation: variant === "temporary" ? elevation : 0,
       square: true
     }, PaperProps, {
-      className: clsx(classes.paper, PaperProps.className),
+      className: clsx$1(classes.paper, PaperProps.className),
       ownerState,
       children
     }));
     if (variant === "permanent") {
-      return /* @__PURE__ */ jsx(DrawerDockedRoot, _extends$2({
-        className: clsx(classes.root, classes.docked, className),
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(DrawerDockedRoot, _extends$2({
+        className: clsx$1(classes.root, classes.docked, className),
         ownerState,
         ref
       }, other, {
         children: drawer
       }));
     }
-    const slidingDrawer = /* @__PURE__ */ jsx(TransitionComponent, _extends$2({
+    const slidingDrawer = /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionComponent, _extends$2({
       in: open,
       direction: oppositeDirection[anchorInvariant],
       timeout: transitionDuration,
@@ -21896,19 +21939,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children: drawer
     }));
     if (variant === "persistent") {
-      return /* @__PURE__ */ jsx(DrawerDockedRoot, _extends$2({
-        className: clsx(classes.root, classes.docked, className),
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(DrawerDockedRoot, _extends$2({
+        className: clsx$1(classes.root, classes.docked, className),
         ownerState,
         ref
       }, other, {
         children: slidingDrawer
       }));
     }
-    return /* @__PURE__ */ jsx(DrawerRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(DrawerRoot, _extends$2({
       BackdropProps: _extends$2({}, BackdropProps, BackdropPropsProp, {
         transitionDuration
       }),
-      className: clsx(classes.root, classes.modal, className),
+      className: clsx$1(classes.root, classes.modal, className),
       open,
       ownerState,
       onClose: onClose2,
@@ -21927,23 +21970,23 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Side from which the drawer will appear.
      * @default 'left'
      */
-    anchor: propTypesExports.oneOf(["bottom", "left", "right", "top"]),
+    anchor: PropTypes.oneOf(["bottom", "left", "right", "top"]),
     /**
      * @ignore
      */
-    BackdropProps: propTypesExports.object,
+    BackdropProps: PropTypes.object,
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The elevation of the drawer.
      * @default 16
@@ -21953,36 +21996,36 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * If `true`, the backdrop is not rendered.
      * @default false
      */
-    hideBackdrop: propTypesExports.bool,
+    hideBackdrop: PropTypes.bool,
     /**
      * Props applied to the [`Modal`](/material-ui/api/modal/) element.
      * @default {}
      */
-    ModalProps: propTypesExports.object,
+    ModalProps: PropTypes.object,
     /**
      * Callback fired when the component requests to be closed.
      *
      * @param {object} event The event source of the callback.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * If `true`, the component is shown.
      * @default false
      */
-    open: propTypesExports.bool,
+    open: PropTypes.bool,
     /**
      * Props applied to the [`Paper`](/material-ui/api/paper/) element.
      * @default {}
      */
-    PaperProps: propTypesExports.object,
+    PaperProps: PropTypes.object,
     /**
      * Props applied to the [`Slide`](/material-ui/api/slide/) element.
      */
-    SlideProps: propTypesExports.object,
+    SlideProps: PropTypes.object,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The duration for the transition, in milliseconds.
      * You may specify a single timeout for all transitions, or individually with an object.
@@ -21991,16 +22034,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   exit: theme.transitions.duration.leavingScreen,
      * }
      */
-    transitionDuration: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.shape({
-      appear: propTypesExports.number,
-      enter: propTypesExports.number,
-      exit: propTypesExports.number
+    transitionDuration: PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+      appear: PropTypes.number,
+      enter: PropTypes.number,
+      exit: PropTypes.number
     })]),
     /**
      * The variant to use.
      * @default 'temporary'
      */
-    variant: propTypesExports.oneOf(["permanent", "persistent", "temporary"])
+    variant: PropTypes.oneOf(["permanent", "persistent", "temporary"])
   } : void 0;
   const BasicDrawerHeader = styled("div")(({ theme }) => __spreadValues({
     display: "flex",
@@ -22059,7 +22102,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   function makeIcon(name) {
     let Icon = iconmap[name];
-    return /* @__PURE__ */ jsx(Icon, {});
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
   }
   function onClose(seneca) {
     seneca.act("aim:app,set:state", {
@@ -22117,21 +22160,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     const DefaultNavMenu = (props2) => {
       const { viewdefs: viewdefs2, viewOrder } = props2;
-      return /* @__PURE__ */ jsx(material.Box, { sx: { overflow: "auto" }, children: /* @__PURE__ */ jsx(
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { overflow: "auto" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         material.ToggleButtonGroup,
         {
           orientation: "vertical",
           "aria-label": "text alignment",
           sx: { width: "100%" },
-          children: sortViews(viewdefs2, viewOrder).map((view) => /* @__PURE__ */ jsxs(
+          children: sortViews(viewdefs2, viewOrder).map((view) => allow(vxg, view) ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
             material.ToggleButton,
             {
               value: "check",
               selected: viewPath == view.name,
               sx: {
-                display: allow(vxg, view) ? null : "none",
                 width: "100%",
-                // display: 'flex',
+                display: "flex",
                 justifyContent: "flex-start",
                 marginBottom: "10px",
                 border: 0,
@@ -22146,11 +22188,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               },
               children: [
                 makeIcon(view.icon),
-                /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx("span", { children: view.title }) })
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: view.title }) })
               ]
             },
             view.name
-          ))
+          ) : null)
         }
       ) });
     };
@@ -22159,7 +22201,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (sections.length === 1) {
         return null;
       }
-      return /* @__PURE__ */ jsx(material.Box, { sx: { display: "flex", width: "100%" }, children: /* @__PURE__ */ jsx(material.ButtonGroup, { sx: { width: "100%" }, children: sections.map((section, sectionNumber) => /* @__PURE__ */ jsx(
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { display: "flex", width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ButtonGroup, { sx: { width: "100%" }, children: sections.map((section, sectionNumber) => /* @__PURE__ */ jsxRuntimeExports.jsx(
         material.ToggleButton,
         {
           value: "check",
@@ -22172,39 +22214,39 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             toggle(sectionNumber)(event);
             selectView(section)(event);
           },
-          children: /* @__PURE__ */ jsxs("div", { children: [
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
             makeIcon(section.button.icon),
-            /* @__PURE__ */ jsx("span", { className: "iconText", children: section.button.text })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "iconText", children: section.button.text })
           ] })
         },
         section.name
       )) }) });
     };
-    return /* @__PURE__ */ jsxs(
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
       BasicDrawer,
       {
         variant: "permanent",
         drawerwidth,
         open,
         children: [
-          /* @__PURE__ */ jsxs(BasicDrawerHeader, { children: [
-            /* @__PURE__ */ jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
               "img",
               {
                 src: part.logo.img,
                 style: { width: "11rem" }
               }
             ),
-            /* @__PURE__ */ jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
           ] }),
-          /* @__PURE__ */ jsx(SectionButtons, { sections: sectiondefs }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(SectionButtons, { sections: sectiondefs }),
           sectiondefs.map((section, sectionNumber) => {
             if (viewPath == section.name || section.view && viewPath in section.view) {
               if ("navmenu" === section.kind) {
-                return /* @__PURE__ */ jsx(DefaultNavMenu, { viewOrder: section.view, viewdefs }, section.name);
+                return /* @__PURE__ */ jsxRuntimeExports.jsx(DefaultNavMenu, { viewOrder: section.view, viewdefs }, section.name);
               }
               const Cmp = ctx().cmp[section.cmp];
-              return /* @__PURE__ */ jsx(Cmp, { ctx, spec }, section.name);
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { ctx, spec }, section.name);
             }
           })
         ]
@@ -26147,7 +26189,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$r = ArrowDownward.default = void 0;
   var _createSvgIcon$r = _interopRequireDefault$r(requireCreateSvgIcon());
-  var _jsxRuntime$r = require$$2;
+  var _jsxRuntime$r = jsxRuntimeExports;
   var _default$r = (0, _createSvgIcon$r.default)(/* @__PURE__ */ (0, _jsxRuntime$r.jsx)("path", {
     d: "m20 12-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
   }), "ArrowDownward");
@@ -26160,7 +26202,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$q = ArrowRight.default = void 0;
   var _createSvgIcon$q = _interopRequireDefault$q(requireCreateSvgIcon());
-  var _jsxRuntime$q = require$$2;
+  var _jsxRuntime$q = jsxRuntimeExports;
   var _default$q = (0, _createSvgIcon$q.default)(/* @__PURE__ */ (0, _jsxRuntime$q.jsx)("path", {
     d: "m10 17 5-5-5-5v10z"
   }), "ArrowRight");
@@ -26173,7 +26215,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$p = Cancel.default = void 0;
   var _createSvgIcon$p = _interopRequireDefault$p(requireCreateSvgIcon());
-  var _jsxRuntime$p = require$$2;
+  var _jsxRuntime$p = jsxRuntimeExports;
   var _default$p = (0, _createSvgIcon$p.default)(/* @__PURE__ */ (0, _jsxRuntime$p.jsx)("path", {
     d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
   }), "Cancel");
@@ -26186,7 +26228,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$o = ClearAll.default = void 0;
   var _createSvgIcon$o = _interopRequireDefault$o(requireCreateSvgIcon());
-  var _jsxRuntime$o = require$$2;
+  var _jsxRuntime$o = jsxRuntimeExports;
   var _default$o = (0, _createSvgIcon$o.default)(/* @__PURE__ */ (0, _jsxRuntime$o.jsx)("path", {
     d: "M5 13h14v-2H5v2zm-2 4h14v-2H3v2zM7 7v2h14V7H7z"
   }), "ClearAll");
@@ -26199,7 +26241,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$n = Close.default = void 0;
   var _createSvgIcon$n = _interopRequireDefault$n(requireCreateSvgIcon());
-  var _jsxRuntime$n = require$$2;
+  var _jsxRuntime$n = jsxRuntimeExports;
   var _default$n = (0, _createSvgIcon$n.default)(/* @__PURE__ */ (0, _jsxRuntime$n.jsx)("path", {
     d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
   }), "Close");
@@ -26212,7 +26254,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$m = DensityLarge.default = void 0;
   var _createSvgIcon$m = _interopRequireDefault$m(requireCreateSvgIcon());
-  var _jsxRuntime$m = require$$2;
+  var _jsxRuntime$m = jsxRuntimeExports;
   var _default$m = (0, _createSvgIcon$m.default)(/* @__PURE__ */ (0, _jsxRuntime$m.jsx)("path", {
     d: "M3 3h18v2H3zm0 16h18v2H3z"
   }), "DensityLarge");
@@ -26225,7 +26267,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$l = DensityMedium.default = void 0;
   var _createSvgIcon$l = _interopRequireDefault$l(requireCreateSvgIcon());
-  var _jsxRuntime$l = require$$2;
+  var _jsxRuntime$l = jsxRuntimeExports;
   var _default$l = (0, _createSvgIcon$l.default)(/* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
     d: "M3 3h18v2H3zm0 16h18v2H3zm0-8h18v2H3z"
   }), "DensityMedium");
@@ -26238,7 +26280,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$k = DensitySmall.default = void 0;
   var _createSvgIcon$k = _interopRequireDefault$k(requireCreateSvgIcon());
-  var _jsxRuntime$k = require$$2;
+  var _jsxRuntime$k = jsxRuntimeExports;
   var _default$k = (0, _createSvgIcon$k.default)(/* @__PURE__ */ (0, _jsxRuntime$k.jsx)("path", {
     d: "M3 2h18v2H3zm0 18h18v2H3zm0-6h18v2H3zm0-6h18v2H3z"
   }), "DensitySmall");
@@ -26251,7 +26293,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$j = DragHandle.default = void 0;
   var _createSvgIcon$j = _interopRequireDefault$j(requireCreateSvgIcon());
-  var _jsxRuntime$j = require$$2;
+  var _jsxRuntime$j = jsxRuntimeExports;
   var _default$j = (0, _createSvgIcon$j.default)(/* @__PURE__ */ (0, _jsxRuntime$j.jsx)("path", {
     d: "M20 9H4v2h16V9zM4 15h16v-2H4v2z"
   }), "DragHandle");
@@ -26264,7 +26306,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$i = DynamicFeed.default = void 0;
   var _createSvgIcon$i = _interopRequireDefault$i(requireCreateSvgIcon());
-  var _jsxRuntime$i = require$$2;
+  var _jsxRuntime$i = jsxRuntimeExports;
   var _default$i = (0, _createSvgIcon$i.default)([/* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
     d: "M8 8H6v7c0 1.1.9 2 2 2h9v-2H8V8z"
   }, "0"), /* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
@@ -26279,7 +26321,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$h = Edit.default = void 0;
   var _createSvgIcon$h = _interopRequireDefault$h(requireCreateSvgIcon());
-  var _jsxRuntime$h = require$$2;
+  var _jsxRuntime$h = jsxRuntimeExports;
   var _default$h = (0, _createSvgIcon$h.default)(/* @__PURE__ */ (0, _jsxRuntime$h.jsx)("path", {
     d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
   }), "Edit");
@@ -26292,7 +26334,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$g = ExpandMore.default = void 0;
   var _createSvgIcon$g = _interopRequireDefault$g(requireCreateSvgIcon());
-  var _jsxRuntime$g = require$$2;
+  var _jsxRuntime$g = jsxRuntimeExports;
   var _default$g = (0, _createSvgIcon$g.default)(/* @__PURE__ */ (0, _jsxRuntime$g.jsx)("path", {
     d: "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
   }), "ExpandMore");
@@ -26305,7 +26347,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$f = FilterAlt.default = void 0;
   var _createSvgIcon$f = _interopRequireDefault$f(requireCreateSvgIcon());
-  var _jsxRuntime$f = require$$2;
+  var _jsxRuntime$f = jsxRuntimeExports;
   var _default$f = (0, _createSvgIcon$f.default)(/* @__PURE__ */ (0, _jsxRuntime$f.jsx)("path", {
     d: "M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61z"
   }), "FilterAlt");
@@ -26318,7 +26360,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$e = FilterList.default = void 0;
   var _createSvgIcon$e = _interopRequireDefault$e(requireCreateSvgIcon());
-  var _jsxRuntime$e = require$$2;
+  var _jsxRuntime$e = jsxRuntimeExports;
   var _default$e = (0, _createSvgIcon$e.default)(/* @__PURE__ */ (0, _jsxRuntime$e.jsx)("path", {
     d: "M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
   }), "FilterList");
@@ -26331,7 +26373,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$d = FilterListOff.default = void 0;
   var _createSvgIcon$d = _interopRequireDefault$d(requireCreateSvgIcon());
-  var _jsxRuntime$d = require$$2;
+  var _jsxRuntime$d = jsxRuntimeExports;
   var _default$d = (0, _createSvgIcon$d.default)(/* @__PURE__ */ (0, _jsxRuntime$d.jsx)("path", {
     d: "M10.83 8H21V6H8.83l2 2zm5 5H18v-2h-4.17l2 2zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41L14 16.83z"
   }), "FilterListOff");
@@ -26344,7 +26386,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$c = FullscreenExit.default = void 0;
   var _createSvgIcon$c = _interopRequireDefault$c(requireCreateSvgIcon());
-  var _jsxRuntime$c = require$$2;
+  var _jsxRuntime$c = jsxRuntimeExports;
   var _default$c = (0, _createSvgIcon$c.default)(/* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
     d: "M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"
   }), "FullscreenExit");
@@ -26357,7 +26399,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$b = Fullscreen.default = void 0;
   var _createSvgIcon$b = _interopRequireDefault$b(requireCreateSvgIcon());
-  var _jsxRuntime$b = require$$2;
+  var _jsxRuntime$b = jsxRuntimeExports;
   var _default$b = (0, _createSvgIcon$b.default)(/* @__PURE__ */ (0, _jsxRuntime$b.jsx)("path", {
     d: "M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"
   }), "Fullscreen");
@@ -26370,7 +26412,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$a = KeyboardDoubleArrowDown.default = void 0;
   var _createSvgIcon$a = _interopRequireDefault$a(requireCreateSvgIcon());
-  var _jsxRuntime$a = require$$2;
+  var _jsxRuntime$a = jsxRuntimeExports;
   var _default$a = (0, _createSvgIcon$a.default)([/* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
     d: "M18 6.41 16.59 5 12 9.58 7.41 5 6 6.41l6 6z"
   }, "0"), /* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
@@ -26385,7 +26427,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$9 = MoreHoriz.default = void 0;
   var _createSvgIcon$9 = _interopRequireDefault$9(requireCreateSvgIcon());
-  var _jsxRuntime$9 = require$$2;
+  var _jsxRuntime$9 = jsxRuntimeExports;
   var _default$9 = (0, _createSvgIcon$9.default)(/* @__PURE__ */ (0, _jsxRuntime$9.jsx)("path", {
     d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
   }), "MoreHoriz");
@@ -26398,7 +26440,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$8 = MoreVert.default = void 0;
   var _createSvgIcon$8 = _interopRequireDefault$8(requireCreateSvgIcon());
-  var _jsxRuntime$8 = require$$2;
+  var _jsxRuntime$8 = jsxRuntimeExports;
   var _default$8 = (0, _createSvgIcon$8.default)(/* @__PURE__ */ (0, _jsxRuntime$8.jsx)("path", {
     d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
   }), "MoreVert");
@@ -26411,7 +26453,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$7 = PushPin.default = void 0;
   var _createSvgIcon$7 = _interopRequireDefault$7(requireCreateSvgIcon());
-  var _jsxRuntime$7 = require$$2;
+  var _jsxRuntime$7 = jsxRuntimeExports;
   var _default$7 = (0, _createSvgIcon$7.default)(/* @__PURE__ */ (0, _jsxRuntime$7.jsx)("path", {
     fillRule: "evenodd",
     d: "M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"
@@ -26425,7 +26467,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$6 = RestartAlt.default = void 0;
   var _createSvgIcon$6 = _interopRequireDefault$6(requireCreateSvgIcon());
-  var _jsxRuntime$6 = require$$2;
+  var _jsxRuntime$6 = jsxRuntimeExports;
   var _default$6 = (0, _createSvgIcon$6.default)(/* @__PURE__ */ (0, _jsxRuntime$6.jsx)("path", {
     d: "M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8zm-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91z"
   }), "RestartAlt");
@@ -26438,7 +26480,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$5 = Save.default = void 0;
   var _createSvgIcon$5 = _interopRequireDefault$5(requireCreateSvgIcon());
-  var _jsxRuntime$5 = require$$2;
+  var _jsxRuntime$5 = jsxRuntimeExports;
   var _default$5 = (0, _createSvgIcon$5.default)(/* @__PURE__ */ (0, _jsxRuntime$5.jsx)("path", {
     d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"
   }), "Save");
@@ -26451,7 +26493,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$4 = Search.default = void 0;
   var _createSvgIcon$4 = _interopRequireDefault$4(requireCreateSvgIcon());
-  var _jsxRuntime$4 = require$$2;
+  var _jsxRuntime$4 = jsxRuntimeExports;
   var _default$4 = (0, _createSvgIcon$4.default)(/* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
     d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
   }), "Search");
@@ -26464,7 +26506,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$3 = SearchOff.default = void 0;
   var _createSvgIcon$3 = _interopRequireDefault$3(requireCreateSvgIcon());
-  var _jsxRuntime$3 = require$$2;
+  var _jsxRuntime$3 = jsxRuntimeExports;
   var _default$3 = (0, _createSvgIcon$3.default)([/* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
     d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3 6.08 3 3.28 5.64 3.03 9h2.02C5.3 6.75 7.18 5 9.5 5 11.99 5 14 7.01 14 9.5S11.99 14 9.5 14c-.17 0-.33-.03-.5-.05v2.02c.17.02.33.03.5.03 1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"
   }, "0"), /* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
@@ -26479,7 +26521,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$2 = Sort.default = void 0;
   var _createSvgIcon$2 = _interopRequireDefault$2(requireCreateSvgIcon());
-  var _jsxRuntime$2 = require$$2;
+  var _jsxRuntime$2 = jsxRuntimeExports;
   var _default$2 = (0, _createSvgIcon$2.default)(/* @__PURE__ */ (0, _jsxRuntime$2.jsx)("path", {
     d: "M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"
   }), "Sort");
@@ -26492,7 +26534,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$1 = ViewColumn.default = void 0;
   var _createSvgIcon$1 = _interopRequireDefault$1(requireCreateSvgIcon());
-  var _jsxRuntime$1 = require$$2;
+  var _jsxRuntime$1 = jsxRuntimeExports;
   var _default$1 = (0, _createSvgIcon$1.default)(/* @__PURE__ */ (0, _jsxRuntime$1.jsx)("path", {
     d: "M14.67 5v14H9.33V5h5.34zm1 14H21V5h-5.33v14zm-7.34 0V5H3v14h5.33z"
   }), "ViewColumn");
@@ -26505,7 +26547,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1 = VisibilityOff.default = void 0;
   var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
-  var _jsxRuntime = require$$2;
+  var _jsxRuntime = jsxRuntimeExports;
   var _default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
     d: "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"
   }), "VisibilityOff");
@@ -26524,16 +26566,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getDialogUtilityClass(slot) {
     return generateUtilityClass("MuiDialog", slot);
@@ -26732,8 +26774,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         titleId: ariaLabelledby
       };
     }, [ariaLabelledby]);
-    return /* @__PURE__ */ jsx(DialogRoot, _extends$2({
-      className: clsx(classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(DialogRoot, _extends$2({
+      className: clsx$1(classes.root, className),
       closeAfterTransition: true,
       components: {
         Backdrop: DialogBackdrop
@@ -26751,26 +26793,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onClick: handleBackdropClick,
       ownerState
     }, other, {
-      children: /* @__PURE__ */ jsx(TransitionComponent, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionComponent, _extends$2({
         appear: true,
         in: open,
         timeout: transitionDuration,
         role: "presentation"
       }, TransitionProps, {
-        children: /* @__PURE__ */ jsx(DialogContainer, {
-          className: clsx(classes.container),
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContainer, {
+          className: clsx$1(classes.container),
           onMouseDown: handleMouseDown,
           ownerState,
-          children: /* @__PURE__ */ jsx(DialogPaper, _extends$2({
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogPaper, _extends$2({
             as: PaperComponent,
             elevation: 24,
             role: "dialog",
             "aria-describedby": ariaDescribedby,
             "aria-labelledby": ariaLabelledby
           }, PaperProps, {
-            className: clsx(classes.paper, PaperProps.className),
+            className: clsx$1(classes.paper, PaperProps.className),
             ownerState,
-            children: /* @__PURE__ */ jsx(DialogContext.Provider, {
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContext.Provider, {
               value: dialogContextValue,
               children
             })
@@ -26787,11 +26829,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The id(s) of the element(s) that describe the dialog.
      */
-    "aria-describedby": propTypesExports.string,
+    "aria-describedby": PropTypes.string,
     /**
      * The id(s) of the element(s) that label the dialog.
      */
-    "aria-labelledby": propTypesExports.string,
+    "aria-labelledby": PropTypes.string,
     /**
      * A backdrop component. This prop enables custom backdrop rendering.
      * @deprecated Use `slots.backdrop` instead. While this prop currently works, it will be removed in the next major version.
@@ -26806,88 +26848,88 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   zIndex: -1,
      * })
      */
-    BackdropComponent: propTypesExports.elementType,
+    BackdropComponent: PropTypes.elementType,
     /**
      * @ignore
      */
-    BackdropProps: propTypesExports.object,
+    BackdropProps: PropTypes.object,
     /**
      * Dialog children, usually the included sub-components.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * If `true`, hitting escape will not fire the `onClose` callback.
      * @default false
      */
-    disableEscapeKeyDown: propTypesExports.bool,
+    disableEscapeKeyDown: PropTypes.bool,
     /**
      * If `true`, the dialog is full-screen.
      * @default false
      */
-    fullScreen: propTypesExports.bool,
+    fullScreen: PropTypes.bool,
     /**
      * If `true`, the dialog stretches to `maxWidth`.
      *
      * Notice that the dialog width grow is limited by the default margin.
      * @default false
      */
-    fullWidth: propTypesExports.bool,
+    fullWidth: PropTypes.bool,
     /**
      * Determine the max-width of the dialog.
      * The dialog width grows with the size of the screen.
      * Set to `false` to disable `maxWidth`.
      * @default 'sm'
      */
-    maxWidth: propTypesExports.oneOfType([propTypesExports.oneOf(["xs", "sm", "md", "lg", "xl", false]), propTypesExports.string]),
+    maxWidth: PropTypes.oneOfType([PropTypes.oneOf(["xs", "sm", "md", "lg", "xl", false]), PropTypes.string]),
     /**
      * Callback fired when the backdrop is clicked.
      * @deprecated Use the `onClose` prop with the `reason` argument to handle the `backdropClick` events.
      */
-    onBackdropClick: propTypesExports.func,
+    onBackdropClick: PropTypes.func,
     /**
      * Callback fired when the component requests to be closed.
      *
      * @param {object} event The event source of the callback.
      * @param {string} reason Can be: `"escapeKeyDown"`, `"backdropClick"`.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * If `true`, the component is shown.
      */
-    open: propTypesExports.bool.isRequired,
+    open: PropTypes.bool.isRequired,
     /**
      * The component used to render the body of the dialog.
      * @default Paper
      */
-    PaperComponent: propTypesExports.elementType,
+    PaperComponent: PropTypes.elementType,
     /**
      * Props applied to the [`Paper`](/material-ui/api/paper/) element.
      * @default {}
      */
-    PaperProps: propTypesExports.object,
+    PaperProps: PropTypes.object,
     /**
      * Determine the container for scrolling the dialog.
      * @default 'paper'
      */
-    scroll: propTypesExports.oneOf(["body", "paper"]),
+    scroll: PropTypes.oneOf(["body", "paper"]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The component used for the transition.
      * [Follow this guide](/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
      * @default Fade
      */
-    TransitionComponent: propTypesExports.elementType,
+    TransitionComponent: PropTypes.elementType,
     /**
      * The duration for the transition, in milliseconds.
      * You may specify a single timeout for all transitions, or individually with an object.
@@ -26896,16 +26938,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   exit: theme.transitions.duration.leavingScreen,
      * }
      */
-    transitionDuration: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.shape({
-      appear: propTypesExports.number,
-      enter: propTypesExports.number,
-      exit: propTypesExports.number
+    transitionDuration: PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+      appear: PropTypes.number,
+      enter: PropTypes.number,
+      exit: PropTypes.number
     })]),
     /**
      * Props applied to the transition element.
      * By default, the element is based on this [`Transition`](http://reactcommunity.org/react-transition-group/transition/) component.
      */
-    TransitionProps: propTypesExports.object
+    TransitionProps: PropTypes.object
   } : void 0;
   const _excluded$V = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
   function getScale(value) {
@@ -27037,7 +27079,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         clearTimeout(timer.current);
       };
     }, []);
-    return /* @__PURE__ */ jsx(TransitionComponent, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionComponent, _extends$2({
       appear,
       in: inProp,
       nodeRef,
@@ -27072,13 +27114,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * node and a done callback. Allows for more fine grained transition end
      * logic. Note: Timeouts are still used as a fallback if provided.
      */
-    addEndListener: propTypesExports.func,
+    addEndListener: PropTypes.func,
     /**
      * Perform the enter transition when it first mounts if `in` is also `true`.
      * Set this to `false` to disable this behavior.
      * @default true
      */
-    appear: propTypesExports.bool,
+    appear: PropTypes.bool,
     /**
      * A single child content element.
      */
@@ -27087,42 +27129,42 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The transition timing function.
      * You may specify a single easing or a object containing enter and exit values.
      */
-    easing: propTypesExports.oneOfType([propTypesExports.shape({
-      enter: propTypesExports.string,
-      exit: propTypesExports.string
-    }), propTypesExports.string]),
+    easing: PropTypes.oneOfType([PropTypes.shape({
+      enter: PropTypes.string,
+      exit: PropTypes.string
+    }), PropTypes.string]),
     /**
      * If `true`, the component will transition in.
      */
-    in: propTypesExports.bool,
+    in: PropTypes.bool,
     /**
      * @ignore
      */
-    onEnter: propTypesExports.func,
+    onEnter: PropTypes.func,
     /**
      * @ignore
      */
-    onEntered: propTypesExports.func,
+    onEntered: PropTypes.func,
     /**
      * @ignore
      */
-    onEntering: propTypesExports.func,
+    onEntering: PropTypes.func,
     /**
      * @ignore
      */
-    onExit: propTypesExports.func,
+    onExit: PropTypes.func,
     /**
      * @ignore
      */
-    onExited: propTypesExports.func,
+    onExited: PropTypes.func,
     /**
      * @ignore
      */
-    onExiting: propTypesExports.func,
+    onExiting: PropTypes.func,
     /**
      * @ignore
      */
-    style: propTypesExports.object,
+    style: PropTypes.object,
     /**
      * The duration for the transition, in milliseconds.
      * You may specify a single timeout for all transitions, or individually with an object.
@@ -27130,10 +27172,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Set to 'auto' to automatically calculate transition time based on height.
      * @default 'auto'
      */
-    timeout: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.shape({
-      appear: propTypesExports.number,
-      enter: propTypesExports.number,
-      exit: propTypesExports.number
+    timeout: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.shape({
+      appear: PropTypes.number,
+      enter: PropTypes.number,
+      exit: PropTypes.number
     })])
   } : void 0;
   Grow.muiSupportAuto = true;
@@ -27150,14 +27192,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       timeout
     } = props;
     const [leaving, setLeaving] = React__namespace.useState(false);
-    const rippleClassName = clsx(className, classes.ripple, classes.rippleVisible, pulsate && classes.ripplePulsate);
+    const rippleClassName = clsx$1(className, classes.ripple, classes.rippleVisible, pulsate && classes.ripplePulsate);
     const rippleStyles = {
       width: rippleSize,
       height: rippleSize,
       top: -(rippleSize / 2) + rippleY,
       left: -(rippleSize / 2) + rippleX
     };
-    const childClassName = clsx(classes.child, leaving && classes.childLeaving, pulsate && classes.childPulsate);
+    const childClassName = clsx$1(classes.child, leaving && classes.childLeaving, pulsate && classes.childPulsate);
     if (!inProp && !leaving) {
       setLeaving(true);
     }
@@ -27170,10 +27212,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       return void 0;
     }, [onExited, inProp, timeout]);
-    return /* @__PURE__ */ jsx("span", {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
       className: rippleClassName,
       style: rippleStyles,
-      children: /* @__PURE__ */ jsx("span", {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
         className: childClassName
       })
     });
@@ -27183,36 +27225,36 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Override or extend the styles applied to the component.
      * See [CSS API](#css) below for more details.
      */
-    classes: propTypesExports.object.isRequired,
-    className: propTypesExports.string,
+    classes: PropTypes.object.isRequired,
+    className: PropTypes.string,
     /**
      * @ignore - injected from TransitionGroup
      */
-    in: propTypesExports.bool,
+    in: PropTypes.bool,
     /**
      * @ignore - injected from TransitionGroup
      */
-    onExited: propTypesExports.func,
+    onExited: PropTypes.func,
     /**
      * If `true`, the ripple pulsates, typically indicating the keyboard focus state of an element.
      */
-    pulsate: propTypesExports.bool,
+    pulsate: PropTypes.bool,
     /**
      * Diameter of the ripple.
      */
-    rippleSize: propTypesExports.number,
+    rippleSize: PropTypes.number,
     /**
      * Horizontal position of the ripple center.
      */
-    rippleX: propTypesExports.number,
+    rippleX: PropTypes.number,
     /**
      * Vertical position of the ripple center.
      */
-    rippleY: propTypesExports.number,
+    rippleY: PropTypes.number,
     /**
      * exit delay
      */
-    timeout: propTypesExports.number.isRequired
+    timeout: PropTypes.number.isRequired
   } : void 0;
   function getTouchRippleUtilityClass(slot) {
     return generateUtilityClass("MuiTouchRipple", slot);
@@ -27360,14 +27402,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         rippleSize,
         cb
       } = params;
-      setRipples((oldRipples) => [...oldRipples, /* @__PURE__ */ jsx(TouchRippleRipple, {
+      setRipples((oldRipples) => [...oldRipples, /* @__PURE__ */ jsxRuntimeExports.jsx(TouchRippleRipple, {
         classes: {
-          ripple: clsx(classes.ripple, touchRippleClasses.ripple),
-          rippleVisible: clsx(classes.rippleVisible, touchRippleClasses.rippleVisible),
-          ripplePulsate: clsx(classes.ripplePulsate, touchRippleClasses.ripplePulsate),
-          child: clsx(classes.child, touchRippleClasses.child),
-          childLeaving: clsx(classes.childLeaving, touchRippleClasses.childLeaving),
-          childPulsate: clsx(classes.childPulsate, touchRippleClasses.childPulsate)
+          ripple: clsx$1(classes.ripple, touchRippleClasses.ripple),
+          rippleVisible: clsx$1(classes.rippleVisible, touchRippleClasses.rippleVisible),
+          ripplePulsate: clsx$1(classes.ripplePulsate, touchRippleClasses.ripplePulsate),
+          child: clsx$1(classes.child, touchRippleClasses.child),
+          childLeaving: clsx$1(classes.childLeaving, touchRippleClasses.childLeaving),
+          childPulsate: clsx$1(classes.childPulsate, touchRippleClasses.childPulsate)
         },
         timeout: DURATION,
         pulsate: pulsate2,
@@ -27481,11 +27523,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       start: start2,
       stop
     }), [pulsate, start2, stop]);
-    return /* @__PURE__ */ jsx(TouchRippleRoot, _extends$2({
-      className: clsx(touchRippleClasses.root, classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TouchRippleRoot, _extends$2({
+      className: clsx$1(touchRippleClasses.root, classes.root, className),
       ref: container
     }, other, {
-      children: /* @__PURE__ */ jsx(TransitionGroup, {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionGroup, {
         component: null,
         exit: true,
         children: ripples
@@ -27497,16 +27539,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * If `true`, the ripple starts at the center of the component
      * rather than at the point of interaction.
      */
-    center: propTypesExports.bool,
+    center: PropTypes.bool,
     /**
      * Override or extend the styles applied to the component.
      * See [CSS API](#css) below for more details.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string
+    className: PropTypes.string
   } : void 0;
   function getButtonBaseUtilityClass(slot) {
     return generateUtilityClass("MuiButtonBase", slot);
@@ -27762,9 +27804,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       focusVisible
     });
     const classes = useUtilityClasses$O(ownerState);
-    return /* @__PURE__ */ jsxs(ButtonBaseRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(ButtonBaseRoot, _extends$2({
       as: ComponentProp,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       ownerState,
       onBlur: handleBlur2,
       onClick,
@@ -27785,7 +27827,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }, buttonProps, other, {
       children: [children, enableTouchRipple ? (
         /* TouchRipple is only needed client-side, x2 boost on the server. */
-        /* @__PURE__ */ jsx(TouchRipple, _extends$2({
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TouchRipple, _extends$2({
           ref: handleRippleRef,
           center: centerRipple
         }, TouchRippleProps))
@@ -27807,19 +27849,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * They won't start at the cursor interaction position.
      * @default false
      */
-    centerRipple: propTypesExports.bool,
+    centerRipple: PropTypes.bool,
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
@@ -27829,7 +27871,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the ripple effect is disabled.
      *
@@ -27837,17 +27879,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
      * @default false
      */
-    disableRipple: propTypesExports.bool,
+    disableRipple: PropTypes.bool,
     /**
      * If `true`, the touch ripple effect is disabled.
      * @default false
      */
-    disableTouchRipple: propTypesExports.bool,
+    disableTouchRipple: PropTypes.bool,
     /**
      * If `true`, the base button will have a keyboard focus ripple.
      * @default false
      */
-    focusRipple: propTypesExports.bool,
+    focusRipple: PropTypes.bool,
     /**
      * This prop can help identify which element has keyboard focus.
      * The class name will be applied when the element gains the focus through keyboard interaction.
@@ -27856,99 +27898,99 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * A [polyfill can be used](https://github.com/WICG/focus-visible) to apply a `focus-visible` class to other components
      * if needed.
      */
-    focusVisibleClassName: propTypesExports.string,
+    focusVisibleClassName: PropTypes.string,
     /**
      * @ignore
      */
-    href: propTypesExports.any,
+    href: PropTypes.any,
     /**
      * The component used to render a link when the `href` prop is provided.
      * @default 'a'
      */
-    LinkComponent: propTypesExports.elementType,
+    LinkComponent: PropTypes.elementType,
     /**
      * @ignore
      */
-    onBlur: propTypesExports.func,
+    onBlur: PropTypes.func,
     /**
      * @ignore
      */
-    onClick: propTypesExports.func,
+    onClick: PropTypes.func,
     /**
      * @ignore
      */
-    onContextMenu: propTypesExports.func,
+    onContextMenu: PropTypes.func,
     /**
      * @ignore
      */
-    onDragLeave: propTypesExports.func,
+    onDragLeave: PropTypes.func,
     /**
      * @ignore
      */
-    onFocus: propTypesExports.func,
+    onFocus: PropTypes.func,
     /**
      * Callback fired when the component is focused with a keyboard.
      * We trigger a `onFocus` callback too.
      */
-    onFocusVisible: propTypesExports.func,
+    onFocusVisible: PropTypes.func,
     /**
      * @ignore
      */
-    onKeyDown: propTypesExports.func,
+    onKeyDown: PropTypes.func,
     /**
      * @ignore
      */
-    onKeyUp: propTypesExports.func,
+    onKeyUp: PropTypes.func,
     /**
      * @ignore
      */
-    onMouseDown: propTypesExports.func,
+    onMouseDown: PropTypes.func,
     /**
      * @ignore
      */
-    onMouseLeave: propTypesExports.func,
+    onMouseLeave: PropTypes.func,
     /**
      * @ignore
      */
-    onMouseUp: propTypesExports.func,
+    onMouseUp: PropTypes.func,
     /**
      * @ignore
      */
-    onTouchEnd: propTypesExports.func,
+    onTouchEnd: PropTypes.func,
     /**
      * @ignore
      */
-    onTouchMove: propTypesExports.func,
+    onTouchMove: PropTypes.func,
     /**
      * @ignore
      */
-    onTouchStart: propTypesExports.func,
+    onTouchStart: PropTypes.func,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * @default 0
      */
-    tabIndex: propTypesExports.number,
+    tabIndex: PropTypes.number,
     /**
      * Props applied to the `TouchRipple` element.
      */
-    TouchRippleProps: propTypesExports.object,
+    TouchRippleProps: PropTypes.object,
     /**
      * A ref that points to the `TouchRipple` element.
      */
-    touchRippleRef: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.shape({
-      current: propTypesExports.shape({
-        pulsate: propTypesExports.func.isRequired,
-        start: propTypesExports.func.isRequired,
-        stop: propTypesExports.func.isRequired
+    touchRippleRef: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
+      current: PropTypes.shape({
+        pulsate: PropTypes.func.isRequired,
+        start: PropTypes.func.isRequired,
+        stop: PropTypes.func.isRequired
       })
     })]),
     /**
      * @ignore
      */
-    type: propTypesExports.oneOfType([propTypesExports.oneOf(["button", "reset", "submit"]), propTypesExports.string])
+    type: PropTypes.oneOfType([PropTypes.oneOf(["button", "reset", "submit"]), PropTypes.string])
   } : void 0;
   function getIconButtonUtilityClass(slot) {
     return generateUtilityClass("MuiIconButton", slot);
@@ -28058,8 +28100,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       size
     });
     const classes = useUtilityClasses$N(ownerState);
-    return /* @__PURE__ */ jsx(IconButtonRoot, _extends$2({
-      className: clsx(classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(IconButtonRoot, _extends$2({
+      className: clsx$1(classes.root, className),
       centerRipple: true,
       focusRipple: !disableFocusRipple,
       disabled,
@@ -28077,7 +28119,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The icon to display.
      */
-    children: chainPropTypes(propTypesExports.node, (props) => {
+    children: chainPropTypes(PropTypes.node, (props) => {
       const found = React__namespace.Children.toArray(props.children).some((child) => /* @__PURE__ */ React__namespace.isValidElement(child) && child.props.onClick);
       if (found) {
         return new Error(["MUI: You are providing an onClick event listener to a child of a button element.", "Prefer applying it to the IconButton directly.", "This guarantees that the whole <button> will be responsive to click events."].join("\n"));
@@ -28087,28 +28129,28 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'default'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["inherit", "default", "primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["inherit", "default", "primary", "secondary", "error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the  keyboard focus ripple is disabled.
      * @default false
      */
-    disableFocusRipple: propTypesExports.bool,
+    disableFocusRipple: PropTypes.bool,
     /**
      * If `true`, the ripple effect is disabled.
      *
@@ -28116,7 +28158,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
      * @default false
      */
-    disableRipple: propTypesExports.bool,
+    disableRipple: PropTypes.bool,
     /**
      * If given, uses a negative margin to counteract the padding on one
      * side (this is often helpful for aligning the left or right
@@ -28124,17 +28166,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * size and shape).
      * @default false
      */
-    edge: propTypesExports.oneOf(["end", "start", false]),
+    edge: PropTypes.oneOf(["end", "start", false]),
     /**
      * The size of the component.
      * `small` is equivalent to the dense button styling.
      * @default 'medium'
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["small", "medium", "large"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["small", "medium", "large"]), PropTypes.string]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   const _excluded$R = ["components", "componentsProps", "slots", "slotProps"];
   const PopperRoot = styled(PopperUnstyled, {
@@ -28156,7 +28198,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps
     } = props, other = _objectWithoutPropertiesLoose(props, _excluded$R);
     const RootComponent = (_slots$root = slots == null ? void 0 : slots.root) != null ? _slots$root : components == null ? void 0 : components.Root;
-    return /* @__PURE__ */ jsx(PopperRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(PopperRoot, _extends$2({
       direction: theme == null ? void 0 : theme.direction,
       slots: {
         root: RootComponent
@@ -28177,29 +28219,29 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * It's used to set the position of the popper.
      * The return value will passed as the reference object of the Popper instance.
      */
-    anchorEl: propTypesExports.oneOfType([HTMLElementType, propTypesExports.object, propTypesExports.func]),
+    anchorEl: PropTypes.oneOfType([HTMLElementType, PropTypes.object, PropTypes.func]),
     /**
      * Popper render function or node.
      */
-    children: propTypesExports.oneOfType([propTypesExports.node, propTypesExports.func]),
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     /**
      * @ignore
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The components used for each slot inside the Popper.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    components: propTypesExports.shape({
-      Root: propTypesExports.elementType
+    components: PropTypes.shape({
+      Root: PropTypes.elementType
     }),
     /**
      * The props used for each slot inside the Popper.
      * @default {}
      */
-    componentsProps: propTypesExports.shape({
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    componentsProps: PropTypes.shape({
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * An HTML element or function that returns one.
@@ -28208,19 +28250,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * By default, it uses the body of the top-level document object,
      * so it's simply `document.body` most of the time.
      */
-    container: propTypesExports.oneOfType([HTMLElementType, propTypesExports.func]),
+    container: PropTypes.oneOfType([HTMLElementType, PropTypes.func]),
     /**
      * The `children` will be under the DOM hierarchy of the parent component.
      * @default false
      */
-    disablePortal: propTypesExports.bool,
+    disablePortal: PropTypes.bool,
     /**
      * Always keep the children in the DOM.
      * This prop can be useful in SEO situation or
      * when you want to maximize the responsiveness of the Popper.
      * @default false
      */
-    keepMounted: propTypesExports.bool,
+    keepMounted: PropTypes.bool,
     /**
      * Popper.js is based on a "plugin-like" architecture,
      * most of its features are fully encapsulated "modifiers".
@@ -28230,39 +28272,39 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * For this reason, modifiers should be very performant to avoid bottlenecks.
      * To learn how to create a modifier, [read the modifiers documentation](https://popper.js.org/docs/v2/modifiers/).
      */
-    modifiers: propTypesExports.arrayOf(propTypesExports.shape({
-      data: propTypesExports.object,
-      effect: propTypesExports.func,
-      enabled: propTypesExports.bool,
-      fn: propTypesExports.func,
-      name: propTypesExports.any,
-      options: propTypesExports.object,
-      phase: propTypesExports.oneOf(["afterMain", "afterRead", "afterWrite", "beforeMain", "beforeRead", "beforeWrite", "main", "read", "write"]),
-      requires: propTypesExports.arrayOf(propTypesExports.string),
-      requiresIfExists: propTypesExports.arrayOf(propTypesExports.string)
+    modifiers: PropTypes.arrayOf(PropTypes.shape({
+      data: PropTypes.object,
+      effect: PropTypes.func,
+      enabled: PropTypes.bool,
+      fn: PropTypes.func,
+      name: PropTypes.any,
+      options: PropTypes.object,
+      phase: PropTypes.oneOf(["afterMain", "afterRead", "afterWrite", "beforeMain", "beforeRead", "beforeWrite", "main", "read", "write"]),
+      requires: PropTypes.arrayOf(PropTypes.string),
+      requiresIfExists: PropTypes.arrayOf(PropTypes.string)
     })),
     /**
      * If `true`, the component is shown.
      */
-    open: propTypesExports.bool.isRequired,
+    open: PropTypes.bool.isRequired,
     /**
      * @ignore
      */
-    ownerState: propTypesExports.any,
+    ownerState: PropTypes.any,
     /**
      * Popper placement.
      * @default 'bottom'
      */
-    placement: propTypesExports.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
+    placement: PropTypes.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
     /**
      * Options provided to the [`Popper.js`](https://popper.js.org/docs/v2/constructors/#options) instance.
      * @default {}
      */
-    popperOptions: propTypesExports.shape({
-      modifiers: propTypesExports.array,
-      onFirstUpdate: propTypesExports.func,
-      placement: propTypesExports.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
-      strategy: propTypesExports.oneOf(["absolute", "fixed"])
+    popperOptions: PropTypes.shape({
+      modifiers: PropTypes.array,
+      onFirstUpdate: PropTypes.func,
+      placement: PropTypes.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
+      strategy: PropTypes.oneOf(["absolute", "fixed"])
     }),
     /**
      * A ref that points to the used popper instance.
@@ -28272,26 +28314,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The props used for each slot inside the Popper.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Popper.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      root: PropTypes.elementType
     }),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * Help supporting a react-transition-group/Transition component.
      * @default false
      */
-    transition: propTypesExports.bool
+    transition: PropTypes.bool
   } : void 0;
   function getTooltipUtilityClass(slot) {
     return generateUtilityClass("MuiTooltip", slot);
@@ -28713,7 +28755,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       nameOrDescProps["aria-labelledby"] = open && !titleIsString ? id : null;
     }
     const childrenProps = _extends$2({}, nameOrDescProps, other, children.props, {
-      className: clsx(other.className, children.props.className),
+      className: clsx$1(other.className, children.props.className),
       onTouchStart: detectTouchStart,
       ref: handleRef
     }, followCursor ? {
@@ -28784,17 +28826,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const TooltipComponent = (_ref4 = (_slots$tooltip = slots.tooltip) != null ? _slots$tooltip : components.Tooltip) != null ? _ref4 : TooltipTooltip;
     const ArrowComponent = (_ref5 = (_slots$arrow = slots.arrow) != null ? _slots$arrow : components.Arrow) != null ? _ref5 : TooltipArrow;
     const popperProps = appendOwnerState(PopperComponent, _extends$2({}, PopperProps, (_slotProps$popper = slotProps.popper) != null ? _slotProps$popper : componentsProps.popper, {
-      className: clsx(classes.popper, PopperProps == null ? void 0 : PopperProps.className, (_ref6 = (_slotProps$popper2 = slotProps.popper) != null ? _slotProps$popper2 : componentsProps.popper) == null ? void 0 : _ref6.className)
+      className: clsx$1(classes.popper, PopperProps == null ? void 0 : PopperProps.className, (_ref6 = (_slotProps$popper2 = slotProps.popper) != null ? _slotProps$popper2 : componentsProps.popper) == null ? void 0 : _ref6.className)
     }), ownerState);
     const transitionProps = appendOwnerState(TransitionComponent, _extends$2({}, TransitionProps, (_slotProps$transition = slotProps.transition) != null ? _slotProps$transition : componentsProps.transition), ownerState);
     const tooltipProps = appendOwnerState(TooltipComponent, _extends$2({}, (_slotProps$tooltip = slotProps.tooltip) != null ? _slotProps$tooltip : componentsProps.tooltip, {
-      className: clsx(classes.tooltip, (_ref7 = (_slotProps$tooltip2 = slotProps.tooltip) != null ? _slotProps$tooltip2 : componentsProps.tooltip) == null ? void 0 : _ref7.className)
+      className: clsx$1(classes.tooltip, (_ref7 = (_slotProps$tooltip2 = slotProps.tooltip) != null ? _slotProps$tooltip2 : componentsProps.tooltip) == null ? void 0 : _ref7.className)
     }), ownerState);
     const tooltipArrowProps = appendOwnerState(ArrowComponent, _extends$2({}, (_slotProps$arrow = slotProps.arrow) != null ? _slotProps$arrow : componentsProps.arrow, {
-      className: clsx(classes.arrow, (_ref8 = (_slotProps$arrow2 = slotProps.arrow) != null ? _slotProps$arrow2 : componentsProps.arrow) == null ? void 0 : _ref8.className)
+      className: clsx$1(classes.arrow, (_ref8 = (_slotProps$arrow2 = slotProps.arrow) != null ? _slotProps$arrow2 : componentsProps.arrow) == null ? void 0 : _ref8.className)
     }), ownerState);
-    return /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-      children: [/* @__PURE__ */ React__namespace.cloneElement(children, childrenProps), /* @__PURE__ */ jsx(PopperComponent, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+      children: [/* @__PURE__ */ React__namespace.cloneElement(children, childrenProps), /* @__PURE__ */ jsxRuntimeExports.jsx(PopperComponent, _extends$2({
         as: PopperComponentProp != null ? PopperComponentProp : Popper,
         placement,
         anchorEl: followCursor ? {
@@ -28815,11 +28857,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         popperOptions,
         children: ({
           TransitionProps: TransitionPropsInner
-        }) => /* @__PURE__ */ jsx(TransitionComponent, _extends$2({
+        }) => /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionComponent, _extends$2({
           timeout: theme.transitions.duration.shorter
         }, TransitionPropsInner, transitionProps, {
-          children: /* @__PURE__ */ jsxs(TooltipComponent, _extends$2({}, tooltipProps, {
-            children: [title, arrow2 ? /* @__PURE__ */ jsx(ArrowComponent, _extends$2({}, tooltipArrowProps, {
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs(TooltipComponent, _extends$2({}, tooltipProps, {
+            children: [title, arrow2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowComponent, _extends$2({}, tooltipArrowProps, {
               ref: setArrowRef
             })) : null]
           }))
@@ -28836,7 +28878,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * If `true`, adds an arrow to the tooltip.
      * @default false
      */
-    arrow: propTypesExports.bool,
+    arrow: PropTypes.bool,
     /**
      * Tooltip reference element.
      */
@@ -28844,11 +28886,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The components used for each slot inside.
      *
@@ -28857,11 +28899,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    components: propTypesExports.shape({
-      Arrow: propTypesExports.elementType,
-      Popper: propTypesExports.elementType,
-      Tooltip: propTypesExports.elementType,
-      Transition: propTypesExports.elementType
+    components: PropTypes.shape({
+      Arrow: PropTypes.elementType,
+      Popper: PropTypes.elementType,
+      Tooltip: PropTypes.elementType,
+      Transition: PropTypes.elementType
     }),
     /**
      * The extra props for the slot components.
@@ -28872,107 +28914,107 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    componentsProps: propTypesExports.shape({
-      arrow: propTypesExports.object,
-      popper: propTypesExports.object,
-      tooltip: propTypesExports.object,
-      transition: propTypesExports.object
+    componentsProps: PropTypes.shape({
+      arrow: PropTypes.object,
+      popper: PropTypes.object,
+      tooltip: PropTypes.object,
+      transition: PropTypes.object
     }),
     /**
      * Set to `true` if the `title` acts as an accessible description.
      * By default the `title` acts as an accessible label for the child.
      * @default false
      */
-    describeChild: propTypesExports.bool,
+    describeChild: PropTypes.bool,
     /**
      * Do not respond to focus-visible events.
      * @default false
      */
-    disableFocusListener: propTypesExports.bool,
+    disableFocusListener: PropTypes.bool,
     /**
      * Do not respond to hover events.
      * @default false
      */
-    disableHoverListener: propTypesExports.bool,
+    disableHoverListener: PropTypes.bool,
     /**
      * Makes a tooltip not interactive, i.e. it will close when the user
      * hovers over the tooltip before the `leaveDelay` is expired.
      * @default false
      */
-    disableInteractive: propTypesExports.bool,
+    disableInteractive: PropTypes.bool,
     /**
      * Do not respond to long press touch events.
      * @default false
      */
-    disableTouchListener: propTypesExports.bool,
+    disableTouchListener: PropTypes.bool,
     /**
      * The number of milliseconds to wait before showing the tooltip.
      * This prop won't impact the enter touch delay (`enterTouchDelay`).
      * @default 100
      */
-    enterDelay: propTypesExports.number,
+    enterDelay: PropTypes.number,
     /**
      * The number of milliseconds to wait before showing the tooltip when one was already recently opened.
      * @default 0
      */
-    enterNextDelay: propTypesExports.number,
+    enterNextDelay: PropTypes.number,
     /**
      * The number of milliseconds a user must touch the element before showing the tooltip.
      * @default 700
      */
-    enterTouchDelay: propTypesExports.number,
+    enterTouchDelay: PropTypes.number,
     /**
      * If `true`, the tooltip follow the cursor over the wrapped element.
      * @default false
      */
-    followCursor: propTypesExports.bool,
+    followCursor: PropTypes.bool,
     /**
      * This prop is used to help implement the accessibility logic.
      * If you don't provide this prop. It falls back to a randomly generated id.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * The number of milliseconds to wait before hiding the tooltip.
      * This prop won't impact the leave touch delay (`leaveTouchDelay`).
      * @default 0
      */
-    leaveDelay: propTypesExports.number,
+    leaveDelay: PropTypes.number,
     /**
      * The number of milliseconds after the user stops touching an element before hiding the tooltip.
      * @default 1500
      */
-    leaveTouchDelay: propTypesExports.number,
+    leaveTouchDelay: PropTypes.number,
     /**
      * Callback fired when the component requests to be closed.
      *
      * @param {React.SyntheticEvent} event The event source of the callback.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * Callback fired when the component requests to be open.
      *
      * @param {React.SyntheticEvent} event The event source of the callback.
      */
-    onOpen: propTypesExports.func,
+    onOpen: PropTypes.func,
     /**
      * If `true`, the component is shown.
      */
-    open: propTypesExports.bool,
+    open: PropTypes.bool,
     /**
      * Tooltip placement.
      * @default 'bottom'
      */
-    placement: propTypesExports.oneOf(["bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
+    placement: PropTypes.oneOf(["bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
     /**
      * The component used for the popper.
      * @default Popper
      */
-    PopperComponent: propTypesExports.elementType,
+    PopperComponent: PropTypes.elementType,
     /**
      * Props applied to the [`Popper`](/material-ui/api/popper/) element.
      * @default {}
      */
-    PopperProps: propTypesExports.object,
+    PopperProps: PropTypes.object,
     /**
      * The extra props for the slot components.
      * You can override the existing props or add new ones.
@@ -28981,11 +29023,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      arrow: propTypesExports.object,
-      popper: propTypesExports.object,
-      tooltip: propTypesExports.object,
-      transition: propTypesExports.object
+    slotProps: PropTypes.shape({
+      arrow: PropTypes.object,
+      popper: PropTypes.object,
+      tooltip: PropTypes.object,
+      transition: PropTypes.object
     }),
     /**
      * The components used for each slot inside.
@@ -28994,31 +29036,31 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slots: propTypesExports.shape({
-      arrow: propTypesExports.elementType,
-      popper: propTypesExports.elementType,
-      tooltip: propTypesExports.elementType,
-      transition: propTypesExports.elementType
+    slots: PropTypes.shape({
+      arrow: PropTypes.elementType,
+      popper: PropTypes.elementType,
+      tooltip: PropTypes.elementType,
+      transition: PropTypes.elementType
     }),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * Tooltip title. Zero-length titles string, undefined, null and false are never displayed.
      */
-    title: propTypesExports.node,
+    title: PropTypes.node,
     /**
      * The component used for the transition.
      * [Follow this guide](/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
      * @default Grow
      */
-    TransitionComponent: propTypesExports.elementType,
+    TransitionComponent: PropTypes.elementType,
     /**
      * Props applied to the transition element.
      * By default, the element is based on this [`Transition`](http://reactcommunity.org/react-transition-group/transition/) component.
      */
-    TransitionProps: propTypesExports.object
+    TransitionProps: PropTypes.object
   } : void 0;
   function getListItemIconUtilityClass(slot) {
     return generateUtilityClass("MuiListItemIcon", slot);
@@ -29072,8 +29114,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       alignItems: context.alignItems
     });
     const classes = useUtilityClasses$L(ownerState);
-    return /* @__PURE__ */ jsx(ListItemIconRoot, _extends$2({
-      className: clsx(classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIconRoot, _extends$2({
+      className: clsx$1(classes.root, className),
       ownerState,
       ref
     }, other));
@@ -29087,19 +29129,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The content of the component, normally `Icon`, `SvgIcon`,
      * or a `@mui/icons-material` SVG icon element.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getListUtilityClass(slot) {
     return generateUtilityClass("MuiList", slot);
@@ -29162,11 +29204,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disablePadding
     });
     const classes = useUtilityClasses$K(ownerState);
-    return /* @__PURE__ */ jsx(ListContext.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ListContext.Provider, {
       value: context,
-      children: /* @__PURE__ */ jsxs(ListRoot, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs(ListRoot, _extends$2({
         as: component,
-        className: clsx(classes.root, className),
+        className: clsx$1(classes.root, className),
         ref,
         ownerState
       }, other, {
@@ -29182,40 +29224,40 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, compact vertical padding designed for keyboard and mouse input is used for
      * the list and list items.
      * The prop is available to descendant components as the `dense` context.
      * @default false
      */
-    dense: propTypesExports.bool,
+    dense: PropTypes.bool,
     /**
      * If `true`, vertical padding is removed from the list.
      * @default false
      */
-    disablePadding: propTypesExports.bool,
+    disablePadding: PropTypes.bool,
     /**
      * The content of the subheader, normally `ListSubheader`.
      */
-    subheader: propTypesExports.node,
+    subheader: PropTypes.node,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   const _excluded$N = ["actions", "autoFocus", "autoFocusItem", "children", "className", "disabledItemsFocusable", "disableListWrap", "onKeyDown", "variant"];
   function nextItem(list, item, disableListWrap) {
@@ -29384,7 +29426,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       return child;
     });
-    return /* @__PURE__ */ jsx(List, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(List, _extends$2({
       role: "menu",
       ref: handleRef,
       className,
@@ -29403,41 +29445,41 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * If `true`, will focus the `[role="menu"]` container and move into tab order.
      * @default false
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * If `true`, will focus the first menuitem if `variant="menu"` or selected item
      * if `variant="selectedMenu"`.
      * @default false
      */
-    autoFocusItem: propTypesExports.bool,
+    autoFocusItem: PropTypes.bool,
     /**
      * MenuList contents, normally `MenuItem`s.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * If `true`, will allow focus on disabled items.
      * @default false
      */
-    disabledItemsFocusable: propTypesExports.bool,
+    disabledItemsFocusable: PropTypes.bool,
     /**
      * If `true`, the menu items will not wrap focus.
      * @default false
      */
-    disableListWrap: propTypesExports.bool,
+    disableListWrap: PropTypes.bool,
     /**
      * @ignore
      */
-    onKeyDown: propTypesExports.func,
+    onKeyDown: PropTypes.func,
     /**
      * The variant to use. Use `menu` to prevent selected items from impacting the initial focus
      * and the vertical alignment relative to the anchor element.
      * @default 'selectedMenu'
      */
-    variant: propTypesExports.oneOf(["menu", "selectedMenu"])
+    variant: PropTypes.oneOf(["menu", "selectedMenu"])
   } : void 0;
   function getPopoverUtilityClass(slot) {
     return generateUtilityClass("MuiPopover", slot);
@@ -29682,28 +29724,28 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       transitionDuration = void 0;
     }
     const container = containerProp || (anchorEl ? ownerDocument(resolveAnchorEl(anchorEl)).body : void 0);
-    return /* @__PURE__ */ jsx(PopoverRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(PopoverRoot, _extends$2({
       BackdropProps: {
         invisible: true
       },
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       container,
       open,
       ref,
       ownerState
     }, other, {
-      children: /* @__PURE__ */ jsx(TransitionComponent, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionComponent, _extends$2({
         appear: true,
         in: open,
         onEntering: handleEntering,
         onExited: handleExited,
         timeout: transitionDuration
       }, TransitionProps, {
-        children: /* @__PURE__ */ jsx(PopoverPaper, _extends$2({
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(PopoverPaper, _extends$2({
           elevation
         }, PaperProps, {
           ref: handlePaperRef,
-          className: clsx(classes.paper, PaperProps.className)
+          className: clsx$1(classes.paper, PaperProps.className)
         }, isPositioned ? void 0 : {
           style: _extends$2({}, PaperProps.style, {
             opacity: 0
@@ -29729,7 +29771,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * An HTML element, or a function that returns one.
      * It's used to set the position of the popover.
      */
-    anchorEl: chainPropTypes(propTypesExports.oneOfType([HTMLElementType, propTypesExports.func]), (props) => {
+    anchorEl: chainPropTypes(PropTypes.oneOfType([HTMLElementType, PropTypes.func]), (props) => {
       if (props.open && (!props.anchorReference || props.anchorReference === "anchorEl")) {
         const resolvedAnchorEl = resolveAnchorEl(props.anchorEl);
         if (resolvedAnchorEl && resolvedAnchorEl.nodeType === 1) {
@@ -29756,36 +29798,36 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   horizontal: 'left',
      * }
      */
-    anchorOrigin: propTypesExports.shape({
-      horizontal: propTypesExports.oneOfType([propTypesExports.oneOf(["center", "left", "right"]), propTypesExports.number]).isRequired,
-      vertical: propTypesExports.oneOfType([propTypesExports.oneOf(["bottom", "center", "top"]), propTypesExports.number]).isRequired
+    anchorOrigin: PropTypes.shape({
+      horizontal: PropTypes.oneOfType([PropTypes.oneOf(["center", "left", "right"]), PropTypes.number]).isRequired,
+      vertical: PropTypes.oneOfType([PropTypes.oneOf(["bottom", "center", "top"]), PropTypes.number]).isRequired
     }),
     /**
      * This is the position that may be used to set the position of the popover.
      * The coordinates are relative to the application's client area.
      */
-    anchorPosition: propTypesExports.shape({
-      left: propTypesExports.number.isRequired,
-      top: propTypesExports.number.isRequired
+    anchorPosition: PropTypes.shape({
+      left: PropTypes.number.isRequired,
+      top: PropTypes.number.isRequired
     }),
     /**
      * This determines which anchor prop to refer to when setting
      * the position of the popover.
      * @default 'anchorEl'
      */
-    anchorReference: propTypesExports.oneOf(["anchorEl", "anchorPosition", "none"]),
+    anchorReference: PropTypes.oneOf(["anchorEl", "anchorPosition", "none"]),
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * An HTML element, component instance, or function that returns either.
      * The `container` will passed to the Modal component.
@@ -29793,7 +29835,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * By default, it uses the body of the anchorEl's top-level document object,
      * so it's simply `document.body` most of the time.
      */
-    container: propTypesExports.oneOfType([HTMLElementType, propTypesExports.func]),
+    container: PropTypes.oneOfType([HTMLElementType, PropTypes.func]),
     /**
      * The elevation of the popover.
      * @default 8
@@ -29803,27 +29845,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Specifies how close to the edge of the window the popover can appear.
      * @default 16
      */
-    marginThreshold: propTypesExports.number,
+    marginThreshold: PropTypes.number,
     /**
      * Callback fired when the component requests to be closed.
      * The `reason` parameter can optionally be used to control the response to `onClose`.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * If `true`, the component is shown.
      */
-    open: propTypesExports.bool.isRequired,
+    open: PropTypes.bool.isRequired,
     /**
      * Props applied to the [`Paper`](/material-ui/api/paper/) element.
      * @default {}
      */
-    PaperProps: propTypesExports.shape({
+    PaperProps: PropTypes.shape({
       component: elementTypeAcceptingRef$1
     }),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * This is the point on the popover which
      * will attach to the anchor's origin.
@@ -29836,31 +29878,31 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   horizontal: 'left',
      * }
      */
-    transformOrigin: propTypesExports.shape({
-      horizontal: propTypesExports.oneOfType([propTypesExports.oneOf(["center", "left", "right"]), propTypesExports.number]).isRequired,
-      vertical: propTypesExports.oneOfType([propTypesExports.oneOf(["bottom", "center", "top"]), propTypesExports.number]).isRequired
+    transformOrigin: PropTypes.shape({
+      horizontal: PropTypes.oneOfType([PropTypes.oneOf(["center", "left", "right"]), PropTypes.number]).isRequired,
+      vertical: PropTypes.oneOfType([PropTypes.oneOf(["bottom", "center", "top"]), PropTypes.number]).isRequired
     }),
     /**
      * The component used for the transition.
      * [Follow this guide](/material-ui/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
      * @default Grow
      */
-    TransitionComponent: propTypesExports.elementType,
+    TransitionComponent: PropTypes.elementType,
     /**
      * Set to 'auto' to automatically calculate transition time based on height.
      * @default 'auto'
      */
-    transitionDuration: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.shape({
-      appear: propTypesExports.number,
-      enter: propTypesExports.number,
-      exit: propTypesExports.number
+    transitionDuration: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.shape({
+      appear: PropTypes.number,
+      enter: PropTypes.number,
+      exit: PropTypes.number
     })]),
     /**
      * Props applied to the transition element.
      * By default, the element is based on this [`Transition`](http://reactcommunity.org/react-transition-group/transition/) component.
      * @default {}
      */
-    TransitionProps: propTypesExports.object
+    TransitionProps: PropTypes.object
   } : void 0;
   function getMenuUtilityClass(slot) {
     return generateUtilityClass("MuiMenu", slot);
@@ -29981,7 +30023,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
       }
     });
-    return /* @__PURE__ */ jsx(MenuRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(MenuRoot, _extends$2({
       onClose: onClose2,
       anchorOrigin: {
         vertical: "bottom",
@@ -30005,14 +30047,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ownerState
     }, other, {
       classes: PopoverClasses,
-      children: /* @__PURE__ */ jsx(MenuMenuList, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(MenuMenuList, _extends$2({
         onKeyDown: handleListKeyDown,
         actions: menuListActionsRef,
         autoFocus: autoFocus && (activeItemIndex === -1 || disableAutoFocusItem),
         autoFocusItem,
         variant
       }, MenuListProps, {
-        className: clsx(classes.list, MenuListProps.className),
+        className: clsx$1(classes.list, MenuListProps.className),
         children
       }))
     }));
@@ -30026,7 +30068,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * An HTML element, or a function that returns one.
      * It's used to set the position of the menu.
      */
-    anchorEl: propTypesExports.oneOfType([HTMLElementType, propTypesExports.func]),
+    anchorEl: PropTypes.oneOfType([HTMLElementType, PropTypes.func]),
     /**
      * If `true` (Default) will focus the `[role="menu"]` if no focusable child is found. Disabled
      * children are not focusable. If you set this prop to `false` focus will be placed
@@ -30034,15 +30076,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * and should only be considered if you manage focus otherwise.
      * @default true
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * Menu contents, normally `MenuItem`s.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * When opening the menu will not focus the active item but the `[role="menu"]`
      * unless `autoFocus` is also set to `false`. Not using the default means not
@@ -30050,55 +30092,55 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * accessibility implications.
      * @default false
      */
-    disableAutoFocusItem: propTypesExports.bool,
+    disableAutoFocusItem: PropTypes.bool,
     /**
      * Props applied to the [`MenuList`](/material-ui/api/menu-list/) element.
      * @default {}
      */
-    MenuListProps: propTypesExports.object,
+    MenuListProps: PropTypes.object,
     /**
      * Callback fired when the component requests to be closed.
      *
      * @param {object} event The event source of the callback.
      * @param {string} reason Can be: `"escapeKeyDown"`, `"backdropClick"`, `"tabKeyDown"`.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * If `true`, the component is shown.
      */
-    open: propTypesExports.bool.isRequired,
+    open: PropTypes.bool.isRequired,
     /**
      * @ignore
      */
-    PaperProps: propTypesExports.object,
+    PaperProps: PropTypes.object,
     /**
      * `classes` prop applied to the [`Popover`](/material-ui/api/popover/) element.
      */
-    PopoverClasses: propTypesExports.object,
+    PopoverClasses: PropTypes.object,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The length of the transition in `ms`, or 'auto'
      * @default 'auto'
      */
-    transitionDuration: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.shape({
-      appear: propTypesExports.number,
-      enter: propTypesExports.number,
-      exit: propTypesExports.number
+    transitionDuration: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.shape({
+      appear: PropTypes.number,
+      enter: PropTypes.number,
+      exit: PropTypes.number
     })]),
     /**
      * Props applied to the transition element.
      * By default, the element is based on this [`Transition`](http://reactcommunity.org/react-transition-group/transition/) component.
      * @default {}
      */
-    TransitionProps: propTypesExports.object,
+    TransitionProps: PropTypes.object,
     /**
      * The variant to use. Use `menu` to prevent selected items from impacting the initial focus.
      * @default 'selectedMenu'
      */
-    variant: propTypesExports.oneOf(["menu", "selectedMenu"])
+    variant: PropTypes.oneOf(["menu", "selectedMenu"])
   } : void 0;
   function getDividerUtilityClass(slot) {
     return generateUtilityClass("MuiDivider", slot);
@@ -30258,14 +30300,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       variant
     });
     const classes = useUtilityClasses$H(ownerState);
-    return /* @__PURE__ */ jsx(DividerRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(DividerRoot, _extends$2({
       as: component,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       role,
       ref,
       ownerState
     }, other, {
-      children: children ? /* @__PURE__ */ jsx(DividerWrapper, {
+      children: children ? /* @__PURE__ */ jsxRuntimeExports.jsx(DividerWrapper, {
         className: classes.wrapper,
         ownerState,
         children
@@ -30281,58 +30323,58 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Absolutely position the element.
      * @default false
      */
-    absolute: propTypesExports.bool,
+    absolute: PropTypes.bool,
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, a vertical divider will have the correct height when used in flex container.
      * (By default, a vertical divider will have a calculated height of `0px` if it is the child of a flex container.)
      * @default false
      */
-    flexItem: propTypesExports.bool,
+    flexItem: PropTypes.bool,
     /**
      * If `true`, the divider will have a lighter color.
      * @default false
      */
-    light: propTypesExports.bool,
+    light: PropTypes.bool,
     /**
      * The component orientation.
      * @default 'horizontal'
      */
-    orientation: propTypesExports.oneOf(["horizontal", "vertical"]),
+    orientation: PropTypes.oneOf(["horizontal", "vertical"]),
     /**
      * @ignore
      */
-    role: propTypesExports.string,
+    role: PropTypes.string,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The text alignment.
      * @default 'center'
      */
-    textAlign: propTypesExports.oneOf(["center", "left", "right"]),
+    textAlign: PropTypes.oneOf(["center", "left", "right"]),
     /**
      * The variant to use.
      * @default 'fullWidth'
      */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["fullWidth", "inset", "middle"]), propTypesExports.string])
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["fullWidth", "inset", "middle"]), PropTypes.string])
   } : void 0;
   function getTypographyUtilityClass(slot) {
     return generateUtilityClass("MuiTypography", slot);
@@ -30433,11 +30475,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const Component = component || (paragraph ? "p" : variantMapping[variant] || defaultVariantMapping[variant]) || "span";
     const classes = useUtilityClasses$G(ownerState);
-    return /* @__PURE__ */ jsx(TypographyRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TypographyRoot, _extends$2({
       as: Component,
       ref,
       ownerState,
-      className: clsx(classes.root, className)
+      className: clsx$1(classes.root, className)
     }, other));
   });
   process.env.NODE_ENV !== "production" ? Typography.propTypes = {
@@ -30449,29 +30491,29 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Set the text-align on the component.
      * @default 'inherit'
      */
-    align: propTypesExports.oneOf(["center", "inherit", "justify", "left", "right"]),
+    align: PropTypes.oneOf(["center", "inherit", "justify", "left", "right"]),
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the text will have a bottom margin.
      * @default false
      */
-    gutterBottom: propTypesExports.bool,
+    gutterBottom: PropTypes.bool,
     /**
      * If `true`, the text will not wrap, but instead will truncate with a text overflow ellipsis.
      *
@@ -30479,21 +30521,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * (the element needs to have a width in order to overflow).
      * @default false
      */
-    noWrap: propTypesExports.bool,
+    noWrap: PropTypes.bool,
     /**
      * If `true`, the element will be a paragraph element.
      * @default false
      */
-    paragraph: propTypesExports.bool,
+    paragraph: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * Applies the theme typography styles.
      * @default 'body1'
      */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["body1", "body2", "button", "caption", "h1", "h2", "h3", "h4", "h5", "h6", "inherit", "overline", "subtitle1", "subtitle2"]), propTypesExports.string]),
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["body1", "body2", "button", "caption", "h1", "h2", "h3", "h4", "h5", "h6", "inherit", "overline", "subtitle1", "subtitle2"]), PropTypes.string]),
     /**
      * The component maps the variant prop to a range of different HTML element types.
      * For instance, subtitle1 to `<h6>`.
@@ -30513,7 +30555,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   inherit: 'p',
      * }
      */
-    variantMapping: propTypesExports.object
+    variantMapping: PropTypes.object
   } : void 0;
   function getListItemTextUtilityClass(slot) {
     return generateUtilityClass("MuiListItemText", slot);
@@ -30590,7 +30632,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const classes = useUtilityClasses$F(ownerState);
     if (primary != null && primary.type !== Typography && !disableTypography) {
-      primary = /* @__PURE__ */ jsx(Typography, _extends$2({
+      primary = /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, _extends$2({
         variant: dense ? "body2" : "body1",
         className: classes.primary,
         component: primaryTypographyProps != null && primaryTypographyProps.variant ? void 0 : "span",
@@ -30600,7 +30642,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }));
     }
     if (secondary != null && secondary.type !== Typography && !disableTypography) {
-      secondary = /* @__PURE__ */ jsx(Typography, _extends$2({
+      secondary = /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, _extends$2({
         variant: "body2",
         className: classes.secondary,
         color: "text.secondary",
@@ -30609,8 +30651,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         children: secondary
       }));
     }
-    return /* @__PURE__ */ jsxs(ListItemTextRoot, _extends$2({
-      className: clsx(classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(ListItemTextRoot, _extends$2({
+      className: clsx$1(classes.root, className),
       ownerState,
       ref
     }, other, {
@@ -30625,15 +30667,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Alias for the `primary` prop.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * If `true`, the children won't be wrapped by a Typography component.
      * This can be useful to render an alternative Typography variant by wrapping
@@ -30641,35 +30683,35 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * with the Typography component.
      * @default false
      */
-    disableTypography: propTypesExports.bool,
+    disableTypography: PropTypes.bool,
     /**
      * If `true`, the children are indented.
      * This should be used if there is no left avatar or left icon.
      * @default false
      */
-    inset: propTypesExports.bool,
+    inset: PropTypes.bool,
     /**
      * The main content element.
      */
-    primary: propTypesExports.node,
+    primary: PropTypes.node,
     /**
      * These props will be forwarded to the primary typography component
      * (as long as disableTypography is not `true`).
      */
-    primaryTypographyProps: propTypesExports.object,
+    primaryTypographyProps: PropTypes.object,
     /**
      * The secondary content element.
      */
-    secondary: propTypesExports.node,
+    secondary: PropTypes.node,
     /**
      * These props will be forwarded to the secondary typography component
      * (as long as disableTypography is not `true`).
      */
-    secondaryTypographyProps: propTypesExports.object,
+    secondaryTypographyProps: PropTypes.object,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getMenuItemUtilityClass(slot) {
     return generateUtilityClass("MuiMenuItem", slot);
@@ -30823,15 +30865,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     if (!props.disabled) {
       tabIndex = tabIndexProp !== void 0 ? tabIndexProp : -1;
     }
-    return /* @__PURE__ */ jsx(ListContext.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ListContext.Provider, {
       value: childContext,
-      children: /* @__PURE__ */ jsx(MenuItemRoot, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItemRoot, _extends$2({
         ref: handleRef,
         role,
         tabIndex,
         component,
-        focusVisibleClassName: clsx(classes.focusVisible, focusVisibleClassName),
-        className: clsx(classes.root, className)
+        focusVisibleClassName: clsx$1(classes.focusVisible, focusVisibleClassName),
+        className: clsx$1(classes.root, className)
       }, other, {
         ownerState,
         classes
@@ -30848,44 +30890,44 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Focus will also be triggered if the value changes from false to true.
      * @default false
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, compact vertical padding designed for keyboard and mouse input is used.
      * The prop defaults to the value inherited from the parent Menu component.
      * @default false
      */
-    dense: propTypesExports.bool,
+    dense: PropTypes.bool,
     /**
      * @ignore
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the left and right padding is removed.
      * @default false
      */
-    disableGutters: propTypesExports.bool,
+    disableGutters: PropTypes.bool,
     /**
      * If `true`, a 1px light border is added to the bottom of the menu item.
      * @default false
      */
-    divider: propTypesExports.bool,
+    divider: PropTypes.bool,
     /**
      * This prop can help identify which element has keyboard focus.
      * The class name will be applied when the element gains the focus through keyboard interaction.
@@ -30894,24 +30936,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * A [polyfill can be used](https://github.com/WICG/focus-visible) to apply a `focus-visible` class to other components
      * if needed.
      */
-    focusVisibleClassName: propTypesExports.string,
+    focusVisibleClassName: PropTypes.string,
     /**
      * @ignore
      */
-    role: propTypesExports.string,
+    role: PropTypes.string,
     /**
      * If `true`, the component is selected.
      * @default false
      */
-    selected: propTypesExports.bool,
+    selected: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * @default 0
      */
-    tabIndex: propTypesExports.number
+    tabIndex: PropTypes.number
   } : void 0;
   function getButtonUtilityClass(slot) {
     return generateUtilityClass("MuiButton", slot);
@@ -31157,23 +31199,23 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       variant
     });
     const classes = useUtilityClasses$D(ownerState);
-    const startIcon = startIconProp && /* @__PURE__ */ jsx(ButtonStartIcon, {
+    const startIcon = startIconProp && /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonStartIcon, {
       className: classes.startIcon,
       ownerState,
       children: startIconProp
     });
-    const endIcon = endIconProp && /* @__PURE__ */ jsx(ButtonEndIcon, {
+    const endIcon = endIconProp && /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonEndIcon, {
       className: classes.endIcon,
       ownerState,
       children: endIconProp
     });
-    return /* @__PURE__ */ jsxs(ButtonRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(ButtonRoot, _extends$2({
       ownerState,
-      className: clsx(contextProps.className, classes.root, className),
+      className: clsx$1(contextProps.className, classes.root, className),
       component,
       disabled,
       focusRipple: !disableFocusRipple,
-      focusVisibleClassName: clsx(classes.focusVisible, focusVisibleClassName),
+      focusVisibleClassName: clsx$1(classes.focusVisible, focusVisibleClassName),
       ref,
       type
     }, other, {
@@ -31189,42 +31231,42 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'primary'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["inherit", "primary", "secondary", "success", "error", "info", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["inherit", "primary", "secondary", "success", "error", "info", "warning"]), PropTypes.string]),
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, no elevation is used.
      * @default false
      */
-    disableElevation: propTypesExports.bool,
+    disableElevation: PropTypes.bool,
     /**
      * If `true`, the  keyboard focus ripple is disabled.
      * @default false
      */
-    disableFocusRipple: propTypesExports.bool,
+    disableFocusRipple: PropTypes.bool,
     /**
      * If `true`, the ripple effect is disabled.
      *
@@ -31232,48 +31274,48 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
      * @default false
      */
-    disableRipple: propTypesExports.bool,
+    disableRipple: PropTypes.bool,
     /**
      * Element placed after the children.
      */
-    endIcon: propTypesExports.node,
+    endIcon: PropTypes.node,
     /**
      * @ignore
      */
-    focusVisibleClassName: propTypesExports.string,
+    focusVisibleClassName: PropTypes.string,
     /**
      * If `true`, the button will take up the full width of its container.
      * @default false
      */
-    fullWidth: propTypesExports.bool,
+    fullWidth: PropTypes.bool,
     /**
      * The URL to link to when the button is clicked.
      * If defined, an `a` element will be used as the root node.
      */
-    href: propTypesExports.string,
+    href: PropTypes.string,
     /**
      * The size of the component.
      * `small` is equivalent to the dense button styling.
      * @default 'medium'
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["small", "medium", "large"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["small", "medium", "large"]), PropTypes.string]),
     /**
      * Element placed before the children.
      */
-    startIcon: propTypesExports.node,
+    startIcon: PropTypes.node,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * @ignore
      */
-    type: propTypesExports.oneOfType([propTypesExports.oneOf(["button", "reset", "submit"]), propTypesExports.string]),
+    type: PropTypes.oneOfType([PropTypes.oneOf(["button", "reset", "submit"]), PropTypes.string]),
     /**
      * The variant to use.
      * @default 'text'
      */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["contained", "outlined", "text"]), propTypesExports.string])
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["contained", "outlined", "text"]), PropTypes.string])
   } : void 0;
   const FormControlContext = /* @__PURE__ */ React__namespace.createContext(void 0);
   if (process.env.NODE_ENV !== "production") {
@@ -31393,9 +31435,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       edge
     });
     const classes = useUtilityClasses$C(ownerState);
-    return /* @__PURE__ */ jsxs(SwitchBaseRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(SwitchBaseRoot, _extends$2({
       component: "span",
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       centerRipple: true,
       focusRipple: !disableFocusRipple,
       disabled,
@@ -31406,7 +31448,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ownerState,
       ref
     }, other, {
-      children: [/* @__PURE__ */ jsx(SwitchBaseInput, _extends$2({
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(SwitchBaseInput, _extends$2({
         autoFocus,
         checked: checkedProp,
         defaultChecked,
@@ -31430,37 +31472,37 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * If `true`, the `input` element is focused during the first mount.
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * If `true`, the component is checked.
      */
-    checked: propTypesExports.bool,
+    checked: PropTypes.bool,
     /**
      * The icon to display when the component is checked.
      */
-    checkedIcon: propTypesExports.node.isRequired,
+    checkedIcon: PropTypes.node.isRequired,
     /**
      * Override or extend the styles applied to the component.
      * See [CSS API](#css) below for more details.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * @ignore
      */
-    defaultChecked: propTypesExports.bool,
+    defaultChecked: PropTypes.bool,
     /**
      * If `true`, the component is disabled.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the  keyboard focus ripple is disabled.
      * @default false
      */
-    disableFocusRipple: propTypesExports.bool,
+    disableFocusRipple: PropTypes.bool,
     /**
      * If given, uses a negative margin to counteract the padding on one
      * side (this is often helpful for aligning the left or right
@@ -31468,19 +31510,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * size and shape).
      * @default false
      */
-    edge: propTypesExports.oneOf(["end", "start", false]),
+    edge: PropTypes.oneOf(["end", "start", false]),
     /**
      * The icon to display when the component is unchecked.
      */
-    icon: propTypesExports.node.isRequired,
+    icon: PropTypes.node.isRequired,
     /**
      * The id of the `input` element.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
      */
-    inputProps: propTypesExports.object,
+    inputProps: PropTypes.object,
     /**
      * Pass a ref to the `input` element.
      */
@@ -31488,55 +31530,55 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /*
      * @ignore
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * @ignore
      */
-    onBlur: propTypesExports.func,
+    onBlur: PropTypes.func,
     /**
      * Callback fired when the state is changed.
      *
      * @param {object} event The event source of the callback.
      * You can pull out the new checked state by accessing `event.target.checked` (boolean).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * @ignore
      */
-    onFocus: propTypesExports.func,
+    onFocus: PropTypes.func,
     /**
      * It prevents the user from changing the value of the field
      * (not from interacting with the field).
      */
-    readOnly: propTypesExports.bool,
+    readOnly: PropTypes.bool,
     /**
      * If `true`, the `input` element is required.
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.object,
+    sx: PropTypes.object,
     /**
      * @ignore
      */
-    tabIndex: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * The input component prop `type`.
      */
-    type: propTypesExports.string.isRequired,
+    type: PropTypes.string.isRequired,
     /**
      * The value of the component.
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
-  const CheckBoxOutlineBlankIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const CheckBoxOutlineBlankIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
   }), "CheckBoxOutlineBlank");
-  const CheckBoxIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const CheckBoxIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
   }), "CheckBox");
-  const IndeterminateCheckBoxIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const IndeterminateCheckBoxIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"
   }), "IndeterminateCheckBox");
   function getCheckboxUtilityClass(slot) {
@@ -31587,9 +31629,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       color: (theme.vars || theme).palette.action.disabled
     }
   }));
-  const defaultCheckedIcon$1 = /* @__PURE__ */ jsx(CheckBoxIcon, {});
-  const defaultIcon$1 = /* @__PURE__ */ jsx(CheckBoxOutlineBlankIcon, {});
-  const defaultIndeterminateIcon = /* @__PURE__ */ jsx(IndeterminateCheckBoxIcon, {});
+  const defaultCheckedIcon$1 = /* @__PURE__ */ jsxRuntimeExports.jsx(CheckBoxIcon, {});
+  const defaultIcon$1 = /* @__PURE__ */ jsxRuntimeExports.jsx(CheckBoxOutlineBlankIcon, {});
+  const defaultIndeterminateIcon = /* @__PURE__ */ jsxRuntimeExports.jsx(IndeterminateCheckBoxIcon, {});
   const Checkbox = /* @__PURE__ */ React__namespace.forwardRef(function Checkbox2(inProps, ref) {
     var _icon$props$fontSize, _indeterminateIcon$pr;
     const props = useThemeProps({
@@ -31614,7 +31656,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       size
     });
     const classes = useUtilityClasses$B(ownerState);
-    return /* @__PURE__ */ jsx(CheckboxRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(CheckboxRoot, _extends$2({
       type: "checkbox",
       inputProps: _extends$2({
         "data-indeterminate": indeterminate
@@ -31627,7 +31669,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }),
       ownerState,
       ref,
-      className: clsx(classes.root, className)
+      className: clsx$1(classes.root, className)
     }, other, {
       classes
     }));
@@ -31640,50 +31682,50 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * If `true`, the component is checked.
      */
-    checked: propTypesExports.bool,
+    checked: PropTypes.bool,
     /**
      * The icon to display when the component is checked.
      * @default <CheckBoxIcon />
      */
-    checkedIcon: propTypesExports.node,
+    checkedIcon: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'primary'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["default", "primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["default", "primary", "secondary", "error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * The default checked state. Use when the component is not controlled.
      */
-    defaultChecked: propTypesExports.bool,
+    defaultChecked: PropTypes.bool,
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the ripple effect is disabled.
      * @default false
      */
-    disableRipple: propTypesExports.bool,
+    disableRipple: PropTypes.bool,
     /**
      * The icon to display when the component is unchecked.
      * @default <CheckBoxOutlineBlankIcon />
      */
-    icon: propTypesExports.node,
+    icon: PropTypes.node,
     /**
      * The id of the `input` element.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * If `true`, the component appears indeterminate.
      * This does not set the native input element to indeterminate due
@@ -31691,16 +31733,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * However, we set a `data-indeterminate` attribute on the `input`.
      * @default false
      */
-    indeterminate: propTypesExports.bool,
+    indeterminate: PropTypes.bool,
     /**
      * The icon to display when the component is indeterminate.
      * @default <IndeterminateCheckBoxIcon />
      */
-    indeterminateIcon: propTypesExports.node,
+    indeterminateIcon: PropTypes.node,
     /**
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
      */
-    inputProps: propTypesExports.object,
+    inputProps: PropTypes.object,
     /**
      * Pass a ref to the `input` element.
      */
@@ -31711,32 +31753,32 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * @param {React.ChangeEvent<HTMLInputElement>} event The event source of the callback.
      * You can pull out the new checked state by accessing `event.target.checked` (boolean).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * If `true`, the `input` element is required.
      * @default false
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * The size of the component.
      * `small` is equivalent to the dense checkbox styling.
      * @default 'medium'
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["medium", "small"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["medium", "small"]), PropTypes.string]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The value of the component. The DOM API casts this to a string.
      * The browser uses "on" as the default value.
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
-  const RadioButtonUncheckedIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const RadioButtonUncheckedIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
   }), "RadioButtonUnchecked");
-  const RadioButtonCheckedIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const RadioButtonCheckedIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M8.465 8.465C9.37 7.56 10.62 7 12 7C14.76 7 17 9.24 17 12C17 13.38 16.44 14.63 15.535 15.535C14.63 16.44 13.38 17 12 17C9.24 17 7 14.76 7 12C7 10.62 7.56 9.37 8.465 8.465Z"
   }), "RadioButtonChecked");
   const RadioButtonIconRoot = styled("span")({
@@ -31774,14 +31816,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const ownerState = _extends$2({}, props, {
       checked
     });
-    return /* @__PURE__ */ jsxs(RadioButtonIconRoot, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(RadioButtonIconRoot, {
       className: classes.root,
       ownerState,
-      children: [/* @__PURE__ */ jsx(RadioButtonIconBackground, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(RadioButtonIconBackground, {
         fontSize: fontSize2,
         className: classes.background,
         ownerState
-      }), /* @__PURE__ */ jsx(RadioButtonIconDot, {
+      }), /* @__PURE__ */ jsxRuntimeExports.jsx(RadioButtonIconDot, {
         fontSize: fontSize2,
         className: classes.dot,
         ownerState
@@ -31792,17 +31834,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * If `true`, the component is checked.
      */
-    checked: propTypesExports.bool,
+    checked: PropTypes.bool,
     /**
      * Override or extend the styles applied to the component.
      * See [CSS API](#css) below for more details.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * The size of the component.
      * `small` is equivalent to the dense radio styling.
      */
-    fontSize: propTypesExports.oneOf(["small", "medium"])
+    fontSize: PropTypes.oneOf(["small", "medium"])
   } : void 0;
   const RadioGroupContext = /* @__PURE__ */ React__namespace.createContext(void 0);
   if (process.env.NODE_ENV !== "production") {
@@ -31864,10 +31906,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return String(a) === String(b);
   }
-  const defaultCheckedIcon = /* @__PURE__ */ jsx(RadioButtonIcon, {
+  const defaultCheckedIcon = /* @__PURE__ */ jsxRuntimeExports.jsx(RadioButtonIcon, {
     checked: true
   });
-  const defaultIcon = /* @__PURE__ */ jsx(RadioButtonIcon, {});
+  const defaultIcon = /* @__PURE__ */ jsxRuntimeExports.jsx(RadioButtonIcon, {});
   const Radio = /* @__PURE__ */ React__namespace.forwardRef(function Radio2(inProps, ref) {
     var _defaultIcon$props$fo, _defaultCheckedIcon$p;
     const props = useThemeProps({
@@ -31901,7 +31943,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         name = radioGroup.name;
       }
     }
-    return /* @__PURE__ */ jsx(RadioRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(RadioRoot, _extends$2({
       type: "radio",
       icon: /* @__PURE__ */ React__namespace.cloneElement(icon, {
         fontSize: (_defaultIcon$props$fo = defaultIcon.props.fontSize) != null ? _defaultIcon$props$fo : size
@@ -31915,7 +31957,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       checked,
       onChange,
       ref,
-      className: clsx(classes.root, className)
+      className: clsx$1(classes.root, className)
     }, other));
   });
   process.env.NODE_ENV !== "production" ? Radio.propTypes = {
@@ -31926,49 +31968,49 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * If `true`, the component is checked.
      */
-    checked: propTypesExports.bool,
+    checked: PropTypes.bool,
     /**
      * The icon to display when the component is checked.
      * @default <RadioButtonIcon checked />
      */
-    checkedIcon: propTypesExports.node,
+    checkedIcon: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'primary'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["default", "primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["default", "primary", "secondary", "error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * If `true`, the component is disabled.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the ripple effect is disabled.
      * @default false
      */
-    disableRipple: propTypesExports.bool,
+    disableRipple: PropTypes.bool,
     /**
      * The icon to display when the component is unchecked.
      * @default <RadioButtonIcon />
      */
-    icon: propTypesExports.node,
+    icon: PropTypes.node,
     /**
      * The id of the `input` element.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
      */
-    inputProps: propTypesExports.object,
+    inputProps: PropTypes.object,
     /**
      * Pass a ref to the `input` element.
      */
@@ -31976,7 +32018,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Name attribute of the `input` element.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * Callback fired when the state is changed.
      *
@@ -31984,26 +32026,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * You can pull out the new value by accessing `event.target.value` (string).
      * You can pull out the new checked state by accessing `event.target.checked` (boolean).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * If `true`, the `input` element is required.
      * @default false
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * The size of the component.
      * `small` is equivalent to the dense radio styling.
      * @default 'medium'
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["medium", "small"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["medium", "small"]), PropTypes.string]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The value of the component. The DOM API casts this to a string.
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
   function getToolbarUtilityClass(slot) {
     return generateUtilityClass("MuiToolbar", slot);
@@ -32067,9 +32109,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       variant
     });
     const classes = useUtilityClasses$z(ownerState);
-    return /* @__PURE__ */ jsx(ToolbarRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ToolbarRoot, _extends$2({
       as: component,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       ref,
       ownerState
     }, other));
@@ -32083,34 +32125,34 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The Toolbar children, usually a mixture of `IconButton`, `Button` and `Typography`.
      * The Toolbar is a flex container, allowing flex item properites to be used to lay out the children.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, disables gutter padding.
      * @default false
      */
-    disableGutters: propTypesExports.bool,
+    disableGutters: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The variant to use.
      * @default 'regular'
      */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["dense", "regular"]), propTypesExports.string])
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["dense", "regular"]), PropTypes.string])
   } : void 0;
   function useMediaQueryOld(query, defaultMatches, matchMedia, ssrMatchMedia, noSsr) {
     const [match2, setMatch] = React__namespace.useState(() => {
@@ -32414,7 +32456,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         addEndListener(nodeRef.current, next2);
       }
     };
-    return /* @__PURE__ */ jsx(TransitionComponent, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionComponent, _extends$2({
       in: inProp,
       onEnter: handleEnter,
       onEntered: handleEntered,
@@ -32426,9 +32468,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       nodeRef,
       timeout: timeout === "auto" ? null : timeout
     }, other, {
-      children: (state, childProps) => /* @__PURE__ */ jsx(CollapseRoot, _extends$2({
+      children: (state, childProps) => /* @__PURE__ */ jsxRuntimeExports.jsx(CollapseRoot, _extends$2({
         as: component,
-        className: clsx(classes.root, className, {
+        className: clsx$1(classes.root, className, {
           "entered": classes.entered,
           "exited": !inProp && collapsedSize === "0px" && classes.hidden
         }[state]),
@@ -32440,13 +32482,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }),
         ref: handleRef
       }, childProps, {
-        children: /* @__PURE__ */ jsx(CollapseWrapper, {
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(CollapseWrapper, {
           ownerState: _extends$2({}, ownerState, {
             state
           }),
           className: classes.wrapper,
           ref: wrapperRef,
-          children: /* @__PURE__ */ jsx(CollapseWrapperInner, {
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(CollapseWrapperInner, {
             ownerState: _extends$2({}, ownerState, {
               state
             }),
@@ -32467,24 +32509,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * node and a done callback. Allows for more fine grained transition end
      * logic. Note: Timeouts are still used as a fallback if provided.
      */
-    addEndListener: propTypesExports.func,
+    addEndListener: PropTypes.func,
     /**
      * The content node to be collapsed.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The width (horizontal) or height (vertical) of the container when collapsed.
      * @default '0px'
      */
-    collapsedSize: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    collapsedSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
@@ -32494,51 +32536,51 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The transition timing function.
      * You may specify a single easing or a object containing enter and exit values.
      */
-    easing: propTypesExports.oneOfType([propTypesExports.shape({
-      enter: propTypesExports.string,
-      exit: propTypesExports.string
-    }), propTypesExports.string]),
+    easing: PropTypes.oneOfType([PropTypes.shape({
+      enter: PropTypes.string,
+      exit: PropTypes.string
+    }), PropTypes.string]),
     /**
      * If `true`, the component will transition in.
      */
-    in: propTypesExports.bool,
+    in: PropTypes.bool,
     /**
      * @ignore
      */
-    onEnter: propTypesExports.func,
+    onEnter: PropTypes.func,
     /**
      * @ignore
      */
-    onEntered: propTypesExports.func,
+    onEntered: PropTypes.func,
     /**
      * @ignore
      */
-    onEntering: propTypesExports.func,
+    onEntering: PropTypes.func,
     /**
      * @ignore
      */
-    onExit: propTypesExports.func,
+    onExit: PropTypes.func,
     /**
      * @ignore
      */
-    onExited: propTypesExports.func,
+    onExited: PropTypes.func,
     /**
      * @ignore
      */
-    onExiting: propTypesExports.func,
+    onExiting: PropTypes.func,
     /**
      * The transition orientation.
      * @default 'vertical'
      */
-    orientation: propTypesExports.oneOf(["horizontal", "vertical"]),
+    orientation: PropTypes.oneOf(["horizontal", "vertical"]),
     /**
      * @ignore
      */
-    style: propTypesExports.object,
+    style: PropTypes.object,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The duration for the transition, in milliseconds.
      * You may specify a single timeout for all transitions, or individually with an object.
@@ -32546,10 +32588,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Set to 'auto' to automatically calculate transition time based on height.
      * @default duration.standard
      */
-    timeout: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.shape({
-      appear: propTypesExports.number,
-      enter: propTypesExports.number,
-      exit: propTypesExports.number
+    timeout: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number, PropTypes.shape({
+      appear: PropTypes.number,
+      enter: PropTypes.number,
+      exit: PropTypes.number
     })])
   } : void 0;
   Collapse.muiSupportAuto = true;
@@ -32643,21 +32685,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       variant
     });
     const classes = useUtilityClasses$x(ownerState);
-    return /* @__PURE__ */ jsx(FormControlContext.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(FormControlContext.Provider, {
       value: null,
-      children: /* @__PURE__ */ jsx(InputAdornmentRoot, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(InputAdornmentRoot, _extends$2({
         as: component,
         ownerState,
-        className: clsx(classes.root, className),
+        className: clsx$1(classes.root, className),
         ref
       }, other, {
-        children: typeof children === "string" && !disableTypography ? /* @__PURE__ */ jsx(Typography, {
+        children: typeof children === "string" && !disableTypography ? /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, {
           color: "text.secondary",
           children
-        }) : /* @__PURE__ */ jsxs(React__namespace.Fragment, {
+        }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
           children: [position2 === "start" ? (
             /* notranslate needed while Google Translate will not fix zero-width space issue */
-            _span$3 || (_span$3 = /* @__PURE__ */ jsx("span", {
+            _span$3 || (_span$3 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
               className: "notranslate",
               children: "​"
             }))
@@ -32674,45 +32716,45 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component, normally an `IconButton` or string.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * Disable pointer events on the root.
      * This allows for the content of the adornment to focus the `input` on click.
      * @default false
      */
-    disablePointerEvents: propTypesExports.bool,
+    disablePointerEvents: PropTypes.bool,
     /**
      * If children is a string then disable wrapping in a Typography component.
      * @default false
      */
-    disableTypography: propTypesExports.bool,
+    disableTypography: PropTypes.bool,
     /**
      * The position this adornment should appear relative to the `Input`.
      */
-    position: propTypesExports.oneOf(["end", "start"]).isRequired,
+    position: PropTypes.oneOf(["end", "start"]).isRequired,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The variant to use.
      * Note: If you are using the `TextField` component or the `FormControl` component
      * you do not have to set this manually.
      */
-    variant: propTypesExports.oneOf(["filled", "outlined", "standard"])
+    variant: PropTypes.oneOf(["filled", "outlined", "standard"])
   } : void 0;
   function formControlState({
     props,
@@ -32730,7 +32772,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }, {});
   }
   function GlobalStyles(props) {
-    return /* @__PURE__ */ jsx(GlobalStyles$1, _extends$2({}, props, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(GlobalStyles$1, _extends$2({}, props, {
       defaultTheme: defaultTheme$2
     }));
   }
@@ -32742,9 +32784,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The styles you want to apply globally.
      */
-    styles: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.number, propTypesExports.object, propTypesExports.shape({
-      __emotion_styles: propTypesExports.any.isRequired
-    }), propTypesExports.string, propTypesExports.bool])
+    styles: PropTypes.oneOfType([PropTypes.func, PropTypes.number, PropTypes.object, PropTypes.shape({
+      __emotion_styles: PropTypes.any.isRequired
+    }), PropTypes.string, PropTypes.bool])
   } : void 0;
   function hasValue(value) {
     return value != null && !(Array.isArray(value) && value.length === 0);
@@ -32928,7 +32970,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       MozAppearance: "textfield"
     });
   });
-  const inputGlobalStyles = /* @__PURE__ */ jsx(GlobalStyles, {
+  const inputGlobalStyles = /* @__PURE__ */ jsxRuntimeExports.jsx(GlobalStyles, {
     styles: {
       "@keyframes mui-auto-fill": {
         from: {
@@ -33149,17 +33191,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const rootProps = slotProps.root || componentsProps.root || {};
     const Input2 = slots.input || components.Input || InputBaseComponent;
     inputProps = _extends$2({}, inputProps, (_slotProps$input = slotProps.input) != null ? _slotProps$input : componentsProps.input);
-    return /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-      children: [!disableInjectingGlobalStyles && inputGlobalStyles, /* @__PURE__ */ jsxs(Root, _extends$2({}, rootProps, !isHostComponent(Root) && {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+      children: [!disableInjectingGlobalStyles && inputGlobalStyles, /* @__PURE__ */ jsxRuntimeExports.jsxs(Root, _extends$2({}, rootProps, !isHostComponent(Root) && {
         ownerState: _extends$2({}, ownerState, rootProps.ownerState)
       }, {
         ref,
         onClick: handleClick
       }, other, {
-        className: clsx(classes.root, rootProps.className, className),
-        children: [startAdornment, /* @__PURE__ */ jsx(FormControlContext.Provider, {
+        className: clsx$1(classes.root, rootProps.className, className),
+        children: [startAdornment, /* @__PURE__ */ jsxRuntimeExports.jsx(FormControlContext.Provider, {
           value: null,
-          children: /* @__PURE__ */ jsx(Input2, _extends$2({
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Input2, _extends$2({
             ownerState,
             "aria-invalid": fcs.error,
             "aria-describedby": ariaDescribedby,
@@ -33183,7 +33225,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             ownerState: _extends$2({}, ownerState, inputProps.ownerState)
           }, {
             ref: handleInputRef,
-            className: clsx(classes.input, inputProps.className),
+            className: clsx$1(classes.input, inputProps.className),
             onBlur: handleBlur2,
             onChange: handleChange,
             onFocus: handleFocus
@@ -33202,32 +33244,32 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    "aria-describedby": propTypesExports.string,
+    "aria-describedby": PropTypes.string,
     /**
      * This prop helps users to fill forms faster, especially on mobile devices.
      * The name can be confusing, as it's more like an autofill.
      * You can learn more about it [following the specification](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill).
      */
-    autoComplete: propTypesExports.string,
+    autoComplete: PropTypes.string,
     /**
      * If `true`, the `input` element is focused during the first mount.
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * The prop defaults to the value (`'primary'`) inherited from the parent FormControl component.
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["primary", "secondary", "error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * The components used for each slot inside.
      *
@@ -33236,9 +33278,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    components: propTypesExports.shape({
-      Input: propTypesExports.elementType,
-      Root: propTypesExports.elementType
+    components: PropTypes.shape({
+      Input: PropTypes.elementType,
+      Root: PropTypes.elementType
     }),
     /**
      * The extra props for the slot components.
@@ -33249,43 +33291,43 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    componentsProps: propTypesExports.shape({
-      input: propTypesExports.object,
-      root: propTypesExports.object
+    componentsProps: PropTypes.shape({
+      input: PropTypes.object,
+      root: PropTypes.object
     }),
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.any,
+    defaultValue: PropTypes.any,
     /**
      * If `true`, the component is disabled.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, GlobalStyles for the auto-fill keyframes will not be injected/removed on mount/unmount. Make sure to inject them at the top of your application.
      * This option is intended to help with boosting the initial rendering performance if you are loading a big amount of Input components at once.
      * @default false
      */
-    disableInjectingGlobalStyles: propTypesExports.bool,
+    disableInjectingGlobalStyles: PropTypes.bool,
     /**
      * End `InputAdornment` for this component.
      */
-    endAdornment: propTypesExports.node,
+    endAdornment: PropTypes.node,
     /**
      * If `true`, the `input` will indicate an error.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    error: propTypesExports.bool,
+    error: PropTypes.bool,
     /**
      * If `true`, the `input` will take up the full width of its container.
      * @default false
      */
-    fullWidth: propTypesExports.bool,
+    fullWidth: PropTypes.bool,
     /**
      * The id of the `input` element.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * The component used for the `input` element.
      * Either a string to use a HTML element or a component.
@@ -33296,7 +33338,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
      * @default {}
      */
-    inputProps: propTypesExports.object,
+    inputProps: PropTypes.object,
     /**
      * Pass a ref to the `input` element.
      */
@@ -33306,83 +33348,83 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * FormControl.
      * The prop defaults to the value (`'none'`) inherited from the parent FormControl component.
      */
-    margin: propTypesExports.oneOf(["dense", "none"]),
+    margin: PropTypes.oneOf(["dense", "none"]),
     /**
      * Maximum number of rows to display when multiline option is set to true.
      */
-    maxRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    maxRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * Minimum number of rows to display when multiline option is set to true.
      */
-    minRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    minRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * If `true`, a [TextareaAutosize](/material-ui/react-textarea-autosize/) element is rendered.
      * @default false
      */
-    multiline: propTypesExports.bool,
+    multiline: PropTypes.bool,
     /**
      * Name attribute of the `input` element.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * Callback fired when the `input` is blurred.
      *
      * Notice that the first argument (event) might be undefined.
      */
-    onBlur: propTypesExports.func,
+    onBlur: PropTypes.func,
     /**
      * Callback fired when the value is changed.
      *
      * @param {React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>} event The event source of the callback.
      * You can pull out the new value by accessing `event.target.value` (string).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * @ignore
      */
-    onClick: propTypesExports.func,
+    onClick: PropTypes.func,
     /**
      * @ignore
      */
-    onFocus: propTypesExports.func,
+    onFocus: PropTypes.func,
     /**
      * Callback fired when the `input` doesn't satisfy its constraints.
      */
-    onInvalid: propTypesExports.func,
+    onInvalid: PropTypes.func,
     /**
      * @ignore
      */
-    onKeyDown: propTypesExports.func,
+    onKeyDown: PropTypes.func,
     /**
      * @ignore
      */
-    onKeyUp: propTypesExports.func,
+    onKeyUp: PropTypes.func,
     /**
      * The short hint displayed in the `input` before the user enters a value.
      */
-    placeholder: propTypesExports.string,
+    placeholder: PropTypes.string,
     /**
      * It prevents the user from changing the value of the field
      * (not from interacting with the field).
      */
-    readOnly: propTypesExports.bool,
+    readOnly: PropTypes.bool,
     /**
      * @ignore
      */
-    renderSuffix: propTypesExports.func,
+    renderSuffix: PropTypes.func,
     /**
      * If `true`, the `input` element is required.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * Number of rows to display when multiline option is set to true.
      */
-    rows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    rows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * The size of the component.
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["medium", "small"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["medium", "small"]), PropTypes.string]),
     /**
      * The extra props for the slot components.
      * You can override the existing props or add new ones.
@@ -33391,9 +33433,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      input: propTypesExports.object,
-      root: propTypesExports.object
+    slotProps: PropTypes.shape({
+      input: PropTypes.object,
+      root: PropTypes.object
     }),
     /**
      * The components used for each slot inside.
@@ -33402,27 +33444,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slots: propTypesExports.shape({
-      input: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      input: PropTypes.elementType,
+      root: PropTypes.elementType
     }),
     /**
      * Start `InputAdornment` for this component.
      */
-    startAdornment: propTypesExports.node,
+    startAdornment: PropTypes.node,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
      * @default 'text'
      */
-    type: propTypesExports.string,
+    type: PropTypes.string,
     /**
      * The value of the `input` element, required for a controlled component.
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
   function getInputUtilityClass(slot) {
     return generateUtilityClass("MuiInput", slot);
@@ -33553,7 +33595,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const componentsProps = (slotProps != null ? slotProps : componentsPropsProp) ? deepmerge(slotProps != null ? slotProps : componentsPropsProp, inputComponentsProps) : inputComponentsProps;
     const RootSlot = (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : InputRoot;
     const InputSlot = (_ref2 = (_slots$input = slots.input) != null ? _slots$input : components.Input) != null ? _ref2 : InputInput;
-    return /* @__PURE__ */ jsx(InputBase, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(InputBase, _extends$2({
       slots: {
         root: RootSlot,
         input: InputSlot
@@ -33578,22 +33620,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The name can be confusing, as it's more like an autofill.
      * You can learn more about it [following the specification](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill).
      */
-    autoComplete: propTypesExports.string,
+    autoComplete: PropTypes.string,
     /**
      * If `true`, the `input` element is focused during the first mount.
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * The prop defaults to the value (`'primary'`) inherited from the parent FormControl component.
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["primary", "secondary"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["primary", "secondary"]), PropTypes.string]),
     /**
      * The components used for each slot inside.
      *
@@ -33602,9 +33644,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    components: propTypesExports.shape({
-      Input: propTypesExports.elementType,
-      Root: propTypesExports.elementType
+    components: PropTypes.shape({
+      Input: PropTypes.elementType,
+      Root: PropTypes.elementType
     }),
     /**
      * The extra props for the slot components.
@@ -33615,52 +33657,52 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    componentsProps: propTypesExports.shape({
-      input: propTypesExports.object,
-      root: propTypesExports.object
+    componentsProps: PropTypes.shape({
+      input: PropTypes.object,
+      root: PropTypes.object
     }),
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.any,
+    defaultValue: PropTypes.any,
     /**
      * If `true`, the component is disabled.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the `input` will not have an underline.
      */
-    disableUnderline: propTypesExports.bool,
+    disableUnderline: PropTypes.bool,
     /**
      * End `InputAdornment` for this component.
      */
-    endAdornment: propTypesExports.node,
+    endAdornment: PropTypes.node,
     /**
      * If `true`, the `input` will indicate an error.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    error: propTypesExports.bool,
+    error: PropTypes.bool,
     /**
      * If `true`, the `input` will take up the full width of its container.
      * @default false
      */
-    fullWidth: propTypesExports.bool,
+    fullWidth: PropTypes.bool,
     /**
      * The id of the `input` element.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * The component used for the `input` element.
      * Either a string to use a HTML element or a component.
      * @default 'input'
      */
-    inputComponent: propTypesExports.elementType,
+    inputComponent: PropTypes.elementType,
     /**
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
      * @default {}
      */
-    inputProps: propTypesExports.object,
+    inputProps: PropTypes.object,
     /**
      * Pass a ref to the `input` element.
      */
@@ -33670,49 +33712,49 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * FormControl.
      * The prop defaults to the value (`'none'`) inherited from the parent FormControl component.
      */
-    margin: propTypesExports.oneOf(["dense", "none"]),
+    margin: PropTypes.oneOf(["dense", "none"]),
     /**
      * Maximum number of rows to display when multiline option is set to true.
      */
-    maxRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    maxRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * Minimum number of rows to display when multiline option is set to true.
      */
-    minRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    minRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * If `true`, a [TextareaAutosize](/material-ui/react-textarea-autosize/) element is rendered.
      * @default false
      */
-    multiline: propTypesExports.bool,
+    multiline: PropTypes.bool,
     /**
      * Name attribute of the `input` element.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * Callback fired when the value is changed.
      *
      * @param {React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>} event The event source of the callback.
      * You can pull out the new value by accessing `event.target.value` (string).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * The short hint displayed in the `input` before the user enters a value.
      */
-    placeholder: propTypesExports.string,
+    placeholder: PropTypes.string,
     /**
      * It prevents the user from changing the value of the field
      * (not from interacting with the field).
      */
-    readOnly: propTypesExports.bool,
+    readOnly: PropTypes.bool,
     /**
      * If `true`, the `input` element is required.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * Number of rows to display when multiline option is set to true.
      */
-    rows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    rows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * The extra props for the slot components.
      * You can override the existing props or add new ones.
@@ -33721,9 +33763,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      input: propTypesExports.object,
-      root: propTypesExports.object
+    slotProps: PropTypes.shape({
+      input: PropTypes.object,
+      root: PropTypes.object
     }),
     /**
      * The components used for each slot inside.
@@ -33732,27 +33774,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slots: propTypesExports.shape({
-      input: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      input: PropTypes.elementType,
+      root: PropTypes.elementType
     }),
     /**
      * Start `InputAdornment` for this component.
      */
-    startAdornment: propTypesExports.node,
+    startAdornment: PropTypes.node,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
      * @default 'text'
      */
-    type: propTypesExports.string,
+    type: PropTypes.string,
     /**
      * The value of the `input` element, required for a controlled component.
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
   Input.muiName = "Input";
   function getFilledInputUtilityClass(slot) {
@@ -33961,7 +34003,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const componentsProps = (slotProps != null ? slotProps : componentsPropsProp) ? deepmerge(slotProps != null ? slotProps : componentsPropsProp, filledInputComponentsProps) : filledInputComponentsProps;
     const RootSlot = (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : FilledInputRoot;
     const InputSlot = (_ref2 = (_slots$input = slots.input) != null ? _slots$input : components.Input) != null ? _ref2 : FilledInputInput;
-    return /* @__PURE__ */ jsx(InputBase, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(InputBase, _extends$2({
       slots: {
         root: RootSlot,
         input: InputSlot
@@ -33986,22 +34028,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The name can be confusing, as it's more like an autofill.
      * You can learn more about it [following the specification](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill).
      */
-    autoComplete: propTypesExports.string,
+    autoComplete: PropTypes.string,
     /**
      * If `true`, the `input` element is focused during the first mount.
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * The prop defaults to the value (`'primary'`) inherited from the parent FormControl component.
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["primary", "secondary"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["primary", "secondary"]), PropTypes.string]),
     /**
      * The components used for each slot inside.
      *
@@ -34010,9 +34052,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    components: propTypesExports.shape({
-      Input: propTypesExports.elementType,
-      Root: propTypesExports.elementType
+    components: PropTypes.shape({
+      Input: PropTypes.elementType,
+      Root: PropTypes.elementType
     }),
     /**
      * The extra props for the slot components.
@@ -34023,59 +34065,59 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    componentsProps: propTypesExports.shape({
-      input: propTypesExports.object,
-      root: propTypesExports.object
+    componentsProps: PropTypes.shape({
+      input: PropTypes.object,
+      root: PropTypes.object
     }),
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.any,
+    defaultValue: PropTypes.any,
     /**
      * If `true`, the component is disabled.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the input will not have an underline.
      */
-    disableUnderline: propTypesExports.bool,
+    disableUnderline: PropTypes.bool,
     /**
      * End `InputAdornment` for this component.
      */
-    endAdornment: propTypesExports.node,
+    endAdornment: PropTypes.node,
     /**
      * If `true`, the `input` will indicate an error.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    error: propTypesExports.bool,
+    error: PropTypes.bool,
     /**
      * If `true`, the `input` will take up the full width of its container.
      * @default false
      */
-    fullWidth: propTypesExports.bool,
+    fullWidth: PropTypes.bool,
     /**
      * If `true`, the label is hidden.
      * This is used to increase density for a `FilledInput`.
      * Be sure to add `aria-label` to the `input` element.
      * @default false
      */
-    hiddenLabel: propTypesExports.bool,
+    hiddenLabel: PropTypes.bool,
     /**
      * The id of the `input` element.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * The component used for the `input` element.
      * Either a string to use a HTML element or a component.
      * @default 'input'
      */
-    inputComponent: propTypesExports.elementType,
+    inputComponent: PropTypes.elementType,
     /**
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
      * @default {}
      */
-    inputProps: propTypesExports.object,
+    inputProps: PropTypes.object,
     /**
      * Pass a ref to the `input` element.
      */
@@ -34085,49 +34127,49 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * FormControl.
      * The prop defaults to the value (`'none'`) inherited from the parent FormControl component.
      */
-    margin: propTypesExports.oneOf(["dense", "none"]),
+    margin: PropTypes.oneOf(["dense", "none"]),
     /**
      * Maximum number of rows to display when multiline option is set to true.
      */
-    maxRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    maxRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * Minimum number of rows to display when multiline option is set to true.
      */
-    minRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    minRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * If `true`, a [TextareaAutosize](/material-ui/react-textarea-autosize/) element is rendered.
      * @default false
      */
-    multiline: propTypesExports.bool,
+    multiline: PropTypes.bool,
     /**
      * Name attribute of the `input` element.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * Callback fired when the value is changed.
      *
      * @param {React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>} event The event source of the callback.
      * You can pull out the new value by accessing `event.target.value` (string).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * The short hint displayed in the `input` before the user enters a value.
      */
-    placeholder: propTypesExports.string,
+    placeholder: PropTypes.string,
     /**
      * It prevents the user from changing the value of the field
      * (not from interacting with the field).
      */
-    readOnly: propTypesExports.bool,
+    readOnly: PropTypes.bool,
     /**
      * If `true`, the `input` element is required.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * Number of rows to display when multiline option is set to true.
      */
-    rows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    rows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * The extra props for the slot components.
      * You can override the existing props or add new ones.
@@ -34136,9 +34178,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      input: propTypesExports.object,
-      root: propTypesExports.object
+    slotProps: PropTypes.shape({
+      input: PropTypes.object,
+      root: PropTypes.object
     }),
     /**
      * The components used for each slot inside.
@@ -34147,27 +34189,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slots: propTypesExports.shape({
-      input: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      input: PropTypes.elementType,
+      root: PropTypes.elementType
     }),
     /**
      * Start `InputAdornment` for this component.
      */
-    startAdornment: propTypesExports.node,
+    startAdornment: PropTypes.node,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
      * @default 'text'
      */
-    type: propTypesExports.string,
+    type: PropTypes.string,
     /**
      * The value of the `input` element, required for a controlled component.
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
   FilledInput.muiName = "Input";
   var _span$2;
@@ -34245,18 +34287,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       notched,
       withLabel
     });
-    return /* @__PURE__ */ jsx(NotchedOutlineRoot$1, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(NotchedOutlineRoot$1, _extends$2({
       "aria-hidden": true,
       className,
       ownerState
     }, other, {
-      children: /* @__PURE__ */ jsx(NotchedOutlineLegend, {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(NotchedOutlineLegend, {
         ownerState,
-        children: withLabel ? /* @__PURE__ */ jsx("span", {
+        children: withLabel ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
           children: label
         }) : (
           // notranslate needed while Google Translate will not fix zero-width space issue
-          _span$2 || (_span$2 = /* @__PURE__ */ jsx("span", {
+          _span$2 || (_span$2 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
             className: "notranslate",
             children: "​"
           }))
@@ -34268,28 +34310,28 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      * See [CSS API](#css) below for more details.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The label.
      */
-    label: propTypesExports.node,
+    label: PropTypes.node,
     /**
      * If `true`, the outline is notched to accommodate the label.
      */
-    notched: propTypesExports.bool.isRequired,
+    notched: PropTypes.bool.isRequired,
     /**
      * @ignore
      */
-    style: propTypesExports.object
+    style: PropTypes.object
   } : void 0;
   function getOutlinedInputUtilityClass(slot) {
     return generateUtilityClass("MuiOutlinedInput", slot);
@@ -34435,15 +34477,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const RootSlot = (_ref = (_slots$root = slots.root) != null ? _slots$root : components.Root) != null ? _ref : OutlinedInputRoot;
     const InputSlot = (_ref2 = (_slots$input = slots.input) != null ? _slots$input : components.Input) != null ? _ref2 : OutlinedInputInput;
-    return /* @__PURE__ */ jsx(InputBase, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(InputBase, _extends$2({
       slots: {
         root: RootSlot,
         input: InputSlot
       },
-      renderSuffix: (state) => /* @__PURE__ */ jsx(NotchedOutlineRoot, {
+      renderSuffix: (state) => /* @__PURE__ */ jsxRuntimeExports.jsx(NotchedOutlineRoot, {
         ownerState,
         className: classes.notchedOutline,
-        label: label != null && label !== "" && fcs.required ? _React$Fragment || (_React$Fragment = /* @__PURE__ */ jsxs(React__namespace.Fragment, {
+        label: label != null && label !== "" && fcs.required ? _React$Fragment || (_React$Fragment = /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
           children: [label, " ", "*"]
         })) : label,
         notched: typeof notched !== "undefined" ? notched : Boolean(state.startAdornment || state.filled || state.focused)
@@ -34469,22 +34511,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The name can be confusing, as it's more like an autofill.
      * You can learn more about it [following the specification](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill).
      */
-    autoComplete: propTypesExports.string,
+    autoComplete: PropTypes.string,
     /**
      * If `true`, the `input` element is focused during the first mount.
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * The prop defaults to the value (`'primary'`) inherited from the parent FormControl component.
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["primary", "secondary"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["primary", "secondary"]), PropTypes.string]),
     /**
      * The components used for each slot inside.
      *
@@ -34493,48 +34535,48 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    components: propTypesExports.shape({
-      Input: propTypesExports.elementType,
-      Root: propTypesExports.elementType
+    components: PropTypes.shape({
+      Input: PropTypes.elementType,
+      Root: PropTypes.elementType
     }),
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.any,
+    defaultValue: PropTypes.any,
     /**
      * If `true`, the component is disabled.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * End `InputAdornment` for this component.
      */
-    endAdornment: propTypesExports.node,
+    endAdornment: PropTypes.node,
     /**
      * If `true`, the `input` will indicate an error.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    error: propTypesExports.bool,
+    error: PropTypes.bool,
     /**
      * If `true`, the `input` will take up the full width of its container.
      * @default false
      */
-    fullWidth: propTypesExports.bool,
+    fullWidth: PropTypes.bool,
     /**
      * The id of the `input` element.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * The component used for the `input` element.
      * Either a string to use a HTML element or a component.
      * @default 'input'
      */
-    inputComponent: propTypesExports.elementType,
+    inputComponent: PropTypes.elementType,
     /**
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
      * @default {}
      */
-    inputProps: propTypesExports.object,
+    inputProps: PropTypes.object,
     /**
      * Pass a ref to the `input` element.
      */
@@ -34543,59 +34585,59 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The label of the `input`. It is only used for layout. The actual labelling
      * is handled by `InputLabel`.
      */
-    label: propTypesExports.node,
+    label: PropTypes.node,
     /**
      * If `dense`, will adjust vertical spacing. This is normally obtained via context from
      * FormControl.
      * The prop defaults to the value (`'none'`) inherited from the parent FormControl component.
      */
-    margin: propTypesExports.oneOf(["dense", "none"]),
+    margin: PropTypes.oneOf(["dense", "none"]),
     /**
      * Maximum number of rows to display when multiline option is set to true.
      */
-    maxRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    maxRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * Minimum number of rows to display when multiline option is set to true.
      */
-    minRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    minRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * If `true`, a [TextareaAutosize](/material-ui/react-textarea-autosize/) element is rendered.
      * @default false
      */
-    multiline: propTypesExports.bool,
+    multiline: PropTypes.bool,
     /**
      * Name attribute of the `input` element.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * If `true`, the outline is notched to accommodate the label.
      */
-    notched: propTypesExports.bool,
+    notched: PropTypes.bool,
     /**
      * Callback fired when the value is changed.
      *
      * @param {React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>} event The event source of the callback.
      * You can pull out the new value by accessing `event.target.value` (string).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * The short hint displayed in the `input` before the user enters a value.
      */
-    placeholder: propTypesExports.string,
+    placeholder: PropTypes.string,
     /**
      * It prevents the user from changing the value of the field
      * (not from interacting with the field).
      */
-    readOnly: propTypesExports.bool,
+    readOnly: PropTypes.bool,
     /**
      * If `true`, the `input` element is required.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * Number of rows to display when multiline option is set to true.
      */
-    rows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    rows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * The components used for each slot inside.
      *
@@ -34603,27 +34645,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slots: propTypesExports.shape({
-      input: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      input: PropTypes.elementType,
+      root: PropTypes.elementType
     }),
     /**
      * Start `InputAdornment` for this component.
      */
-    startAdornment: propTypesExports.node,
+    startAdornment: PropTypes.node,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
      * @default 'text'
      */
-    type: propTypesExports.string,
+    type: PropTypes.string,
     /**
      * The value of the `input` element, required for a controlled component.
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
   OutlinedInput.muiName = "Input";
   function getFormLabelUtilityClasses(slot) {
@@ -34711,13 +34753,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       required: fcs.required
     });
     const classes = useUtilityClasses$s(ownerState);
-    return /* @__PURE__ */ jsxs(FormLabelRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormLabelRoot, _extends$2({
       as: component,
       ownerState,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       ref
     }, other, {
-      children: [children, fcs.required && /* @__PURE__ */ jsxs(AsteriskComponent, {
+      children: [children, fcs.required && /* @__PURE__ */ jsxRuntimeExports.jsxs(AsteriskComponent, {
         ownerState,
         "aria-hidden": true,
         className: classes.asterisk,
@@ -34733,50 +34775,50 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["error", "info", "primary", "secondary", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["error", "info", "primary", "secondary", "success", "warning"]), PropTypes.string]),
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the label should be displayed in a disabled state.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the label is displayed in an error state.
      */
-    error: propTypesExports.bool,
+    error: PropTypes.bool,
     /**
      * If `true`, the label should use filled classes key.
      */
-    filled: propTypesExports.bool,
+    filled: PropTypes.bool,
     /**
      * If `true`, the input of this label is focused (used by `FormGroup` components).
      */
-    focused: propTypesExports.bool,
+    focused: PropTypes.bool,
     /**
      * If `true`, the label will indicate that the `input` is required.
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getInputLabelUtilityClasses(slot) {
     return generateUtilityClass("MuiInputLabel", slot);
@@ -34901,11 +34943,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       required: fcs.required
     });
     const classes = useUtilityClasses$r(ownerState);
-    return /* @__PURE__ */ jsx(InputLabelRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabelRoot, _extends$2({
       "data-shrink": shrink,
       ownerState,
       ref,
-      className: clsx(classes.root, className)
+      className: clsx$1(classes.root, className)
     }, other, {
       classes
     }));
@@ -34918,64 +34960,64 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["error", "info", "primary", "secondary", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["error", "info", "primary", "secondary", "success", "warning"]), PropTypes.string]),
     /**
      * If `true`, the transition animation is disabled.
      * @default false
      */
-    disableAnimation: propTypesExports.bool,
+    disableAnimation: PropTypes.bool,
     /**
      * If `true`, the component is disabled.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the label is displayed in an error state.
      */
-    error: propTypesExports.bool,
+    error: PropTypes.bool,
     /**
      * If `true`, the `input` of this label is focused.
      */
-    focused: propTypesExports.bool,
+    focused: PropTypes.bool,
     /**
      * If `dense`, will adjust vertical spacing. This is normally obtained via context from
      * FormControl.
      */
-    margin: propTypesExports.oneOf(["dense"]),
+    margin: PropTypes.oneOf(["dense"]),
     /**
      * if `true`, the label will indicate that the `input` is required.
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * If `true`, the label is shrunk.
      */
-    shrink: propTypesExports.bool,
+    shrink: PropTypes.bool,
     /**
      * The size of the component.
      * @default 'normal'
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["normal", "small"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["normal", "small"]), PropTypes.string]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The variant to use.
      */
-    variant: propTypesExports.oneOf(["filled", "outlined", "standard"])
+    variant: PropTypes.oneOf(["filled", "outlined", "standard"])
   } : void 0;
   function getFormControlUtilityClasses(slot) {
     return generateUtilityClass("MuiFormControl", slot);
@@ -35131,12 +35173,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         variant
       };
     }, [adornedStart, color2, disabled, error, filled, focused, fullWidth, hiddenLabel, registerEffect, required, size, variant]);
-    return /* @__PURE__ */ jsx(FormControlContext.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(FormControlContext.Provider, {
       value: childContext,
-      children: /* @__PURE__ */ jsx(FormControlRoot, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(FormControlRoot, _extends$2({
         as: component,
         ownerState,
-        className: clsx(classes.root, className),
+        className: clsx$1(classes.root, className),
         ref
       }, other, {
         children
@@ -35151,77 +35193,77 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'primary'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["primary", "secondary", "error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the label, input and helper text should be displayed in a disabled state.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the label is displayed in an error state.
      * @default false
      */
-    error: propTypesExports.bool,
+    error: PropTypes.bool,
     /**
      * If `true`, the component is displayed in focused state.
      */
-    focused: propTypesExports.bool,
+    focused: PropTypes.bool,
     /**
      * If `true`, the component will take up the full width of its container.
      * @default false
      */
-    fullWidth: propTypesExports.bool,
+    fullWidth: PropTypes.bool,
     /**
      * If `true`, the label is hidden.
      * This is used to increase density for a `FilledInput`.
      * Be sure to add `aria-label` to the `input` element.
      * @default false
      */
-    hiddenLabel: propTypesExports.bool,
+    hiddenLabel: PropTypes.bool,
     /**
      * If `dense` or `normal`, will adjust vertical spacing of this and contained components.
      * @default 'none'
      */
-    margin: propTypesExports.oneOf(["dense", "none", "normal"]),
+    margin: PropTypes.oneOf(["dense", "none", "normal"]),
     /**
      * If `true`, the label will indicate that the `input` is required.
      * @default false
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * The size of the component.
      * @default 'medium'
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["medium", "small"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["medium", "small"]), PropTypes.string]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The variant to use.
      * @default 'outlined'
      */
-    variant: propTypesExports.oneOf(["filled", "outlined", "standard"])
+    variant: PropTypes.oneOf(["filled", "outlined", "standard"])
   } : void 0;
   function getFormHelperTextUtilityClasses(slot) {
     return generateUtilityClass("MuiFormHelperText", slot);
@@ -35305,15 +35347,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       required: fcs.required
     });
     const classes = useUtilityClasses$p(ownerState);
-    return /* @__PURE__ */ jsx(FormHelperTextRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(FormHelperTextRoot, _extends$2({
       as: component,
       ownerState,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       ref
     }, other, {
       children: children === " " ? (
         // notranslate needed while Google Translate will not fix zero-width space issue
-        _span$1 || (_span$1 = /* @__PURE__ */ jsx("span", {
+        _span$1 || (_span$1 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
           className: "notranslate",
           children: "​"
         }))
@@ -35330,53 +35372,53 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * If `' '` is provided, the component reserves one line height for displaying a future message.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the helper text should be displayed in a disabled state.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, helper text should be displayed in an error state.
      */
-    error: propTypesExports.bool,
+    error: PropTypes.bool,
     /**
      * If `true`, the helper text should use filled classes key.
      */
-    filled: propTypesExports.bool,
+    filled: PropTypes.bool,
     /**
      * If `true`, the helper text should use focused classes key.
      */
-    focused: propTypesExports.bool,
+    focused: PropTypes.bool,
     /**
      * If `dense`, will adjust vertical spacing. This is normally obtained via context from
      * FormControl.
      */
-    margin: propTypesExports.oneOf(["dense"]),
+    margin: PropTypes.oneOf(["dense"]),
     /**
      * If `true`, the helper text should use required classes key.
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The variant to use.
      */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["filled", "outlined", "standard"]), propTypesExports.string])
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["filled", "outlined", "standard"]), PropTypes.string])
   } : void 0;
   function getNativeSelectUtilityClasses(slot) {
     return generateUtilityClass("MuiNativeSelect", slot);
@@ -35511,13 +35553,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       variant
     });
     const classes = useUtilityClasses$o(ownerState);
-    return /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-      children: [/* @__PURE__ */ jsx(NativeSelectSelect, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(NativeSelectSelect, _extends$2({
         ownerState,
-        className: clsx(classes.select, className),
+        className: clsx$1(classes.select, className),
         disabled,
         ref: inputRef || ref
-      }, other)), props.multiple ? null : /* @__PURE__ */ jsx(NativeSelectIcon, {
+      }, other)), props.multiple ? null : /* @__PURE__ */ jsxRuntimeExports.jsx(NativeSelectIcon, {
         as: IconComponent,
         ownerState,
         className: classes.icon
@@ -35529,24 +35571,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The option elements to populate the select with.
      * Can be some `<option>` elements.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      * See [CSS API](#css) below for more details.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * The CSS class name of the select element.
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * If `true`, the select is disabled.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * The icon that displays the arrow.
      */
-    IconComponent: propTypesExports.elementType.isRequired,
+    IconComponent: PropTypes.elementType.isRequired,
     /**
      * Use that prop to pass a ref to the native select element.
      * @deprecated
@@ -35555,26 +35597,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    multiple: propTypesExports.bool,
+    multiple: PropTypes.bool,
     /**
      * Name attribute of the `select` or hidden `input` element.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * Callback fired when a menu item is selected.
      *
      * @param {object} event The event source of the callback.
      * You can pull out the new value by accessing `event.target.value` (string).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * The input value.
      */
-    value: propTypesExports.any,
+    value: PropTypes.any,
     /**
      * The variant to use.
      */
-    variant: propTypesExports.oneOf(["standard", "outlined", "filled"])
+    variant: PropTypes.oneOf(["standard", "outlined", "filled"])
   } : void 0;
   function getSelectUtilityClasses(slot) {
     return generateUtilityClass("MuiSelect", slot);
@@ -35980,8 +36022,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       open
     });
     const classes = useUtilityClasses$n(ownerState);
-    return /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-      children: [/* @__PURE__ */ jsx(SelectSelect, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(SelectSelect, _extends$2({
         ref: handleDisplayRef,
         tabIndex,
         role: "button",
@@ -35997,16 +36039,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         onFocus
       }, SelectDisplayProps, {
         ownerState,
-        className: clsx(SelectDisplayProps.className, classes.select, className),
+        className: clsx$1(SelectDisplayProps.className, classes.select, className),
         id: buttonId,
         children: isEmpty(display2) ? (
           // notranslate needed while Google Translate will not fix zero-width space issue
-          _span || (_span = /* @__PURE__ */ jsx("span", {
+          _span || (_span = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
             className: "notranslate",
             children: "​"
           }))
         ) : display2
-      })), /* @__PURE__ */ jsx(SelectNativeInput, _extends$2({
+      })), /* @__PURE__ */ jsxRuntimeExports.jsx(SelectNativeInput, _extends$2({
         value: Array.isArray(value) ? value.join(",") : value,
         name,
         ref: inputRef,
@@ -36017,11 +36059,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         className: classes.nativeInput,
         autoFocus,
         ownerState
-      }, other)), /* @__PURE__ */ jsx(SelectIcon, {
+      }, other)), /* @__PURE__ */ jsxRuntimeExports.jsx(SelectIcon, {
         as: IconComponent,
         className: classes.icon,
         ownerState
-      }), /* @__PURE__ */ jsx(Menu, _extends$2({
+      }), /* @__PURE__ */ jsxRuntimeExports.jsx(Menu, _extends$2({
         id: `menu-${name || ""}`,
         anchorEl: anchorElement,
         open,
@@ -36053,55 +36095,55 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    "aria-describedby": propTypesExports.string,
+    "aria-describedby": PropTypes.string,
     /**
      * @ignore
      */
-    "aria-label": propTypesExports.string,
+    "aria-label": PropTypes.string,
     /**
      * @ignore
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * If `true`, the width of the popover will automatically be set according to the items inside the
      * menu, otherwise it will be at least the width of the select input.
      */
-    autoWidth: propTypesExports.bool,
+    autoWidth: PropTypes.bool,
     /**
      * The option elements to populate the select with.
      * Can be some `<MenuItem>` elements.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      * See [CSS API](#css) below for more details.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * The CSS class name of the select element.
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * If `true`, the component is toggled on mount. Use when the component open state is not controlled.
      * You can only use it when the `native` prop is `false` (default).
      */
-    defaultOpen: propTypesExports.bool,
+    defaultOpen: PropTypes.bool,
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.any,
+    defaultValue: PropTypes.any,
     /**
      * If `true`, the select is disabled.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the selected item is displayed even if its value is empty.
      */
-    displayEmpty: propTypesExports.bool,
+    displayEmpty: PropTypes.bool,
     /**
      * The icon that displays the arrow.
      */
-    IconComponent: propTypesExports.elementType.isRequired,
+    IconComponent: PropTypes.elementType.isRequired,
     /**
      * Imperative handle implementing `{ value: T, node: HTMLElement, focus(): void }`
      * Equivalent to `ref`
@@ -36111,23 +36153,23 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The ID of an element that acts as an additional label. The Select will
      * be labelled by the additional label and the selected value.
      */
-    labelId: propTypesExports.string,
+    labelId: PropTypes.string,
     /**
      * Props applied to the [`Menu`](/material-ui/api/menu/) element.
      */
-    MenuProps: propTypesExports.object,
+    MenuProps: PropTypes.object,
     /**
      * If `true`, `value` must be an array and the menu will support multiple selections.
      */
-    multiple: propTypesExports.bool,
+    multiple: PropTypes.bool,
     /**
      * Name attribute of the `select` or hidden `input` element.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * @ignore
      */
-    onBlur: propTypesExports.func,
+    onBlur: PropTypes.func,
     /**
      * Callback fired when a menu item is selected.
      *
@@ -36135,62 +36177,62 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * You can pull out the new value by accessing `event.target.value` (any).
      * @param {object} [child] The react element that was selected.
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * Callback fired when the component requests to be closed.
      * Use in controlled mode (see open).
      *
      * @param {object} event The event source of the callback.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * @ignore
      */
-    onFocus: propTypesExports.func,
+    onFocus: PropTypes.func,
     /**
      * Callback fired when the component requests to be opened.
      * Use in controlled mode (see open).
      *
      * @param {object} event The event source of the callback.
      */
-    onOpen: propTypesExports.func,
+    onOpen: PropTypes.func,
     /**
      * If `true`, the component is shown.
      */
-    open: propTypesExports.bool,
+    open: PropTypes.bool,
     /**
      * @ignore
      */
-    readOnly: propTypesExports.bool,
+    readOnly: PropTypes.bool,
     /**
      * Render the selected value.
      *
      * @param {any} value The `value` provided to the component.
      * @returns {ReactNode}
      */
-    renderValue: propTypesExports.func,
+    renderValue: PropTypes.func,
     /**
      * Props applied to the clickable div element.
      */
-    SelectDisplayProps: propTypesExports.object,
+    SelectDisplayProps: PropTypes.object,
     /**
      * @ignore
      */
-    tabIndex: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * @ignore
      */
-    type: propTypesExports.any,
+    type: PropTypes.any,
     /**
      * The input value.
      */
-    value: propTypesExports.any,
+    value: PropTypes.any,
     /**
      * The variant to use.
      */
-    variant: propTypesExports.oneOf(["standard", "outlined", "filled"])
+    variant: PropTypes.oneOf(["standard", "outlined", "filled"])
   } : void 0;
-  const ArrowDropDownIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const ArrowDropDownIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M7 10l5 5 5-5z"
   }), "ArrowDropDown");
   var _StyledInput, _StyledFilledInput;
@@ -36247,11 +36289,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const variant = fcs.variant || variantProp;
     const InputComponent = input || {
-      standard: _StyledInput || (_StyledInput = /* @__PURE__ */ jsx(StyledInput, {})),
-      outlined: /* @__PURE__ */ jsx(StyledOutlinedInput, {
+      standard: _StyledInput || (_StyledInput = /* @__PURE__ */ jsxRuntimeExports.jsx(StyledInput, {})),
+      outlined: /* @__PURE__ */ jsxRuntimeExports.jsx(StyledOutlinedInput, {
         label
       }),
-      filled: _StyledFilledInput || (_StyledFilledInput = /* @__PURE__ */ jsx(StyledFilledInput, {}))
+      filled: _StyledFilledInput || (_StyledFilledInput = /* @__PURE__ */ jsxRuntimeExports.jsx(StyledFilledInput, {}))
     }[variant];
     const ownerState = _extends$2({}, props, {
       variant,
@@ -36259,7 +36301,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const classes = useUtilityClasses$m(ownerState);
     const inputComponentRef = useForkRef(ref, InputComponent.ref);
-    return /* @__PURE__ */ jsx(React__namespace.Fragment, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(React__namespace.Fragment, {
       children: /* @__PURE__ */ React__namespace.cloneElement(InputComponent, _extends$2({
         // Most of the logic is implemented in `SelectInput`.
         // The `Select` component is a simple API wrapper to expose something better to play with.
@@ -36293,7 +36335,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         notched: true
       } : {}, {
         ref: inputComponentRef,
-        className: clsx(InputComponent.props.className, className)
+        className: clsx$1(InputComponent.props.className, className)
       }, !input && {
         variant
       }, other))
@@ -36309,33 +36351,33 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * menu, otherwise it will be at least the width of the select input.
      * @default false
      */
-    autoWidth: propTypesExports.bool,
+    autoWidth: PropTypes.bool,
     /**
      * The option elements to populate the select with.
      * Can be some `MenuItem` when `native` is false and `option` when `native` is true.
      *
      * ⚠️The `MenuItem` elements **must** be direct descendants when `native` is false.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      * @default {}
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * If `true`, the component is initially open. Use when the component open state is not controlled (i.e. the `open` prop is not defined).
      * You can only use it when the `native` prop is `false` (default).
      * @default false
      */
-    defaultOpen: propTypesExports.bool,
+    defaultOpen: PropTypes.bool,
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.any,
+    defaultValue: PropTypes.any,
     /**
      * If `true`, a value is displayed even if no items are selected.
      *
@@ -36346,48 +36388,48 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The label should either be hidden or forced to a shrunk state.
      * @default false
      */
-    displayEmpty: propTypesExports.bool,
+    displayEmpty: PropTypes.bool,
     /**
      * The icon that displays the arrow.
      * @default ArrowDropDownIcon
      */
-    IconComponent: propTypesExports.elementType,
+    IconComponent: PropTypes.elementType,
     /**
      * The `id` of the wrapper element or the `select` element when `native`.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * An `Input` element; does not have to be a material-ui specific `Input`.
      */
-    input: propTypesExports.element,
+    input: PropTypes.element,
     /**
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
      * When `native` is `true`, the attributes are applied on the `select` element.
      */
-    inputProps: propTypesExports.object,
+    inputProps: PropTypes.object,
     /**
      * See [OutlinedInput#label](/material-ui/api/outlined-input/#props)
      */
-    label: propTypesExports.node,
+    label: PropTypes.node,
     /**
      * The ID of an element that acts as an additional label. The Select will
      * be labelled by the additional label and the selected value.
      */
-    labelId: propTypesExports.string,
+    labelId: PropTypes.string,
     /**
      * Props applied to the [`Menu`](/material-ui/api/menu/) element.
      */
-    MenuProps: propTypesExports.object,
+    MenuProps: PropTypes.object,
     /**
      * If `true`, `value` must be an array and the menu will support multiple selections.
      * @default false
      */
-    multiple: propTypesExports.bool,
+    multiple: PropTypes.bool,
     /**
      * If `true`, the component uses a native `select` element.
      * @default false
      */
-    native: propTypesExports.bool,
+    native: PropTypes.bool,
     /**
      * Callback fired when a menu item is selected.
      *
@@ -36396,26 +36438,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * **Warning**: This is a generic event, not a change event, unless the change event is caused by browser autofill.
      * @param {object} [child] The react element that was selected when `native` is `false` (default).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * Callback fired when the component requests to be closed.
      * Use it in either controlled (see the `open` prop), or uncontrolled mode (to detect when the Select collapes).
      *
      * @param {object} event The event source of the callback.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * Callback fired when the component requests to be opened.
      * Use it in either controlled (see the `open` prop), or uncontrolled mode (to detect when the Select expands).
      *
      * @param {object} event The event source of the callback.
      */
-    onOpen: propTypesExports.func,
+    onOpen: PropTypes.func,
     /**
      * If `true`, the component is shown.
      * You can only use it when the `native` prop is `false` (default).
      */
-    open: propTypesExports.bool,
+    open: PropTypes.bool,
     /**
      * Render the selected value.
      * You can only use it when the `native` prop is `false` (default).
@@ -36423,15 +36465,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * @param {any} value The `value` provided to the component.
      * @returns {ReactNode}
      */
-    renderValue: propTypesExports.func,
+    renderValue: PropTypes.func,
     /**
      * Props applied to the clickable div element.
      */
-    SelectDisplayProps: propTypesExports.object,
+    SelectDisplayProps: PropTypes.object,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The `input` value. Providing an empty string will select no options.
      * Set to an empty string `''` if you don't want any of the available options to be selected.
@@ -36439,12 +36481,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * If the value is an object it must have reference equality with the option in order to be selected.
      * If the value is not an object, the string representation must match with the string representation of the option in order to be selected.
      */
-    value: propTypesExports.oneOfType([propTypesExports.oneOf([""]), propTypesExports.any]),
+    value: PropTypes.oneOfType([PropTypes.oneOf([""]), PropTypes.any]),
     /**
      * The variant to use.
      * @default 'outlined'
      */
-    variant: propTypesExports.oneOf(["filled", "outlined", "standard"])
+    variant: PropTypes.oneOf(["filled", "outlined", "standard"])
   } : void 0;
   Select.muiName = "Select";
   function getTextFieldUtilityClass(slot) {
@@ -36544,7 +36586,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const helperTextId = helperText && id ? `${id}-helper-text` : void 0;
     const inputLabelId = label && id ? `${id}-label` : void 0;
     const InputComponent = variantComponent[variant];
-    const InputElement = /* @__PURE__ */ jsx(InputComponent, _extends$2({
+    const InputElement = /* @__PURE__ */ jsxRuntimeExports.jsx(InputComponent, _extends$2({
       "aria-describedby": helperTextId,
       autoComplete,
       autoFocus,
@@ -36565,8 +36607,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       placeholder,
       inputProps
     }, InputMore, InputProps));
-    return /* @__PURE__ */ jsxs(TextFieldRoot, _extends$2({
-      className: clsx(classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(TextFieldRoot, _extends$2({
+      className: clsx$1(classes.root, className),
       disabled,
       error,
       fullWidth,
@@ -36576,12 +36618,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       variant,
       ownerState
     }, other, {
-      children: [label != null && label !== "" && /* @__PURE__ */ jsx(InputLabel, _extends$2({
+      children: [label != null && label !== "" && /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel, _extends$2({
         htmlFor: id,
         id: inputLabelId
       }, InputLabelProps, {
         children: label
-      })), select ? /* @__PURE__ */ jsx(Select, _extends$2({
+      })), select ? /* @__PURE__ */ jsxRuntimeExports.jsx(Select, _extends$2({
         "aria-describedby": helperTextId,
         id,
         labelId: inputLabelId,
@@ -36589,7 +36631,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         input: InputElement
       }, SelectProps, {
         children
-      })) : InputElement, helperText && /* @__PURE__ */ jsx(FormHelperText, _extends$2({
+      })) : InputElement, helperText && /* @__PURE__ */ jsxRuntimeExports.jsx(FormHelperText, _extends$2({
         id: helperTextId
       }, FormHelperTextProps, {
         children: helperText
@@ -36606,79 +36648,79 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The name can be confusing, as it's more like an autofill.
      * You can learn more about it [following the specification](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill).
      */
-    autoComplete: propTypesExports.string,
+    autoComplete: PropTypes.string,
     /**
      * If `true`, the `input` element is focused during the first mount.
      * @default false
      */
-    autoFocus: propTypesExports.bool,
+    autoFocus: PropTypes.bool,
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'primary'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["primary", "secondary", "error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.any,
+    defaultValue: PropTypes.any,
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the label is displayed in an error state.
      * @default false
      */
-    error: propTypesExports.bool,
+    error: PropTypes.bool,
     /**
      * Props applied to the [`FormHelperText`](/material-ui/api/form-helper-text/) element.
      */
-    FormHelperTextProps: propTypesExports.object,
+    FormHelperTextProps: PropTypes.object,
     /**
      * If `true`, the input will take up the full width of its container.
      * @default false
      */
-    fullWidth: propTypesExports.bool,
+    fullWidth: PropTypes.bool,
     /**
      * The helper text content.
      */
-    helperText: propTypesExports.node,
+    helperText: PropTypes.node,
     /**
      * The id of the `input` element.
      * Use this prop to make `label` and `helperText` accessible for screen readers.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * Props applied to the [`InputLabel`](/material-ui/api/input-label/) element.
      * Pointer events like `onClick` are enabled if and only if `shrink` is `true`.
      */
-    InputLabelProps: propTypesExports.object,
+    InputLabelProps: PropTypes.object,
     /**
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
      */
-    inputProps: propTypesExports.object,
+    inputProps: PropTypes.object,
     /**
      * Props applied to the Input element.
      * It will be a [`FilledInput`](/material-ui/api/filled-input/),
      * [`OutlinedInput`](/material-ui/api/outlined-input/) or [`Input`](/material-ui/api/input/)
      * component depending on the `variant` prop value.
      */
-    InputProps: propTypesExports.object,
+    InputProps: PropTypes.object,
     /**
      * Pass a ref to the `input` element.
      */
@@ -36686,88 +36728,88 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The label content.
      */
-    label: propTypesExports.node,
+    label: PropTypes.node,
     /**
      * If `dense` or `normal`, will adjust vertical spacing of this and contained components.
      * @default 'none'
      */
-    margin: propTypesExports.oneOf(["dense", "none", "normal"]),
+    margin: PropTypes.oneOf(["dense", "none", "normal"]),
     /**
      * Maximum number of rows to display when multiline option is set to true.
      */
-    maxRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    maxRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * Minimum number of rows to display when multiline option is set to true.
      */
-    minRows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    minRows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * If `true`, a `textarea` element is rendered instead of an input.
      * @default false
      */
-    multiline: propTypesExports.bool,
+    multiline: PropTypes.bool,
     /**
      * Name attribute of the `input` element.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * @ignore
      */
-    onBlur: propTypesExports.func,
+    onBlur: PropTypes.func,
     /**
      * Callback fired when the value is changed.
      *
      * @param {object} event The event source of the callback.
      * You can pull out the new value by accessing `event.target.value` (string).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * @ignore
      */
-    onFocus: propTypesExports.func,
+    onFocus: PropTypes.func,
     /**
      * The short hint displayed in the `input` before the user enters a value.
      */
-    placeholder: propTypesExports.string,
+    placeholder: PropTypes.string,
     /**
      * If `true`, the label is displayed as required and the `input` element is required.
      * @default false
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * Number of rows to display when multiline option is set to true.
      */
-    rows: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    rows: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * Render a [`Select`](/material-ui/api/select/) element while passing the Input element to `Select` as `input` parameter.
      * If this option is set you must pass the options of the select as children.
      * @default false
      */
-    select: propTypesExports.bool,
+    select: PropTypes.bool,
     /**
      * Props applied to the [`Select`](/material-ui/api/select/) element.
      */
-    SelectProps: propTypesExports.object,
+    SelectProps: PropTypes.object,
     /**
      * The size of the component.
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["medium", "small"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["medium", "small"]), PropTypes.string]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * Type of the `input` element. It should be [a valid HTML5 input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types).
      */
-    type: propTypesExports.string,
+    type: PropTypes.string,
     /**
      * The value of the `input` element, required for a controlled component.
      */
-    value: propTypesExports.any,
+    value: PropTypes.any,
     /**
      * The variant to use.
      * @default 'outlined'
      */
-    variant: propTypesExports.oneOf(["filled", "outlined", "standard"])
+    variant: PropTypes.oneOf(["filled", "outlined", "standard"])
   } : void 0;
   function getLinearProgressUtilityClass(slot) {
     return generateUtilityClass("MuiLinearProgress", slot);
@@ -37029,21 +37071,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         console.error("MUI: You need to provide a valueBuffer prop when using the buffer variant of LinearProgress.");
       }
     }
-    return /* @__PURE__ */ jsxs(LinearProgressRoot, _extends$2({
-      className: clsx(classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(LinearProgressRoot, _extends$2({
+      className: clsx$1(classes.root, className),
       ownerState,
       role: "progressbar"
     }, rootProps, {
       ref
     }, other, {
-      children: [variant === "buffer" ? /* @__PURE__ */ jsx(LinearProgressDashed, {
+      children: [variant === "buffer" ? /* @__PURE__ */ jsxRuntimeExports.jsx(LinearProgressDashed, {
         className: classes.dashed,
         ownerState
-      }) : null, /* @__PURE__ */ jsx(LinearProgressBar1, {
+      }) : null, /* @__PURE__ */ jsxRuntimeExports.jsx(LinearProgressBar1, {
         className: classes.bar1,
         ownerState,
         style: inlineStyles.bar1
-      }), variant === "determinate" ? null : /* @__PURE__ */ jsx(LinearProgressBar2, {
+      }), variant === "determinate" ? null : /* @__PURE__ */ jsxRuntimeExports.jsx(LinearProgressBar2, {
         className: classes.bar2,
         ownerState,
         style: inlineStyles.bar2
@@ -37058,38 +37100,38 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'primary'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["inherit", "primary", "secondary"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["inherit", "primary", "secondary"]), PropTypes.string]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The value of the progress indicator for the determinate and buffer variants.
      * Value between 0 and 100.
      */
-    value: propTypesExports.number,
+    value: PropTypes.number,
     /**
      * The value for the buffer variant.
      * Value between 0 and 100.
      */
-    valueBuffer: propTypesExports.number,
+    valueBuffer: PropTypes.number,
     /**
      * The variant to use.
      * Use indeterminate or query when there is no progress value.
      * @default 'indeterminate'
      */
-    variant: propTypesExports.oneOf(["buffer", "determinate", "indeterminate", "query"])
+    variant: PropTypes.oneOf(["buffer", "determinate", "indeterminate", "query"])
   } : void 0;
   const TableContext = /* @__PURE__ */ React__namespace.createContext();
   if (process.env.NODE_ENV !== "production") {
@@ -37225,10 +37267,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     if (sortDirection) {
       ariaSort = sortDirection === "asc" ? "ascending" : "descending";
     }
-    return /* @__PURE__ */ jsx(TableCellRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TableCellRoot, _extends$2({
       as: component,
       ref,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       "aria-sort": ariaSort,
       scope,
       ownerState
@@ -37246,62 +37288,62 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * you to add them up quickly in your head without having to worry about decimals.
      * @default 'inherit'
      */
-    align: propTypesExports.oneOf(["center", "inherit", "justify", "left", "right"]),
+    align: PropTypes.oneOf(["center", "inherit", "justify", "left", "right"]),
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * Sets the padding applied to the cell.
      * The prop defaults to the value (`'default'`) inherited from the parent Table component.
      */
-    padding: propTypesExports.oneOf(["checkbox", "none", "normal"]),
+    padding: PropTypes.oneOf(["checkbox", "none", "normal"]),
     /**
      * Set scope attribute.
      */
-    scope: propTypesExports.string,
+    scope: PropTypes.string,
     /**
      * Specify the size of the cell.
      * The prop defaults to the value (`'medium'`) inherited from the parent Table component.
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["medium", "small"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["medium", "small"]), PropTypes.string]),
     /**
      * Set aria-sort direction.
      */
-    sortDirection: propTypesExports.oneOf(["asc", "desc", false]),
+    sortDirection: PropTypes.oneOf(["asc", "desc", false]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * Specify the cell type.
      * The prop defaults to the value inherited from the parent TableHead, TableBody, or TableFooter components.
      */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["body", "footer", "head"]), propTypesExports.string])
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["body", "footer", "head"]), PropTypes.string])
   } : void 0;
-  const KeyboardArrowLeft = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const KeyboardArrowLeft = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
   }), "KeyboardArrowLeft");
-  const KeyboardArrowRight = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const KeyboardArrowRight = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"
   }), "KeyboardArrowRight");
-  const LastPageIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const LastPageIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"
   }), "LastPage");
-  const FirstPageIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const FirstPageIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"
   }), "FirstPage");
   var _LastPageIcon, _FirstPageIcon, _KeyboardArrowRight, _KeyboardArrowLeft, _KeyboardArrowLeft2, _KeyboardArrowRight2, _FirstPageIcon2, _LastPageIcon2;
@@ -37331,37 +37373,37 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const handleLastPageButtonClick = (event) => {
       onPageChange(event, Math.max(0, Math.ceil(count2 / rowsPerPage) - 1));
     };
-    return /* @__PURE__ */ jsxs("div", _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", _extends$2({
       ref
     }, other, {
-      children: [showFirstButton && /* @__PURE__ */ jsx(IconButton, {
+      children: [showFirstButton && /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton, {
         onClick: handleFirstPageButtonClick,
         disabled: page === 0,
         "aria-label": getItemAriaLabel("first", page),
         title: getItemAriaLabel("first", page),
-        children: theme.direction === "rtl" ? _LastPageIcon || (_LastPageIcon = /* @__PURE__ */ jsx(LastPageIcon, {})) : _FirstPageIcon || (_FirstPageIcon = /* @__PURE__ */ jsx(FirstPageIcon, {}))
-      }), /* @__PURE__ */ jsx(IconButton, _extends$2({
+        children: theme.direction === "rtl" ? _LastPageIcon || (_LastPageIcon = /* @__PURE__ */ jsxRuntimeExports.jsx(LastPageIcon, {})) : _FirstPageIcon || (_FirstPageIcon = /* @__PURE__ */ jsxRuntimeExports.jsx(FirstPageIcon, {}))
+      }), /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton, _extends$2({
         onClick: handleBackButtonClick,
         disabled: page === 0,
         color: "inherit",
         "aria-label": getItemAriaLabel("previous", page),
         title: getItemAriaLabel("previous", page)
       }, backIconButtonProps, {
-        children: theme.direction === "rtl" ? _KeyboardArrowRight || (_KeyboardArrowRight = /* @__PURE__ */ jsx(KeyboardArrowRight, {})) : _KeyboardArrowLeft || (_KeyboardArrowLeft = /* @__PURE__ */ jsx(KeyboardArrowLeft, {}))
-      })), /* @__PURE__ */ jsx(IconButton, _extends$2({
+        children: theme.direction === "rtl" ? _KeyboardArrowRight || (_KeyboardArrowRight = /* @__PURE__ */ jsxRuntimeExports.jsx(KeyboardArrowRight, {})) : _KeyboardArrowLeft || (_KeyboardArrowLeft = /* @__PURE__ */ jsxRuntimeExports.jsx(KeyboardArrowLeft, {}))
+      })), /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton, _extends$2({
         onClick: handleNextButtonClick,
         disabled: count2 !== -1 ? page >= Math.ceil(count2 / rowsPerPage) - 1 : false,
         color: "inherit",
         "aria-label": getItemAriaLabel("next", page),
         title: getItemAriaLabel("next", page)
       }, nextIconButtonProps, {
-        children: theme.direction === "rtl" ? _KeyboardArrowLeft2 || (_KeyboardArrowLeft2 = /* @__PURE__ */ jsx(KeyboardArrowLeft, {})) : _KeyboardArrowRight2 || (_KeyboardArrowRight2 = /* @__PURE__ */ jsx(KeyboardArrowRight, {}))
-      })), showLastButton && /* @__PURE__ */ jsx(IconButton, {
+        children: theme.direction === "rtl" ? _KeyboardArrowLeft2 || (_KeyboardArrowLeft2 = /* @__PURE__ */ jsxRuntimeExports.jsx(KeyboardArrowLeft, {})) : _KeyboardArrowRight2 || (_KeyboardArrowRight2 = /* @__PURE__ */ jsxRuntimeExports.jsx(KeyboardArrowRight, {}))
+      })), showLastButton && /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton, {
         onClick: handleLastPageButtonClick,
         disabled: page >= Math.ceil(count2 / rowsPerPage) - 1,
         "aria-label": getItemAriaLabel("last", page),
         title: getItemAriaLabel("last", page),
-        children: theme.direction === "rtl" ? _FirstPageIcon2 || (_FirstPageIcon2 = /* @__PURE__ */ jsx(FirstPageIcon, {})) : _LastPageIcon2 || (_LastPageIcon2 = /* @__PURE__ */ jsx(LastPageIcon, {}))
+        children: theme.direction === "rtl" ? _FirstPageIcon2 || (_FirstPageIcon2 = /* @__PURE__ */ jsxRuntimeExports.jsx(FirstPageIcon, {})) : _LastPageIcon2 || (_LastPageIcon2 = /* @__PURE__ */ jsxRuntimeExports.jsx(LastPageIcon, {}))
       })]
     }));
   });
@@ -37369,11 +37411,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Props applied to the back arrow [`IconButton`](/material-ui/api/icon-button/) element.
      */
-    backIconButtonProps: propTypesExports.object,
+    backIconButtonProps: PropTypes.object,
     /**
      * The total number of rows.
      */
-    count: propTypesExports.number.isRequired,
+    count: PropTypes.number.isRequired,
     /**
      * Accepts a function which returns a string value that provides a user-friendly name for the current page.
      *
@@ -37383,34 +37425,34 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * @param {number} page The page number to format.
      * @returns {string}
      */
-    getItemAriaLabel: propTypesExports.func.isRequired,
+    getItemAriaLabel: PropTypes.func.isRequired,
     /**
      * Props applied to the next arrow [`IconButton`](/material-ui/api/icon-button/) element.
      */
-    nextIconButtonProps: propTypesExports.object,
+    nextIconButtonProps: PropTypes.object,
     /**
      * Callback fired when the page is changed.
      *
      * @param {object} event The event source of the callback.
      * @param {number} page The page selected.
      */
-    onPageChange: propTypesExports.func.isRequired,
+    onPageChange: PropTypes.func.isRequired,
     /**
      * The zero-based index of the current page.
      */
-    page: propTypesExports.number.isRequired,
+    page: PropTypes.number.isRequired,
     /**
      * The number of rows per page.
      */
-    rowsPerPage: propTypesExports.number.isRequired,
+    rowsPerPage: PropTypes.number.isRequired,
     /**
      * If `true`, show the first-page button.
      */
-    showFirstButton: propTypesExports.bool.isRequired,
+    showFirstButton: PropTypes.bool.isRequired,
     /**
      * If `true`, show the last-page button.
      */
-    showLastButton: propTypesExports.bool.isRequired
+    showLastButton: PropTypes.bool.isRequired
   } : void 0;
   function getTablePaginationUtilityClass(slot) {
     return generateUtilityClass("MuiTablePagination", slot);
@@ -37575,25 +37617,25 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       return rowsPerPage === -1 ? count2 : Math.min(count2, (page + 1) * rowsPerPage);
     };
-    return /* @__PURE__ */ jsx(TablePaginationRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TablePaginationRoot, _extends$2({
       colSpan,
       ref,
       as: component,
       ownerState,
-      className: clsx(classes.root, className)
+      className: clsx$1(classes.root, className)
     }, other, {
-      children: /* @__PURE__ */ jsxs(TablePaginationToolbar, {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs(TablePaginationToolbar, {
         className: classes.toolbar,
-        children: [/* @__PURE__ */ jsx(TablePaginationSpacer, {
+        children: [/* @__PURE__ */ jsxRuntimeExports.jsx(TablePaginationSpacer, {
           className: classes.spacer
-        }), rowsPerPageOptions.length > 1 && /* @__PURE__ */ jsx(TablePaginationSelectLabel, {
+        }), rowsPerPageOptions.length > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx(TablePaginationSelectLabel, {
           className: classes.selectLabel,
           id: labelId,
           children: labelRowsPerPage
-        }), rowsPerPageOptions.length > 1 && /* @__PURE__ */ jsx(TablePaginationSelect, _extends$2({
+        }), rowsPerPageOptions.length > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx(TablePaginationSelect, _extends$2({
           variant: "standard"
         }, !SelectProps.variant && {
-          input: _InputBase || (_InputBase = /* @__PURE__ */ jsx(InputBase, {}))
+          input: _InputBase || (_InputBase = /* @__PURE__ */ jsxRuntimeExports.jsx(InputBase, {}))
         }, {
           value: rowsPerPage,
           onChange: onRowsPerPageChange,
@@ -37602,10 +37644,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }, SelectProps, {
           classes: _extends$2({}, SelectProps.classes, {
             // TODO v5 remove `classes.input`
-            root: clsx(classes.input, classes.selectRoot, (SelectProps.classes || {}).root),
-            select: clsx(classes.select, (SelectProps.classes || {}).select),
+            root: clsx$1(classes.input, classes.selectRoot, (SelectProps.classes || {}).root),
+            select: clsx$1(classes.select, (SelectProps.classes || {}).select),
             // TODO v5 remove `selectIcon`
-            icon: clsx(classes.selectIcon, (SelectProps.classes || {}).icon)
+            icon: clsx$1(classes.selectIcon, (SelectProps.classes || {}).icon)
           }),
           children: rowsPerPageOptions.map((rowsPerPageOption) => /* @__PURE__ */ React.createElement(MenuItemComponent, _extends$2({}, !isHostComponent(MenuItemComponent) && {
             ownerState
@@ -37614,7 +37656,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             key: rowsPerPageOption.label ? rowsPerPageOption.label : rowsPerPageOption,
             value: rowsPerPageOption.value ? rowsPerPageOption.value : rowsPerPageOption
           }), rowsPerPageOption.label ? rowsPerPageOption.label : rowsPerPageOption))
-        })), /* @__PURE__ */ jsx(TablePaginationDisplayedRows, {
+        })), /* @__PURE__ */ jsxRuntimeExports.jsx(TablePaginationDisplayedRows, {
           className: classes.displayedRows,
           children: labelDisplayedRows({
             from: count2 === 0 ? 0 : page * rowsPerPage + 1,
@@ -37622,7 +37664,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             count: count2 === -1 ? -1 : count2,
             page
           })
-        }), /* @__PURE__ */ jsx(ActionsComponent, {
+        }), /* @__PURE__ */ jsxRuntimeExports.jsx(ActionsComponent, {
           className: classes.actions,
           backIconButtonProps,
           count: count2,
@@ -37647,28 +37689,28 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Either a string to use a HTML element or a component.
      * @default TablePaginationActions
      */
-    ActionsComponent: propTypesExports.elementType,
+    ActionsComponent: PropTypes.elementType,
     /**
      * Props applied to the back arrow [`IconButton`](/material-ui/api/icon-button/) component.
      */
-    backIconButtonProps: propTypesExports.object,
+    backIconButtonProps: PropTypes.object,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * @ignore
      */
-    colSpan: propTypesExports.number,
+    colSpan: PropTypes.number,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The total number of rows.
      *
@@ -37686,7 +37728,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   return `Go to ${type} page`;
      * }
      */
-    getItemAriaLabel: propTypesExports.func,
+    getItemAriaLabel: PropTypes.func,
     /**
      * Customize the displayed rows label. Invoked with a `{ from, to, count, page }`
      * object.
@@ -37696,31 +37738,31 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   return `${from}–${to} of ${count !== -1 ? count : `more than ${to}`}`;
      * }
      */
-    labelDisplayedRows: propTypesExports.func,
+    labelDisplayedRows: PropTypes.func,
     /**
      * Customize the rows per page label.
      *
      * For localization purposes, you can use the provided [translations](/material-ui/guides/localization/).
      * @default 'Rows per page:'
      */
-    labelRowsPerPage: propTypesExports.node,
+    labelRowsPerPage: PropTypes.node,
     /**
      * Props applied to the next arrow [`IconButton`](/material-ui/api/icon-button/) element.
      */
-    nextIconButtonProps: propTypesExports.object,
+    nextIconButtonProps: PropTypes.object,
     /**
      * Callback fired when the page is changed.
      *
      * @param {React.MouseEvent<HTMLButtonElement> | null} event The event source of the callback.
      * @param {number} page The page selected.
      */
-    onPageChange: propTypesExports.func.isRequired,
+    onPageChange: PropTypes.func.isRequired,
     /**
      * Callback fired when the number of rows per page is changed.
      *
      * @param {React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>} event The event source of the callback.
      */
-    onRowsPerPageChange: propTypesExports.func,
+    onRowsPerPageChange: PropTypes.func,
     /**
      * The zero-based index of the current page.
      */
@@ -37751,47 +37793,47 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Use -1 for the value with a custom label to show all the rows.
      * @default [10, 25, 50, 100]
      */
-    rowsPerPageOptions: propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.number, propTypesExports.shape({
-      label: propTypesExports.string.isRequired,
-      value: propTypesExports.number.isRequired
+    rowsPerPageOptions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired
     })]).isRequired),
     /**
      * Props applied to the rows per page [`Select`](/material-ui/api/select/) element.
      * @default {}
      */
-    SelectProps: propTypesExports.object,
+    SelectProps: PropTypes.object,
     /**
      * If `true`, show the first-page button.
      * @default false
      */
-    showFirstButton: propTypesExports.bool,
+    showFirstButton: PropTypes.bool,
     /**
      * If `true`, show the last-page button.
      * @default false
      */
-    showLastButton: propTypesExports.bool,
+    showLastButton: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getAlertUtilityClass(slot) {
     return generateUtilityClass("MuiAlert", slot);
   }
   const alertClasses = generateUtilityClasses("MuiAlert", ["root", "action", "icon", "message", "filled", "filledSuccess", "filledInfo", "filledWarning", "filledError", "outlined", "outlinedSuccess", "outlinedInfo", "outlinedWarning", "outlinedError", "standard", "standardSuccess", "standardInfo", "standardWarning", "standardError"]);
-  const SuccessOutlinedIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const SuccessOutlinedIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
   }), "SuccessOutlined");
-  const ReportProblemOutlinedIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const ReportProblemOutlinedIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
   }), "ReportProblemOutlined");
-  const ErrorOutlineIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const ErrorOutlineIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
   }), "ErrorOutline");
-  const InfoOutlinedIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const InfoOutlinedIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
   }), "InfoOutlined");
-  const CloseIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const CloseIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
   }), "Close");
   const _excluded$i = ["action", "children", "className", "closeText", "color", "components", "componentsProps", "icon", "iconMapping", "onClose", "role", "severity", "slotProps", "slots", "variant"];
@@ -37888,16 +37930,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     marginRight: -8
   });
   const defaultIconMapping = {
-    success: /* @__PURE__ */ jsx(SuccessOutlinedIcon, {
+    success: /* @__PURE__ */ jsxRuntimeExports.jsx(SuccessOutlinedIcon, {
       fontSize: "inherit"
     }),
-    warning: /* @__PURE__ */ jsx(ReportProblemOutlinedIcon, {
+    warning: /* @__PURE__ */ jsxRuntimeExports.jsx(ReportProblemOutlinedIcon, {
       fontSize: "inherit"
     }),
-    error: /* @__PURE__ */ jsx(ErrorOutlineIcon, {
+    error: /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorOutlineIcon, {
       fontSize: "inherit"
     }),
-    info: /* @__PURE__ */ jsx(InfoOutlinedIcon, {
+    info: /* @__PURE__ */ jsxRuntimeExports.jsx(InfoOutlinedIcon, {
       fontSize: "inherit"
     })
   };
@@ -37934,36 +37976,36 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const AlertCloseIcon = (_ref2 = (_slots$closeIcon = slots.closeIcon) != null ? _slots$closeIcon : components.CloseIcon) != null ? _ref2 : CloseIcon;
     const closeButtonProps = (_slotProps$closeButto = slotProps.closeButton) != null ? _slotProps$closeButto : componentsProps.closeButton;
     const closeIconProps = (_slotProps$closeIcon = slotProps.closeIcon) != null ? _slotProps$closeIcon : componentsProps.closeIcon;
-    return /* @__PURE__ */ jsxs(AlertRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertRoot, _extends$2({
       role,
       elevation: 0,
       ownerState,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       ref
     }, other, {
-      children: [icon !== false ? /* @__PURE__ */ jsx(AlertIcon, {
+      children: [icon !== false ? /* @__PURE__ */ jsxRuntimeExports.jsx(AlertIcon, {
         ownerState,
         className: classes.icon,
         children: icon || iconMapping[severity] || defaultIconMapping[severity]
-      }) : null, /* @__PURE__ */ jsx(AlertMessage, {
+      }) : null, /* @__PURE__ */ jsxRuntimeExports.jsx(AlertMessage, {
         ownerState,
         className: classes.message,
         children
-      }), action != null ? /* @__PURE__ */ jsx(AlertAction, {
+      }), action != null ? /* @__PURE__ */ jsxRuntimeExports.jsx(AlertAction, {
         ownerState,
         className: classes.action,
         children: action
-      }) : null, action == null && onClose2 ? /* @__PURE__ */ jsx(AlertAction, {
+      }) : null, action == null && onClose2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(AlertAction, {
         ownerState,
         className: classes.action,
-        children: /* @__PURE__ */ jsx(AlertCloseButton, _extends$2({
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(AlertCloseButton, _extends$2({
           size: "small",
           "aria-label": closeText,
           title: closeText,
           color: "inherit",
           onClick: onClose2
         }, closeButtonProps, {
-          children: /* @__PURE__ */ jsx(AlertCloseIcon, _extends$2({
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(AlertCloseIcon, _extends$2({
             fontSize: "small"
           }, closeIconProps))
         }))
@@ -37978,32 +38020,32 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The action to display. It renders after the message, at the end of the alert.
      */
-    action: propTypesExports.node,
+    action: PropTypes.node,
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * Override the default label for the *close popup* icon button.
      *
      * For localization purposes, you can use the provided [translations](/material-ui/guides/localization/).
      * @default 'Close'
      */
-    closeText: propTypesExports.string,
+    closeText: PropTypes.string,
     /**
      * The color of the component. Unless provided, the value is taken from the `severity` prop.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["error", "info", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * The components used for each slot inside.
      *
@@ -38012,9 +38054,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    components: propTypesExports.shape({
-      CloseButton: propTypesExports.elementType,
-      CloseIcon: propTypesExports.elementType
+    components: PropTypes.shape({
+      CloseButton: PropTypes.elementType,
+      CloseIcon: PropTypes.elementType
     }),
     /**
      * The extra props for the slot components.
@@ -38025,44 +38067,44 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    componentsProps: propTypesExports.shape({
-      closeButton: propTypesExports.object,
-      closeIcon: propTypesExports.object
+    componentsProps: PropTypes.shape({
+      closeButton: PropTypes.object,
+      closeIcon: PropTypes.object
     }),
     /**
      * Override the icon displayed before the children.
      * Unless provided, the icon is mapped to the value of the `severity` prop.
      * Set to `false` to remove the `icon`.
      */
-    icon: propTypesExports.node,
+    icon: PropTypes.node,
     /**
      * The component maps the `severity` prop to a range of different icons,
      * for instance success to `<SuccessOutlined>`.
      * If you wish to change this mapping, you can provide your own.
      * Alternatively, you can use the `icon` prop to override the icon displayed.
      */
-    iconMapping: propTypesExports.shape({
-      error: propTypesExports.node,
-      info: propTypesExports.node,
-      success: propTypesExports.node,
-      warning: propTypesExports.node
+    iconMapping: PropTypes.shape({
+      error: PropTypes.node,
+      info: PropTypes.node,
+      success: PropTypes.node,
+      warning: PropTypes.node
     }),
     /**
      * Callback fired when the component requests to be closed.
      * When provided and no `action` prop is set, a close icon button is displayed that triggers the callback when clicked.
      * @param {React.SyntheticEvent} event The event source of the callback.
      */
-    onClose: propTypesExports.func,
+    onClose: PropTypes.func,
     /**
      * The ARIA role attribute of the element.
      * @default 'alert'
      */
-    role: propTypesExports.string,
+    role: PropTypes.string,
     /**
      * The severity of the alert. This defines the color and icon used.
      * @default 'success'
      */
-    severity: propTypesExports.oneOf(["error", "info", "success", "warning"]),
+    severity: PropTypes.oneOf(["error", "info", "success", "warning"]),
     /**
      * The extra props for the slot components.
      * You can override the existing props or add new ones.
@@ -38071,9 +38113,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      closeButton: propTypesExports.object,
-      closeIcon: propTypesExports.object
+    slotProps: PropTypes.shape({
+      closeButton: PropTypes.object,
+      closeIcon: PropTypes.object
     }),
     /**
      * The components used for each slot inside.
@@ -38082,19 +38124,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    slots: propTypesExports.shape({
-      closeButton: propTypesExports.elementType,
-      closeIcon: propTypesExports.elementType
+    slots: PropTypes.shape({
+      closeButton: PropTypes.elementType,
+      closeIcon: PropTypes.elementType
     }),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The variant to use.
      * @default 'standard'
      */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["filled", "outlined", "standard"]), propTypesExports.string])
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["filled", "outlined", "standard"]), PropTypes.string])
   } : void 0;
   function getAlertTitleUtilityClass(slot) {
     return generateUtilityClass("MuiAlertTitle", slot);
@@ -38132,12 +38174,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } = props, other = _objectWithoutPropertiesLoose(props, _excluded$h);
     const ownerState = props;
     const classes = useUtilityClasses$g(ownerState);
-    return /* @__PURE__ */ jsx(AlertTitleRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(AlertTitleRoot, _extends$2({
       gutterBottom: true,
       component: "div",
       ownerState,
       ref,
-      className: clsx(classes.root, className)
+      className: clsx$1(classes.root, className)
     }, other));
   });
   process.env.NODE_ENV !== "production" ? AlertTitle.propTypes = {
@@ -38148,21 +38190,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
-  const CancelIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const CancelIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
   }), "Cancel");
   function getChipUtilityClass(slot) {
@@ -38496,23 +38538,23 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     let deleteIcon = null;
     if (onDelete) {
       deleteIcon = deleteIconProp && /* @__PURE__ */ React__namespace.isValidElement(deleteIconProp) ? /* @__PURE__ */ React__namespace.cloneElement(deleteIconProp, {
-        className: clsx(deleteIconProp.props.className, classes.deleteIcon),
+        className: clsx$1(deleteIconProp.props.className, classes.deleteIcon),
         onClick: handleDeleteIconClick
-      }) : /* @__PURE__ */ jsx(CancelIcon, {
-        className: clsx(classes.deleteIcon),
+      }) : /* @__PURE__ */ jsxRuntimeExports.jsx(CancelIcon, {
+        className: clsx$1(classes.deleteIcon),
         onClick: handleDeleteIconClick
       });
     }
     let avatar = null;
     if (avatarProp && /* @__PURE__ */ React__namespace.isValidElement(avatarProp)) {
       avatar = /* @__PURE__ */ React__namespace.cloneElement(avatarProp, {
-        className: clsx(classes.avatar, avatarProp.props.className)
+        className: clsx$1(classes.avatar, avatarProp.props.className)
       });
     }
     let icon = null;
     if (iconProp && /* @__PURE__ */ React__namespace.isValidElement(iconProp)) {
       icon = /* @__PURE__ */ React__namespace.cloneElement(iconProp, {
-        className: clsx(classes.icon, iconProp.props.className)
+        className: clsx$1(classes.icon, iconProp.props.className)
       });
     }
     if (process.env.NODE_ENV !== "production") {
@@ -38520,9 +38562,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         console.error("MUI: The Chip component can not handle the avatar and the icon prop at the same time. Pick one.");
       }
     }
-    return /* @__PURE__ */ jsxs(ChipRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(ChipRoot, _extends$2({
       as: component,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       disabled: clickable && disabled ? true : void 0,
       onClick,
       onKeyDown: handleKeyDown2,
@@ -38531,8 +38573,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       tabIndex: skipFocusWhenDisabled && disabled ? -1 : tabIndex,
       ownerState
     }, moreProps, other, {
-      children: [avatar || icon, /* @__PURE__ */ jsx(ChipLabel, {
-        className: clsx(classes.label),
+      children: [avatar || icon, /* @__PURE__ */ jsxRuntimeExports.jsx(ChipLabel, {
+        className: clsx$1(classes.label),
         ownerState,
         children: label
       }), deleteIcon]
@@ -38546,7 +38588,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The Avatar element to display.
      */
-    avatar: propTypesExports.element,
+    avatar: PropTypes.element,
     /**
      * This prop isn't supported.
      * Use the `component` prop if you need to change the children structure.
@@ -38555,11 +38597,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * If `true`, the chip will appear clickable, and will raise when pressed,
      * even if the onClick prop is not defined.
@@ -38568,77 +38610,77 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * along with the component prop to indicate an anchor Chip is clickable.
      * Note: this controls the UI and does not affect the onClick event.
      */
-    clickable: propTypesExports.bool,
+    clickable: PropTypes.bool,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'default'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["default", "primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["default", "primary", "secondary", "error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * Override the default delete icon element. Shown only if `onDelete` is set.
      */
-    deleteIcon: propTypesExports.element,
+    deleteIcon: PropTypes.element,
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * Icon element.
      */
-    icon: propTypesExports.element,
+    icon: PropTypes.element,
     /**
      * The content of the component.
      */
-    label: propTypesExports.node,
+    label: PropTypes.node,
     /**
      * @ignore
      */
-    onClick: propTypesExports.func,
+    onClick: PropTypes.func,
     /**
      * Callback fired when the delete icon is clicked.
      * If set, the delete icon will be shown.
      */
-    onDelete: propTypesExports.func,
+    onDelete: PropTypes.func,
     /**
      * @ignore
      */
-    onKeyDown: propTypesExports.func,
+    onKeyDown: PropTypes.func,
     /**
      * @ignore
      */
-    onKeyUp: propTypesExports.func,
+    onKeyUp: PropTypes.func,
     /**
      * The size of the component.
      * @default 'medium'
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["medium", "small"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["medium", "small"]), PropTypes.string]),
     /**
      * If `true`, allows the disabled chip to escape focus.
      * If `false`, allows the disabled chip to receive focus.
      * @default false
      */
-    skipFocusWhenDisabled: propTypesExports.bool,
+    skipFocusWhenDisabled: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * @ignore
      */
-    tabIndex: propTypesExports.number,
+    tabIndex: PropTypes.number,
     /**
      * The variant to use.
      * @default 'filled'
      */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["filled", "outlined"]), propTypesExports.string])
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["filled", "outlined"]), PropTypes.string])
   } : void 0;
   function getFormControlLabelUtilityClasses(slot) {
     return generateUtilityClass("MuiFormControlLabel", slot);
@@ -38749,15 +38791,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const typographySlotProps = (_slotProps$typography = slotProps.typography) != null ? _slotProps$typography : componentsProps.typography;
     let label = labelProp;
     if (label != null && label.type !== Typography && !disableTypography) {
-      label = /* @__PURE__ */ jsx(Typography, _extends$2({
+      label = /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, _extends$2({
         component: "span"
       }, typographySlotProps, {
-        className: clsx(classes.label, typographySlotProps == null ? void 0 : typographySlotProps.className),
+        className: clsx$1(classes.label, typographySlotProps == null ? void 0 : typographySlotProps.className),
         children: label
       }));
     }
-    return /* @__PURE__ */ jsxs(FormControlLabelRoot, _extends$2({
-      className: clsx(classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControlLabelRoot, _extends$2({
+      className: clsx$1(classes.root, className),
       ownerState,
       ref
     }, other, {
@@ -38772,34 +38814,34 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * If `true`, the component appears selected.
      */
-    checked: propTypesExports.bool,
+    checked: PropTypes.bool,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The props used for each slot inside.
      * @default {}
      */
-    componentsProps: propTypesExports.shape({
-      typography: propTypesExports.object
+    componentsProps: PropTypes.shape({
+      typography: PropTypes.object
     }),
     /**
      * A control element. For instance, it can be a `Radio`, a `Switch` or a `Checkbox`.
      */
-    control: propTypesExports.element.isRequired,
+    control: PropTypes.element.isRequired,
     /**
      * If `true`, the control is disabled.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the label is rendered as it is passed without an additional typography node.
      */
-    disableTypography: propTypesExports.bool,
+    disableTypography: PropTypes.bool,
     /**
      * Pass a ref to the `input` element.
      */
@@ -38807,38 +38849,38 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * A text or an element to be used in an enclosing label element.
      */
-    label: propTypesExports.node,
+    label: PropTypes.node,
     /**
      * The position of the label.
      * @default 'end'
      */
-    labelPlacement: propTypesExports.oneOf(["bottom", "end", "start", "top"]),
+    labelPlacement: PropTypes.oneOf(["bottom", "end", "start", "top"]),
     /**
      * @ignore
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * Callback fired when the state is changed.
      *
      * @param {React.SyntheticEvent} event The event source of the callback.
      * You can pull out the new checked state by accessing `event.target.checked` (boolean).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * The props used for each slot inside.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      typography: propTypesExports.object
+    slotProps: PropTypes.shape({
+      typography: PropTypes.object
     }),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The value of the component.
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
   function getSwitchUtilityClass(slot) {
     return generateUtilityClass("MuiSwitch", slot);
@@ -39025,15 +39067,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       size
     });
     const classes = useUtilityClasses$d(ownerState);
-    const icon = /* @__PURE__ */ jsx(SwitchThumb, {
+    const icon = /* @__PURE__ */ jsxRuntimeExports.jsx(SwitchThumb, {
       className: classes.thumb,
       ownerState
     });
-    return /* @__PURE__ */ jsxs(SwitchRoot, {
-      className: clsx(classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(SwitchRoot, {
+      className: clsx$1(classes.root, className),
       sx,
       ownerState,
-      children: [/* @__PURE__ */ jsx(SwitchSwitchBase, _extends$2({
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(SwitchSwitchBase, _extends$2({
         type: "checkbox",
         icon,
         checkedIcon: icon,
@@ -39043,7 +39085,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         classes: _extends$2({}, classes, {
           root: classes.switchBase
         })
-      })), /* @__PURE__ */ jsx(SwitchTrack, {
+      })), /* @__PURE__ */ jsxRuntimeExports.jsx(SwitchTrack, {
         className: classes.track,
         ownerState
       })]
@@ -39057,39 +39099,39 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * If `true`, the component is checked.
      */
-    checked: propTypesExports.bool,
+    checked: PropTypes.bool,
     /**
      * The icon to display when the component is checked.
      */
-    checkedIcon: propTypesExports.node,
+    checkedIcon: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'primary'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["default", "primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["default", "primary", "secondary", "error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * The default checked state. Use when the component is not controlled.
      */
-    defaultChecked: propTypesExports.bool,
+    defaultChecked: PropTypes.bool,
     /**
      * If `true`, the component is disabled.
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the ripple effect is disabled.
      * @default false
      */
-    disableRipple: propTypesExports.bool,
+    disableRipple: PropTypes.bool,
     /**
      * If given, uses a negative margin to counteract the padding on one
      * side (this is often helpful for aligning the left or right
@@ -39097,19 +39139,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * size and shape).
      * @default false
      */
-    edge: propTypesExports.oneOf(["end", "start", false]),
+    edge: PropTypes.oneOf(["end", "start", false]),
     /**
      * The icon to display when the component is unchecked.
      */
-    icon: propTypesExports.node,
+    icon: PropTypes.node,
     /**
      * The id of the `input` element.
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
      */
-    inputProps: propTypesExports.object,
+    inputProps: PropTypes.object,
     /**
      * Pass a ref to the `input` element.
      */
@@ -39121,27 +39163,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * You can pull out the new value by accessing `event.target.value` (string).
      * You can pull out the new checked state by accessing `event.target.checked` (boolean).
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * If `true`, the `input` element is required.
      * @default false
      */
-    required: propTypesExports.bool,
+    required: PropTypes.bool,
     /**
      * The size of the component.
      * `small` is equivalent to the dense switch styling.
      * @default 'medium'
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["medium", "small"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["medium", "small"]), PropTypes.string]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The value of the component. The DOM API casts this to a string.
      * The browser uses "on" as the default value.
      */
-    value: propTypesExports.any
+    value: PropTypes.any
   } : void 0;
   function getTableContainerUtilityClass(slot) {
     return generateUtilityClass("MuiTableContainer", slot);
@@ -39178,10 +39220,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       component
     });
     const classes = useUtilityClasses$c(ownerState);
-    return /* @__PURE__ */ jsx(TableContainerRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TableContainerRoot, _extends$2({
       ref,
       as: component,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       ownerState
     }, other));
   });
@@ -39193,24 +39235,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component, normally `Table`.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   /**
    * react-virtual
@@ -40046,13 +40088,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       size,
       stickyHeader
     }), [padding2, size, stickyHeader]);
-    return /* @__PURE__ */ jsx(TableContext.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TableContext.Provider, {
       value: table,
-      children: /* @__PURE__ */ jsx(TableRoot, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TableRoot, _extends$2({
         as: component,
         role: component === defaultComponent$4 ? null : "table",
         ref,
-        className: clsx(classes.root, className),
+        className: clsx$1(classes.root, className),
         ownerState
       }, other))
     });
@@ -40065,41 +40107,41 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the table, normally `TableHead` and `TableBody`.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * Allows TableCells to inherit padding of the Table.
      * @default 'normal'
      */
-    padding: propTypesExports.oneOf(["checkbox", "none", "normal"]),
+    padding: PropTypes.oneOf(["checkbox", "none", "normal"]),
     /**
      * Allows TableCells to inherit size of the Table.
      * @default 'medium'
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["medium", "small"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["medium", "small"]), PropTypes.string]),
     /**
      * Set the header sticky.
      *
      * ⚠️ It doesn't work with IE11.
      * @default false
      */
-    stickyHeader: propTypesExports.bool,
+    stickyHeader: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getTableHeadUtilityClass(slot) {
     return generateUtilityClass("MuiTableHead", slot);
@@ -40139,11 +40181,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       component
     });
     const classes = useUtilityClasses$a(ownerState);
-    return /* @__PURE__ */ jsx(Tablelvl2Context.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Tablelvl2Context.Provider, {
       value: tablelvl2$2,
-      children: /* @__PURE__ */ jsx(TableHeadRoot, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TableHeadRoot, _extends$2({
         as: component,
-        className: clsx(classes.root, className),
+        className: clsx$1(classes.root, className),
         ref,
         role: component === defaultComponent$3 ? null : "rowgroup",
         ownerState
@@ -40158,24 +40200,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component, normally `TableRow`.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getTableRowUtilityClass(slot) {
     return generateUtilityClass("MuiTableRow", slot);
@@ -40243,10 +40285,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       footer: tablelvl22 && tablelvl22.variant === "footer"
     });
     const classes = useUtilityClasses$9(ownerState);
-    return /* @__PURE__ */ jsx(TableRowRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TableRowRoot, _extends$2({
       as: component,
       ref,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       role: component === defaultComponent$2 ? null : "row",
       ownerState
     }, other));
@@ -40259,34 +40301,34 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Should be valid <tr> children such as `TableCell`.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the table row will shade on hover.
      * @default false
      */
-    hover: propTypesExports.bool,
+    hover: PropTypes.bool,
     /**
      * If `true`, the table row will have the selected shading.
      * @default false
      */
-    selected: propTypesExports.bool,
+    selected: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   const shouldSpreadAdditionalProps = (Slot) => {
     return !Slot || !isHostComponent(Slot);
@@ -40300,7 +40342,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       open
     } = props;
     const utilityClasses = {
-      offset: clsx(open && sliderClasses.valueLabelOpen),
+      offset: clsx$1(open && sliderClasses.valueLabelOpen),
       circle: sliderClasses.valueLabelCircle,
       label: sliderClasses.valueLabelLabel
     };
@@ -40317,14 +40359,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return null;
     }
     return /* @__PURE__ */ React__namespace.cloneElement(children, {
-      className: clsx(children.props.className)
-    }, /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-      children: [children.props.children, /* @__PURE__ */ jsx("span", {
-        className: clsx(classes.offset, className),
+      className: clsx$1(children.props.className)
+    }, /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+      children: [children.props.children, /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
+        className: clsx$1(classes.offset, className),
         "aria-hidden": true,
-        children: /* @__PURE__ */ jsx("span", {
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
           className: classes.circle,
-          children: /* @__PURE__ */ jsx("span", {
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
             className: classes.label,
             children: value
           })
@@ -40333,9 +40375,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   }
   process.env.NODE_ENV !== "production" ? SliderValueLabel.propTypes = {
-    children: propTypesExports.element.isRequired,
-    className: propTypesExports.string,
-    value: propTypesExports.node
+    children: PropTypes.element.isRequired,
+    className: PropTypes.string,
+    value: PropTypes.node
   } : void 0;
   const _excluded$9 = ["aria-label", "aria-valuetext", "aria-labelledby", "component", "components", "componentsProps", "color", "classes", "className", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "size", "step", "scale", "slotProps", "slots", "tabIndex", "track", "value", "valueLabelDisplay", "valueLabelFormat"];
   const valueToPercent = (value, min2, max2) => (value - min2) * 100 / (max2 - min2);
@@ -40412,7 +40454,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    children: propTypesExports.node
+    children: PropTypes.node
   } : void 0;
   const SliderRail = styled("span", {
     name: "MuiSlider",
@@ -40447,7 +40489,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    children: propTypesExports.node
+    children: PropTypes.node
   } : void 0;
   const SliderTrack = styled("span", {
     name: "MuiSlider",
@@ -40495,7 +40537,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    children: propTypesExports.node
+    children: PropTypes.node
   } : void 0;
   const SliderThumb = styled("span", {
     name: "MuiSlider",
@@ -40577,7 +40619,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    children: propTypesExports.node
+    children: PropTypes.node
   } : void 0;
   const StyledSliderValueLabel = styled(SliderValueLabel, {
     name: "MuiSlider",
@@ -40645,7 +40687,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    children: propTypesExports.node
+    children: PropTypes.node
   } : void 0;
   const SliderMark = styled("span", {
     name: "MuiSlider",
@@ -40685,7 +40727,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    children: propTypesExports.node
+    children: PropTypes.node
   } : void 0;
   const SliderMarkLabel = styled("span", {
     name: "MuiSlider",
@@ -40723,7 +40765,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    children: propTypesExports.node
+    children: PropTypes.node
   } : void 0;
   const useUtilityClasses$8 = (ownerState) => {
     const {
@@ -40902,8 +40944,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       externalSlotProps: inputSlotProps,
       ownerState
     });
-    return /* @__PURE__ */ jsxs(RootSlot, _extends$2({}, rootProps, {
-      children: [/* @__PURE__ */ jsx(RailSlot, _extends$2({}, railProps)), /* @__PURE__ */ jsx(TrackSlot, _extends$2({}, trackProps)), marks.filter((mark) => mark.value >= min2 && mark.value <= max2).map((mark, index2) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(RootSlot, _extends$2({}, rootProps, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(RailSlot, _extends$2({}, railProps)), /* @__PURE__ */ jsxRuntimeExports.jsx(TrackSlot, _extends$2({}, trackProps)), marks.filter((mark) => mark.value >= min2 && mark.value <= max2).map((mark, index2) => {
         const percent = valueToPercent(mark.value, min2, max2);
         const style2 = axisProps2[axis].offset(percent);
         let markActive;
@@ -40912,22 +40954,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         } else {
           markActive = track === "normal" && (range ? mark.value >= values2[0] && mark.value <= values2[values2.length - 1] : mark.value <= values2[0]) || track === "inverted" && (range ? mark.value <= values2[0] || mark.value >= values2[values2.length - 1] : mark.value >= values2[0]);
         }
-        return /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-          children: [/* @__PURE__ */ jsx(MarkSlot, _extends$2({
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+          children: [/* @__PURE__ */ jsxRuntimeExports.jsx(MarkSlot, _extends$2({
             "data-index": index2
           }, markProps, !isHostComponent(MarkSlot) && {
             markActive
           }, {
             style: _extends$2({}, style2, markProps.style),
-            className: clsx(markProps.className, markActive && classes.markActive)
-          })), mark.label != null ? /* @__PURE__ */ jsx(MarkLabelSlot, _extends$2({
+            className: clsx$1(markProps.className, markActive && classes.markActive)
+          })), mark.label != null ? /* @__PURE__ */ jsxRuntimeExports.jsx(MarkLabelSlot, _extends$2({
             "aria-hidden": true,
             "data-index": index2
           }, markLabelProps, !isHostComponent(MarkLabelSlot) && {
             markLabelActive: markActive
           }, {
             style: _extends$2({}, style2, markLabelProps.style),
-            className: clsx(classes.markLabel, markLabelProps.className, markActive && classes.markLabelActive),
+            className: clsx$1(classes.markLabel, markLabelProps.className, markActive && classes.markLabelActive),
             children: mark.label
           })) : null]
         }, index2);
@@ -40935,8 +40977,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         const percent = valueToPercent(value, min2, max2);
         const style2 = axisProps2[axis].offset(percent);
         const ValueLabelComponent = valueLabelDisplay === "off" ? Forward : ValueLabelSlot;
-        return /* @__PURE__ */ jsx(React__namespace.Fragment, {
-          children: /* @__PURE__ */ jsx(ValueLabelComponent, _extends$2({}, !isHostComponent(ValueLabelComponent) && {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(React__namespace.Fragment, {
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(ValueLabelComponent, _extends$2({}, !isHostComponent(ValueLabelComponent) && {
             valueLabelFormat,
             valueLabelDisplay,
             value: typeof valueLabelFormat === "function" ? valueLabelFormat(scale(value), index2) : valueLabelFormat,
@@ -40944,15 +40986,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             open: open === index2 || active === index2 || valueLabelDisplay === "on",
             disabled
           }, valueLabelProps, {
-            children: /* @__PURE__ */ jsx(ThumbSlot, _extends$2({
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(ThumbSlot, _extends$2({
               "data-index": index2,
               "data-focusvisible": focusedThumbIndex === index2
             }, thumbProps, {
-              className: clsx(classes.thumb, thumbProps.className, active === index2 && classes.active, focusedThumbIndex === index2 && classes.focusVisible),
+              className: clsx$1(classes.thumb, thumbProps.className, active === index2 && classes.active, focusedThumbIndex === index2 && classes.focusVisible),
               style: _extends$2({}, style2, {
                 pointerEvents: disableSwap && active !== index2 ? "none" : void 0
               }, thumbProps.style),
-              children: /* @__PURE__ */ jsx(InputSlot, _extends$2({
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(InputSlot, _extends$2({
                 "data-index": index2,
                 "aria-label": getAriaLabel ? getAriaLabel(index2) : ariaLabel,
                 "aria-valuenow": scale(value),
@@ -40974,7 +41016,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The label of the slider.
      */
-    "aria-label": chainPropTypes(propTypesExports.string, (props) => {
+    "aria-label": chainPropTypes(PropTypes.string, (props) => {
       const range = Array.isArray(props.value || props.defaultValue);
       if (range && props["aria-label"] != null) {
         return new Error("MUI: You need to use the `getAriaLabel` prop instead of `aria-label` when using a range slider.");
@@ -40984,11 +41026,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The id of the element containing a label for the slider.
      */
-    "aria-labelledby": propTypesExports.string,
+    "aria-labelledby": PropTypes.string,
     /**
      * A string value that provides a user-friendly name for the current value of the slider.
      */
-    "aria-valuetext": chainPropTypes(propTypesExports.string, (props) => {
+    "aria-valuetext": chainPropTypes(PropTypes.string, (props) => {
       const range = Array.isArray(props.value || props.defaultValue);
       if (range && props["aria-valuetext"] != null) {
         return new Error("MUI: You need to use the `getAriaValueText` prop instead of `aria-valuetext` when using a range slider.");
@@ -40998,18 +41040,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'primary'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["primary", "secondary"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["primary", "secondary"]), PropTypes.string]),
     /**
      * The components used for each slot inside.
      *
@@ -41018,15 +41060,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    components: propTypesExports.shape({
-      Input: propTypesExports.elementType,
-      Mark: propTypesExports.elementType,
-      MarkLabel: propTypesExports.elementType,
-      Rail: propTypesExports.elementType,
-      Root: propTypesExports.elementType,
-      Thumb: propTypesExports.elementType,
-      Track: propTypesExports.elementType,
-      ValueLabel: propTypesExports.elementType
+    components: PropTypes.shape({
+      Input: PropTypes.elementType,
+      Mark: PropTypes.elementType,
+      MarkLabel: PropTypes.elementType,
+      Rail: PropTypes.elementType,
+      Root: PropTypes.elementType,
+      Thumb: PropTypes.elementType,
+      Track: PropTypes.elementType,
+      ValueLabel: PropTypes.elementType
     }),
     /**
      * The extra props for the slot components.
@@ -41037,44 +41079,44 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    componentsProps: propTypesExports.shape({
-      input: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      mark: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      markLabel: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      rail: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      thumb: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      track: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      valueLabel: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.shape({
-        children: propTypesExports.element,
-        className: propTypesExports.string,
-        open: propTypesExports.bool,
-        style: propTypesExports.object,
-        value: propTypesExports.number,
-        valueLabelDisplay: propTypesExports.oneOf(["auto", "off", "on"])
+    componentsProps: PropTypes.shape({
+      input: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      mark: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      markLabel: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      rail: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      thumb: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      track: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      valueLabel: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
+        children: PropTypes.element,
+        className: PropTypes.string,
+        open: PropTypes.bool,
+        style: PropTypes.object,
+        value: PropTypes.number,
+        valueLabelDisplay: PropTypes.oneOf(["auto", "off", "on"])
       })])
     }),
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.number), propTypesExports.number]),
+    defaultValue: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     /**
      * If `true`, the component is disabled.
      * @default false
      */
-    disabled: propTypesExports.bool,
+    disabled: PropTypes.bool,
     /**
      * If `true`, the active thumb doesn't swap when moving pointer over a thumb while dragging another thumb.
      * @default false
      */
-    disableSwap: propTypesExports.bool,
+    disableSwap: PropTypes.bool,
     /**
      * Accepts a function which returns a string value that provides a user-friendly name for the thumb labels of the slider.
      * This is important for screen reader users.
      * @param {number} index The thumb label's index to format.
      * @returns {string}
      */
-    getAriaLabel: propTypesExports.func,
+    getAriaLabel: PropTypes.func,
     /**
      * Accepts a function which returns a string value that provides a user-friendly name for the current value of the slider.
      * This is important for screen reader users.
@@ -41082,33 +41124,33 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * @param {number} index The thumb label's index to format.
      * @returns {string}
      */
-    getAriaValueText: propTypesExports.func,
+    getAriaValueText: PropTypes.func,
     /**
      * Marks indicate predetermined values to which the user can move the slider.
      * If `true` the marks are spaced according the value of the `step` prop.
      * If an array, it should contain objects with `value` and an optional `label` keys.
      * @default false
      */
-    marks: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.shape({
-      label: propTypesExports.node,
-      value: propTypesExports.number.isRequired
-    })), propTypesExports.bool]),
+    marks: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.node,
+      value: PropTypes.number.isRequired
+    })), PropTypes.bool]),
     /**
      * The maximum allowed value of the slider.
      * Should not be equal to min.
      * @default 100
      */
-    max: propTypesExports.number,
+    max: PropTypes.number,
     /**
      * The minimum allowed value of the slider.
      * Should not be equal to max.
      * @default 0
      */
-    min: propTypesExports.number,
+    min: PropTypes.number,
     /**
      * Name attribute of the hidden `input` element.
      */
-    name: propTypesExports.string,
+    name: PropTypes.string,
     /**
      * Callback function that is fired when the slider's value changed.
      *
@@ -41118,19 +41160,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * @param {number | number[]} value The new value.
      * @param {number} activeThumb Index of the currently moved thumb.
      */
-    onChange: propTypesExports.func,
+    onChange: PropTypes.func,
     /**
      * Callback function that is fired when the `mouseup` is triggered.
      *
      * @param {React.SyntheticEvent | Event} event The event source of the callback. **Warning**: This is a generic event not a change event.
      * @param {number | number[]} value The new value.
      */
-    onChangeCommitted: propTypesExports.func,
+    onChangeCommitted: PropTypes.func,
     /**
      * The component orientation.
      * @default 'horizontal'
      */
-    orientation: propTypesExports.oneOf(["horizontal", "vertical"]),
+    orientation: PropTypes.oneOf(["horizontal", "vertical"]),
     /**
      * A transformation function, to change the scale of the slider.
      * @param {any} x
@@ -41139,31 +41181,31 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   return x;
      * }
      */
-    scale: propTypesExports.func,
+    scale: PropTypes.func,
     /**
      * The size of the slider.
      * @default 'medium'
      */
-    size: propTypesExports.oneOfType([propTypesExports.oneOf(["small", "medium"]), propTypesExports.string]),
+    size: PropTypes.oneOfType([PropTypes.oneOf(["small", "medium"]), PropTypes.string]),
     /**
      * The props used for each slot inside the Slider.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      input: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      mark: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      markLabel: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      rail: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      thumb: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      track: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      valueLabel: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.shape({
-        children: propTypesExports.element,
-        className: propTypesExports.string,
-        open: propTypesExports.bool,
-        style: propTypesExports.object,
-        value: propTypesExports.number,
-        valueLabelDisplay: propTypesExports.oneOf(["auto", "off", "on"])
+    slotProps: PropTypes.shape({
+      input: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      mark: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      markLabel: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      rail: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      thumb: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      track: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      valueLabel: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
+        children: PropTypes.element,
+        className: PropTypes.string,
+        open: PropTypes.bool,
+        style: PropTypes.object,
+        value: PropTypes.number,
+        valueLabelDisplay: PropTypes.oneOf(["auto", "off", "on"])
       })])
     }),
     /**
@@ -41171,15 +41213,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      input: propTypesExports.elementType,
-      mark: propTypesExports.elementType,
-      markLabel: propTypesExports.elementType,
-      rail: propTypesExports.elementType,
-      root: propTypesExports.elementType,
-      thumb: propTypesExports.elementType,
-      track: propTypesExports.elementType,
-      valueLabel: propTypesExports.elementType
+    slots: PropTypes.shape({
+      input: PropTypes.elementType,
+      mark: PropTypes.elementType,
+      markLabel: PropTypes.elementType,
+      rail: PropTypes.elementType,
+      root: PropTypes.elementType,
+      thumb: PropTypes.elementType,
+      track: PropTypes.elementType,
+      valueLabel: PropTypes.elementType
     }),
     /**
      * The granularity with which the slider can step through values. (A "discrete" slider.)
@@ -41189,15 +41231,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * When step is `null`, the thumb can only be slid onto marks provided with the `marks` prop.
      * @default 1
      */
-    step: propTypesExports.number,
+    step: PropTypes.number,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * Tab index attribute of the hidden `input` element.
      */
-    tabIndex: propTypesExports.number,
+    tabIndex: PropTypes.number,
     /**
      * The track presentation:
      *
@@ -41206,12 +41248,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * - `false` the track will render without a bar.
      * @default 'normal'
      */
-    track: propTypesExports.oneOf(["inverted", "normal", false]),
+    track: PropTypes.oneOf(["inverted", "normal", false]),
     /**
      * The value of the slider.
      * For ranged sliders, provide an array with two values.
      */
-    value: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.number), propTypesExports.number]),
+    value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     /**
      * Controls when the value label is displayed:
      *
@@ -41220,7 +41262,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * - `off` will never display.
      * @default 'off'
      */
-    valueLabelDisplay: propTypesExports.oneOf(["auto", "off", "on"]),
+    valueLabelDisplay: PropTypes.oneOf(["auto", "off", "on"]),
     /**
      * The format function the value label's value.
      *
@@ -41234,7 +41276,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   return x;
      * }
      */
-    valueLabelFormat: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.string])
+    valueLabelFormat: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
   } : void 0;
   const _excluded$8 = ["component", "direction", "spacing", "divider", "children"];
   function joinChildren(children, separator) {
@@ -41336,7 +41378,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       direction,
       spacing: spacing2
     };
-    return /* @__PURE__ */ jsx(StackRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(StackRoot, _extends$2({
       as: component,
       ownerState,
       ref
@@ -41352,31 +41394,31 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * Defines the `flex-direction` style property.
      * It is applied for all screen sizes.
      * @default 'column'
      */
-    direction: propTypesExports.oneOfType([propTypesExports.oneOf(["column-reverse", "column", "row-reverse", "row"]), propTypesExports.arrayOf(propTypesExports.oneOf(["column-reverse", "column", "row-reverse", "row"])), propTypesExports.object]),
+    direction: PropTypes.oneOfType([PropTypes.oneOf(["column-reverse", "column", "row-reverse", "row"]), PropTypes.arrayOf(PropTypes.oneOf(["column-reverse", "column", "row-reverse", "row"])), PropTypes.object]),
     /**
      * Add an element between each child.
      */
-    divider: propTypesExports.node,
+    divider: PropTypes.node,
     /**
      * Defines the space between immediate children.
      * @default 0
      */
-    spacing: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])), propTypesExports.number, propTypesExports.object, propTypesExports.string]),
+    spacing: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])), PropTypes.number, PropTypes.object, PropTypes.string]),
     /**
      * The system prop, which allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getBadgeUtilityClass(slot) {
     return generateUtilityClass("MuiBadge", slot);
@@ -41628,16 +41670,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         as: component
       },
       ownerState,
-      className: clsx(rootSlotProps == null ? void 0 : rootSlotProps.className, classes.root, className)
+      className: clsx$1(rootSlotProps == null ? void 0 : rootSlotProps.className, classes.root, className)
     });
     const badgeProps = useSlotProps({
       elementType: BadgeSlot,
       externalSlotProps: badgeSlotProps,
       ownerState,
-      className: clsx(classes.badge, badgeSlotProps == null ? void 0 : badgeSlotProps.className)
+      className: clsx$1(classes.badge, badgeSlotProps == null ? void 0 : badgeSlotProps.className)
     });
-    return /* @__PURE__ */ jsxs(RootSlot, _extends$2({}, rootProps, {
-      children: [children, /* @__PURE__ */ jsx(BadgeSlot, _extends$2({}, badgeProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(RootSlot, _extends$2({}, rootProps, {
+      children: [children, /* @__PURE__ */ jsxRuntimeExports.jsx(BadgeSlot, _extends$2({}, badgeProps, {
         children: displayValue
       }))]
     }));
@@ -41654,38 +41696,38 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *   horizontal: 'right',
      * }
      */
-    anchorOrigin: propTypesExports.shape({
-      horizontal: propTypesExports.oneOf(["left", "right"]).isRequired,
-      vertical: propTypesExports.oneOf(["bottom", "top"]).isRequired
+    anchorOrigin: PropTypes.shape({
+      horizontal: PropTypes.oneOf(["left", "right"]).isRequired,
+      vertical: PropTypes.oneOf(["bottom", "top"]).isRequired
     }),
     /**
      * The content rendered within the badge.
      */
-    badgeContent: propTypesExports.node,
+    badgeContent: PropTypes.node,
     /**
      * The badge will be added relative to this node.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The color of the component.
      * It supports both default and custom theme colors, which can be added as shown in the
      * [palette customization guide](https://mui.com/material-ui/customization/palette/#adding-new-colors).
      * @default 'default'
      */
-    color: propTypesExports.oneOfType([propTypesExports.oneOf(["default", "primary", "secondary", "error", "info", "success", "warning"]), propTypesExports.string]),
+    color: PropTypes.oneOfType([PropTypes.oneOf(["default", "primary", "secondary", "error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The components used for each slot inside.
      *
@@ -41694,9 +41736,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    components: propTypesExports.shape({
-      Badge: propTypesExports.elementType,
-      Root: propTypesExports.elementType
+    components: PropTypes.shape({
+      Badge: PropTypes.elementType,
+      Root: PropTypes.elementType
     }),
     /**
      * The extra props for the slot components.
@@ -41707,58 +41749,58 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      *
      * @default {}
      */
-    componentsProps: propTypesExports.shape({
-      badge: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    componentsProps: PropTypes.shape({
+      badge: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * If `true`, the badge is invisible.
      * @default false
      */
-    invisible: propTypesExports.bool,
+    invisible: PropTypes.bool,
     /**
      * Max count to show.
      * @default 99
      */
-    max: propTypesExports.number,
+    max: PropTypes.number,
     /**
      * Wrapped shape the badge should overlap.
      * @default 'rectangular'
      */
-    overlap: propTypesExports.oneOf(["circular", "rectangular"]),
+    overlap: PropTypes.oneOf(["circular", "rectangular"]),
     /**
      * Controls whether the badge is hidden when `badgeContent` is zero.
      * @default false
      */
-    showZero: propTypesExports.bool,
+    showZero: PropTypes.bool,
     /**
      * The props used for each slot inside the Badge.
      * @default {}
      */
-    slotProps: propTypesExports.shape({
-      badge: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]),
-      root: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object])
+    slotProps: PropTypes.shape({
+      badge: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
      * The components used for each slot inside the Badge.
      * Either a string to use a HTML element or a component.
      * @default {}
      */
-    slots: propTypesExports.shape({
-      badge: propTypesExports.elementType,
-      root: propTypesExports.elementType
+    slots: PropTypes.shape({
+      badge: PropTypes.elementType,
+      root: PropTypes.elementType
     }),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The variant to use.
      * @default 'standard'
      */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["dot", "standard"]), propTypesExports.string])
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["dot", "standard"]), PropTypes.string])
   } : void 0;
-  const ArrowDownwardIcon = createSvgIcon(/* @__PURE__ */ jsx("path", {
+  const ArrowDownwardIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
   }), "ArrowDownward");
   function getTableSortLabelUtilityClass(slot) {
@@ -41858,16 +41900,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       IconComponent
     });
     const classes = useUtilityClasses$6(ownerState);
-    return /* @__PURE__ */ jsxs(TableSortLabelRoot, _extends$2({
-      className: clsx(classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(TableSortLabelRoot, _extends$2({
+      className: clsx$1(classes.root, className),
       component: "span",
       disableRipple: true,
       ownerState,
       ref
     }, other, {
-      children: [children, hideSortIcon && !active ? null : /* @__PURE__ */ jsx(TableSortLabelIcon, {
+      children: [children, hideSortIcon && !active ? null : /* @__PURE__ */ jsxRuntimeExports.jsx(TableSortLabelIcon, {
         as: IconComponent,
-        className: clsx(classes.icon),
+        className: clsx$1(classes.icon),
         ownerState
       })]
     }));
@@ -41881,38 +41923,38 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * If `true`, the label will have the active styling (should be true for the sorted column).
      * @default false
      */
-    active: propTypesExports.bool,
+    active: PropTypes.bool,
     /**
      * Label contents, the arrow will be appended automatically.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The current sort direction.
      * @default 'asc'
      */
-    direction: propTypesExports.oneOf(["asc", "desc"]),
+    direction: PropTypes.oneOf(["asc", "desc"]),
     /**
      * Hide sort icon when active is false.
      * @default false
      */
-    hideSortIcon: propTypesExports.bool,
+    hideSortIcon: PropTypes.bool,
     /**
      * Sort icon to use.
      * @default ArrowDownwardIcon
      */
-    IconComponent: propTypesExports.elementType,
+    IconComponent: PropTypes.elementType,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getTableBodyUtilityClass(slot) {
     return generateUtilityClass("MuiTableBody", slot);
@@ -41952,10 +41994,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       component
     });
     const classes = useUtilityClasses$5(ownerState);
-    return /* @__PURE__ */ jsx(Tablelvl2Context.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Tablelvl2Context.Provider, {
       value: tablelvl2$1,
-      children: /* @__PURE__ */ jsx(TableBodyRoot, _extends$2({
-        className: clsx(classes.root, className),
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TableBodyRoot, _extends$2({
+        className: clsx$1(classes.root, className),
         as: component,
         ref,
         role: component === defaultComponent$1 ? null : "rowgroup",
@@ -41971,24 +42013,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component, normally `TableRow`.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getSkeletonUtilityClass(slot) {
     return generateUtilityClass("MuiSkeleton", slot);
@@ -42132,10 +42174,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       hasChildren: Boolean(other.children)
     });
     const classes = useUtilityClasses$4(ownerState);
-    return /* @__PURE__ */ jsx(SkeletonRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(SkeletonRoot, _extends$2({
       as: component,
       ref,
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       ownerState
     }, other, {
       style: _extends$2({
@@ -42154,47 +42196,47 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * If `false` the animation effect is disabled.
      * @default 'pulse'
      */
-    animation: propTypesExports.oneOf(["pulse", "wave", false]),
+    animation: PropTypes.oneOf(["pulse", "wave", false]),
     /**
      * Optional children to infer width and height from.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * Height of the skeleton.
      * Useful when you don't want to adapt the skeleton to a text element but for instance a card.
      */
-    height: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string]),
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     /**
      * @ignore
      */
-    style: propTypesExports.object,
+    style: PropTypes.object,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
     /**
      * The type of content that will be rendered.
      * @default 'text'
      */
-    variant: propTypesExports.oneOfType([propTypesExports.oneOf(["circular", "rectangular", "rounded", "text"]), propTypesExports.string]),
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["circular", "rectangular", "rounded", "text"]), PropTypes.string]),
     /**
      * Width of the skeleton.
      * Useful when the skeleton is inside an inline element with no width of its own.
      */
-    width: propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string])
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
   } : void 0;
   let IDX = 36;
   let HEX = "";
@@ -42358,11 +42400,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       component
     });
     const classes = useUtilityClasses$3(ownerState);
-    return /* @__PURE__ */ jsx(Tablelvl2Context.Provider, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Tablelvl2Context.Provider, {
       value: tablelvl2,
-      children: /* @__PURE__ */ jsx(TableFooterRoot, _extends$2({
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TableFooterRoot, _extends$2({
         as: component,
-        className: clsx(classes.root, className),
+        className: clsx$1(classes.root, className),
         ref,
         role: component === defaultComponent ? null : "rowgroup",
         ownerState
@@ -42377,24 +42419,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component, normally `TableRow`.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getDialogActionsUtilityClass(slot) {
     return generateUtilityClass("MuiDialogActions", slot);
@@ -42446,8 +42488,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disableSpacing
     });
     const classes = useUtilityClasses$2(ownerState);
-    return /* @__PURE__ */ jsx(DialogActionsRoot, _extends$2({
-      className: clsx(classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(DialogActionsRoot, _extends$2({
+      className: clsx$1(classes.root, className),
       ownerState,
       ref
     }, other));
@@ -42460,24 +42502,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * If `true`, the actions do not have additional margin.
      * @default false
      */
-    disableSpacing: propTypesExports.bool,
+    disableSpacing: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getDialogContentUtilityClass(slot) {
     return generateUtilityClass("MuiDialogContent", slot);
@@ -42538,8 +42580,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       dividers
     });
     const classes = useUtilityClasses$1(ownerState);
-    return /* @__PURE__ */ jsx(DialogContentRoot, _extends$2({
-      className: clsx(classes.root, className),
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContentRoot, _extends$2({
+      className: clsx$1(classes.root, className),
       ownerState,
       ref
     }, other));
@@ -42552,24 +42594,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * Display the top and bottom dividers.
      * @default false
      */
-    dividers: propTypesExports.bool,
+    dividers: PropTypes.bool,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   const _excluded = ["className", "id"];
   const useUtilityClasses = (ownerState) => {
@@ -42603,9 +42645,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       titleId: id = idProp
     } = React__namespace.useContext(DialogContext);
-    return /* @__PURE__ */ jsx(DialogTitleRoot, _extends$2({
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitleRoot, _extends$2({
       component: "h2",
-      className: clsx(classes.root, className),
+      className: clsx$1(classes.root, className),
       ownerState,
       ref,
       variant: "h6",
@@ -42620,23 +42662,23 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The content of the component.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * @ignore
      */
-    className: propTypesExports.string,
+    className: PropTypes.string,
     /**
      * @ignore
      */
-    id: propTypesExports.string,
+    id: PropTypes.string,
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function __rest(s, e) {
     var t = {};
@@ -42980,7 +43022,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { density, isLoading } = getState();
     const iconButtonProps = muiExpandAllButtonProps instanceof Function ? muiExpandAllButtonProps({ table }) : muiExpandAllButtonProps;
     const isAllRowsExpanded = getIsAllRowsExpanded();
-    return jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: ((_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isAllRowsExpanded) ? localization.collapseAll : localization.expandAll, children: jsx("span", { children: jsx(IconButton, Object.assign({ "aria-label": localization.expandAll, disabled: isLoading || !renderDetailPanel && !getCanSomeRowsExpand(), onClick: () => toggleAllRowsExpanded(!isAllRowsExpanded) }, iconButtonProps, { sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem", mt: density !== "compact" ? "-0.25rem" : void 0 }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsx(KeyboardDoubleArrowDownIcon, { style: {
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: ((_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isAllRowsExpanded) ? localization.collapseAll : localization.expandAll, children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.expandAll, disabled: isLoading || !renderDetailPanel && !getCanSomeRowsExpand(), onClick: () => toggleAllRowsExpanded(!isAllRowsExpanded) }, iconButtonProps, { sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem", mt: density !== "compact" ? "-0.25rem" : void 0 }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsxRuntimeExports.jsx(KeyboardDoubleArrowDownIcon, { style: {
       transform: `rotate(${isAllRowsExpanded ? -180 : getIsSomeRowsExpanded() ? -90 : 0}deg)`,
       transition: "transform 150ms"
     } }) })) }) });
@@ -42998,7 +43040,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       row.toggleExpanded();
       (_a2 = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.onClick) === null || _a2 === void 0 ? void 0 : _a2.call(iconButtonProps, event);
     };
-    return jsx(Tooltip, { arrow: true, disableHoverListener: !canExpand && !renderDetailPanel, enterDelay: 1e3, enterNextDelay: 1e3, title: ((_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isExpanded) ? localization.collapse : localization.expand, children: jsx("span", { children: jsx(IconButton, Object.assign({ "aria-label": localization.expand, disabled: !canExpand && !renderDetailPanel }, iconButtonProps, { onClick: handleToggleExpand, sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem" }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsx(ExpandMoreIcon, { style: {
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, disableHoverListener: !canExpand && !renderDetailPanel, enterDelay: 1e3, enterNextDelay: 1e3, title: ((_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isExpanded) ? localization.collapse : localization.expand, children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.expand, disabled: !canExpand && !renderDetailPanel }, iconButtonProps, { onClick: handleToggleExpand, sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem" }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsxRuntimeExports.jsx(ExpandMoreIcon, { style: {
       transform: `rotate(${!canExpand && !renderDetailPanel ? -90 : isExpanded ? -180 : 0}deg)`,
       transition: "transform 150ms"
     } }) })) }) });
@@ -43147,7 +43189,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onSelect === null || onSelect === void 0 ? void 0 : onSelect();
     };
     const filterOption = !!header && columnDef ? columnDef._filterFn : globalFilterFn;
-    return jsx(Menu, { anchorEl, anchorOrigin: { vertical: "center", horizontal: "right" }, onClose: () => setAnchorEl(null), open: !!anchorEl, MenuListProps: {
+    return jsxRuntimeExports.jsx(Menu, { anchorEl, anchorOrigin: { vertical: "center", horizontal: "right" }, onClose: () => setAnchorEl(null), open: !!anchorEl, MenuListProps: {
       dense: density === "compact"
     }, children: (_d = header && column2 && columnDef ? (_c = (_b = columnDef.renderColumnFilterModeMenuItems) === null || _b === void 0 ? void 0 : _b.call(columnDef, {
       column: column2,
@@ -43163,13 +43205,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       internalFilterOptions,
       onSelectFilterMode: handleSelectFilterMode,
       table
-    })) !== null && _d !== void 0 ? _d : internalFilterOptions.map(({ option, label, divider, symbol }, index2) => jsxs(MenuItem, { divider, onClick: () => handleSelectFilterMode(option), selected: option === filterOption, sx: {
+    })) !== null && _d !== void 0 ? _d : internalFilterOptions.map(({ option, label, divider, symbol }, index2) => jsxRuntimeExports.jsxs(MenuItem, { divider, onClick: () => handleSelectFilterMode(option), selected: option === filterOption, sx: {
       alignItems: "center",
       display: "flex",
       gap: "2ch",
       my: 0,
       py: "6px"
-    }, value: option, children: [jsx(Box, { sx: { fontSize: "1.25rem", width: "2ch" }, children: symbol }), label] }, index2)) });
+    }, value: option, children: [jsxRuntimeExports.jsx(Box, { sx: { fontSize: "1.25rem", width: "2ch" }, children: symbol }), label] }, index2)) });
   };
   const commonMenuItemStyles = {
     py: "6px",
@@ -43244,32 +43286,32 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const showFilterModeSubMenu = enableColumnFilterModes && columnDef.enableColumnFilterModes !== false && !isSelectFilter && (allowedColumnFilterOptions === void 0 || !!(allowedColumnFilterOptions === null || allowedColumnFilterOptions === void 0 ? void 0 : allowedColumnFilterOptions.length));
     const internalColumnMenuItems = [
       ...enableSorting && column2.getCanSort() ? [
-        enableSortingRemoval !== false && jsx(MenuItem, { disabled: !column2.getIsSorted(), onClick: handleClearSort, sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(ClearAllIcon, {}) }), localization.clearSort] }) }, 0),
-        jsx(MenuItem, { disabled: column2.getIsSorted() === "asc", onClick: handleSortAsc, sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(SortIcon, { style: { transform: "rotate(180deg) scaleX(-1)" } }) }), (_b = localization.sortByColumnAsc) === null || _b === void 0 ? void 0 : _b.replace("{column}", String(columnDef.header))] }) }, 1),
-        jsx(MenuItem, { divider: enableColumnFilters || enableGrouping || enableHiding, disabled: column2.getIsSorted() === "desc", onClick: handleSortDesc, sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(SortIcon, {}) }), (_c = localization.sortByColumnDesc) === null || _c === void 0 ? void 0 : _c.replace("{column}", String(columnDef.header))] }) }, 2)
+        enableSortingRemoval !== false && jsxRuntimeExports.jsx(MenuItem, { disabled: !column2.getIsSorted(), onClick: handleClearSort, sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(ClearAllIcon, {}) }), localization.clearSort] }) }, 0),
+        jsxRuntimeExports.jsx(MenuItem, { disabled: column2.getIsSorted() === "asc", onClick: handleSortAsc, sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(SortIcon, { style: { transform: "rotate(180deg) scaleX(-1)" } }) }), (_b = localization.sortByColumnAsc) === null || _b === void 0 ? void 0 : _b.replace("{column}", String(columnDef.header))] }) }, 1),
+        jsxRuntimeExports.jsx(MenuItem, { divider: enableColumnFilters || enableGrouping || enableHiding, disabled: column2.getIsSorted() === "desc", onClick: handleSortDesc, sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(SortIcon, {}) }), (_c = localization.sortByColumnDesc) === null || _c === void 0 ? void 0 : _c.replace("{column}", String(columnDef.header))] }) }, 2)
       ] : [],
       ...enableColumnFilters && column2.getCanFilter() ? [
-        jsx(MenuItem, { disabled: !columnFilterValue || Array.isArray(columnFilterValue) && !columnFilterValue.filter((value) => value).length, onClick: handleClearFilter, sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(FilterListOffIcon, {}) }), localization.clearFilter] }) }, 3),
-        jsxs(MenuItem, { disabled: showColumnFilters && !enableColumnFilterModes, divider: enableGrouping || enableHiding, onClick: showColumnFilters ? handleOpenFilterModeMenu : handleFilterByColumn, sx: commonMenuItemStyles, children: [jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(FilterListIcon, {}) }), (_d = localization.filterByColumn) === null || _d === void 0 ? void 0 : _d.replace("{column}", String(columnDef.header))] }), showFilterModeSubMenu && jsx(IconButton, { onClick: handleOpenFilterModeMenu, onMouseEnter: handleOpenFilterModeMenu, size: "small", sx: { p: 0 }, children: jsx(ArrowRightIcon, {}) })] }, 4),
-        showFilterModeSubMenu && jsx(MRT_FilterOptionMenu, { anchorEl: filterMenuAnchorEl, header, onSelect: handleFilterByColumn, setAnchorEl: setFilterMenuAnchorEl, table }, 5)
+        jsxRuntimeExports.jsx(MenuItem, { disabled: !columnFilterValue || Array.isArray(columnFilterValue) && !columnFilterValue.filter((value) => value).length, onClick: handleClearFilter, sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(FilterListOffIcon, {}) }), localization.clearFilter] }) }, 3),
+        jsxRuntimeExports.jsxs(MenuItem, { disabled: showColumnFilters && !enableColumnFilterModes, divider: enableGrouping || enableHiding, onClick: showColumnFilters ? handleOpenFilterModeMenu : handleFilterByColumn, sx: commonMenuItemStyles, children: [jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(FilterListIcon, {}) }), (_d = localization.filterByColumn) === null || _d === void 0 ? void 0 : _d.replace("{column}", String(columnDef.header))] }), showFilterModeSubMenu && jsxRuntimeExports.jsx(IconButton, { onClick: handleOpenFilterModeMenu, onMouseEnter: handleOpenFilterModeMenu, size: "small", sx: { p: 0 }, children: jsxRuntimeExports.jsx(ArrowRightIcon, {}) })] }, 4),
+        showFilterModeSubMenu && jsxRuntimeExports.jsx(MRT_FilterOptionMenu, { anchorEl: filterMenuAnchorEl, header, onSelect: handleFilterByColumn, setAnchorEl: setFilterMenuAnchorEl, table }, 5)
       ] : [],
       ...enableGrouping && column2.getCanGroup() ? [
-        jsx(MenuItem, { divider: enablePinning, onClick: handleGroupByColumn, sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(DynamicFeedIcon, {}) }), (_e = localization[column2.getIsGrouped() ? "ungroupByColumn" : "groupByColumn"]) === null || _e === void 0 ? void 0 : _e.replace("{column}", String(columnDef.header))] }) }, 6)
+        jsxRuntimeExports.jsx(MenuItem, { divider: enablePinning, onClick: handleGroupByColumn, sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(DynamicFeedIcon, {}) }), (_e = localization[column2.getIsGrouped() ? "ungroupByColumn" : "groupByColumn"]) === null || _e === void 0 ? void 0 : _e.replace("{column}", String(columnDef.header))] }) }, 6)
       ] : [],
       ...enablePinning && column2.getCanPin() ? [
-        jsx(MenuItem, { disabled: column2.getIsPinned() === "left" || !column2.getCanPin(), onClick: () => handlePinColumn("left"), sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(PushPinIcon, { style: { transform: "rotate(90deg)" } }) }), localization.pinToLeft] }) }, 7),
-        jsx(MenuItem, { disabled: column2.getIsPinned() === "right" || !column2.getCanPin(), onClick: () => handlePinColumn("right"), sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(PushPinIcon, { style: { transform: "rotate(-90deg)" } }) }), localization.pinToRight] }) }, 8),
-        jsx(MenuItem, { disabled: !column2.getIsPinned(), divider: enableHiding, onClick: () => handlePinColumn(false), sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(PushPinIcon, {}) }), localization.unpin] }) }, 9)
+        jsxRuntimeExports.jsx(MenuItem, { disabled: column2.getIsPinned() === "left" || !column2.getCanPin(), onClick: () => handlePinColumn("left"), sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(PushPinIcon, { style: { transform: "rotate(90deg)" } }) }), localization.pinToLeft] }) }, 7),
+        jsxRuntimeExports.jsx(MenuItem, { disabled: column2.getIsPinned() === "right" || !column2.getCanPin(), onClick: () => handlePinColumn("right"), sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(PushPinIcon, { style: { transform: "rotate(-90deg)" } }) }), localization.pinToRight] }) }, 8),
+        jsxRuntimeExports.jsx(MenuItem, { disabled: !column2.getIsPinned(), divider: enableHiding, onClick: () => handlePinColumn(false), sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(PushPinIcon, {}) }), localization.unpin] }) }, 9)
       ] : [],
       ...enableColumnResizing && column2.getCanResize() ? [
-        jsx(MenuItem, { disabled: !columnSizing[column2.id], onClick: handleResetColumnSize, sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(RestartAltIcon, {}) }), localization.resetColumnSize] }) }, 10)
+        jsxRuntimeExports.jsx(MenuItem, { disabled: !columnSizing[column2.id], onClick: handleResetColumnSize, sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(RestartAltIcon, {}) }), localization.resetColumnSize] }) }, 10)
       ] : [],
       ...enableHiding ? [
-        jsx(MenuItem, { disabled: !column2.getCanHide(), onClick: handleHideColumn, sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(VisibilityOffIcon, {}) }), (_f = localization.hideColumn) === null || _f === void 0 ? void 0 : _f.replace("{column}", String(columnDef.header))] }) }, 11),
-        jsx(MenuItem, { disabled: !Object.values(columnVisibility).filter((visible) => !visible).length, onClick: handleShowAllColumns, sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(ViewColumnIcon, {}) }), (_g = localization.showAllColumns) === null || _g === void 0 ? void 0 : _g.replace("{column}", String(columnDef.header))] }) }, 12)
+        jsxRuntimeExports.jsx(MenuItem, { disabled: !column2.getCanHide(), onClick: handleHideColumn, sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(VisibilityOffIcon, {}) }), (_f = localization.hideColumn) === null || _f === void 0 ? void 0 : _f.replace("{column}", String(columnDef.header))] }) }, 11),
+        jsxRuntimeExports.jsx(MenuItem, { disabled: !Object.values(columnVisibility).filter((visible) => !visible).length, onClick: handleShowAllColumns, sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(ViewColumnIcon, {}) }), (_g = localization.showAllColumns) === null || _g === void 0 ? void 0 : _g.replace("{column}", String(columnDef.header))] }) }, 12)
       ] : []
     ].filter(Boolean);
-    return jsx(Menu, { anchorEl, open: !!anchorEl, onClose: () => setAnchorEl(null), MenuListProps: {
+    return jsxRuntimeExports.jsx(Menu, { anchorEl, open: !!anchorEl, onClose: () => setAnchorEl(null), MenuListProps: {
       dense: density === "compact"
     }, children: (_k = (_j = (_h = columnDef.renderColumnActionsMenuItems) === null || _h === void 0 ? void 0 : _h.call(columnDef, {
       closeMenu: () => setAnchorEl(null),
@@ -43286,9 +43328,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const MRT_RowActionMenu = ({ anchorEl, handleEdit, row, setAnchorEl, table }) => {
     const { getState, options: { icons: { EditIcon }, enableEditing, localization, renderRowActionMenuItems } } = table;
     const { density } = getState();
-    return jsxs(Menu, { anchorEl, open: !!anchorEl, onClick: (event) => event.stopPropagation(), onClose: () => setAnchorEl(null), MenuListProps: {
+    return jsxRuntimeExports.jsxs(Menu, { anchorEl, open: !!anchorEl, onClick: (event) => event.stopPropagation(), onClose: () => setAnchorEl(null), MenuListProps: {
       dense: density === "compact"
-    }, children: [enableEditing instanceof Function ? enableEditing(row) : enableEditing && jsx(MenuItem, { onClick: handleEdit, sx: commonMenuItemStyles, children: jsxs(Box, { sx: commonListItemStyles, children: [jsx(ListItemIcon, { children: jsx(EditIcon, {}) }), localization.edit] }) }), renderRowActionMenuItems === null || renderRowActionMenuItems === void 0 ? void 0 : renderRowActionMenuItems({
+    }, children: [enableEditing instanceof Function ? enableEditing(row) : enableEditing && jsxRuntimeExports.jsx(MenuItem, { onClick: handleEdit, sx: commonMenuItemStyles, children: jsxRuntimeExports.jsxs(Box, { sx: commonListItemStyles, children: [jsxRuntimeExports.jsx(ListItemIcon, { children: jsxRuntimeExports.jsx(EditIcon, {}) }), localization.edit] }) }), renderRowActionMenuItems === null || renderRowActionMenuItems === void 0 ? void 0 : renderRowActionMenuItems({
       row,
       table,
       closeMenu: () => setAnchorEl(null)
@@ -43315,7 +43357,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         values: (_b = editingRow === null || editingRow === void 0 ? void 0 : editingRow._valuesCache) !== null && _b !== void 0 ? _b : Object.assign({}, row.original)
       });
     };
-    return jsx(Box, { onClick: (e) => e.stopPropagation(), sx: { display: "flex", gap: "0.75rem" }, children: variant === "icon" ? jsxs(Fragment, { children: [jsx(Tooltip, { arrow: true, title: localization.cancel, children: jsx(IconButton, { "aria-label": localization.cancel, onClick: handleCancel, children: jsx(CancelIcon2, {}) }) }), jsx(Tooltip, { arrow: true, title: localization.save, children: jsx(IconButton, { "aria-label": localization.save, color: "info", onClick: handleSave, children: jsx(SaveIcon, {}) }) })] }) : jsxs(Fragment, { children: [jsx(Button, { onClick: handleCancel, children: localization.cancel }), jsx(Button, { onClick: handleSave, variant: "contained", children: localization.save })] }) });
+    return jsxRuntimeExports.jsx(Box, { onClick: (e) => e.stopPropagation(), sx: { display: "flex", gap: "0.75rem" }, children: variant === "icon" ? jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: localization.cancel, children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.cancel, onClick: handleCancel, children: jsxRuntimeExports.jsx(CancelIcon2, {}) }) }), jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: localization.save, children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.save, color: "info", onClick: handleSave, children: jsxRuntimeExports.jsx(SaveIcon, {}) }) })] }) : jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Button, { onClick: handleCancel, children: localization.cancel }), jsxRuntimeExports.jsx(Button, { onClick: handleSave, variant: "contained", children: localization.save })] }) });
   };
   const commonIconButtonStyles = {
     height: "2rem",
@@ -43341,7 +43383,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       setEditingRow(Object.assign({}, row));
       setAnchorEl(null);
     };
-    return jsx(Fragment, { children: renderRowActions ? renderRowActions({ cell, row, table }) : row.id === (editingRow === null || editingRow === void 0 ? void 0 : editingRow.id) && editingMode === "row" ? jsx(MRT_EditActionButtons, { row, table }) : !renderRowActionMenuItems && (enableEditing instanceof Function ? enableEditing(row) : enableEditing) ? jsx(Tooltip, { placement: "right", arrow: true, title: localization.edit, children: jsx(IconButton, { "aria-label": localization.edit, sx: commonIconButtonStyles, onClick: handleStartEditMode, children: jsx(EditIcon, {}) }) }) : renderRowActionMenuItems ? jsxs(Fragment, { children: [jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: localization.rowActions, children: jsx(IconButton, { "aria-label": localization.rowActions, onClick: handleOpenRowActionMenu, size: "small", sx: commonIconButtonStyles, children: jsx(MoreHorizIcon, {}) }) }), jsx(MRT_RowActionMenu, { anchorEl, handleEdit: handleStartEditMode, row, setAnchorEl, table })] }) : null });
+    return jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: renderRowActions ? renderRowActions({ cell, row, table }) : row.id === (editingRow === null || editingRow === void 0 ? void 0 : editingRow.id) && editingMode === "row" ? jsxRuntimeExports.jsx(MRT_EditActionButtons, { row, table }) : !renderRowActionMenuItems && (enableEditing instanceof Function ? enableEditing(row) : enableEditing) ? jsxRuntimeExports.jsx(Tooltip, { placement: "right", arrow: true, title: localization.edit, children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.edit, sx: commonIconButtonStyles, onClick: handleStartEditMode, children: jsxRuntimeExports.jsx(EditIcon, {}) }) }) : renderRowActionMenuItems ? jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: localization.rowActions, children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.rowActions, onClick: handleOpenRowActionMenu, size: "small", sx: commonIconButtonStyles, children: jsxRuntimeExports.jsx(MoreHorizIcon, {}) }) }), jsxRuntimeExports.jsx(MRT_RowActionMenu, { anchorEl, handleEdit: handleStartEditMode, row, setAnchorEl, table })] }) : null });
   };
   const MRT_SelectCheckbox = ({ row, selectAll, table }) => {
     var _a;
@@ -43356,7 +43398,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       e.stopPropagation();
       (_a2 = checkboxProps === null || checkboxProps === void 0 ? void 0 : checkboxProps.onClick) === null || _a2 === void 0 ? void 0 : _a2.call(checkboxProps, e);
     }, sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.5rem", width: density === "compact" ? "1.75rem" : "2.5rem", m: density !== "compact" ? "-0.4rem" : void 0 }, (checkboxProps === null || checkboxProps === void 0 ? void 0 : checkboxProps.sx) instanceof Function ? checkboxProps.sx(theme) : checkboxProps === null || checkboxProps === void 0 ? void 0 : checkboxProps.sx), title: void 0 });
-    return jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: (_a = checkboxProps === null || checkboxProps === void 0 ? void 0 : checkboxProps.title) !== null && _a !== void 0 ? _a : selectAll ? localization.toggleSelectAll : localization.toggleSelectRow, children: enableMultiRowSelection === false ? jsx(Radio, Object.assign({}, commonProps)) : jsx(Checkbox, Object.assign({ indeterminate: selectAll ? table.getIsSomeRowsSelected() && !allRowsSelected : row === null || row === void 0 ? void 0 : row.getIsSomeSelected() }, commonProps)) });
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: (_a = checkboxProps === null || checkboxProps === void 0 ? void 0 : checkboxProps.title) !== null && _a !== void 0 ? _a : selectAll ? localization.toggleSelectAll : localization.toggleSelectRow, children: enableMultiRowSelection === false ? jsxRuntimeExports.jsx(Radio, Object.assign({}, commonProps)) : jsxRuntimeExports.jsx(Checkbox, Object.assign({ indeterminate: selectAll ? table.getIsSomeRowsSelected() && !allRowsSelected : row === null || row === void 0 ? void 0 : row.getIsSomeSelected() }, commonProps)) });
   };
   const MRT_GlobalFilterTextField = ({ table }) => {
     var _a;
@@ -43391,26 +43433,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       isMounted.current = true;
     }, [globalFilter]);
-    return jsxs(Collapse, { in: showGlobalFilter, orientation: "horizontal", unmountOnExit: true, mountOnEnter: true, children: [jsx(TextField, Object.assign({ placeholder: localization.search, onChange: handleChange, value: searchValue !== null && searchValue !== void 0 ? searchValue : "", variant: "standard", InputProps: {
-      startAdornment: enableGlobalFilterModes ? jsx(InputAdornment, { position: "start", children: jsx(Tooltip, { arrow: true, title: localization.changeSearchMode, children: jsx(IconButton, { "aria-label": localization.changeSearchMode, onClick: handleGlobalFilterMenuOpen, size: "small", sx: { height: "1.75rem", width: "1.75rem" }, children: jsx(SearchIcon, {}) }) }) }) : jsx(SearchIcon, { style: { marginRight: "4px" } }),
-      endAdornment: jsx(InputAdornment, { position: "end", children: jsx(Tooltip, { arrow: true, title: (_a = localization.clearSearch) !== null && _a !== void 0 ? _a : "", children: jsx("span", { children: jsx(IconButton, { "aria-label": localization.clearSearch, disabled: !(searchValue === null || searchValue === void 0 ? void 0 : searchValue.length), onClick: handleClear, size: "small", children: jsx(CloseIcon2, {}) }) }) }) })
+    return jsxRuntimeExports.jsxs(Collapse, { in: showGlobalFilter, orientation: "horizontal", unmountOnExit: true, mountOnEnter: true, children: [jsxRuntimeExports.jsx(TextField, Object.assign({ placeholder: localization.search, onChange: handleChange, value: searchValue !== null && searchValue !== void 0 ? searchValue : "", variant: "standard", InputProps: {
+      startAdornment: enableGlobalFilterModes ? jsxRuntimeExports.jsx(InputAdornment, { position: "start", children: jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: localization.changeSearchMode, children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.changeSearchMode, onClick: handleGlobalFilterMenuOpen, size: "small", sx: { height: "1.75rem", width: "1.75rem" }, children: jsxRuntimeExports.jsx(SearchIcon, {}) }) }) }) : jsxRuntimeExports.jsx(SearchIcon, { style: { marginRight: "4px" } }),
+      endAdornment: jsxRuntimeExports.jsx(InputAdornment, { position: "end", children: jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: (_a = localization.clearSearch) !== null && _a !== void 0 ? _a : "", children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.clearSearch, disabled: !(searchValue === null || searchValue === void 0 ? void 0 : searchValue.length), onClick: handleClear, size: "small", children: jsxRuntimeExports.jsx(CloseIcon2, {}) }) }) }) })
     } }, textFieldProps, { inputRef: (inputRef) => {
       searchInputRef.current = inputRef;
       if (textFieldProps === null || textFieldProps === void 0 ? void 0 : textFieldProps.inputRef) {
         textFieldProps.inputRef = inputRef;
       }
-    } })), jsx(MRT_FilterOptionMenu, { anchorEl, setAnchorEl, table, onSelect: handleClear })] });
+    } })), jsxRuntimeExports.jsx(MRT_FilterOptionMenu, { anchorEl, setAnchorEl, table, onSelect: handleClear })] });
   };
   const MRT_LinearProgressBar = ({ isTopToolbar, table }) => {
     const { options: { muiLinearProgressProps }, getState } = table;
     const { isLoading, showProgressBars } = getState();
     const linearProgressProps = muiLinearProgressProps instanceof Function ? muiLinearProgressProps({ isTopToolbar, table }) : muiLinearProgressProps;
-    return jsx(Collapse, { in: isLoading || showProgressBars, mountOnEnter: true, unmountOnExit: true, sx: {
+    return jsxRuntimeExports.jsx(Collapse, { in: isLoading || showProgressBars, mountOnEnter: true, unmountOnExit: true, sx: {
       bottom: isTopToolbar ? 0 : void 0,
       position: "absolute",
       top: !isTopToolbar ? 0 : void 0,
       width: "100%"
-    }, children: jsx(LinearProgress, Object.assign({ "aria-label": "Loading", "aria-busy": "true", sx: { position: "relative" } }, linearProgressProps)) });
+    }, children: jsxRuntimeExports.jsx(LinearProgress, Object.assign({ "aria-label": "Loading", "aria-busy": "true", sx: { position: "relative" } }, linearProgressProps)) });
   };
   const MRT_TablePagination = ({ table, position: position2 = "bottom" }) => {
     const { getPrePaginationRowModel, getState, setPageIndex, setPageSize, options: { muiTablePaginationProps, enableToolbarInternalActions, localization, rowCount } } = table;
@@ -43421,7 +43463,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const handleChangeRowsPerPage = (event) => {
       setPageSize(+event.target.value);
     };
-    return jsx(TablePagination, Object.assign({ component: "div", count: totalRowCount, getItemAriaLabel: (type) => type === "first" ? localization.goToFirstPage : type === "last" ? localization.goToLastPage : type === "next" ? localization.goToNextPage : localization.goToPreviousPage, labelDisplayedRows: ({ from: from2, to, count: count2 }) => `${from2}-${to} ${localization.of} ${count2}`, labelRowsPerPage: localization.rowsPerPage, onPageChange: (_2, newPage) => setPageIndex(newPage), onRowsPerPageChange: handleChangeRowsPerPage, page: Math.max(Math.min(pageIndex, Math.ceil(totalRowCount / pageSize2) - 1), 0), rowsPerPage: pageSize2, rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 50, 100], showFirstButton: showFirstLastPageButtons, showLastButton: showFirstLastPageButtons }, tablePaginationProps, { SelectProps: Object.assign({ sx: { m: "0 1rem 0 1ch" }, MenuProps: { MenuListProps: { disablePadding: true }, sx: { m: 0 } } }, tablePaginationProps === null || tablePaginationProps === void 0 ? void 0 : tablePaginationProps.SelectProps), sx: (theme) => Object.assign({ "& .MuiTablePagination-toolbar": {
+    return jsxRuntimeExports.jsx(TablePagination, Object.assign({ component: "div", count: totalRowCount, getItemAriaLabel: (type) => type === "first" ? localization.goToFirstPage : type === "last" ? localization.goToLastPage : type === "next" ? localization.goToNextPage : localization.goToPreviousPage, labelDisplayedRows: ({ from: from2, to, count: count2 }) => `${from2}-${to} ${localization.of} ${count2}`, labelRowsPerPage: localization.rowsPerPage, onPageChange: (_2, newPage) => setPageIndex(newPage), onRowsPerPageChange: handleChangeRowsPerPage, page: Math.max(Math.min(pageIndex, Math.ceil(totalRowCount / pageSize2) - 1), 0), rowsPerPage: pageSize2, rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 50, 100], showFirstButton: showFirstLastPageButtons, showLastButton: showFirstLastPageButtons }, tablePaginationProps, { SelectProps: Object.assign({ sx: { m: "0 1rem 0 1ch" }, MenuProps: { MenuListProps: { disablePadding: true }, sx: { m: 0 } } }, tablePaginationProps === null || tablePaginationProps === void 0 ? void 0 : tablePaginationProps.SelectProps), sx: (theme) => Object.assign({ "& .MuiTablePagination-toolbar": {
       display: "flex",
       alignItems: "center"
     }, "& .MuiTablePagination-selectLabel": {
@@ -43443,8 +43485,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const alertProps = muiToolbarAlertBannerProps instanceof Function ? muiToolbarAlertBannerProps({ table }) : muiToolbarAlertBannerProps;
     const chipProps = muiToolbarAlertBannerChipProps instanceof Function ? muiToolbarAlertBannerChipProps({ table }) : muiToolbarAlertBannerChipProps;
     const selectMessage = getSelectedRowModel().rows.length > 0 ? (_b = (_a = localization.selectedCountOfRowCountRowsSelected) === null || _a === void 0 ? void 0 : _a.replace("{selectedCount}", getSelectedRowModel().rows.length.toString())) === null || _b === void 0 ? void 0 : _b.replace("{rowCount}", (rowCount !== null && rowCount !== void 0 ? rowCount : getPrePaginationRowModel().rows.length).toString()) : null;
-    const groupedByMessage = grouping.length > 0 ? jsxs("span", { children: [localization.groupedBy, " ", grouping.map((columnId, index2) => jsxs(React.Fragment, { children: [index2 > 0 ? localization.thenBy : "", jsx(Chip, Object.assign({ label: table.getColumn(columnId).columnDef.header, onDelete: () => table.getColumn(columnId).toggleGrouping() }, chipProps))] }, `${index2}-${columnId}`))] }) : null;
-    return jsx(Collapse, { in: showAlertBanner || !!selectMessage || !!groupedByMessage, timeout: stackAlertBanner ? 200 : 0, children: jsxs(Alert, Object.assign({ color: "info", icon: false }, alertProps, { sx: (theme) => Object.assign({ borderRadius: 0, fontSize: "1rem", left: 0, p: 0, position: "relative", mb: stackAlertBanner ? 0 : positionToolbarAlertBanner === "bottom" ? "-1rem" : void 0, right: 0, top: 0, width: "100%", zIndex: 2 }, (alertProps === null || alertProps === void 0 ? void 0 : alertProps.sx) instanceof Function ? alertProps.sx(theme) : alertProps === null || alertProps === void 0 ? void 0 : alertProps.sx), children: [(alertProps === null || alertProps === void 0 ? void 0 : alertProps.title) && jsx(AlertTitle, { children: alertProps.title }), jsxs(Box, { sx: { p: "0.5rem 1rem" }, children: [alertProps === null || alertProps === void 0 ? void 0 : alertProps.children, (alertProps === null || alertProps === void 0 ? void 0 : alertProps.children) && (selectMessage || groupedByMessage) && jsx("br", {}), selectMessage, selectMessage && groupedByMessage && jsx("br", {}), groupedByMessage] })] })) });
+    const groupedByMessage = grouping.length > 0 ? jsxRuntimeExports.jsxs("span", { children: [localization.groupedBy, " ", grouping.map((columnId, index2) => jsxRuntimeExports.jsxs(React.Fragment, { children: [index2 > 0 ? localization.thenBy : "", jsxRuntimeExports.jsx(Chip, Object.assign({ label: table.getColumn(columnId).columnDef.header, onDelete: () => table.getColumn(columnId).toggleGrouping() }, chipProps))] }, `${index2}-${columnId}`))] }) : null;
+    return jsxRuntimeExports.jsx(Collapse, { in: showAlertBanner || !!selectMessage || !!groupedByMessage, timeout: stackAlertBanner ? 200 : 0, children: jsxRuntimeExports.jsxs(Alert, Object.assign({ color: "info", icon: false }, alertProps, { sx: (theme) => Object.assign({ borderRadius: 0, fontSize: "1rem", left: 0, p: 0, position: "relative", mb: stackAlertBanner ? 0 : positionToolbarAlertBanner === "bottom" ? "-1rem" : void 0, right: 0, top: 0, width: "100%", zIndex: 2 }, (alertProps === null || alertProps === void 0 ? void 0 : alertProps.sx) instanceof Function ? alertProps.sx(theme) : alertProps === null || alertProps === void 0 ? void 0 : alertProps.sx), children: [(alertProps === null || alertProps === void 0 ? void 0 : alertProps.title) && jsxRuntimeExports.jsx(AlertTitle, { children: alertProps.title }), jsxRuntimeExports.jsxs(Box, { sx: { p: "0.5rem 1rem" }, children: [alertProps === null || alertProps === void 0 ? void 0 : alertProps.children, (alertProps === null || alertProps === void 0 ? void 0 : alertProps.children) && (selectMessage || groupedByMessage) && jsxRuntimeExports.jsx("br", {}), selectMessage, selectMessage && groupedByMessage && jsxRuntimeExports.jsx("br", {}), groupedByMessage] })] })) });
   };
   const MRT_FullScreenToggleButton = (_a) => {
     var _b;
@@ -43454,23 +43496,23 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const handleToggleFullScreen = () => {
       setIsFullScreen(!isFullScreen);
     };
-    return jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.toggleFullScreen, children: jsx(IconButton, Object.assign({ "aria-label": localization.showHideFilters, onClick: handleToggleFullScreen }, rest, { title: void 0, children: isFullScreen ? jsx(FullscreenExitIcon, {}) : jsx(FullscreenIcon, {}) })) });
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.toggleFullScreen, children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.showHideFilters, onClick: handleToggleFullScreen }, rest, { title: void 0, children: isFullScreen ? jsxRuntimeExports.jsx(FullscreenExitIcon, {}) : jsxRuntimeExports.jsx(FullscreenIcon, {}) })) });
   };
   const MRT_ColumnPinningButtons = ({ column: column2, table }) => {
     const { options: { icons: { PushPinIcon }, localization } } = table;
     const handlePinColumn = (pinDirection) => {
       column2.pin(pinDirection);
     };
-    return jsx(Box, { sx: { minWidth: "70px", textAlign: "center" }, children: column2.getIsPinned() ? jsx(Tooltip, { arrow: true, title: localization.unpin, children: jsx(IconButton, { onClick: () => handlePinColumn(false), size: "small", children: jsx(PushPinIcon, {}) }) }) : jsxs(Fragment, { children: [jsx(Tooltip, { arrow: true, title: localization.pinToLeft, children: jsx(IconButton, { onClick: () => handlePinColumn("left"), size: "small", children: jsx(PushPinIcon, { style: {
+    return jsxRuntimeExports.jsx(Box, { sx: { minWidth: "70px", textAlign: "center" }, children: column2.getIsPinned() ? jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: localization.unpin, children: jsxRuntimeExports.jsx(IconButton, { onClick: () => handlePinColumn(false), size: "small", children: jsxRuntimeExports.jsx(PushPinIcon, {}) }) }) : jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: localization.pinToLeft, children: jsxRuntimeExports.jsx(IconButton, { onClick: () => handlePinColumn("left"), size: "small", children: jsxRuntimeExports.jsx(PushPinIcon, { style: {
       transform: "rotate(90deg)"
-    } }) }) }), jsx(Tooltip, { arrow: true, title: localization.pinToRight, children: jsx(IconButton, { onClick: () => handlePinColumn("right"), size: "small", children: jsx(PushPinIcon, { style: {
+    } }) }) }), jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: localization.pinToRight, children: jsxRuntimeExports.jsx(IconButton, { onClick: () => handlePinColumn("right"), size: "small", children: jsxRuntimeExports.jsx(PushPinIcon, { style: {
       transform: "rotate(-90deg)"
     } }) }) })] }) });
   };
   const MRT_GrabHandleButton = ({ iconButtonProps, onDragEnd, onDragStart, table }) => {
     var _a;
     const { options: { icons: { DragHandleIcon }, localization } } = table;
-    return jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, placement: "top", title: (_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : localization.move, children: jsx(IconButton, Object.assign({ disableRipple: true, draggable: "true", size: "small" }, iconButtonProps, { onClick: (e) => {
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, placement: "top", title: (_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : localization.move, children: jsxRuntimeExports.jsx(IconButton, Object.assign({ disableRipple: true, draggable: "true", size: "small" }, iconButtonProps, { onClick: (e) => {
       var _a2;
       e.stopPropagation();
       (_a2 = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.onClick) === null || _a2 === void 0 ? void 0 : _a2.call(iconButtonProps, e);
@@ -43479,7 +43521,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       opacity: 1
     }, "&:active": {
       cursor: "grabbing"
-    } }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: jsx(DragHandleIcon, {}) })) });
+    } }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: jsxRuntimeExports.jsx(DragHandleIcon, {}) })) });
   };
   const MRT_ShowHideColumnsMenuItems = ({ allColumns, hoveredColumn, setHoveredColumn, column: column2, table }) => {
     var _a;
@@ -43516,7 +43558,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         setHoveredColumn(column2);
       }
     };
-    return jsxs(Fragment, { children: [jsx(MenuItem, { disableRipple: true, ref: menuItemRef, onDragEnter: handleDragEnter, sx: (theme) => ({
+    return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(MenuItem, { disableRipple: true, ref: menuItemRef, onDragEnter: handleDragEnter, sx: (theme) => ({
       alignItems: "center",
       justifyContent: "flex-start",
       my: 0,
@@ -43525,18 +43567,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       outline: isDragging ? `2px dashed ${theme.palette.divider}` : (hoveredColumn === null || hoveredColumn === void 0 ? void 0 : hoveredColumn.id) === column2.id ? `2px dashed ${theme.palette.primary.main}` : "none",
       pl: `${(column2.depth + 0.5) * 2}rem`,
       py: "6px"
-    }), children: jsxs(Box, { sx: {
+    }), children: jsxRuntimeExports.jsxs(Box, { sx: {
       display: "flex",
       flexWrap: "nowrap",
       gap: "8px"
-    }, children: [columnDefType !== "group" && enableColumnOrdering && !allColumns.some((col) => col.columnDef.columnDefType === "group") && (columnDef.enableColumnOrdering !== false ? jsx(MRT_GrabHandleButton, { onDragEnd: handleDragEnd, onDragStart: handleDragStart, table }) : jsx(Box, { sx: { width: "28px" } })), enablePinning && (column2.getCanPin() ? jsx(MRT_ColumnPinningButtons, { column: column2, table }) : jsx(Box, { sx: { width: "70px" } })), enableHiding ? jsx(FormControlLabel, { componentsProps: {
+    }, children: [columnDefType !== "group" && enableColumnOrdering && !allColumns.some((col) => col.columnDef.columnDefType === "group") && (columnDef.enableColumnOrdering !== false ? jsxRuntimeExports.jsx(MRT_GrabHandleButton, { onDragEnd: handleDragEnd, onDragStart: handleDragStart, table }) : jsxRuntimeExports.jsx(Box, { sx: { width: "28px" } })), enablePinning && (column2.getCanPin() ? jsxRuntimeExports.jsx(MRT_ColumnPinningButtons, { column: column2, table }) : jsxRuntimeExports.jsx(Box, { sx: { width: "70px" } })), enableHiding ? jsxRuntimeExports.jsx(FormControlLabel, { componentsProps: {
       typography: {
         sx: {
           mb: 0,
           opacity: columnDefType !== "display" ? 1 : 0.5
         }
       }
-    }, checked: switchChecked, control: jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: localization.toggleVisibility, children: jsx(Switch, {}) }), disabled: !column2.getCanHide(), label: columnDef.header, onChange: () => handleToggleColumnHidden(column2) }) : jsx(Typography, { sx: { alignSelf: "center" }, children: columnDef.header })] }) }), (_a = column2.columns) === null || _a === void 0 ? void 0 : _a.map((c, i) => jsx(MRT_ShowHideColumnsMenuItems, { allColumns, column: c, hoveredColumn, setHoveredColumn, table }, `${i}-${c.id}`))] });
+    }, checked: switchChecked, control: jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: localization.toggleVisibility, children: jsxRuntimeExports.jsx(Switch, {}) }), disabled: !column2.getCanHide(), label: columnDef.header, onChange: () => handleToggleColumnHidden(column2) }) : jsxRuntimeExports.jsx(Typography, { sx: { alignSelf: "center" }, children: columnDef.header })] }) }), (_a = column2.columns) === null || _a === void 0 ? void 0 : _a.map((c, i) => jsxRuntimeExports.jsx(MRT_ShowHideColumnsMenuItems, { allColumns, column: c, hoveredColumn, setHoveredColumn, table }, `${i}-${c.id}`))] });
   };
   const MRT_ShowHideColumnsMenu = ({ anchorEl, setAnchorEl, table }) => {
     const { getAllColumns, getAllLeafColumns, getCenterLeafColumns, getIsAllColumnsVisible, getIsSomeColumnsPinned, getIsSomeColumnsVisible, getLeftLeafColumns, getRightLeafColumns, getState, toggleAllColumnsVisible, options: { enableColumnOrdering, enableHiding, enablePinning, localization } } = table;
@@ -43563,14 +43605,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       getRightLeafColumns()
     ]);
     const [hoveredColumn, setHoveredColumn] = React.useState(null);
-    return jsxs(Menu, { anchorEl, open: !!anchorEl, onClose: () => setAnchorEl(null), MenuListProps: {
+    return jsxRuntimeExports.jsxs(Menu, { anchorEl, open: !!anchorEl, onClose: () => setAnchorEl(null), MenuListProps: {
       dense: density === "compact"
-    }, children: [jsxs(Box, { sx: {
+    }, children: [jsxRuntimeExports.jsxs(Box, { sx: {
       display: "flex",
       justifyContent: "space-between",
       p: "0.5rem",
       pt: 0
-    }, children: [enableHiding && jsx(Button, { disabled: !getIsSomeColumnsVisible(), onClick: hideAllColumns, children: localization.hideAll }), enableColumnOrdering && jsx(Button, { onClick: () => table.setColumnOrder(getDefaultColumnOrderIds(table.options)), children: localization.resetOrder }), enablePinning && jsx(Button, { disabled: !getIsSomeColumnsPinned(), onClick: () => table.resetColumnPinning(true), children: localization.unpinAll }), enableHiding && jsx(Button, { disabled: getIsAllColumnsVisible(), onClick: () => toggleAllColumnsVisible(true), children: localization.showAll })] }), jsx(Divider, {}), allColumns.map((column2, index2) => jsx(MRT_ShowHideColumnsMenuItems, { allColumns, column: column2, hoveredColumn, setHoveredColumn, table }, `${index2}-${column2.id}`))] });
+    }, children: [enableHiding && jsxRuntimeExports.jsx(Button, { disabled: !getIsSomeColumnsVisible(), onClick: hideAllColumns, children: localization.hideAll }), enableColumnOrdering && jsxRuntimeExports.jsx(Button, { onClick: () => table.setColumnOrder(getDefaultColumnOrderIds(table.options)), children: localization.resetOrder }), enablePinning && jsxRuntimeExports.jsx(Button, { disabled: !getIsSomeColumnsPinned(), onClick: () => table.resetColumnPinning(true), children: localization.unpinAll }), enableHiding && jsxRuntimeExports.jsx(Button, { disabled: getIsAllColumnsVisible(), onClick: () => toggleAllColumnsVisible(true), children: localization.showAll })] }), jsxRuntimeExports.jsx(Divider, {}), allColumns.map((column2, index2) => jsxRuntimeExports.jsx(MRT_ShowHideColumnsMenuItems, { allColumns, column: column2, hoveredColumn, setHoveredColumn, table }, `${index2}-${column2.id}`))] });
   };
   const MRT_ShowHideColumnsButton = (_a) => {
     var _b;
@@ -43580,7 +43622,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
-    return jsxs(Fragment, { children: [jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.showHideColumns, children: jsx(IconButton, Object.assign({ "aria-label": localization.showHideColumns, onClick: handleClick }, rest, { title: void 0, children: jsx(ViewColumnIcon, {}) })) }), anchorEl && jsx(MRT_ShowHideColumnsMenu, { anchorEl, setAnchorEl, table })] });
+    return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.showHideColumns, children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.showHideColumns, onClick: handleClick }, rest, { title: void 0, children: jsxRuntimeExports.jsx(ViewColumnIcon, {}) })) }), anchorEl && jsxRuntimeExports.jsx(MRT_ShowHideColumnsMenu, { anchorEl, setAnchorEl, table })] });
   };
   const MRT_ToggleDensePaddingButton = (_a) => {
     var _b;
@@ -43591,7 +43633,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       const nextDensity = density === "comfortable" ? "compact" : density === "compact" ? "spacious" : "comfortable";
       setDensity(nextDensity);
     };
-    return jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.toggleDensity, children: jsx(IconButton, Object.assign({ "aria-label": localization.toggleDensity, onClick: handleToggleDensePadding }, rest, { title: void 0, children: density === "compact" ? jsx(DensitySmallIcon, {}) : density === "comfortable" ? jsx(DensityMediumIcon, {}) : jsx(DensityLargeIcon, {}) })) });
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.toggleDensity, children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.toggleDensity, onClick: handleToggleDensePadding }, rest, { title: void 0, children: density === "compact" ? jsxRuntimeExports.jsx(DensitySmallIcon, {}) : density === "comfortable" ? jsxRuntimeExports.jsx(DensityMediumIcon, {}) : jsxRuntimeExports.jsx(DensityLargeIcon, {}) })) });
   };
   const MRT_ToggleFiltersButton = (_a) => {
     var _b;
@@ -43601,7 +43643,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const handleToggleShowFilters = () => {
       setShowColumnFilters(!showColumnFilters);
     };
-    return jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.showHideFilters, children: jsx(IconButton, Object.assign({ "aria-label": localization.showHideFilters, onClick: handleToggleShowFilters }, rest, { title: void 0, children: showColumnFilters ? jsx(FilterListOffIcon, {}) : jsx(FilterListIcon, {}) })) });
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.showHideFilters, children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.showHideFilters, onClick: handleToggleShowFilters }, rest, { title: void 0, children: showColumnFilters ? jsxRuntimeExports.jsx(FilterListOffIcon, {}) : jsxRuntimeExports.jsx(FilterListIcon, {}) })) });
   };
   const MRT_ToggleGlobalFilterButton = (_a) => {
     var _b, _c;
@@ -43615,18 +43657,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return (_a2 = searchInputRef.current) === null || _a2 === void 0 ? void 0 : _a2.focus();
       });
     };
-    return jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.showHideSearch, children: jsx(IconButton, Object.assign({ "aria-label": (_c = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _c !== void 0 ? _c : localization.showHideSearch, disabled: !!globalFilter, onClick: handleToggleSearch }, rest, { title: void 0, children: showGlobalFilter ? jsx(SearchOffIcon, {}) : jsx(SearchIcon, {}) })) });
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.showHideSearch, children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": (_c = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _c !== void 0 ? _c : localization.showHideSearch, disabled: !!globalFilter, onClick: handleToggleSearch }, rest, { title: void 0, children: showGlobalFilter ? jsxRuntimeExports.jsx(SearchOffIcon, {}) : jsxRuntimeExports.jsx(SearchIcon, {}) })) });
   };
   const MRT_ToolbarInternalButtons = ({ table }) => {
     var _a;
     const { options: { enableColumnFilters, enableColumnOrdering, enableDensityToggle, enableFilters, enableFullScreenToggle, enableGlobalFilter, enableHiding, enablePinning, initialState, renderToolbarInternalActions } } = table;
-    return jsx(Box, { sx: {
+    return jsxRuntimeExports.jsx(Box, { sx: {
       alignItems: "center",
       display: "flex",
       zIndex: 3
     }, children: (_a = renderToolbarInternalActions === null || renderToolbarInternalActions === void 0 ? void 0 : renderToolbarInternalActions({
       table
-    })) !== null && _a !== void 0 ? _a : jsxs(Fragment, { children: [enableFilters && enableGlobalFilter && !(initialState === null || initialState === void 0 ? void 0 : initialState.showGlobalFilter) && jsx(MRT_ToggleGlobalFilterButton, { table }), enableFilters && enableColumnFilters && jsx(MRT_ToggleFiltersButton, { table }), (enableHiding || enableColumnOrdering || enablePinning) && jsx(MRT_ShowHideColumnsButton, { table }), enableDensityToggle && jsx(MRT_ToggleDensePaddingButton, { table }), enableFullScreenToggle && jsx(MRT_FullScreenToggleButton, { table })] }) });
+    })) !== null && _a !== void 0 ? _a : jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [enableFilters && enableGlobalFilter && !(initialState === null || initialState === void 0 ? void 0 : initialState.showGlobalFilter) && jsxRuntimeExports.jsx(MRT_ToggleGlobalFilterButton, { table }), enableFilters && enableColumnFilters && jsxRuntimeExports.jsx(MRT_ToggleFiltersButton, { table }), (enableHiding || enableColumnOrdering || enablePinning) && jsxRuntimeExports.jsx(MRT_ShowHideColumnsButton, { table }), enableDensityToggle && jsxRuntimeExports.jsx(MRT_ToggleDensePaddingButton, { table }), enableFullScreenToggle && jsxRuntimeExports.jsx(MRT_FullScreenToggleButton, { table })] }) });
   };
   const MRT_ToolbarDropZone = ({ table }) => {
     var _a, _b;
@@ -43641,7 +43683,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         setShowToolbarDropZone(!!enableGrouping && !!draggingColumn && draggingColumn.columnDef.enableGrouping !== false && !grouping.includes(draggingColumn.id));
       }
     }, [enableGrouping, draggingColumn, grouping]);
-    return jsx(Fade, { in: showToolbarDropZone, children: jsx(Box, { className: "Mui-ToolbarDropZone", sx: (theme) => ({
+    return jsxRuntimeExports.jsx(Fade, { in: showToolbarDropZone, children: jsxRuntimeExports.jsx(Box, { className: "Mui-ToolbarDropZone", sx: (theme) => ({
       alignItems: "center",
       backgroundColor: alpha(theme.palette.info.main, (hoveredColumn === null || hoveredColumn === void 0 ? void 0 : hoveredColumn.id) === "drop-zone" ? 0.2 : 0.1),
       backdropFilter: "blur(4px)",
@@ -43653,7 +43695,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       position: "absolute",
       width: "100%",
       zIndex: 4
-    }), onDragEnter: handleDragEnter, children: jsx(Typography, { fontStyle: "italic", children: localization.dropToGroupBy.replace("{column}", (_b = (_a = draggingColumn === null || draggingColumn === void 0 ? void 0 : draggingColumn.columnDef) === null || _a === void 0 ? void 0 : _a.header) !== null && _b !== void 0 ? _b : "") }) }) });
+    }), onDragEnter: handleDragEnter, children: jsxRuntimeExports.jsx(Typography, { fontStyle: "italic", children: localization.dropToGroupBy.replace("{column}", (_b = (_a = draggingColumn === null || draggingColumn === void 0 ? void 0 : draggingColumn.columnDef) === null || _a === void 0 ? void 0 : _a.header) !== null && _b !== void 0 ? _b : "") }) }) });
   };
   const commonToolbarStyles = ({ theme }) => ({
     alignItems: "flex-start",
@@ -43674,12 +43716,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const isMobile = useMediaQuery("(max-width:720px)");
     const toolbarProps = muiTopToolbarProps instanceof Function ? muiTopToolbarProps({ table }) : muiTopToolbarProps;
     const stackAlertBanner = isMobile || !!renderTopToolbarCustomActions || showGlobalFilter;
-    return jsxs(Toolbar, Object.assign({ variant: "dense" }, toolbarProps, { ref: (ref) => {
+    return jsxRuntimeExports.jsxs(Toolbar, Object.assign({ variant: "dense" }, toolbarProps, { ref: (ref) => {
       topToolbarRef.current = ref;
       if (toolbarProps === null || toolbarProps === void 0 ? void 0 : toolbarProps.ref) {
         toolbarProps.ref.current = ref;
       }
-    }, sx: (theme) => Object.assign(Object.assign({ position: isFullScreen ? "sticky" : void 0, top: isFullScreen ? "0" : void 0 }, commonToolbarStyles({ theme })), (toolbarProps === null || toolbarProps === void 0 ? void 0 : toolbarProps.sx) instanceof Function ? toolbarProps.sx(theme) : toolbarProps === null || toolbarProps === void 0 ? void 0 : toolbarProps.sx), children: [positionToolbarAlertBanner === "top" && jsx(MRT_ToolbarAlertBanner, { stackAlertBanner, table }), ["both", "top"].includes(positionToolbarDropZone !== null && positionToolbarDropZone !== void 0 ? positionToolbarDropZone : "") && jsx(MRT_ToolbarDropZone, { table }), jsxs(Box, { sx: {
+    }, sx: (theme) => Object.assign(Object.assign({ position: isFullScreen ? "sticky" : void 0, top: isFullScreen ? "0" : void 0 }, commonToolbarStyles({ theme })), (toolbarProps === null || toolbarProps === void 0 ? void 0 : toolbarProps.sx) instanceof Function ? toolbarProps.sx(theme) : toolbarProps === null || toolbarProps === void 0 ? void 0 : toolbarProps.sx), children: [positionToolbarAlertBanner === "top" && jsxRuntimeExports.jsx(MRT_ToolbarAlertBanner, { stackAlertBanner, table }), ["both", "top"].includes(positionToolbarDropZone !== null && positionToolbarDropZone !== void 0 ? positionToolbarDropZone : "") && jsxRuntimeExports.jsx(MRT_ToolbarDropZone, { table }), jsxRuntimeExports.jsxs(Box, { sx: {
       alignItems: "flex-start",
       boxSizing: "border-box",
       display: "flex",
@@ -43689,11 +43731,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       right: 0,
       top: 0,
       width: "100%"
-    }, children: [enableGlobalFilter && positionGlobalFilter === "left" && jsx(MRT_GlobalFilterTextField, { table }), (_a = renderTopToolbarCustomActions === null || renderTopToolbarCustomActions === void 0 ? void 0 : renderTopToolbarCustomActions({ table })) !== null && _a !== void 0 ? _a : jsx("span", {}), enableToolbarInternalActions ? jsxs(Box, { sx: {
+    }, children: [enableGlobalFilter && positionGlobalFilter === "left" && jsxRuntimeExports.jsx(MRT_GlobalFilterTextField, { table }), (_a = renderTopToolbarCustomActions === null || renderTopToolbarCustomActions === void 0 ? void 0 : renderTopToolbarCustomActions({ table })) !== null && _a !== void 0 ? _a : jsxRuntimeExports.jsx("span", {}), enableToolbarInternalActions ? jsxRuntimeExports.jsxs(Box, { sx: {
       display: "flex",
       flexWrap: "wrap-reverse",
       justifyContent: "flex-end"
-    }, children: [enableGlobalFilter && positionGlobalFilter === "right" && jsx(MRT_GlobalFilterTextField, { table }), jsx(MRT_ToolbarInternalButtons, { table })] }) : enableGlobalFilter && positionGlobalFilter === "right" && jsx(MRT_GlobalFilterTextField, { table })] }), enablePagination && ["top", "both"].includes(positionPagination !== null && positionPagination !== void 0 ? positionPagination : "") && jsx(MRT_TablePagination, { table, position: "top" }), jsx(MRT_LinearProgressBar, { isTopToolbar: true, table })] }));
+    }, children: [enableGlobalFilter && positionGlobalFilter === "right" && jsxRuntimeExports.jsx(MRT_GlobalFilterTextField, { table }), jsxRuntimeExports.jsx(MRT_ToolbarInternalButtons, { table })] }) : enableGlobalFilter && positionGlobalFilter === "right" && jsxRuntimeExports.jsx(MRT_GlobalFilterTextField, { table })] }), enablePagination && ["top", "both"].includes(positionPagination !== null && positionPagination !== void 0 ? positionPagination : "") && jsxRuntimeExports.jsx(MRT_TablePagination, { table, position: "top" }), jsxRuntimeExports.jsx(MRT_LinearProgressBar, { isTopToolbar: true, table })] }));
   };
   const MRT_BottomToolbar = ({ table }) => {
     const { getState, options: { enablePagination, muiBottomToolbarProps, positionPagination, positionToolbarAlertBanner, positionToolbarDropZone, renderBottomToolbarCustomActions }, refs: { bottomToolbarRef } } = table;
@@ -43701,27 +43743,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const isMobile = useMediaQuery("(max-width:720px)");
     const toolbarProps = muiBottomToolbarProps instanceof Function ? muiBottomToolbarProps({ table }) : muiBottomToolbarProps;
     const stackAlertBanner = isMobile || !!renderBottomToolbarCustomActions;
-    return jsxs(Toolbar, Object.assign({ variant: "dense" }, toolbarProps, { ref: (node2) => {
+    return jsxRuntimeExports.jsxs(Toolbar, Object.assign({ variant: "dense" }, toolbarProps, { ref: (node2) => {
       if (node2) {
         bottomToolbarRef.current = node2;
         if (toolbarProps === null || toolbarProps === void 0 ? void 0 : toolbarProps.ref) {
           toolbarProps.ref.current = node2;
         }
       }
-    }, sx: (theme) => Object.assign(Object.assign(Object.assign({}, commonToolbarStyles({ theme })), { bottom: isFullScreen ? "0" : void 0, boxShadow: `0 1px 2px -1px ${alpha(theme.palette.common.black, 0.1)} inset`, left: 0, position: isFullScreen ? "fixed" : "relative", right: 0 }), (toolbarProps === null || toolbarProps === void 0 ? void 0 : toolbarProps.sx) instanceof Function ? toolbarProps.sx(theme) : toolbarProps === null || toolbarProps === void 0 ? void 0 : toolbarProps.sx), children: [jsx(MRT_LinearProgressBar, { isTopToolbar: false, table }), positionToolbarAlertBanner === "bottom" && jsx(MRT_ToolbarAlertBanner, { stackAlertBanner, table }), ["both", "bottom"].includes(positionToolbarDropZone !== null && positionToolbarDropZone !== void 0 ? positionToolbarDropZone : "") && jsx(MRT_ToolbarDropZone, { table }), jsxs(Box, { sx: {
+    }, sx: (theme) => Object.assign(Object.assign(Object.assign({}, commonToolbarStyles({ theme })), { bottom: isFullScreen ? "0" : void 0, boxShadow: `0 1px 2px -1px ${alpha(theme.palette.common.black, 0.1)} inset`, left: 0, position: isFullScreen ? "fixed" : "relative", right: 0 }), (toolbarProps === null || toolbarProps === void 0 ? void 0 : toolbarProps.sx) instanceof Function ? toolbarProps.sx(theme) : toolbarProps === null || toolbarProps === void 0 ? void 0 : toolbarProps.sx), children: [jsxRuntimeExports.jsx(MRT_LinearProgressBar, { isTopToolbar: false, table }), positionToolbarAlertBanner === "bottom" && jsxRuntimeExports.jsx(MRT_ToolbarAlertBanner, { stackAlertBanner, table }), ["both", "bottom"].includes(positionToolbarDropZone !== null && positionToolbarDropZone !== void 0 ? positionToolbarDropZone : "") && jsxRuntimeExports.jsx(MRT_ToolbarDropZone, { table }), jsxRuntimeExports.jsxs(Box, { sx: {
       alignItems: "center",
       boxSizing: "border-box",
       display: "flex",
       justifyContent: "space-between",
       p: "0.5rem",
       width: "100%"
-    }, children: [renderBottomToolbarCustomActions ? renderBottomToolbarCustomActions({ table }) : jsx("span", {}), jsx(Box, { sx: {
+    }, children: [renderBottomToolbarCustomActions ? renderBottomToolbarCustomActions({ table }) : jsxRuntimeExports.jsx("span", {}), jsxRuntimeExports.jsx(Box, { sx: {
       display: "flex",
       justifyContent: "flex-end",
       position: stackAlertBanner ? "relative" : "absolute",
       right: 0,
       top: 0
-    }, children: enablePagination && ["bottom", "both"].includes(positionPagination !== null && positionPagination !== void 0 ? positionPagination : "") && jsx(MRT_TablePagination, { table, position: "bottom" }) })] })] }));
+    }, children: enablePagination && ["bottom", "both"].includes(positionPagination !== null && positionPagination !== void 0 ? positionPagination : "") && jsxRuntimeExports.jsx(MRT_TablePagination, { table, position: "bottom" }) })] })] }));
   };
   const MRT_TableHeadCellColumnActionsButton = ({ header, table }) => {
     var _a;
@@ -43740,9 +43782,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       table
     }) : columnDef.muiTableHeadCellColumnActionsButtonProps;
     const iconButtonProps = Object.assign(Object.assign({}, mTableHeadCellColumnActionsButtonProps), mcTableHeadCellColumnActionsButtonProps);
-    return jsxs(Fragment, { children: [jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, placement: "top", title: (_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : localization.columnActions, children: jsx(IconButton, Object.assign({ "aria-label": localization.columnActions, onClick: handleClick, size: "small" }, iconButtonProps, { sx: (theme) => Object.assign({ height: "2rem", m: "-8px -4px", opacity: 0.5, transform: "scale(0.85) translateX(-4px)", transition: "opacity 150ms", width: "2rem", "&:hover": {
+    return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, placement: "top", title: (_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : localization.columnActions, children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.columnActions, onClick: handleClick, size: "small" }, iconButtonProps, { sx: (theme) => Object.assign({ height: "2rem", m: "-8px -4px", opacity: 0.5, transform: "scale(0.85) translateX(-4px)", transition: "opacity 150ms", width: "2rem", "&:hover": {
       opacity: 1
-    } }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: jsx(MoreVertIcon, {}) })) }), anchorEl && jsx(MRT_ColumnActionMenu, { anchorEl, header, setAnchorEl, table })] });
+    } }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: jsxRuntimeExports.jsx(MoreVertIcon, {}) })) }), anchorEl && jsxRuntimeExports.jsx(MRT_ColumnActionMenu, { anchorEl, header, setAnchorEl, table })] });
   };
   const MRT_FilterTextField = ({ header, rangeFilterIndex, table }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
@@ -43845,16 +43887,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       isMounted.current = true;
     }, [column2.getFilterValue()]);
     if (columnDef.Filter) {
-      return jsx(Fragment, { children: (_f = columnDef.Filter) === null || _f === void 0 ? void 0 : _f.call(columnDef, { column: column2, header, rangeFilterIndex, table }) });
+      return jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: (_f = columnDef.Filter) === null || _f === void 0 ? void 0 : _f.call(columnDef, { column: column2, header, rangeFilterIndex, table }) });
     }
-    return jsxs(Fragment, { children: [jsxs(TextField, Object.assign({ fullWidth: true, inputProps: {
+    return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsxs(TextField, Object.assign({ fullWidth: true, inputProps: {
       disabled: !!filterChipLabel,
       sx: {
         textOverflow: "ellipsis",
         width: filterChipLabel ? 0 : void 0
       },
       title: filterPlaceholder
-    }, helperText: showChangeModeButton ? jsx("label", { children: localization.filterMode.replace(
+    }, helperText: showChangeModeButton ? jsxRuntimeExports.jsx("label", { children: localization.filterMode.replace(
       "{filterType}",
       // @ts-ignore
       localization[`filter${((_g = currentFilterOption === null || currentFilterOption === void 0 ? void 0 : currentFilterOption.charAt(0)) === null || _g === void 0 ? void 0 : _g.toUpperCase()) + (currentFilterOption === null || currentFilterOption === void 0 ? void 0 : currentFilterOption.slice(1))}`]
@@ -43865,17 +43907,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         whiteSpace: "nowrap"
       }
     }, margin: "none", placeholder: filterChipLabel || isSelectFilter || isMultiSelectFilter ? void 0 : filterPlaceholder, onChange: handleChange, onClick: (e) => e.stopPropagation(), select: isSelectFilter || isMultiSelectFilter, value: filterValue !== null && filterValue !== void 0 ? filterValue : "", variant: "standard", InputProps: {
-      startAdornment: showChangeModeButton ? jsxs(InputAdornment, { position: "start", children: [jsx(Tooltip, { arrow: true, title: localization.changeFilterMode, children: jsx("span", { children: jsx(IconButton, { "aria-label": localization.changeFilterMode, onClick: handleFilterMenuOpen, size: "small", sx: { height: "1.75rem", width: "1.75rem" }, children: jsx(FilterListIcon, {}) }) }) }), filterChipLabel && jsx(Chip, { onDelete: handleClearEmptyFilterChip, label: filterChipLabel })] }) : null,
-      endAdornment: !filterChipLabel && jsx(InputAdornment, { position: "end", children: jsx(Tooltip, { arrow: true, placement: "right", title: (_h = localization.clearFilter) !== null && _h !== void 0 ? _h : "", children: jsx("span", { children: jsx(IconButton, { "aria-label": localization.clearFilter, disabled: !((_j = filterValue === null || filterValue === void 0 ? void 0 : filterValue.toString()) === null || _j === void 0 ? void 0 : _j.length), onClick: handleClear, size: "small", sx: {
+      startAdornment: showChangeModeButton ? jsxRuntimeExports.jsxs(InputAdornment, { position: "start", children: [jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: localization.changeFilterMode, children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.changeFilterMode, onClick: handleFilterMenuOpen, size: "small", sx: { height: "1.75rem", width: "1.75rem" }, children: jsxRuntimeExports.jsx(FilterListIcon, {}) }) }) }), filterChipLabel && jsxRuntimeExports.jsx(Chip, { onDelete: handleClearEmptyFilterChip, label: filterChipLabel })] }) : null,
+      endAdornment: !filterChipLabel && jsxRuntimeExports.jsx(InputAdornment, { position: "end", children: jsxRuntimeExports.jsx(Tooltip, { arrow: true, placement: "right", title: (_h = localization.clearFilter) !== null && _h !== void 0 ? _h : "", children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.clearFilter, disabled: !((_j = filterValue === null || filterValue === void 0 ? void 0 : filterValue.toString()) === null || _j === void 0 ? void 0 : _j.length), onClick: handleClear, size: "small", sx: {
         height: "1.75rem",
         width: "1.75rem"
-      }, children: jsx(CloseIcon2, {}) }) }) }) })
+      }, children: jsxRuntimeExports.jsx(CloseIcon2, {}) }) }) }) })
     }, SelectProps: {
       displayEmpty: true,
       multiple: isMultiSelectFilter,
-      renderValue: isMultiSelectFilter ? (selected) => !(selected === null || selected === void 0 ? void 0 : selected.length) ? jsx(Box, { sx: { opacity: 0.5 }, children: filterPlaceholder }) : jsx(Box, { sx: { display: "flex", flexWrap: "wrap", gap: "2px" }, children: selected === null || selected === void 0 ? void 0 : selected.map((value) => {
+      renderValue: isMultiSelectFilter ? (selected) => !(selected === null || selected === void 0 ? void 0 : selected.length) ? jsxRuntimeExports.jsx(Box, { sx: { opacity: 0.5 }, children: filterPlaceholder }) : jsxRuntimeExports.jsx(Box, { sx: { display: "flex", flexWrap: "wrap", gap: "2px" }, children: selected === null || selected === void 0 ? void 0 : selected.map((value) => {
         const selectedValue = filterSelectOptions === null || filterSelectOptions === void 0 ? void 0 : filterSelectOptions.find((option) => option instanceof Object ? option.value === value : option === value);
-        return jsx(Chip, { label: selectedValue instanceof Object ? selectedValue.text : selectedValue }, value);
+        return jsxRuntimeExports.jsx(Chip, { label: selectedValue instanceof Object ? selectedValue.text : selectedValue }, value);
       }) }) : void 0
     } }, textFieldProps, { inputRef: (inputRef) => {
       filterInputRefs.current[`${column2.id}-${rangeFilterIndex !== null && rangeFilterIndex !== void 0 ? rangeFilterIndex : 0}`] = inputRef;
@@ -43884,7 +43926,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     }, sx: (theme) => Object.assign({ p: 0, minWidth: isRangeFilter ? "100px" : !filterChipLabel ? "120px" : "auto", width: "calc(100% + 4px)", mx: "-2px", "& .MuiSelect-icon": {
       mr: "1.5rem"
-    } }, (textFieldProps === null || textFieldProps === void 0 ? void 0 : textFieldProps.sx) instanceof Function ? textFieldProps.sx(theme) : textFieldProps === null || textFieldProps === void 0 ? void 0 : textFieldProps.sx), children: [(isSelectFilter || isMultiSelectFilter) && jsx(MenuItem, { divider: true, disabled: true, hidden: true, value: "", children: jsx(Box, { sx: { opacity: 0.5 }, children: filterPlaceholder }) }), (_k = textFieldProps.children) !== null && _k !== void 0 ? _k : filterSelectOptions === null || filterSelectOptions === void 0 ? void 0 : filterSelectOptions.map((option) => {
+    } }, (textFieldProps === null || textFieldProps === void 0 ? void 0 : textFieldProps.sx) instanceof Function ? textFieldProps.sx(theme) : textFieldProps === null || textFieldProps === void 0 ? void 0 : textFieldProps.sx), children: [(isSelectFilter || isMultiSelectFilter) && jsxRuntimeExports.jsx(MenuItem, { divider: true, disabled: true, hidden: true, value: "", children: jsxRuntimeExports.jsx(Box, { sx: { opacity: 0.5 }, children: filterPlaceholder }) }), (_k = textFieldProps.children) !== null && _k !== void 0 ? _k : filterSelectOptions === null || filterSelectOptions === void 0 ? void 0 : filterSelectOptions.map((option) => {
       var _a2;
       if (!option)
         return "";
@@ -43897,16 +43939,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         value = option.value;
         text2 = option.text;
       }
-      return jsxs(MenuItem, { sx: {
+      return jsxRuntimeExports.jsxs(MenuItem, { sx: {
         display: "flex",
         m: 0,
         alignItems: "center",
         gap: "0.5rem"
-      }, value, children: [isMultiSelectFilter && jsx(Checkbox, { checked: ((_a2 = column2.getFilterValue()) !== null && _a2 !== void 0 ? _a2 : []).includes(value), sx: { mr: "0.5rem" } }), text2, " ", !columnDef.filterSelectOptions && `(${facetedUniqueValues.get(value)})`] }, value);
-    })] })), jsx(MRT_FilterOptionMenu, { anchorEl, header, setAnchorEl, table, setFilterValue })] });
+      }, value, children: [isMultiSelectFilter && jsxRuntimeExports.jsx(Checkbox, { checked: ((_a2 = column2.getFilterValue()) !== null && _a2 !== void 0 ? _a2 : []).includes(value), sx: { mr: "0.5rem" } }), text2, " ", !columnDef.filterSelectOptions && `(${facetedUniqueValues.get(value)})`] }, value);
+    })] })), jsxRuntimeExports.jsx(MRT_FilterOptionMenu, { anchorEl, header, setAnchorEl, table, setFilterValue })] });
   };
   const MRT_FilterRangeFields = ({ header, table }) => {
-    return jsxs(Box, { sx: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }, children: [jsx(MRT_FilterTextField, { header, rangeFilterIndex: 0, table }), jsx(MRT_FilterTextField, { header, rangeFilterIndex: 1, table })] });
+    return jsxRuntimeExports.jsxs(Box, { sx: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }, children: [jsxRuntimeExports.jsx(MRT_FilterTextField, { header, rangeFilterIndex: 0, table }), jsxRuntimeExports.jsx(MRT_FilterTextField, { header, rangeFilterIndex: 1, table })] });
   };
   const MRT_FilterCheckbox = ({ column: column2, table }) => {
     var _a, _b, _c;
@@ -43923,7 +43965,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }) : columnDef.muiTableHeadCellFilterCheckboxProps;
     const checkboxProps = Object.assign(Object.assign({}, mTableHeadCellFilterCheckboxProps), mcTableHeadCellFilterCheckboxProps);
     const filterLabel = (_a = localization.filterByColumn) === null || _a === void 0 ? void 0 : _a.replace("{column}", columnDef.header);
-    return jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: (_b = checkboxProps === null || checkboxProps === void 0 ? void 0 : checkboxProps.title) !== null && _b !== void 0 ? _b : filterLabel, children: jsx(FormControlLabel, { control: jsx(Checkbox, Object.assign({ checked: column2.getFilterValue() === "true", indeterminate: column2.getFilterValue() === void 0, color: column2.getFilterValue() === void 0 ? "default" : "primary", size: density === "compact" ? "small" : "medium" }, checkboxProps, { onClick: (e) => {
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: (_b = checkboxProps === null || checkboxProps === void 0 ? void 0 : checkboxProps.title) !== null && _b !== void 0 ? _b : filterLabel, children: jsxRuntimeExports.jsx(FormControlLabel, { control: jsxRuntimeExports.jsx(Checkbox, Object.assign({ checked: column2.getFilterValue() === "true", indeterminate: column2.getFilterValue() === void 0, color: column2.getFilterValue() === void 0 ? "default" : "primary", size: density === "compact" ? "small" : "medium" }, checkboxProps, { onClick: (e) => {
       var _a2;
       e.stopPropagation();
       (_a2 = checkboxProps === null || checkboxProps === void 0 ? void 0 : checkboxProps.onClick) === null || _a2 === void 0 ? void 0 : _a2.call(checkboxProps, e);
@@ -43971,7 +44013,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       isMounted.current = true;
     }, [columnFilterValue, min2, max2]);
-    return jsxs(Stack, { children: [jsx(Slider, Object.assign({ disableSwap: true, min: min2, max: max2, onChange: (_event, values2) => {
+    return jsxRuntimeExports.jsxs(Stack, { children: [jsxRuntimeExports.jsx(Slider, Object.assign({ disableSwap: true, min: min2, max: max2, onChange: (_event, values2) => {
       setFilterValues(values2);
     }, onChangeCommitted: (_event, value) => {
       if (Array.isArray(value)) {
@@ -43993,7 +44035,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           }
         }
       }
-    }, sx: (theme) => Object.assign({ m: "auto", mt: !showChangeModeButton ? "10px" : "6px", px: "4px", width: "calc(100% - 8px)" }, (sliderProps === null || sliderProps === void 0 ? void 0 : sliderProps.sx) instanceof Function ? sliderProps.sx(theme) : sliderProps === null || sliderProps === void 0 ? void 0 : sliderProps.sx) })), showChangeModeButton ? jsx(FormHelperText, { sx: {
+    }, sx: (theme) => Object.assign({ m: "auto", mt: !showChangeModeButton ? "10px" : "6px", px: "4px", width: "calc(100% - 8px)" }, (sliderProps === null || sliderProps === void 0 ? void 0 : sliderProps.sx) instanceof Function ? sliderProps.sx(theme) : sliderProps === null || sliderProps === void 0 ? void 0 : sliderProps.sx) })), showChangeModeButton ? jsxRuntimeExports.jsx(FormHelperText, { sx: {
       m: "-3px -6px",
       fontSize: "0.75rem",
       lineHeight: "0.8rem",
@@ -44009,7 +44051,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { showColumnFilters } = getState();
     const { column: column2 } = header;
     const { columnDef } = column2;
-    return jsx(Collapse, { in: showColumnFilters, mountOnEnter: true, unmountOnExit: true, children: columnDef.filterVariant === "checkbox" ? jsx(MRT_FilterCheckbox, { column: column2, table }) : columnDef.filterVariant === "range-slider" ? jsx(MRT_FilterRangeSlider, { header, table }) : columnDef.filterVariant === "range" || ["between", "betweenInclusive", "inNumberRange"].includes(columnDef._filterFn) ? jsx(MRT_FilterRangeFields, { header, table }) : jsx(MRT_FilterTextField, { header, table }) });
+    return jsxRuntimeExports.jsx(Collapse, { in: showColumnFilters, mountOnEnter: true, unmountOnExit: true, children: columnDef.filterVariant === "checkbox" ? jsxRuntimeExports.jsx(MRT_FilterCheckbox, { column: column2, table }) : columnDef.filterVariant === "range-slider" ? jsxRuntimeExports.jsx(MRT_FilterRangeSlider, { header, table }) : columnDef.filterVariant === "range" || ["between", "betweenInclusive", "inNumberRange"].includes(columnDef._filterFn) ? jsxRuntimeExports.jsx(MRT_FilterRangeFields, { header, table }) : jsxRuntimeExports.jsx(MRT_FilterTextField, { header, table }) });
   };
   const MRT_TableHeadCellFilterLabel = ({ header, table }) => {
     var _a, _b, _c, _d;
@@ -44023,8 +44065,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       // @ts-ignore
       localization[`filter${((_b = currentFilterOption === null || currentFilterOption === void 0 ? void 0 : currentFilterOption.charAt(0)) === null || _b === void 0 ? void 0 : _b.toUpperCase()) + (currentFilterOption === null || currentFilterOption === void 0 ? void 0 : currentFilterOption.slice(1))}`]
     ).replace("{filterValue}", `"${Array.isArray(column2.getFilterValue()) ? column2.getFilterValue().join(`" ${isRangeFilter ? localization.and : localization.or} "`) : column2.getFilterValue()}"`).replace('" "', "");
-    return jsx(Grow, { unmountOnExit: true, in: !!column2.getFilterValue() && !isRangeFilter || isRangeFilter && // @ts-ignore
-    (!!((_c = column2.getFilterValue()) === null || _c === void 0 ? void 0 : _c[0]) || !!((_d = column2.getFilterValue()) === null || _d === void 0 ? void 0 : _d[1])), children: jsx(Box, { component: "span", sx: { flex: "0 0" }, children: jsx(Tooltip, { arrow: true, placement: "top", title: filterTooltip, children: jsx(IconButton, { disableRipple: true, onClick: (event) => {
+    return jsxRuntimeExports.jsx(Grow, { unmountOnExit: true, in: !!column2.getFilterValue() && !isRangeFilter || isRangeFilter && // @ts-ignore
+    (!!((_c = column2.getFilterValue()) === null || _c === void 0 ? void 0 : _c[0]) || !!((_d = column2.getFilterValue()) === null || _d === void 0 ? void 0 : _d[1])), children: jsxRuntimeExports.jsx(Box, { component: "span", sx: { flex: "0 0" }, children: jsxRuntimeExports.jsx(Tooltip, { arrow: true, placement: "top", title: filterTooltip, children: jsxRuntimeExports.jsx(IconButton, { disableRipple: true, onClick: (event) => {
       setShowColumnFilters(true);
       queueMicrotask(() => {
         var _a2, _b2;
@@ -44039,7 +44081,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       p: "2px",
       transform: "scale(0.66)",
       width: "12px"
-    }, children: jsx(FilterAltIcon, {}) }) }) }) });
+    }, children: jsxRuntimeExports.jsx(FilterAltIcon, {}) }) }) }) });
   };
   const MRT_TableHeadCellGrabHandle = ({ column: column2, table, tableHeadCellRef }) => {
     const { getState, options: { enableColumnOrdering, muiTableHeadCellDragHandleProps }, setColumnOrder, setDraggingColumn, setHoveredColumn } = table;
@@ -44065,14 +44107,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       setDraggingColumn(null);
       setHoveredColumn(null);
     };
-    return jsx(MRT_GrabHandleButton, { iconButtonProps, onDragStart: handleDragStart, onDragEnd: handleDragEnd, table });
+    return jsxRuntimeExports.jsx(MRT_GrabHandleButton, { iconButtonProps, onDragStart: handleDragStart, onDragEnd: handleDragEnd, table });
   };
   const MRT_TableHeadCellResizeHandle = ({ header, table }) => {
     var _a;
     const { getState, options: { columnResizeMode }, setColumnSizingInfo } = table;
     const { density } = getState();
     const { column: column2 } = header;
-    return jsx(Box, { className: "Mui-TableHeadCell-ResizeHandle-Wrapper", onDoubleClick: () => {
+    return jsxRuntimeExports.jsx(Box, { className: "Mui-TableHeadCell-ResizeHandle-Wrapper", onDoubleClick: () => {
       setColumnSizingInfo((old) => Object.assign(Object.assign({}, old), { isResizingColumn: false }));
       column2.resetSize();
     }, onMouseDown: header.getResizeHandler(), onTouchStart: header.getResizeHandler(), sx: (theme) => ({
@@ -44087,7 +44129,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     }), style: {
       transform: column2.getIsResizing() && columnResizeMode === "onEnd" ? `translateX(${(_a = getState().columnSizingInfo.deltaOffset) !== null && _a !== void 0 ? _a : 0}px)` : void 0
-    }, children: jsx(Divider, { className: "Mui-TableHeadCell-ResizeHandle-Divider", flexItem: true, orientation: "vertical", sx: {
+    }, children: jsxRuntimeExports.jsx(Divider, { className: "Mui-TableHeadCell-ResizeHandle-Divider", flexItem: true, orientation: "vertical", sx: {
       borderRadius: "2px",
       borderWidth: "2px",
       height: "24px",
@@ -44103,7 +44145,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { columnDef } = column2;
     const { sorting } = getState();
     const sortTooltip = column2.getIsSorted() ? column2.getIsSorted() === "desc" ? localization.sortedByColumnDesc.replace("{column}", columnDef.header) : localization.sortedByColumnAsc.replace("{column}", columnDef.header) : localization.unsorted;
-    return jsx(Tooltip, { arrow: true, placement: "top", title: sortTooltip, children: jsx(Badge, { badgeContent: sorting.length > 1 ? column2.getSortIndex() + 1 : 0, overlap: "circular", children: jsx(TableSortLabel, { "aria-label": sortTooltip, active: !!column2.getIsSorted(), direction: column2.getIsSorted() ? column2.getIsSorted() : void 0, sx: {
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, placement: "top", title: sortTooltip, children: jsxRuntimeExports.jsx(Badge, { badgeContent: sorting.length > 1 ? column2.getSortIndex() + 1 : 0, overlap: "circular", children: jsxRuntimeExports.jsx(TableSortLabel, { "aria-label": sortTooltip, active: !!column2.getIsSorted(), direction: column2.getIsSorted() ? column2.getIsSorted() : void 0, sx: {
       flex: "0 0",
       width: "2.4ch",
       transform: (tableCellProps === null || tableCellProps === void 0 ? void 0 : tableCellProps.align) !== "right" ? "translateX(-0.5ch)" : void 0
@@ -44155,7 +44197,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       header,
       table
     }) : (_b = columnDef === null || columnDef === void 0 ? void 0 : columnDef.Header) !== null && _b !== void 0 ? _b : columnDef.header;
-    return jsxs(TableCell, Object.assign({ align: columnDefType === "group" ? "center" : "left", colSpan: header.colSpan, onDragEnter: handleDragEnter, ref: (node2) => {
+    return jsxRuntimeExports.jsxs(TableCell, Object.assign({ align: columnDefType === "group" ? "center" : "left", colSpan: header.colSpan, onDragEnter: handleDragEnter, ref: (node2) => {
       if (node2) {
         tableHeadCellRefs.current[column2.id] = node2;
       }
@@ -44165,21 +44207,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       table,
       tableCellProps,
       theme: theme2
-    })), draggingBorders), children: [header.isPlaceholder ? null : jsxs(Box, { className: "Mui-TableHeadCell-Content", sx: {
+    })), draggingBorders), children: [header.isPlaceholder ? null : jsxRuntimeExports.jsxs(Box, { className: "Mui-TableHeadCell-Content", sx: {
       alignItems: "center",
       display: "flex",
       flexDirection: (tableCellProps === null || tableCellProps === void 0 ? void 0 : tableCellProps.align) === "right" ? "row-reverse" : "row",
       justifyContent: columnDefType === "group" || (tableCellProps === null || tableCellProps === void 0 ? void 0 : tableCellProps.align) === "center" ? "center" : column2.getCanResize() ? "space-between" : "flex-start",
       position: "relative",
       width: "100%"
-    }, children: [jsxs(Box, { className: "Mui-TableHeadCell-Content-Labels", onClick: column2.getToggleSortingHandler(), sx: {
+    }, children: [jsxRuntimeExports.jsxs(Box, { className: "Mui-TableHeadCell-Content-Labels", onClick: column2.getToggleSortingHandler(), sx: {
       alignItems: "center",
       cursor: column2.getCanSort() && columnDefType !== "group" ? "pointer" : void 0,
       display: "flex",
       flexDirection: (tableCellProps === null || tableCellProps === void 0 ? void 0 : tableCellProps.align) === "right" ? "row-reverse" : "row",
       overflow: columnDefType === "data" ? "hidden" : void 0,
       pl: (tableCellProps === null || tableCellProps === void 0 ? void 0 : tableCellProps.align) === "center" ? `${headerPL}rem` : void 0
-    }, children: [jsx(Box, { className: "Mui-TableHeadCell-Content-Wrapper", sx: {
+    }, children: [jsxRuntimeExports.jsx(Box, { className: "Mui-TableHeadCell-Content-Wrapper", sx: {
       minWidth: `${Math.min((_d = (_c = columnDef.header) === null || _c === void 0 ? void 0 : _c.length) !== null && _d !== void 0 ? _d : 0, 5)}ch`,
       overflow: columnDefType === "data" ? "hidden" : void 0,
       textOverflow: "ellipsis",
@@ -44187,24 +44229,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       "&:hover": {
         textOverflow: "clip"
       }
-    }, title: columnDefType === "data" ? columnDef.header : void 0, children: headerElement }), column2.getCanSort() && jsx(MRT_TableHeadCellSortLabel, { header, table, tableCellProps }), column2.getCanFilter() && jsx(MRT_TableHeadCellFilterLabel, { header, table })] }), columnDefType !== "group" && jsxs(Box, { className: "Mui-TableHeadCell-Content-Actions", sx: { whiteSpace: "nowrap" }, children: [showDragHandle && jsx(MRT_TableHeadCellGrabHandle, { column: column2, table, tableHeadCellRef: {
+    }, title: columnDefType === "data" ? columnDef.header : void 0, children: headerElement }), column2.getCanSort() && jsxRuntimeExports.jsx(MRT_TableHeadCellSortLabel, { header, table, tableCellProps }), column2.getCanFilter() && jsxRuntimeExports.jsx(MRT_TableHeadCellFilterLabel, { header, table })] }), columnDefType !== "group" && jsxRuntimeExports.jsxs(Box, { className: "Mui-TableHeadCell-Content-Actions", sx: { whiteSpace: "nowrap" }, children: [showDragHandle && jsxRuntimeExports.jsx(MRT_TableHeadCellGrabHandle, { column: column2, table, tableHeadCellRef: {
       current: tableHeadCellRefs.current[column2.id]
-    } }), showColumnActions && jsx(MRT_TableHeadCellColumnActionsButton, { header, table })] }), column2.getCanResize() && jsx(MRT_TableHeadCellResizeHandle, { header, table })] }), column2.getCanFilter() && jsx(MRT_TableHeadCellFilterContainer, { header, table })] }));
+    } }), showColumnActions && jsxRuntimeExports.jsx(MRT_TableHeadCellColumnActionsButton, { header, table })] }), column2.getCanResize() && jsxRuntimeExports.jsx(MRT_TableHeadCellResizeHandle, { header, table })] }), column2.getCanFilter() && jsxRuntimeExports.jsx(MRT_TableHeadCellFilterContainer, { header, table })] }));
   };
   const MRT_TableHeadRow = ({ headerGroup, table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }) => {
     const { options: { layoutMode, muiTableHeadRowProps } } = table;
     const tableRowProps = muiTableHeadRowProps instanceof Function ? muiTableHeadRowProps({ headerGroup, table }) : muiTableHeadRowProps;
-    return jsxs(TableRow, Object.assign({}, tableRowProps, { sx: (theme) => Object.assign({ backgroundColor: lighten(theme.palette.background.default, 0.04), boxShadow: `4px 0 8px ${alpha(theme.palette.common.black, 0.1)}`, display: layoutMode === "grid" ? "flex" : "table-row", top: 0 }, (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx) instanceof Function ? tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx(theme) : tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx), children: [virtualPaddingLeft ? jsx("th", { style: { display: "flex", width: virtualPaddingLeft } }) : null, (virtualColumns !== null && virtualColumns !== void 0 ? virtualColumns : headerGroup.headers).map((headerOrVirtualHeader) => {
+    return jsxRuntimeExports.jsxs(TableRow, Object.assign({}, tableRowProps, { sx: (theme) => Object.assign({ backgroundColor: lighten(theme.palette.background.default, 0.04), boxShadow: `4px 0 8px ${alpha(theme.palette.common.black, 0.1)}`, display: layoutMode === "grid" ? "flex" : "table-row", top: 0 }, (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx) instanceof Function ? tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx(theme) : tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx), children: [virtualPaddingLeft ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingLeft } }) : null, (virtualColumns !== null && virtualColumns !== void 0 ? virtualColumns : headerGroup.headers).map((headerOrVirtualHeader) => {
       const header = virtualColumns ? headerGroup.headers[headerOrVirtualHeader.index] : headerOrVirtualHeader;
-      return jsx(MRT_TableHeadCell, { header, table }, header.id);
-    }), virtualPaddingRight ? jsx("th", { style: { display: "flex", width: virtualPaddingRight } }) : null] }));
+      return jsxRuntimeExports.jsx(MRT_TableHeadCell, { header, table }, header.id);
+    }), virtualPaddingRight ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingRight } }) : null] }));
   };
   const MRT_TableHead = ({ table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }) => {
     const { getHeaderGroups, getState, options: { enableStickyHeader, layoutMode, muiTableHeadProps } } = table;
     const { isFullScreen } = getState();
     const tableHeadProps = muiTableHeadProps instanceof Function ? muiTableHeadProps({ table }) : muiTableHeadProps;
     const stickyHeader = enableStickyHeader || isFullScreen;
-    return jsx(TableHead, Object.assign({}, tableHeadProps, { sx: (theme) => Object.assign({ display: layoutMode === "grid" ? "grid" : "table-row-group", opacity: 0.97, position: stickyHeader ? "sticky" : "relative", top: stickyHeader && layoutMode === "grid" ? 0 : void 0, zIndex: stickyHeader ? 2 : void 0 }, (tableHeadProps === null || tableHeadProps === void 0 ? void 0 : tableHeadProps.sx) instanceof Function ? tableHeadProps === null || tableHeadProps === void 0 ? void 0 : tableHeadProps.sx(theme) : tableHeadProps === null || tableHeadProps === void 0 ? void 0 : tableHeadProps.sx), children: getHeaderGroups().map((headerGroup) => jsx(MRT_TableHeadRow, { headerGroup, table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }, headerGroup.id)) }));
+    return jsxRuntimeExports.jsx(TableHead, Object.assign({}, tableHeadProps, { sx: (theme) => Object.assign({ display: layoutMode === "grid" ? "grid" : "table-row-group", opacity: 0.97, position: stickyHeader ? "sticky" : "relative", top: stickyHeader && layoutMode === "grid" ? 0 : void 0, zIndex: stickyHeader ? 2 : void 0 }, (tableHeadProps === null || tableHeadProps === void 0 ? void 0 : tableHeadProps.sx) instanceof Function ? tableHeadProps === null || tableHeadProps === void 0 ? void 0 : tableHeadProps.sx(theme) : tableHeadProps === null || tableHeadProps === void 0 ? void 0 : tableHeadProps.sx), children: getHeaderGroups().map((headerGroup) => jsxRuntimeExports.jsx(MRT_TableHeadRow, { headerGroup, table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }, headerGroup.id)) }));
   };
   const MRT_EditCellTextField = ({ cell, showLabel, table }) => {
     var _a, _b, _c;
@@ -44249,9 +44291,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     };
     if (columnDef.Edit) {
-      return jsx(Fragment, { children: (_a = columnDef.Edit) === null || _a === void 0 ? void 0 : _a.call(columnDef, { cell, column: column2, row, table }) });
+      return jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: (_a = columnDef.Edit) === null || _a === void 0 ? void 0 : _a.call(columnDef, { cell, column: column2, row, table }) });
     }
-    return jsx(TextField, Object.assign({ disabled: (columnDef.enableEditing instanceof Function ? columnDef.enableEditing(row) : columnDef.enableEditing) === false, fullWidth: true, inputRef: (inputRef) => {
+    return jsxRuntimeExports.jsx(TextField, Object.assign({ disabled: (columnDef.enableEditing instanceof Function ? columnDef.enableEditing(row) : columnDef.enableEditing) === false, fullWidth: true, inputRef: (inputRef) => {
       if (inputRef) {
         editInputRefs.current[column2.id] = inputRef;
         if (textFieldProps.inputRef) {
@@ -44272,7 +44314,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         value2 = option.value;
         text2 = option.text;
       }
-      return jsx(MenuItem, { sx: {
+      return jsxRuntimeExports.jsx(MenuItem, { sx: {
         display: "flex",
         m: 0,
         alignItems: "center",
@@ -44300,7 +44342,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       table
     }) : columnDef.muiTableBodyCellCopyButtonProps;
     const buttonProps = Object.assign(Object.assign({}, mTableBodyCellCopyButtonProps), mcTableBodyCellCopyButtonProps);
-    return jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, placement: "top", title: (_a = buttonProps === null || buttonProps === void 0 ? void 0 : buttonProps.title) !== null && _a !== void 0 ? _a : copied ? localization.copiedToClipboard : localization.clickToCopy, children: jsx(Button, Object.assign({ onClick: (e) => handleCopy(e, cell.getValue()), size: "small", type: "button", variant: "text" }, buttonProps, { sx: (theme) => Object.assign({ backgroundColor: "transparent", border: "none", color: "inherit", cursor: "copy", fontFamily: "inherit", fontSize: "inherit", letterSpacing: "inherit", m: "-0.25rem", minWidth: "unset", textAlign: "inherit", textTransform: "inherit" }, (buttonProps === null || buttonProps === void 0 ? void 0 : buttonProps.sx) instanceof Function ? buttonProps.sx(theme) : buttonProps === null || buttonProps === void 0 ? void 0 : buttonProps.sx), title: void 0, children })) });
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, placement: "top", title: (_a = buttonProps === null || buttonProps === void 0 ? void 0 : buttonProps.title) !== null && _a !== void 0 ? _a : copied ? localization.copiedToClipboard : localization.clickToCopy, children: jsxRuntimeExports.jsx(Button, Object.assign({ onClick: (e) => handleCopy(e, cell.getValue()), size: "small", type: "button", variant: "text" }, buttonProps, { sx: (theme) => Object.assign({ backgroundColor: "transparent", border: "none", color: "inherit", cursor: "copy", fontFamily: "inherit", fontSize: "inherit", letterSpacing: "inherit", m: "-0.25rem", minWidth: "unset", textAlign: "inherit", textTransform: "inherit" }, (buttonProps === null || buttonProps === void 0 ? void 0 : buttonProps.sx) instanceof Function ? buttonProps.sx(theme) : buttonProps === null || buttonProps === void 0 ? void 0 : buttonProps.sx), title: void 0, children })) });
   };
   const MRT_TableBodyRowGrabHandle = ({ cell, rowRef, table }) => {
     const { options: { muiTableBodyRowDragHandleProps } } = table;
@@ -44318,7 +44360,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       table.setDraggingRow(null);
       table.setHoveredRow(null);
     };
-    return jsx(MRT_GrabHandleButton, { iconButtonProps, onDragStart: handleDragStart, onDragEnd: handleDragEnd, table });
+    return jsxRuntimeExports.jsx(MRT_GrabHandleButton, { iconButtonProps, onDragStart: handleDragStart, onDragEnd: handleDragEnd, table });
   };
   const allowedTypes = ["string", "number"];
   const MRT_TableBodyCellValue = ({ cell, table }) => {
@@ -44350,7 +44392,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         matchExactly: (filterValue ? columnDef._filterFn : globalFilterFn) !== "fuzzy"
       });
       if ((chunks === null || chunks === void 0 ? void 0 : chunks.length) > 1 || ((_b = chunks === null || chunks === void 0 ? void 0 : chunks[0]) === null || _b === void 0 ? void 0 : _b.match)) {
-        renderedCellValue = jsx("span", { "aria-label": renderedCellValue, role: "note", children: (_c = chunks === null || chunks === void 0 ? void 0 : chunks.map(({ key, match: match2, text: text2 }) => jsx(Box, { "aria-hidden": "true", component: "span", sx: match2 ? {
+        renderedCellValue = jsxRuntimeExports.jsx("span", { "aria-label": renderedCellValue, role: "note", children: (_c = chunks === null || chunks === void 0 ? void 0 : chunks.map(({ key, match: match2, text: text2 }) => jsxRuntimeExports.jsx(Box, { "aria-hidden": "true", component: "span", sx: match2 ? {
           backgroundColor: (theme) => theme.palette.mode === "dark" ? darken(theme.palette.warning.dark, 0.25) : lighten(theme.palette.warning.light, 0.5),
           borderRadius: "2px",
           color: (theme) => theme.palette.mode === "dark" ? "white" : "black",
@@ -44367,7 +44409,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         table
       });
     }
-    return jsx(Fragment, { children: renderedCellValue });
+    return jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: renderedCellValue });
   };
   const MRT_TableBodyCell = ({ cell, measureElement: measureElement2, numRows, rowIndex, rowRef, table, virtualCell }) => {
     var _a, _b, _c, _d;
@@ -44426,7 +44468,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         setHoveredColumn(columnDef.enableColumnOrdering !== false ? column2 : null);
       }
     };
-    return jsx(TableCell, Object.assign({ "data-index": virtualCell === null || virtualCell === void 0 ? void 0 : virtualCell.index, ref: (node2) => {
+    return jsxRuntimeExports.jsx(TableCell, Object.assign({ "data-index": virtualCell === null || virtualCell === void 0 ? void 0 : virtualCell.index, ref: (node2) => {
       if (node2) {
         measureElement2 === null || measureElement2 === void 0 ? void 0 : measureElement2(node2);
       }
@@ -44439,13 +44481,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       table,
       theme: theme2,
       tableCellProps
-    })), draggingBorders), children: jsxs(Fragment, { children: [cell.getIsPlaceholder() ? (_b = (_a = columnDef.PlaceholderCell) === null || _a === void 0 ? void 0 : _a.call(columnDef, { cell, column: column2, row, table })) !== null && _b !== void 0 ? _b : null : isLoading || showSkeletons ? jsx(Skeleton, Object.assign({ animation: "wave", height: 20, width: skeletonWidth }, skeletonProps)) : enableRowNumbers && rowNumberMode === "static" && column2.id === "mrt-row-numbers" ? rowIndex + 1 : column2.id === "mrt-row-drag" ? jsx(MRT_TableBodyRowGrabHandle, { cell, rowRef, table }) : columnDefType === "display" && (column2.id === "mrt-row-select" || column2.id === "mrt-row-expand" || !row.getIsGrouped()) ? (_c = columnDef.Cell) === null || _c === void 0 ? void 0 : _c.call(columnDef, {
+    })), draggingBorders), children: jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [cell.getIsPlaceholder() ? (_b = (_a = columnDef.PlaceholderCell) === null || _a === void 0 ? void 0 : _a.call(columnDef, { cell, column: column2, row, table })) !== null && _b !== void 0 ? _b : null : isLoading || showSkeletons ? jsxRuntimeExports.jsx(Skeleton, Object.assign({ animation: "wave", height: 20, width: skeletonWidth }, skeletonProps)) : enableRowNumbers && rowNumberMode === "static" && column2.id === "mrt-row-numbers" ? rowIndex + 1 : column2.id === "mrt-row-drag" ? jsxRuntimeExports.jsx(MRT_TableBodyRowGrabHandle, { cell, rowRef, table }) : columnDefType === "display" && (column2.id === "mrt-row-select" || column2.id === "mrt-row-expand" || !row.getIsGrouped()) ? (_c = columnDef.Cell) === null || _c === void 0 ? void 0 : _c.call(columnDef, {
       cell,
       renderedCellValue: cell.renderValue(),
       column: column2,
       row,
       table
-    }) : isEditing ? jsx(MRT_EditCellTextField, { cell, table }) : (enableClickToCopy || columnDef.enableClickToCopy) && columnDef.enableClickToCopy !== false ? jsx(MRT_CopyButton, { cell, table, children: jsx(MRT_TableBodyCellValue, { cell, table }) }) : jsx(MRT_TableBodyCellValue, { cell, table }), cell.getIsGrouped() && !columnDef.GroupedCell && jsxs(Fragment, { children: [" (", (_d = row.subRows) === null || _d === void 0 ? void 0 : _d.length, ")"] })] }) }));
+    }) : isEditing ? jsxRuntimeExports.jsx(MRT_EditCellTextField, { cell, table }) : (enableClickToCopy || columnDef.enableClickToCopy) && columnDef.enableClickToCopy !== false ? jsxRuntimeExports.jsx(MRT_CopyButton, { cell, table, children: jsxRuntimeExports.jsx(MRT_TableBodyCellValue, { cell, table }) }) : jsxRuntimeExports.jsx(MRT_TableBodyCellValue, { cell, table }), cell.getIsGrouped() && !columnDef.GroupedCell && jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [" (", (_d = row.subRows) === null || _d === void 0 ? void 0 : _d.length, ")"] })] }) }));
   };
   const Memo_MRT_TableBodyCell = React.memo(MRT_TableBodyCell, (prev2, next2) => next2.cell === prev2.cell);
   const MRT_TableDetailPanel = ({ parentRowRef, row, rowIndex, table, virtualRow }) => {
@@ -44458,10 +44500,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       table
     }) : muiTableBodyRowProps;
     const tableCellProps = muiTableDetailPanelProps instanceof Function ? muiTableDetailPanelProps({ row, table }) : muiTableDetailPanelProps;
-    return jsx(TableRow, Object.assign({ className: "Mui-TableBodyCell-DetailPanel" }, tableRowProps, { sx: (theme) => {
+    return jsxRuntimeExports.jsx(TableRow, Object.assign({ className: "Mui-TableBodyCell-DetailPanel" }, tableRowProps, { sx: (theme) => {
       var _a, _b;
       return Object.assign({ display: layoutMode === "grid" ? "flex" : "table-row", position: virtualRow ? "absolute" : void 0, top: virtualRow ? `${(_b = (_a = parentRowRef.current) === null || _a === void 0 ? void 0 : _a.getBoundingClientRect()) === null || _b === void 0 ? void 0 : _b.height}px` : void 0, transform: virtualRow ? `translateY(${virtualRow === null || virtualRow === void 0 ? void 0 : virtualRow.start}px)` : void 0, width: "100%", zIndex: virtualRow ? 2 : void 0 }, (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx) instanceof Function ? tableRowProps.sx(theme) : tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx);
-    }, children: jsx(TableCell, Object.assign({ className: "Mui-TableBodyCell-DetailPanel", colSpan: getVisibleLeafColumns().length }, tableCellProps, { sx: (theme) => Object.assign({ backgroundColor: virtualRow ? lighten(theme.palette.background.default, 0.06) : void 0, borderBottom: !row.getIsExpanded() ? "none" : void 0, display: layoutMode === "grid" ? "flex" : "table-cell", pb: row.getIsExpanded() ? "1rem" : 0, pt: row.getIsExpanded() ? "1rem" : 0, transition: "all 150ms ease-in-out", width: `${table.getTotalSize()}px` }, (tableCellProps === null || tableCellProps === void 0 ? void 0 : tableCellProps.sx) instanceof Function ? tableCellProps.sx(theme) : tableCellProps === null || tableCellProps === void 0 ? void 0 : tableCellProps.sx), children: renderDetailPanel && jsx(Collapse, { in: row.getIsExpanded(), mountOnEnter: true, unmountOnExit: true, children: !isLoading && renderDetailPanel({ row, table }) }) })) }));
+    }, children: jsxRuntimeExports.jsx(TableCell, Object.assign({ className: "Mui-TableBodyCell-DetailPanel", colSpan: getVisibleLeafColumns().length }, tableCellProps, { sx: (theme) => Object.assign({ backgroundColor: virtualRow ? lighten(theme.palette.background.default, 0.06) : void 0, borderBottom: !row.getIsExpanded() ? "none" : void 0, display: layoutMode === "grid" ? "flex" : "table-cell", pb: row.getIsExpanded() ? "1rem" : 0, pt: row.getIsExpanded() ? "1rem" : 0, transition: "all 150ms ease-in-out", width: `${table.getTotalSize()}px` }, (tableCellProps === null || tableCellProps === void 0 ? void 0 : tableCellProps.sx) instanceof Function ? tableCellProps.sx(theme) : tableCellProps === null || tableCellProps === void 0 ? void 0 : tableCellProps.sx), children: renderDetailPanel && jsxRuntimeExports.jsx(Collapse, { in: row.getIsExpanded(), mountOnEnter: true, unmountOnExit: true, children: !isLoading && renderDetailPanel({ row, table }) }) })) }));
   };
   const MRT_TableBodyRow = ({ columnVirtualizer, measureElement: measureElement2, numRows, row, rowIndex, table, virtualColumns, virtualPaddingLeft, virtualPaddingRight, virtualRow }) => {
     const { getState, options: { enableRowOrdering, layoutMode, memoMode, muiTableBodyRowProps, renderDetailPanel }, setHoveredRow } = table;
@@ -44473,14 +44515,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     };
     const rowRef = React.useRef(null);
-    return jsxs(Fragment, { children: [jsxs(TableRow, Object.assign({ "data-index": virtualRow === null || virtualRow === void 0 ? void 0 : virtualRow.index, onDragEnter: handleDragEnter, selected: row.getIsSelected(), ref: (node2) => {
+    return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsxs(TableRow, Object.assign({ "data-index": virtualRow === null || virtualRow === void 0 ? void 0 : virtualRow.index, onDragEnter: handleDragEnter, selected: row.getIsSelected(), ref: (node2) => {
       if (node2) {
         rowRef.current = node2;
         measureElement2 === null || measureElement2 === void 0 ? void 0 : measureElement2(node2);
       }
     } }, tableRowProps, { sx: (theme) => Object.assign({ backgroundColor: lighten(theme.palette.background.default, 0.06), boxSizing: "border-box", display: layoutMode === "grid" ? "flex" : "table-row", opacity: (draggingRow === null || draggingRow === void 0 ? void 0 : draggingRow.id) === row.id || (hoveredRow === null || hoveredRow === void 0 ? void 0 : hoveredRow.id) === row.id ? 0.5 : 1, position: virtualRow ? "absolute" : void 0, transition: virtualRow ? "none" : "all 150ms ease-in-out", top: virtualRow ? 0 : void 0, width: "100%", "&:hover td": {
       backgroundColor: (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.hover) !== false ? row.getIsSelected() ? `${alpha(theme.palette.primary.main, 0.2)}` : theme.palette.mode === "dark" ? `${lighten(theme.palette.background.default, 0.12)}` : `${darken(theme.palette.background.default, 0.05)}` : void 0
-    } }, (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx) instanceof Function ? tableRowProps.sx(theme) : tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx), style: Object.assign({ transform: virtualRow ? `translateY(${virtualRow === null || virtualRow === void 0 ? void 0 : virtualRow.start}px)` : void 0 }, tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.style), children: [virtualPaddingLeft ? jsx("td", { style: { display: "flex", width: virtualPaddingLeft } }) : null, (virtualColumns !== null && virtualColumns !== void 0 ? virtualColumns : row.getVisibleCells()).map((cellOrVirtualCell) => {
+    } }, (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx) instanceof Function ? tableRowProps.sx(theme) : tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx), style: Object.assign({ transform: virtualRow ? `translateY(${virtualRow === null || virtualRow === void 0 ? void 0 : virtualRow.start}px)` : void 0 }, tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.style), children: [virtualPaddingLeft ? jsxRuntimeExports.jsx("td", { style: { display: "flex", width: virtualPaddingLeft } }) : null, (virtualColumns !== null && virtualColumns !== void 0 ? virtualColumns : row.getVisibleCells()).map((cellOrVirtualCell) => {
       const cell = columnVirtualizer ? row.getVisibleCells()[cellOrVirtualCell.index] : cellOrVirtualCell;
       const props = {
         cell,
@@ -44491,8 +44533,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         table,
         virtualCell: columnVirtualizer ? cellOrVirtualCell : void 0
       };
-      return memoMode === "cells" && cell.column.columnDef.columnDefType === "data" && !draggingColumn && !draggingRow && (editingCell === null || editingCell === void 0 ? void 0 : editingCell.id) !== cell.id && (editingRow === null || editingRow === void 0 ? void 0 : editingRow.id) !== row.id ? jsx(Memo_MRT_TableBodyCell, Object.assign({}, props), cell.id) : jsx(MRT_TableBodyCell, Object.assign({}, props), cell.id);
-    }), virtualPaddingRight ? jsx("td", { style: { display: "flex", width: virtualPaddingRight } }) : null] })), renderDetailPanel && !row.getIsGrouped() && jsx(MRT_TableDetailPanel, { parentRowRef: rowRef, row, rowIndex, table, virtualRow })] });
+      return memoMode === "cells" && cell.column.columnDef.columnDefType === "data" && !draggingColumn && !draggingRow && (editingCell === null || editingCell === void 0 ? void 0 : editingCell.id) !== cell.id && (editingRow === null || editingRow === void 0 ? void 0 : editingRow.id) !== row.id ? jsxRuntimeExports.jsx(Memo_MRT_TableBodyCell, Object.assign({}, props), cell.id) : jsxRuntimeExports.jsx(MRT_TableBodyCell, Object.assign({}, props), cell.id);
+    }), virtualPaddingRight ? jsxRuntimeExports.jsx("td", { style: { display: "flex", width: virtualPaddingRight } }) : null] })), renderDetailPanel && !row.getIsGrouped() && jsxRuntimeExports.jsx(MRT_TableDetailPanel, { parentRowRef: rowRef, row, rowIndex, table, virtualRow })] });
   };
   const Memo_MRT_TableBodyRow = React.memo(MRT_TableBodyRow, (prev2, next2) => prev2.row === next2.row && prev2.rowIndex === next2.rowIndex);
   const MRT_TableBody = ({ columnVirtualizer, table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }) => {
@@ -44535,16 +44577,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       virtualizerInstanceRef.current = rowVirtualizer;
     }
     const virtualRows = rowVirtualizer ? rowVirtualizer.getVirtualItems() : void 0;
-    return jsx(TableBody, Object.assign({}, tableBodyProps, { sx: (theme) => Object.assign({ display: layoutMode === "grid" ? "grid" : "table-row-group", height: rowVirtualizer ? `${rowVirtualizer.getTotalSize()}px` : "inherit", minHeight: !rows.length ? "100px" : void 0, position: "relative" }, (tableBodyProps === null || tableBodyProps === void 0 ? void 0 : tableBodyProps.sx) instanceof Function ? tableBodyProps === null || tableBodyProps === void 0 ? void 0 : tableBodyProps.sx(theme) : tableBodyProps === null || tableBodyProps === void 0 ? void 0 : tableBodyProps.sx), children: (_a = tableBodyProps === null || tableBodyProps === void 0 ? void 0 : tableBodyProps.children) !== null && _a !== void 0 ? _a : !rows.length ? jsx("tr", { style: { display: layoutMode === "grid" ? "grid" : "table-row" }, children: jsx("td", { colSpan: table.getVisibleLeafColumns().length, style: {
+    return jsxRuntimeExports.jsx(TableBody, Object.assign({}, tableBodyProps, { sx: (theme) => Object.assign({ display: layoutMode === "grid" ? "grid" : "table-row-group", height: rowVirtualizer ? `${rowVirtualizer.getTotalSize()}px` : "inherit", minHeight: !rows.length ? "100px" : void 0, position: "relative" }, (tableBodyProps === null || tableBodyProps === void 0 ? void 0 : tableBodyProps.sx) instanceof Function ? tableBodyProps === null || tableBodyProps === void 0 ? void 0 : tableBodyProps.sx(theme) : tableBodyProps === null || tableBodyProps === void 0 ? void 0 : tableBodyProps.sx), children: (_a = tableBodyProps === null || tableBodyProps === void 0 ? void 0 : tableBodyProps.children) !== null && _a !== void 0 ? _a : !rows.length ? jsxRuntimeExports.jsx("tr", { style: { display: layoutMode === "grid" ? "grid" : "table-row" }, children: jsxRuntimeExports.jsx("td", { colSpan: table.getVisibleLeafColumns().length, style: {
       display: layoutMode === "grid" ? "grid" : "table-cell"
-    }, children: (_b = renderEmptyRowsFallback === null || renderEmptyRowsFallback === void 0 ? void 0 : renderEmptyRowsFallback({ table })) !== null && _b !== void 0 ? _b : jsx(Typography, { sx: {
+    }, children: (_b = renderEmptyRowsFallback === null || renderEmptyRowsFallback === void 0 ? void 0 : renderEmptyRowsFallback({ table })) !== null && _b !== void 0 ? _b : jsxRuntimeExports.jsx(Typography, { sx: {
       color: "text.secondary",
       fontStyle: "italic",
       maxWidth: `min(100vw, ${(_d = (_c = tablePaperRef.current) === null || _c === void 0 ? void 0 : _c.clientWidth) !== null && _d !== void 0 ? _d : 360}px)`,
       py: "2rem",
       textAlign: "center",
       width: "100%"
-    }, children: globalFilter || columnFilters.length ? localization.noResultsFound : localization.noRecordsToDisplay }) }) }) : jsx(Fragment, { children: (virtualRows !== null && virtualRows !== void 0 ? virtualRows : rows).map((rowOrVirtualRow, rowIndex) => {
+    }, children: globalFilter || columnFilters.length ? localization.noResultsFound : localization.noRecordsToDisplay }) }) }) : jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: (virtualRows !== null && virtualRows !== void 0 ? virtualRows : rows).map((rowOrVirtualRow, rowIndex) => {
       const row = rowVirtualizer ? rows[rowOrVirtualRow.index] : rowOrVirtualRow;
       const props = {
         columnVirtualizer,
@@ -44558,7 +44600,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         virtualPaddingRight,
         virtualRow: rowVirtualizer ? rowOrVirtualRow : void 0
       };
-      return memoMode === "rows" ? jsx(Memo_MRT_TableBodyRow, Object.assign({}, props), row.id) : jsx(MRT_TableBodyRow, Object.assign({}, props), row.id);
+      return memoMode === "rows" ? jsxRuntimeExports.jsx(Memo_MRT_TableBodyRow, Object.assign({}, props), row.id) : jsxRuntimeExports.jsx(MRT_TableBodyRow, Object.assign({}, props), row.id);
     }) }) }));
   };
   const Memo_MRT_TableBody = React.memo(MRT_TableBody, (prev2, next2) => prev2.table.options.data === next2.table.options.data);
@@ -44572,12 +44614,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const mTableFooterCellProps = muiTableFooterCellProps instanceof Function ? muiTableFooterCellProps({ column: column2, table }) : muiTableFooterCellProps;
     const mcTableFooterCellProps = columnDef.muiTableFooterCellProps instanceof Function ? columnDef.muiTableFooterCellProps({ column: column2, table }) : columnDef.muiTableFooterCellProps;
     const tableCellProps = Object.assign(Object.assign({}, mTableFooterCellProps), mcTableFooterCellProps);
-    return jsx(TableCell, Object.assign({ align: columnDefType === "group" ? "center" : "left", colSpan: footer.colSpan, variant: "head" }, tableCellProps, { sx: (theme) => Object.assign({ display: layoutMode === "grid" ? "grid" : "table-cell", fontWeight: "bold", justifyContent: columnDefType === "group" ? "center" : void 0, p: density === "compact" ? "0.5rem" : density === "comfortable" ? "1rem" : "1.5rem", verticalAlign: "top", zIndex: column2.getIsPinned() && columnDefType !== "group" ? 2 : 1 }, getCommonCellStyles({
+    return jsxRuntimeExports.jsx(TableCell, Object.assign({ align: columnDefType === "group" ? "center" : "left", colSpan: footer.colSpan, variant: "head" }, tableCellProps, { sx: (theme) => Object.assign({ display: layoutMode === "grid" ? "grid" : "table-cell", fontWeight: "bold", justifyContent: columnDefType === "group" ? "center" : void 0, p: density === "compact" ? "0.5rem" : density === "comfortable" ? "1rem" : "1.5rem", verticalAlign: "top", zIndex: column2.getIsPinned() && columnDefType !== "group" ? 2 : 1 }, getCommonCellStyles({
       column: column2,
       table,
       theme,
       tableCellProps
-    })), children: jsx(Fragment, { children: footer.isPlaceholder ? null : (_c = (_b = columnDef.Footer instanceof Function ? (_a = columnDef.Footer) === null || _a === void 0 ? void 0 : _a.call(columnDef, {
+    })), children: jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: footer.isPlaceholder ? null : (_c = (_b = columnDef.Footer instanceof Function ? (_a = columnDef.Footer) === null || _a === void 0 ? void 0 : _a.call(columnDef, {
       column: column2,
       footer,
       table
@@ -44589,17 +44631,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     if (!((_a = footerGroup.headers) === null || _a === void 0 ? void 0 : _a.some((header) => typeof header.column.columnDef.footer === "string" && !!header.column.columnDef.footer || header.column.columnDef.Footer)))
       return null;
     const tableRowProps = muiTableFooterRowProps instanceof Function ? muiTableFooterRowProps({ footerGroup, table }) : muiTableFooterRowProps;
-    return jsxs(TableRow, Object.assign({}, tableRowProps, { sx: (theme) => Object.assign({ backgroundColor: lighten(theme.palette.background.default, 0.04), display: layoutMode === "grid" ? "flex" : "table-row", width: "100%" }, (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx) instanceof Function ? tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx(theme) : tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx), children: [virtualPaddingLeft ? jsx("th", { style: { display: "flex", width: virtualPaddingLeft } }) : null, (virtualColumns !== null && virtualColumns !== void 0 ? virtualColumns : footerGroup.headers).map((footerOrVirtualFooter) => {
+    return jsxRuntimeExports.jsxs(TableRow, Object.assign({}, tableRowProps, { sx: (theme) => Object.assign({ backgroundColor: lighten(theme.palette.background.default, 0.04), display: layoutMode === "grid" ? "flex" : "table-row", width: "100%" }, (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx) instanceof Function ? tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx(theme) : tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx), children: [virtualPaddingLeft ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingLeft } }) : null, (virtualColumns !== null && virtualColumns !== void 0 ? virtualColumns : footerGroup.headers).map((footerOrVirtualFooter) => {
       const footer = virtualColumns ? footerGroup.headers[footerOrVirtualFooter.index] : footerOrVirtualFooter;
-      return jsx(MRT_TableFooterCell, { footer, table }, footer.id);
-    }), virtualPaddingRight ? jsx("th", { style: { display: "flex", width: virtualPaddingRight } }) : null] }));
+      return jsxRuntimeExports.jsx(MRT_TableFooterCell, { footer, table }, footer.id);
+    }), virtualPaddingRight ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingRight } }) : null] }));
   };
   const MRT_TableFooter = ({ table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }) => {
     const { getFooterGroups, getState, options: { enableStickyFooter, layoutMode, muiTableFooterProps } } = table;
     const { isFullScreen } = getState();
     const tableFooterProps = muiTableFooterProps instanceof Function ? muiTableFooterProps({ table }) : muiTableFooterProps;
     const stickFooter = (isFullScreen || enableStickyFooter) && enableStickyFooter !== false;
-    return jsx(TableFooter, Object.assign({}, tableFooterProps, { sx: (theme) => Object.assign({ bottom: stickFooter ? 0 : void 0, display: layoutMode === "grid" ? "grid" : "table-row-group", opacity: stickFooter ? 0.97 : void 0, outline: stickFooter ? theme.palette.mode === "light" ? `1px solid ${theme.palette.grey[300]}` : `1px solid ${theme.palette.grey[700]}` : void 0, position: stickFooter ? "sticky" : void 0, zIndex: stickFooter ? 1 : void 0 }, (tableFooterProps === null || tableFooterProps === void 0 ? void 0 : tableFooterProps.sx) instanceof Function ? tableFooterProps === null || tableFooterProps === void 0 ? void 0 : tableFooterProps.sx(theme) : tableFooterProps === null || tableFooterProps === void 0 ? void 0 : tableFooterProps.sx), children: getFooterGroups().map((footerGroup) => jsx(MRT_TableFooterRow, { footerGroup, table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }, footerGroup.id)) }));
+    return jsxRuntimeExports.jsx(TableFooter, Object.assign({}, tableFooterProps, { sx: (theme) => Object.assign({ bottom: stickFooter ? 0 : void 0, display: layoutMode === "grid" ? "grid" : "table-row-group", opacity: stickFooter ? 0.97 : void 0, outline: stickFooter ? theme.palette.mode === "light" ? `1px solid ${theme.palette.grey[300]}` : `1px solid ${theme.palette.grey[700]}` : void 0, position: stickFooter ? "sticky" : void 0, zIndex: stickFooter ? 1 : void 0 }, (tableFooterProps === null || tableFooterProps === void 0 ? void 0 : tableFooterProps.sx) instanceof Function ? tableFooterProps === null || tableFooterProps === void 0 ? void 0 : tableFooterProps.sx(theme) : tableFooterProps === null || tableFooterProps === void 0 ? void 0 : tableFooterProps.sx), children: getFooterGroups().map((footerGroup) => jsxRuntimeExports.jsx(MRT_TableFooterRow, { footerGroup, table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }, footerGroup.id)) }));
   };
   const MRT_Table = ({ table }) => {
     var _a, _b, _c, _d;
@@ -44652,7 +44694,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       virtualPaddingLeft,
       virtualPaddingRight
     };
-    return jsxs(Table, Object.assign({ stickyHeader: enableStickyHeader || isFullScreen }, tableProps, { sx: (theme) => Object.assign({ borderCollapse: "separate", display: layoutMode === "grid" ? "grid" : "table", tableLayout: layoutMode !== "grid" && enableColumnResizing ? "fixed" : void 0 }, (tableProps === null || tableProps === void 0 ? void 0 : tableProps.sx) instanceof Function ? tableProps.sx(theme) : tableProps === null || tableProps === void 0 ? void 0 : tableProps.sx), style: Object.assign(Object.assign({}, columnSizeVars), tableProps === null || tableProps === void 0 ? void 0 : tableProps.style), children: [enableTableHead && jsx(MRT_TableHead, Object.assign({}, props)), memoMode === "table-body" || columnSizingInfo.isResizingColumn ? jsx(Memo_MRT_TableBody, Object.assign({ columnVirtualizer }, props)) : jsx(MRT_TableBody, Object.assign({ columnVirtualizer }, props)), enableTableFooter && jsx(MRT_TableFooter, Object.assign({}, props))] }));
+    return jsxRuntimeExports.jsxs(Table, Object.assign({ stickyHeader: enableStickyHeader || isFullScreen }, tableProps, { sx: (theme) => Object.assign({ borderCollapse: "separate", display: layoutMode === "grid" ? "grid" : "table", tableLayout: layoutMode !== "grid" && enableColumnResizing ? "fixed" : void 0 }, (tableProps === null || tableProps === void 0 ? void 0 : tableProps.sx) instanceof Function ? tableProps.sx(theme) : tableProps === null || tableProps === void 0 ? void 0 : tableProps.sx), style: Object.assign(Object.assign({}, columnSizeVars), tableProps === null || tableProps === void 0 ? void 0 : tableProps.style), children: [enableTableHead && jsxRuntimeExports.jsx(MRT_TableHead, Object.assign({}, props)), memoMode === "table-body" || columnSizingInfo.isResizingColumn ? jsxRuntimeExports.jsx(Memo_MRT_TableBody, Object.assign({ columnVirtualizer }, props)) : jsxRuntimeExports.jsx(MRT_TableBody, Object.assign({ columnVirtualizer }, props)), enableTableFooter && jsxRuntimeExports.jsx(MRT_TableFooter, Object.assign({}, props))] }));
   };
   const useIsomorphicLayoutEffect = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
   const MRT_TableContainer = ({ table }) => {
@@ -44666,20 +44708,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       const bottomToolbarHeight = typeof document !== "undefined" ? (_d = (_c = bottomToolbarRef === null || bottomToolbarRef === void 0 ? void 0 : bottomToolbarRef.current) === null || _c === void 0 ? void 0 : _c.offsetHeight) !== null && _d !== void 0 ? _d : 0 : 0;
       setTotalToolbarHeight(topToolbarHeight + bottomToolbarHeight);
     });
-    return jsx(TableContainer, Object.assign({}, tableContainerProps, { ref: (node2) => {
+    return jsxRuntimeExports.jsx(TableContainer, Object.assign({}, tableContainerProps, { ref: (node2) => {
       if (node2) {
         tableContainerRef.current = node2;
         if (tableContainerProps === null || tableContainerProps === void 0 ? void 0 : tableContainerProps.ref) {
           tableContainerProps.ref.current = node2;
         }
       }
-    }, sx: (theme) => Object.assign({ maxWidth: "100%", maxHeight: enableStickyHeader ? `clamp(350px, calc(100vh - ${totalToolbarHeight}px), 9999px)` : void 0, overflow: "auto" }, (tableContainerProps === null || tableContainerProps === void 0 ? void 0 : tableContainerProps.sx) instanceof Function ? tableContainerProps.sx(theme) : tableContainerProps === null || tableContainerProps === void 0 ? void 0 : tableContainerProps.sx), style: Object.assign({ maxHeight: isFullScreen ? `calc(100vh - ${totalToolbarHeight}px)` : void 0 }, tableContainerProps === null || tableContainerProps === void 0 ? void 0 : tableContainerProps.style), children: jsx(MRT_Table, { table }) }));
+    }, sx: (theme) => Object.assign({ maxWidth: "100%", maxHeight: enableStickyHeader ? `clamp(350px, calc(100vh - ${totalToolbarHeight}px), 9999px)` : void 0, overflow: "auto" }, (tableContainerProps === null || tableContainerProps === void 0 ? void 0 : tableContainerProps.sx) instanceof Function ? tableContainerProps.sx(theme) : tableContainerProps === null || tableContainerProps === void 0 ? void 0 : tableContainerProps.sx), style: Object.assign({ maxHeight: isFullScreen ? `calc(100vh - ${totalToolbarHeight}px)` : void 0 }, tableContainerProps === null || tableContainerProps === void 0 ? void 0 : tableContainerProps.style), children: jsxRuntimeExports.jsx(MRT_Table, { table }) }));
   };
   const MRT_TablePaper = ({ table }) => {
     const { getState, options: { enableBottomToolbar, enableTopToolbar, muiTablePaperProps, renderBottomToolbar, renderTopToolbar }, refs: { tablePaperRef } } = table;
     const { isFullScreen } = getState();
     const tablePaperProps = muiTablePaperProps instanceof Function ? muiTablePaperProps({ table }) : muiTablePaperProps;
-    return jsxs(Paper, Object.assign({ elevation: 2 }, tablePaperProps, { ref: (ref) => {
+    return jsxRuntimeExports.jsxs(Paper, Object.assign({ elevation: 2 }, tablePaperProps, { ref: (ref) => {
       tablePaperRef.current = ref;
       if (tablePaperProps === null || tablePaperProps === void 0 ? void 0 : tablePaperProps.ref) {
         tablePaperProps.ref.current = ref;
@@ -44691,16 +44733,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       maxWidth: "100vw",
       padding: 0,
       width: "100vw"
-    } : {}), children: [enableTopToolbar && (renderTopToolbar instanceof Function ? renderTopToolbar({ table }) : renderTopToolbar !== null && renderTopToolbar !== void 0 ? renderTopToolbar : jsx(MRT_TopToolbar, { table })), jsx(MRT_TableContainer, { table }), enableBottomToolbar && (renderBottomToolbar instanceof Function ? renderBottomToolbar({ table }) : renderBottomToolbar !== null && renderBottomToolbar !== void 0 ? renderBottomToolbar : jsx(MRT_BottomToolbar, { table }))] }));
+    } : {}), children: [enableTopToolbar && (renderTopToolbar instanceof Function ? renderTopToolbar({ table }) : renderTopToolbar !== null && renderTopToolbar !== void 0 ? renderTopToolbar : jsxRuntimeExports.jsx(MRT_TopToolbar, { table })), jsxRuntimeExports.jsx(MRT_TableContainer, { table }), enableBottomToolbar && (renderBottomToolbar instanceof Function ? renderBottomToolbar({ table }) : renderBottomToolbar !== null && renderBottomToolbar !== void 0 ? renderBottomToolbar : jsxRuntimeExports.jsx(MRT_BottomToolbar, { table }))] }));
   };
   const MRT_EditRowModal = ({ open, row, table }) => {
     const { options: { localization } } = table;
-    return jsxs(Dialog, { open, children: [jsx(DialogTitle, { textAlign: "center", children: localization.edit }), jsx(DialogContent, { children: jsx("form", { onSubmit: (e) => e.preventDefault(), children: jsx(Stack, { sx: {
+    return jsxRuntimeExports.jsxs(Dialog, { open, children: [jsxRuntimeExports.jsx(DialogTitle, { textAlign: "center", children: localization.edit }), jsxRuntimeExports.jsx(DialogContent, { children: jsxRuntimeExports.jsx("form", { onSubmit: (e) => e.preventDefault(), children: jsxRuntimeExports.jsx(Stack, { sx: {
       gap: "1.5rem",
       minWidth: { xs: "300px", sm: "360px", md: "400px" },
       pt: "1rem",
       width: "100%"
-    }, children: row.getAllCells().filter((cell) => cell.column.columnDef.columnDefType === "data").map((cell) => jsx(MRT_EditCellTextField, { cell, showLabel: true, table }, cell.id)) }) }) }), jsx(DialogActions, { sx: { p: "1.25rem" }, children: jsx(MRT_EditActionButtons, { row, table, variant: "text" }) })] });
+    }, children: row.getAllCells().filter((cell) => cell.column.columnDef.columnDefType === "data").map((cell) => jsxRuntimeExports.jsx(MRT_EditCellTextField, { cell, showLabel: true, table }, cell.id)) }) }) }), jsxRuntimeExports.jsx(DialogActions, { sx: { p: "1.25rem" }, children: jsxRuntimeExports.jsx(MRT_EditActionButtons, { row, table, variant: "text" }) })] });
   };
   const MRT_TableRoot = (props) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t7, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13;
@@ -44744,9 +44786,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       var _a2, _b2, _c2, _d2, _e2, _f2, _g2, _h2, _j2, _k2, _l2, _m2, _o2, _p2, _q2, _r2, _s2;
       return [
         ((_b2 = (_a2 = props.state) === null || _a2 === void 0 ? void 0 : _a2.columnOrder) !== null && _b2 !== void 0 ? _b2 : columnOrder).includes("mrt-row-drag") && Object.assign(Object.assign(Object.assign({ header: props.localization.move, size: 60 }, props.defaultDisplayColumn), (_c2 = props.displayColumnDefOptions) === null || _c2 === void 0 ? void 0 : _c2["mrt-row-drag"]), { id: "mrt-row-drag" }),
-        ((_e2 = (_d2 = props.state) === null || _d2 === void 0 ? void 0 : _d2.columnOrder) !== null && _e2 !== void 0 ? _e2 : columnOrder).includes("mrt-row-actions") && Object.assign(Object.assign(Object.assign({ Cell: ({ cell, row }) => jsx(MRT_ToggleRowActionMenuButton, { cell, row, table }), header: props.localization.actions, size: 70 }, props.defaultDisplayColumn), (_f2 = props.displayColumnDefOptions) === null || _f2 === void 0 ? void 0 : _f2["mrt-row-actions"]), { id: "mrt-row-actions" }),
-        ((_h2 = (_g2 = props.state) === null || _g2 === void 0 ? void 0 : _g2.columnOrder) !== null && _h2 !== void 0 ? _h2 : columnOrder).includes("mrt-row-expand") && showExpandColumn(props, (_k2 = (_j2 = props.state) === null || _j2 === void 0 ? void 0 : _j2.grouping) !== null && _k2 !== void 0 ? _k2 : grouping) && Object.assign(Object.assign(Object.assign({ Cell: ({ row }) => jsx(MRT_ExpandButton, { row, table }), Header: props.enableExpandAll ? () => jsx(MRT_ExpandAllButton, { table }) : null, header: props.localization.expand, size: 60 }, props.defaultDisplayColumn), (_l2 = props.displayColumnDefOptions) === null || _l2 === void 0 ? void 0 : _l2["mrt-row-expand"]), { id: "mrt-row-expand" }),
-        ((_o2 = (_m2 = props.state) === null || _m2 === void 0 ? void 0 : _m2.columnOrder) !== null && _o2 !== void 0 ? _o2 : columnOrder).includes("mrt-row-select") && Object.assign(Object.assign(Object.assign({ Cell: ({ row }) => jsx(MRT_SelectCheckbox, { row, table }), Header: props.enableSelectAll && props.enableMultiRowSelection ? () => jsx(MRT_SelectCheckbox, { selectAll: true, table }) : null, header: props.localization.select, size: 60 }, props.defaultDisplayColumn), (_p2 = props.displayColumnDefOptions) === null || _p2 === void 0 ? void 0 : _p2["mrt-row-select"]), { id: "mrt-row-select" }),
+        ((_e2 = (_d2 = props.state) === null || _d2 === void 0 ? void 0 : _d2.columnOrder) !== null && _e2 !== void 0 ? _e2 : columnOrder).includes("mrt-row-actions") && Object.assign(Object.assign(Object.assign({ Cell: ({ cell, row }) => jsxRuntimeExports.jsx(MRT_ToggleRowActionMenuButton, { cell, row, table }), header: props.localization.actions, size: 70 }, props.defaultDisplayColumn), (_f2 = props.displayColumnDefOptions) === null || _f2 === void 0 ? void 0 : _f2["mrt-row-actions"]), { id: "mrt-row-actions" }),
+        ((_h2 = (_g2 = props.state) === null || _g2 === void 0 ? void 0 : _g2.columnOrder) !== null && _h2 !== void 0 ? _h2 : columnOrder).includes("mrt-row-expand") && showExpandColumn(props, (_k2 = (_j2 = props.state) === null || _j2 === void 0 ? void 0 : _j2.grouping) !== null && _k2 !== void 0 ? _k2 : grouping) && Object.assign(Object.assign(Object.assign({ Cell: ({ row }) => jsxRuntimeExports.jsx(MRT_ExpandButton, { row, table }), Header: props.enableExpandAll ? () => jsxRuntimeExports.jsx(MRT_ExpandAllButton, { table }) : null, header: props.localization.expand, size: 60 }, props.defaultDisplayColumn), (_l2 = props.displayColumnDefOptions) === null || _l2 === void 0 ? void 0 : _l2["mrt-row-expand"]), { id: "mrt-row-expand" }),
+        ((_o2 = (_m2 = props.state) === null || _m2 === void 0 ? void 0 : _m2.columnOrder) !== null && _o2 !== void 0 ? _o2 : columnOrder).includes("mrt-row-select") && Object.assign(Object.assign(Object.assign({ Cell: ({ row }) => jsxRuntimeExports.jsx(MRT_SelectCheckbox, { row, table }), Header: props.enableSelectAll && props.enableMultiRowSelection ? () => jsxRuntimeExports.jsx(MRT_SelectCheckbox, { selectAll: true, table }) : null, header: props.localization.select, size: 60 }, props.defaultDisplayColumn), (_p2 = props.displayColumnDefOptions) === null || _p2 === void 0 ? void 0 : _p2["mrt-row-select"]), { id: "mrt-row-select" }),
         ((_r2 = (_q2 = props.state) === null || _q2 === void 0 ? void 0 : _q2.columnOrder) !== null && _r2 !== void 0 ? _r2 : columnOrder).includes("mrt-row-numbers") && Object.assign(Object.assign(Object.assign({ Cell: ({ row }) => row.index + 1, Header: () => props.localization.rowNumber, header: props.localization.rowNumbers, size: 60 }, props.defaultDisplayColumn), (_s2 = props.displayColumnDefOptions) === null || _s2 === void 0 ? void 0 : _s2["mrt-row-numbers"]), { id: "mrt-row-numbers" })
       ].filter(Boolean);
     }, [
@@ -44865,7 +44907,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         table.setPageIndex(Math.floor(totalRowCount / pageSize2));
       }
     }, [props.rowCount, table.getPrePaginationRowModel().rows.length]);
-    return jsxs(Fragment, { children: [jsx(Dialog, { PaperComponent: Box, TransitionComponent: !props.enableRowVirtualization ? Grow : void 0, disablePortal: true, fullScreen: true, keepMounted: false, onClose: () => table.setIsFullScreen(false), open: table.getState().isFullScreen, transitionDuration: 400, children: jsx(MRT_TablePaper, { table }) }), !table.getState().isFullScreen && jsx(MRT_TablePaper, { table }), editingRow && props.editingMode === "modal" && jsx(MRT_EditRowModal, { row: editingRow, table, open: true })] });
+    return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Dialog, { PaperComponent: Box, TransitionComponent: !props.enableRowVirtualization ? Grow : void 0, disablePortal: true, fullScreen: true, keepMounted: false, onClose: () => table.setIsFullScreen(false), open: table.getState().isFullScreen, transitionDuration: 400, children: jsxRuntimeExports.jsx(MRT_TablePaper, { table }) }), !table.getState().isFullScreen && jsxRuntimeExports.jsx(MRT_TablePaper, { table }), editingRow && props.editingMode === "modal" && jsxRuntimeExports.jsx(MRT_EditRowModal, { row: editingRow, table, open: true })] });
   };
   const MaterialReactTable = (_a) => {
     var _b;
@@ -44892,7 +44934,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       manualPagination = true;
       manualSorting = true;
     }
-    return jsx(MRT_TableRoot, Object.assign({ aggregationFns: _aggregationFns, autoResetExpanded, columnResizeMode, defaultColumn: _defaultColumn, defaultDisplayColumn: _defaultDisplayColumn, editingMode, enableBottomToolbar, enableColumnActions, enableColumnFilters, enableColumnOrdering, enableColumnResizing, enableDensityToggle, enableExpandAll, enableExpanding, enableFilterMatchHighlighting, enableFilters, enableFullScreenToggle, enableGlobalFilter, enableGlobalFilterRankedResults, enableGrouping, enableHiding, enableMultiRowSelection, enableMultiSort, enablePagination, enablePinning, enableRowSelection, enableSelectAll, enableSorting, enableStickyHeader, enableTableFooter, enableTableHead, enableToolbarInternalActions, enableTopToolbar, filterFns: _filterFns, icons: _icons, layoutMode, localization: _localization, manualFiltering, manualGrouping, manualPagination, manualSorting, positionActionsColumn, positionExpandColumn, positionGlobalFilter, positionPagination, positionToolbarAlertBanner, positionToolbarDropZone, rowNumberMode, selectAllMode, sortingFns: _sortingFns }, rest));
+    return jsxRuntimeExports.jsx(MRT_TableRoot, Object.assign({ aggregationFns: _aggregationFns, autoResetExpanded, columnResizeMode, defaultColumn: _defaultColumn, defaultDisplayColumn: _defaultDisplayColumn, editingMode, enableBottomToolbar, enableColumnActions, enableColumnFilters, enableColumnOrdering, enableColumnResizing, enableDensityToggle, enableExpandAll, enableExpanding, enableFilterMatchHighlighting, enableFilters, enableFullScreenToggle, enableGlobalFilter, enableGlobalFilterRankedResults, enableGrouping, enableHiding, enableMultiRowSelection, enableMultiSort, enablePagination, enablePinning, enableRowSelection, enableSelectAll, enableSorting, enableStickyHeader, enableTableFooter, enableTableHead, enableToolbarInternalActions, enableTopToolbar, filterFns: _filterFns, icons: _icons, layoutMode, localization: _localization, manualFiltering, manualGrouping, manualPagination, manualSorting, positionActionsColumn, positionExpandColumn, positionGlobalFilter, positionPagination, positionToolbarAlertBanner, positionToolbarDropZone, rowNumberMode, selectAllMode, sortingFns: _sortingFns }, rest));
   };
   function BasicList(props) {
     let {
@@ -44905,7 +44947,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { ctx, spec } = props;
     const { model, seneca, custom } = ctx();
     const vxg = reactRedux.useSelector((state) => state.main.vxg);
-    return /* @__PURE__ */ jsx("div", { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       MaterialReactTable,
       {
         enableColumnActions: false,
@@ -45224,7 +45266,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           formData.append(name, get(data, name));
         }
         if (onSubmit) {
-          onSubmit({
+          yield onSubmit({
             data,
             event,
             method,
@@ -45426,7 +45468,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
       } else {
         const valueDate = ref.valueAsDate || new Date(inputValue);
-        const convertTimeToDate = (time) => new Date(new Date().toDateString() + " " + time);
+        const convertTimeToDate = (time) => /* @__PURE__ */ new Date((/* @__PURE__ */ new Date()).toDateString() + " " + time);
         const isTime = ref.type == "time";
         const isWeek = ref.type == "week";
         if (isString(maxOutput.value) && inputValue) {
@@ -45722,6 +45764,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       control._names.focus && focusFieldBy(control._fields, (key) => !!key && key.startsWith(control._names.focus || ""));
       control._names.focus = "";
       control._updateValid();
+      _actioned.current = false;
     }, [fields2, name, control]);
     React.useEffect(() => {
       !get(control._formValues, name) && control._updateFieldArray(name);
@@ -46337,9 +46380,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }), options)
       }));
       _names.mount.add(name);
-      if (!isUndefined(options.value)) {
-        set(_formValues, name, options.value);
-      }
       field ? disabledIsDefined && set(_formValues, name, options.disabled ? void 0 : get(_formValues, name, getFieldValue(field._f))) : updateValidAndValue(name, true, options.value);
       return __spreadProps(__spreadValues(__spreadValues({}, disabledIsDefined ? { disabled: options.disabled } : {}), _options.progressive ? {
         required: !!options.required,
@@ -46665,7 +46705,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { ent, cols } = def;
     React.useEffect(() => {
       for (let field of itemFields) {
-        setValue(field.field, item[field.field] || field.defaultValue || "");
+        setValue(field.name, item[field.name] || field.defaultValue || "");
       }
     }, [item]);
     const forms = useForm({
@@ -46676,7 +46716,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       setValue,
       control
     } = forms;
-    return /* @__PURE__ */ jsx("div", { className: "BasicEdit", children: /* @__PURE__ */ jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicEdit", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       "form",
       {
         className: "vxg-form-field",
@@ -46687,20 +46727,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           }
           onSubmit(selitem);
         })),
-        children: /* @__PURE__ */ jsxs(material.Grid, { container: true, spacing: 3, children: [
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Grid, { container: true, spacing: 3, children: [
           itemFields.map((field, index2) => {
-            return /* @__PURE__ */ jsx(material.Grid, { item: true, xs: field.size, children: /* @__PURE__ */ jsx(
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, xs: field.size, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               Controller,
               {
-                name: field.field,
+                name: field.name,
                 control,
-                defaultValue: item[field.field] || "",
-                render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => field.kind === "combobox" && "status" != field.type ? /* @__PURE__ */ jsx(
+                defaultValue: item[field.name] || "",
+                render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => "selection" === field.type ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                   material.Autocomplete,
                   {
                     freeSolo: true,
                     id: "combo-box",
-                    options: field.options,
+                    options: field.kind,
                     fullWidth: true,
                     selectOnFocus: true,
                     onBlur,
@@ -46724,7 +46764,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                     onChange: (event, selectedValue) => {
                       onChange(selectedValue || "");
                     },
-                    renderInput: (params) => /* @__PURE__ */ jsx(
+                    renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                       material.TextField,
                       __spreadProps(__spreadValues({}, params), {
                         label: field.headerName,
@@ -46734,12 +46774,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                       })
                     )
                   }
-                ) : /* @__PURE__ */ jsx(
+                ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
                   material.TextField,
                   {
                     label: field.headerName,
                     fullWidth: true,
-                    select: "status" == field.type,
+                    select: "status" === field.type,
                     disabled: !!!field.edit,
                     onChange,
                     value,
@@ -46749,22 +46789,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                     sx: {
                       textAlign: "left"
                     },
-                    children: field.type == "status" ? Object.keys(field.options).map(
+                    children: "status" === field.type ? Object.keys(field.kind).map(
                       (option) => {
                         var _a;
-                        return /* @__PURE__ */ jsx(material.MenuItem, { value: option, children: (_a = field.options[option]) == null ? void 0 : _a.title }, option);
+                        return /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { value: option, children: (_a = field.kind[option]) == null ? void 0 : _a.title }, option);
                       }
                     ) : null
                   },
-                  field.field
+                  field.name
                 ),
                 rules: field.required ? { required: field.required, validate: field.validate || ((value) => true) } : {}
               }
             ) }, index2);
           }),
-          0 != children.length ? /* @__PURE__ */ jsx(material.Grid, { item: true, xs: 12, children }) : null,
-          /* @__PURE__ */ jsx(material.Grid, { item: true, xs: 12, children: /* @__PURE__ */ jsxs(material.Grid, { container: true, justifyContent: "space-between", alignItems: "center", marginTop: 2, children: [
-            /* @__PURE__ */ jsx(material.Grid, { item: true, children: /* @__PURE__ */ jsx(
+          0 != children.length ? /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, xs: 12, children }) : null,
+          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, xs: 12, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Grid, { container: true, justifyContent: "space-between", alignItems: "center", marginTop: 2, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               BasicButton,
               {
                 variant: "outlined",
@@ -46773,7 +46813,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 children: "Cancel"
               }
             ) }),
-            /* @__PURE__ */ jsx(material.Grid, { item: true, children: /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               BasicButton,
               {
                 type: "submit",
@@ -46790,15 +46830,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function fields(spec) {
     try {
       let fds = [];
-      let fns = spec.content.def.list.layout.order.replace(/\s+/g, "").split(/,/);
+      let fns = spec.content.def.edit.layout.order.replace(/\s+/g, "").split(/,/);
       for (let fn of fns) {
-        let fd = __spreadValues({}, spec.content.def.cols.find((f) => f.field == fn));
+        let fd = __spreadValues({}, spec.content.def.ent.primary.field[fn]);
+        fd.name = fn;
+        fd.headerName = fd.title;
+        fd = __spreadValues(__spreadValues({}, fd), spec.content.def.edit.layout.field[fn] || {});
         fds.push(fd);
       }
       return fds;
     } catch (err) {
     }
-    return spec.content.def.cols;
+    return [];
   }
   function BasicLed(props) {
     const {
@@ -46811,14 +46854,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const [item, setItem] = React.useState({});
     const def = spec.content.def;
     const { ent, cols } = def;
+    const canon = ent.canon;
     const cmpstate = reactRedux.useSelector((state) => state.main.vxg.cmp);
-    const entstate = reactRedux.useSelector((state) => state.main.vxg.ent.meta.main[ent].state);
-    const entlist = reactRedux.useSelector((state) => state.main.vxg.ent.list.main[ent]);
+    const entstate = reactRedux.useSelector((state) => state.main.vxg.ent.meta.main[canon].state);
+    const entlist = reactRedux.useSelector((state) => state.main.vxg.ent.list.main[canon]);
     const location = reactRouterDom.useLocation();
-    console.log("entstate: ", entstate);
     if ("none" === entstate) {
       let q = custom.BasicLed.query(spec, cmpstate);
-      seneca.entity(def.ent).list$(q);
+      seneca.entity(canon).list$(q);
     }
     const rows = entlist;
     const itemFields = fields(spec);
@@ -46826,17 +46869,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       (field) => ({
         accessorFn: (row) => {
           var _a;
-          return "status" === field.type ? (_a = field.options[row[field.field]]) == null ? void 0 : _a.title : row[field.field];
+          return "status" === field.type ? (_a = field.kind[row[field.name]]) == null ? void 0 : _a.title : row[field.name];
         },
-        accessorKey: field.field,
+        accessorKey: field.name,
         header: field.headerName,
-        Header: () => /* @__PURE__ */ jsx("span", { children: field.headerName }),
+        Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: field.headerName }),
         // muiTableHeadCellProps: { sx: { color: 'green' } },
-        Cell: ({ cell }) => /* @__PURE__ */ jsx("span", { children: cell.getValue() })
+        Cell: ({ cell }) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cell.getValue() })
       })
     );
     let data = rows;
-    console.log("data: ", data);
     React.useEffect(() => {
       setItem({});
     }, [location.pathname]);
@@ -46848,8 +46890,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
-    console.log("item::: ", item, def.ent);
-    return /* @__PURE__ */ jsx("div", { className: "BasicLed", children: "-/" + def.ent !== item.entity$ ? /* @__PURE__ */ jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicList,
       {
         ctx,
@@ -46857,11 +46898,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         data,
         columns,
         onRowClick: (event, item2) => {
-          console.log("item: ", item2);
           setItem(item2);
         }
       }
-    ) : /* @__PURE__ */ jsx(
+    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicEdit,
       {
         ctx,
@@ -46870,7 +46910,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           setItem({});
         },
         onSubmit: (item2) => __async(this, null, function* () {
-          yield seneca.entity(def.ent).save$(item2);
+          yield seneca.entity(canon).save$(item2);
           setItem({});
         }),
         item,
@@ -46879,7 +46919,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ) });
   }
   function makeCmp(view, ctx) {
-    let cmp = () => /* @__PURE__ */ jsx("div", { children: "NONE" });
+    let cmp = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "NONE" });
     const content = view.content || {};
     if ("custom" === content.kind) {
       cmp = ctx().cmp[content.cmp];
@@ -46908,33 +46948,33 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       width: sideOpen ? "calc(100vw - 19rem)" : "calc(100vw - 4rem)",
       padding: "84px " + (sideOpen ? "4.5em" : "0") + " 4.5em " + (sideOpen ? "4.5em" : "0.5em")
     };
-    return /* @__PURE__ */ jsx("div", { className: "BasicMain", style: mainDiv, children: /* @__PURE__ */ jsx("div", { style: __spreadValues({ width: "100%", height: "100%" }, divStyle), children: /* @__PURE__ */ jsx(reactRouterDom.Routes, { children: /* @__PURE__ */ jsx(reactRouterDom.Route, { path: "/view", children: views.map((view) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicMain", style: mainDiv, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: __spreadValues({ width: "100%", height: "100%" }, divStyle), children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Route, { path: "/view", children: views.map((view) => {
       const Cmp = makeCmp(view, ctx);
       if (view.paramId) {
-        return /* @__PURE__ */ jsxs(React.Fragment, { children: [
-          /* @__PURE__ */ jsx(
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(React.Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
             reactRouterDom.Route,
             {
               path: "/view/" + view.name,
-              element: /* @__PURE__ */ jsx(Cmp, { vxg, ctx, spec: view })
+              element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
             },
             view.name
           ),
-          /* @__PURE__ */ jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
             reactRouterDom.Route,
             {
               path: "/view/" + view.name + "/:" + view.paramId,
-              element: /* @__PURE__ */ jsx(Cmp, { vxg, ctx, spec: view })
+              element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
             },
             view.name
           )
         ] }, view.name);
       }
-      return /* @__PURE__ */ jsx(
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
         reactRouterDom.Route,
         {
           path: "/view/" + view.name,
-          element: /* @__PURE__ */ jsx(Cmp, { vxg, ctx, spec: view })
+          element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
         },
         view.name
       );
@@ -46949,7 +46989,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const model = ctx().model;
     const { frame } = spec;
     const part = model.app.web.frame[frame].part.foot;
-    return /* @__PURE__ */ jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
       material.Box,
       {
         sx: {
@@ -46959,7 +46999,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           paddingBottom: "0.5rem",
           borderTop: "1px solid #CCC"
         },
-        children: /* @__PURE__ */ jsx(material.Container, { maxWidth: "lg", children: /* @__PURE__ */ jsx(material.Grid, { container: true, direction: "column", children: /* @__PURE__ */ jsx(material.Grid, { item: true, xs: 12, sx: { textAlign: "right" }, children: /* @__PURE__ */ jsx(material.Typography, { color: "#CCC", variant: "body2", children: part.title }) }) }) })
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Container, { maxWidth: "lg", children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { container: true, direction: "column", children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, xs: 12, sx: { textAlign: "right" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { color: "#CCC", variant: "body2", children: part.title }) }) }) })
       }
     );
   }
@@ -46984,22 +47024,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const footSpec = {
       frame
     };
-    return /* @__PURE__ */ jsxs("div", { children: [
-      /* @__PURE__ */ jsx(BasicHead, { vxg, ctx, spec: headSpec }),
-      /* @__PURE__ */ jsx(BasicSide, { vxg, ctx, spec: sideSpec }),
-      /* @__PURE__ */ jsx(BasicMain, { vxg, ctx, spec: mainSpec }),
-      /* @__PURE__ */ jsx(BasicFoot, { vxg, ctx, spec: footSpec })
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHead, { vxg, ctx, spec: headSpec }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSide, { vxg, ctx, spec: sideSpec }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicMain, { vxg, ctx, spec: mainSpec }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicFoot, { vxg, ctx, spec: footSpec })
     ] });
   }
-  var patrun_minExports = {};
-  var patrun_min = {
-    get exports() {
-      return patrun_minExports;
-    },
-    set exports(v) {
-      patrun_minExports = v;
-    }
-  };
+  var patrun_min$1 = { exports: {} };
+  var patrun_min = patrun_min$1.exports;
   (function(module2, exports3) {
     !function(e) {
       if (true)
@@ -47333,17 +47366,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return e.Gex;
       } }), d.exports.Patrun = g, d.exports = m, d.exports.Patrun = g, d.exports.Gex = e.Gex, d.exports.default = m, d = d.exports;
     });
-  })(patrun_min, patrun_minExports);
+  })(patrun_min$1, patrun_min$1.exports);
+  var patrun_minExports = patrun_min$1.exports;
   const Patrun = /* @__PURE__ */ getDefaultExportFromCjs(patrun_minExports);
-  var jsonicExports = {};
-  var jsonic = {
-    get exports() {
-      return jsonicExports;
-    },
-    set exports(v) {
-      jsonicExports = v;
-    }
-  };
+  var jsonic$1 = { exports: {} };
   var types = {};
   "use strict";
   Object.defineProperty(types, "__esModule", { value: true });
@@ -48720,7 +48746,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                   n: {},
                   log: meta ? meta.log : void 0,
                   F: srcfmt(jsonic2.internal().config),
-                  use: {},
+                  u: {},
                   NORULE: { name: "no-rule" },
                   NOTOKEN: { name: "no-token" }
                 }
@@ -48990,8 +49016,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       this.state = types_1.OPEN;
       this.n = /* @__PURE__ */ Object.create(null);
       this.d = -1;
-      this.use = /* @__PURE__ */ Object.create(null);
-      this.keep = /* @__PURE__ */ Object.create(null);
+      this.u = /* @__PURE__ */ Object.create(null);
+      this.k = /* @__PURE__ */ Object.create(null);
       this.bo = false;
       this.ao = false;
       this.bc = false;
@@ -49019,6 +49045,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     process(ctx, lex) {
       let rule = this.spec.process(this, ctx, lex, this.state);
       return rule;
+    }
+    eq(counter, limit = 0) {
+      let value = this.n[counter];
+      return null == value || value === limit;
+    }
+    lt(counter, limit = 0) {
+      let value = this.n[counter];
+      return null == value || value < limit;
+    }
+    gt(counter, limit = 0) {
+      let value = this.n[counter];
+      return null == value || value > limit;
+    }
+    lte(counter, limit = 0) {
+      let value = this.n[counter];
+      return null == value || value <= limit;
+    }
+    gte(counter, limit = 0) {
+      let value = this.n[counter];
+      return null == value || value >= limit;
     }
     toString() {
       return "[Rule " + this.name + "~" + this.i + "]";
@@ -49174,10 +49220,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
       }
       if (alt.u) {
-        rule.use = Object.assign(rule.use, alt.u);
+        rule.u = Object.assign(rule.u, alt.u);
       }
       if (alt.k) {
-        rule.keep = Object.assign(rule.keep, alt.k);
+        rule.k = Object.assign(rule.k, alt.k);
       }
       if (alt.a) {
         why += "A";
@@ -49193,8 +49239,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           next2 = rule.child = makeRule(rulespec, ctx, rule.node);
           next2.parent = rule;
           next2.n = __spreadValues({}, rule.n);
-          if (0 < Object.keys(rule.keep).length) {
-            next2.keep = __spreadValues({}, rule.keep);
+          if (0 < Object.keys(rule.k).length) {
+            next2.k = __spreadValues({}, rule.k);
           }
           why += "P`" + alt.p + "`";
         } else
@@ -49206,8 +49252,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           next2.parent = rule.parent;
           next2.prev = rule;
           next2.n = __spreadValues({}, rule.n);
-          if (0 < Object.keys(rule.keep).length) {
-            next2.keep = __spreadValues({}, rule.keep);
+          if (0 < Object.keys(rule.k).length) {
+            next2.k = __spreadValues({}, rule.k);
           }
           why += "R`" + alt.r + "`";
         } else
@@ -49340,32 +49386,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return out;
   }
   function normalt(a) {
-    if (null != a.c) {
-      let counters = a.c.n;
-      let depth = a.c.d;
-      if (null != counters || null != depth) {
-        a.c = function(rule) {
-          let pass = true;
-          if (null != counters) {
-            for (let cn in counters) {
-              pass = pass && (null == rule.n[cn] || rule.n[cn] <= (null == counters[cn] ? 0 : counters[cn]));
-            }
-          }
-          if (null != depth) {
-            pass = pass && rule.d <= depth;
-          }
-          return pass;
-        };
-        if (null != counters) {
-          ;
-          a.c.n = counters;
-        }
-        if (null != depth) {
-          ;
-          a.c.d = depth;
-        }
-      }
-    }
     if (types_1.STRING === typeof a.g) {
       a.g = a.g.split(/\s*,\s*/);
     } else if (null == a.g) {
@@ -49459,7 +49479,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           rsm: this.rsm,
           log: void 0,
           F: (0, utility_12.srcfmt)(this.cfg),
-          use: {},
+          u: {},
           NOTOKEN: notoken,
           NORULE: {}
         };
@@ -49565,7 +49585,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const pairkey = (r2) => {
       const key_token = r2.o0;
       const key = ST === key_token.tin || TX === key_token.tin ? key_token.val : key_token.src;
-      r2.use.key = key;
+      r2.u.key = key;
     };
     jsonic2.rule("val", (rs) => {
       rs.bo((rule) => rule.node = void 0).open([
@@ -49635,9 +49655,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           g: "map,pair,key,json"
         }
       ]).bc((r2, _ctx) => {
-        if (r2.use.pair) {
-          r2.use.prev = r2.node[r2.use.key];
-          r2.node[r2.use.key] = r2.child.node;
+        if (r2.u.pair) {
+          r2.u.prev = r2.node[r2.u.key];
+          r2.node[r2.u.key] = r2.child.node;
         }
       }).close([
         // Comma means a new pair at same pair-key level.
@@ -49651,7 +49671,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         // List elements are values.
         { p: "val", g: "list,elem,val,json" }
       ]).bc((r2) => {
-        if (true !== r2.use.done) {
+        if (true !== r2.u.done) {
           r2.node.push(r2.child.node);
         }
       }).close([
@@ -49662,11 +49682,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ]);
     });
     const pairval = (r2, ctx) => {
-      let key = r2.use.key;
+      let key = r2.u.key;
       let val = r2.child.node;
-      const prev2 = r2.use.prev;
+      const prev2 = r2.u.prev;
       val = void 0 === val ? null : val;
-      if (r2.use.list && ctx.cfg.safe.key) {
+      if (r2.u.list && ctx.cfg.safe.key) {
         if ("__proto__" === key || "constructor" === key) {
           return;
         }
@@ -49716,14 +49736,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         // Implicit list (comma sep) only allowed at top level: `1,2`.
         {
           s: [CA],
-          c: { n: { dlist: 0, dmap: 0 } },
+          // c: { n: { dlist: 0, dmap: 0 } },
+          c: (r2) => r2.lte("dlist") && r2.lte("dmap"),
           r: "list",
           u: { implist: true },
           g: "list,val,imp,comma,jsonic"
         },
         // Implicit list (space sep) only allowed at top level: `1 2`.
         {
-          c: { n: { dlist: 0, dmap: 0 } },
+          // c: { n: { dlist: 0, dmap: 0 } },
+          c: (r2) => r2.lte("dlist") && r2.lte("dmap"),
           r: "list",
           u: { implist: true },
           g: "list,val,imp,space,jsonic",
@@ -49747,7 +49769,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         { s: [KEY, CL], p: "pair", b: 2, g: "pair,list,val,imp,jsonic" }
       ], { append: true }).close([
         // Normal end of map, no path dive.
-        { s: [CB], c: { n: { pk: 0 } }, g: "end,json" },
+        {
+          s: [CB],
+          // c: { n: { pk: 0 } },
+          c: (r2) => r2.lte("pk"),
+          g: "end,json"
+        },
         // Not yet at end of path dive, keep ascending.
         { s: [CB], b: 1, g: "path,jsonic" },
         // End of implicit path
@@ -49759,12 +49786,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     jsonic2.rule("list", (rs) => {
       rs.bo((r2) => {
         r2.n.dlist = 1 + (r2.n.dlist ? r2.n.dlist : 0);
-        if (r2.prev.use.implist) {
+        if (r2.prev.u.implist) {
           r2.node.push(r2.prev.node);
           r2.prev.node = r2.node;
         }
       }).open({
-        c: (r2) => r2.prev.use.implist,
+        c: (r2) => r2.prev.u.implist,
         p: "elem"
       }).open([
         // Initial comma [, will insert null as [null,
@@ -49781,28 +49808,42 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         // Ignore initial comma: {,a:1.
         { s: [CA], g: "map,pair,comma,jsonic" }
       ], { append: true }).bc((r2, ctx) => {
-        if (r2.use.pair) {
+        if (r2.u.pair) {
           pairval(r2, ctx);
         }
       }).close([
         // End of map, reset implicit depth counter so that
         // a:b:c:1,d:2 -> {a:{b:{c:1}},d:2}
-        { s: [CB], c: { n: { pk: 0 } }, b: 1, g: "map,pair,json" },
+        {
+          s: [CB],
+          // c: { n: { pk: 0 } },
+          c: (r2) => r2.lte("pk"),
+          b: 1,
+          g: "map,pair,json"
+        },
         // Ignore trailing comma at end of map.
         {
           s: [CA, CB],
-          c: { n: { pk: 0 } },
+          // c: { n: { pk: 0 } },
+          c: (r2) => r2.lte("pk"),
           b: 1,
           g: "map,pair,comma,jsonic"
         },
         { s: [CA, ZZ], g: "end,jsonic" },
         // Comma means a new pair at same pair-key level.
-        { s: [CA], c: { n: { pk: 0 } }, r: "pair", g: "map,pair,json" },
+        {
+          s: [CA],
+          // c: { n: { pk: 0 } },
+          c: (r2) => r2.lte("pk"),
+          r: "pair",
+          g: "map,pair,json"
+        },
         // TODO: try CA VAL ? works anywhere?
         // Comma means a new pair if implicit top level map.
         {
           s: [CA],
-          c: { n: { dmap: 1 } },
+          // c: { n: { dmap: 1 } },
+          c: (r2) => r2.lte("dmap", 1),
           r: "pair",
           g: "map,pair,jsonic"
         },
@@ -49811,7 +49852,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         {
           // s: [VAL],
           s: [KEY],
-          c: { n: { dmap: 1 } },
+          // c: { n: { dmap: 1 } },
+          c: (r2) => r2.lte("dmap", 1),
           r: "pair",
           b: 1,
           g: "map,pair,imp,jsonic"
@@ -49819,9 +49861,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         // End of implicit path (eg. a:b:1), keep closing until pk=0.
         {
           s: [[CB, CA, CS, ...KEY]],
+          c: (r2) => 0 < r2.n.pk,
           b: 1,
-          g: "map,pair,imp,path,jsonic",
-          c: (r2) => 0 < r2.n.pk
+          g: "map,pair,imp,path,jsonic"
         },
         // Can't close a map with `]`
         { s: [CS], e: (r2) => r2.c0, g: "end,jsonic" },
@@ -49829,7 +49871,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         { s: [ZZ], e: finish, g: "map,pair,json" },
         // Who needs commas anyway?
         {
-          // c: { n: { pk: 0 } },
           r: "pair",
           b: 1,
           g: "map,pair,imp,jsonic"
@@ -49863,8 +49904,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           g: "elem,pair,jsonic"
         }
       ]).bc((r2, ctx) => {
-        if (true === r2.use.pair) {
-          r2.use.prev = r2.node[r2.use.key];
+        if (true === r2.u.pair) {
+          r2.u.prev = r2.node[r2.u.key];
           pairval(r2, ctx);
         }
       }).close([
@@ -49914,6 +49955,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return justJSON;
   }
   makeJSON_1 = grammar$1.makeJSON = makeJSON;
+  var jsonic = jsonic$1.exports;
   (function(module2, exports3) {
     "use strict";
     Object.defineProperty(exports3, "__esModule", { value: true });
@@ -50075,13 +50117,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         rule: (name, define2) => {
           return jsonic2.internal().parser.rule(name, define2) || jsonic2;
         },
-        // lex: (matchmaker: MakeLexMatcher) => {
-        //   let match = merged_options.lex.match
-        //   match.unshift(matchmaker)
-        //   jsonic.options({
-        //     lex: { match },
-        //   })
-        // },
         make: (options2) => {
           return make(options2, jsonic2);
         },
@@ -50176,7 +50211,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     if (true) {
       module2.exports = Jsonic2;
     }
-  })(jsonic, jsonicExports);
+  })(jsonic$1, jsonic$1.exports);
+  var jsonicExports = jsonic$1.exports;
   const Jsonic = /* @__PURE__ */ getDefaultExportFromCjs(jsonicExports);
   const config_defaults = {};
   const util = {};
@@ -50281,8 +50317,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children,
       enableColorScheme = false
     } = props;
-    return /* @__PURE__ */ jsxs(React__namespace.Fragment, {
-      children: [/* @__PURE__ */ jsx(GlobalStyles, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(GlobalStyles, {
         styles: (theme) => styles(theme, enableColorScheme)
       }), children]
     });
@@ -50295,14 +50331,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * You can wrap a node.
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Enable `color-scheme` CSS property to use `theme.palette.mode`.
      * For more details, check out https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme
      * For browser support, check out https://caniuse.com/?search=color-scheme
      * @default false
      */
-    enableColorScheme: propTypesExports.bool
+    enableColorScheme: PropTypes.bool
   } : void 0;
   const Container = createContainer({
     createStyledComponent: styled("div", {
@@ -50328,21 +50364,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * @ignore
      */
-    children: propTypesExports.node,
+    children: PropTypes.node,
     /**
      * Override or extend the styles applied to the component.
      */
-    classes: propTypesExports.object,
+    classes: PropTypes.object,
     /**
      * The component used for the root node.
      * Either a string to use a HTML element or a component.
      */
-    component: propTypesExports.elementType,
+    component: PropTypes.elementType,
     /**
      * If `true`, the left and right padding is removed.
      * @default false
      */
-    disableGutters: propTypesExports.bool,
+    disableGutters: PropTypes.bool,
     /**
      * Set the max-width to match the min-width of the current breakpoint.
      * This is useful if you'd prefer to design for a fixed set of sizes
@@ -50350,18 +50386,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * It's fluid by default.
      * @default false
      */
-    fixed: propTypesExports.bool,
+    fixed: PropTypes.bool,
     /**
      * Determine the max-width of the container.
      * The container width grows with the size of the screen.
      * Set to `false` to disable `maxWidth`.
      * @default 'lg'
      */
-    maxWidth: propTypesExports.oneOfType([propTypesExports.oneOf(["xs", "sm", "md", "lg", "xl", false]), propTypesExports.string]),
+    maxWidth: PropTypes.oneOfType([PropTypes.oneOf(["xs", "sm", "md", "lg", "xl", false]), PropTypes.string]),
     /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
-    sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getContainerUtilityClass(slot) {
     return generateUtilityClass("MuiContainer", slot);
@@ -50372,9 +50408,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { handle } = spec;
     {
     }
-    return /* @__PURE__ */ jsxs(Container, { component: "main", maxWidth: "xs", children: [
-      /* @__PURE__ */ jsx(CssBaseline, {}),
-      /* @__PURE__ */ jsxs(
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Container, { component: "main", maxWidth: "xs", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CssBaseline, {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
         Box,
         {
           sx: {
@@ -50384,10 +50420,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             alignItems: "center"
           },
           children: [
-            /* @__PURE__ */ jsx("img", { style: { width: 400 }, src: spec.img.logo }),
-            /* @__PURE__ */ jsx(Typography, { sx: { marginTop: 4 }, component: "h1", variant: "h5", children: spec.title }),
-            /* @__PURE__ */ jsxs(Box, { component: "form", onSubmit: handle.signin, noValidate: true, sx: { mt: 1 }, children: [
-              /* @__PURE__ */ jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { style: { width: 400 }, src: spec.img.logo }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { sx: { marginTop: 4 }, component: "h1", variant: "h5", children: spec.title }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(Box, { component: "form", onSubmit: handle.signin, noValidate: true, sx: { mt: 1 }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
                 TextField,
                 {
                   margin: "normal",
@@ -50400,7 +50436,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                   autoFocus: true
                 }
               ),
-              /* @__PURE__ */ jsx(
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
                 TextField,
                 {
                   margin: "normal",
@@ -50413,7 +50449,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                   autoComplete: "current-password"
                 }
               ),
-              /* @__PURE__ */ jsx(
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Button,
                 {
                   type: "submit",
