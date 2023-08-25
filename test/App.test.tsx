@@ -2,21 +2,26 @@ import { describe, it, expect } from 'vitest'
 import * as React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import BasicAdmin from '../src/lib/BasicAdmin'
-import BasicAppBar from '../src/lib/BasicAppBar'
-import BasicAuth from '../src/lib/BasicAuth'
-import BasicButton from '../src/lib/BasicButton'
-import { BasicDrawer } from '../src/lib/BasicDrawer'
-import { BasicDrawerHeader } from '../src/lib/BasicDrawer'
-import BasicEdit from '../src/lib/BasicEdit'
-import BasicFoot from '../src/lib/BasicFoot'
-import BasicHead from '../src/lib/BasicHead'
-import BasicLed from '../src/lib/BasicLed'
-import BasicList from '../src/lib/BasicList'
-import BasicMain from '../src/lib/BasicMain'
-import BasicSide from '../src/lib/BasicSide'
-// import { BasicAppBar } from '../src/lib/index'
-import Vxg from '../src/lib/vxg'
+// import BasicAdmin from '../src/lib/BasicAdmin'
+// import BasicAppBar from '../src/lib/BasicAppBar'
+// import BasicAuth from '../src/lib/BasicAuth'
+// import BasicButton from '../src/lib/BasicButton'
+// import { BasicDrawer } from '../src/lib/BasicDrawer'
+// import { BasicDrawerHeader } from '../src/lib/BasicDrawer'
+// import BasicEdit from '../src/lib/BasicEdit'
+// import BasicFoot from '../src/lib/BasicFoot'
+// import BasicHead from '../src/lib/BasicHead'
+// import BasicLed from '../src/lib/BasicLed'
+// import BasicList from '../src/lib/BasicList'
+// import BasicMain from '../src/lib/BasicMain'
+// import BasicSide from '../src/lib/BasicSide'
+import {
+  BasicAppBar,
+  BasicButton,
+  BasicDrawer,
+  BasicDrawerHeader,
+} from '../src/lib/index'
+// import Vxg from '../src/lib/vxg'
 
 describe('render-component', () => {
   // it('render-basic-admin', () => {
