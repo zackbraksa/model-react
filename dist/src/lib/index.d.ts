@@ -8,6 +8,6 @@ export { default as BasicList } from './BasicList';
 export { default as BasicEdit } from './BasicEdit';
 export { default as Vxg } from './vxg';
 export { BasicDrawer, BasicDrawerHeader } from './BasicDrawer';
-export { default as BasicButton } from './BasicEdit';
+export { default as BasicButton } from './BasicButton';
 export { default as BasicAppBar } from './BasicAppBar';
 export { default as BasicAuth } from './BasicAuth';

@@ -50470,7 +50470,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   exports2.BasicAdmin = BasicAdmin;
   exports2.BasicAppBar = BasicAppBar;
   exports2.BasicAuth = BasicAuth;
-  exports2.BasicButton = BasicEdit;
+  exports2.BasicButton = BasicButton;
   exports2.BasicDrawer = BasicDrawer;
   exports2.BasicDrawerHeader = BasicDrawerHeader;
   exports2.BasicEdit = BasicEdit;

@@ -50459,7 +50459,7 @@ export {
   BasicAdmin,
   BasicAppBar,
   BasicAuth,
-  BasicEdit as BasicButton,
+  BasicButton,
   BasicDrawer,
   BasicDrawerHeader,
   BasicEdit,
