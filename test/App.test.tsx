@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import * as React from 'react'
 import { render, screen } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import configureStore from 'redux-mock-store'
 
 import {
   BasicAdmin,
@@ -19,8 +22,12 @@ import {
 } from '../src/lib/index'
 
 describe('render-component', () => {
+  const initialState = {}
+  const mockStore = configureStore()
+  let store
+
   // it('render-basic-admin', () => {
-  //   // useNavigate() may be used only in the context of a <Router> component
+  //   // BasicHead causing issues
   //   let ctx = () => {
   //     return {
   //       model: {
@@ -82,14 +89,30 @@ describe('render-component', () => {
     render(<BasicFoot ctx={ctx} spec={spec} />)
   })
 
-  // it('render-basic-head', () => {
-  //   // useNavigate() may be used only in the context of a <Router> component
-  //   let ctx = () => {
-  //     return { model: 'model', seneca: 'seneca' }
-  //   }
-  //   let spec = {}
-  //   render(<BasicHead ctx={ctx} spec={spec} />)
-  // })
+  it('render-basic-head', () => {
+    store = mockStore(initialState)
+    // could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+    let ctx = () => {
+      return {
+        model: {
+          app: {
+            web: {
+              frame: { frame: { part: { head: { tool: { def: {} } } } } },
+            },
+          },
+        },
+        seneca: 'seneca',
+      }
+    }
+    let spec = { frame: 'frame' }
+
+    render(
+      <Provider store={store}>
+        <BasicHead ctx={ctx} spec={spec} />
+      </Provider>,
+      { wrapper: BrowserRouter }
+    )
+  })
 
   // it('render-basic-led', () => {
   //   // Could not find react-redux context value; please ensure the component is wrapped in a <Provider>
