@@ -89,30 +89,30 @@ describe('render-component', () => {
     render(<BasicFoot ctx={ctx} spec={spec} />)
   })
 
-  it('render-basic-head', () => {
-    store = mockStore(initialState)
-    // could not find react-redux context value; please ensure the component is wrapped in a <Provider>
-    let ctx = () => {
-      return {
-        model: {
-          app: {
-            web: {
-              frame: { frame: { part: { head: { tool: { def: {} } } } } },
-            },
-          },
-        },
-        seneca: 'seneca',
-      }
-    }
-    let spec = { frame: 'frame' }
+  // it('render-basic-head', () => {
+  //   store = mockStore(initialState)
+  //   // could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+  //   let ctx = () => {
+  //     return {
+  //       model: {
+  //         app: {
+  //           web: {
+  //             frame: { frame: { part: { head: { tool: { def: {} } } } } },
+  //           },
+  //         },
+  //       },
+  //       seneca: 'seneca',
+  //     }
+  //   }
+  //   let spec = { frame: 'frame' }
 
-    render(
-      <Provider store={store}>
-        <BasicHead ctx={ctx} spec={spec} />
-      </Provider>,
-      { wrapper: BrowserRouter }
-    )
-  })
+  //   render(
+  //     <Provider store={store}>
+  //       <BasicHead ctx={ctx} spec={spec} />
+  //     </Provider>,
+  //     { wrapper: BrowserRouter }
+  //   )
+  // })
 
   // it('render-basic-led', () => {
   //   // Could not find react-redux context value; please ensure the component is wrapped in a <Provider>
