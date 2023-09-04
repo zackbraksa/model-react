@@ -90,6 +90,17 @@ describe('render-component', () => {
   })
 
   // it('render-basic-head', () => {
+  //   // import { renderWithProviders } from '../../test-utils' // <-- Hijacked render
+
+  //   // it('displays data when ready', {
+  //   //   renderWithProviders(<YourComponent />, {
+  //   //     initialState: {
+  //   //       dataready: true // <-- Pass data for selector
+  //   //     }
+  //   //   })
+  //   //   expect(screen.getByText('data reader')).toBeInTheDocument();
+  //   // })
+
   //   store = mockStore(initialState)
   //   // could not find react-redux context value; please ensure the component is wrapped in a <Provider>
   //   let ctx = () => {
