@@ -57,6 +57,7 @@
     "@mui/icons-material": "5.11.9",
     "@mui/material": "5.11.10",
     "@mui/x-data-grid": "5.17.25",
+    "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^6.0.1",
     "@testing-library/react": "^14.0.0",
     "@types/node": "20.5.2",
