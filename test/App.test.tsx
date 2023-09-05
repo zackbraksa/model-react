@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 
+import { renderWithProviders } from './mock-redux-render/test-utils'
 import {
   BasicAdmin,
   BasicAppBar,
@@ -90,19 +91,6 @@ describe('render-component', () => {
   })
 
   // it('render-basic-head', () => {
-  //   // import { renderWithProviders } from '../../test-utils' // <-- Hijacked render
-
-  //   // it('displays data when ready', {
-  //   //   renderWithProviders(<YourComponent />, {
-  //   //     initialState: {
-  //   //       dataready: true // <-- Pass data for selector
-  //   //     }
-  //   //   })
-  //   //   expect(screen.getByText('data reader')).toBeInTheDocument();
-  //   // })
-
-  //   store = mockStore(initialState)
-  //   // could not find react-redux context value; please ensure the component is wrapped in a <Provider>
   //   let ctx = () => {
   //     return {
   //       model: {
@@ -117,12 +105,12 @@ describe('render-component', () => {
   //   }
   //   let spec = { frame: 'frame' }
 
-  //   render(
-  //     <Provider store={store}>
-  //       <BasicHead ctx={ctx} spec={spec} />
-  //     </Provider>,
-  //     { wrapper: BrowserRouter }
-  //   )
+  //   renderWithProviders(<BasicHead ctx={ctx} spec={spec} />, {
+  //     wrapper: BrowserRouter,
+  //     initialState: {
+  //       dataready: true, // pass data for selector
+  //     },
+  //   })
   // })
 
   // it('render-basic-led', () => {
