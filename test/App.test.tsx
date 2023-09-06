@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 
-import { renderWithProviders } from './mock-redux-render/test-utils'
+import { renderWithProviders } from './mocks/test-utils'
 import {
   BasicAdmin,
   BasicAppBar,
@@ -107,9 +107,9 @@ describe('render-component', () => {
 
   //   renderWithProviders(<BasicHead ctx={ctx} spec={spec} />, {
   //     wrapper: BrowserRouter,
-  //     initialState: {
-  //       dataready: true, // pass data for selector
-  //     },
+  //     // initialState: {
+  //     //   dataready: true, // pass data for selector
+  //     // },
   //   })
   // })
 
