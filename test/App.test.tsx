@@ -22,6 +22,37 @@ import {
   BasicSide,
 } from '../src/lib/index'
 
+/*
+// MEDIUM
+import { render, waitFor } from '../../../utils/test-utils'
+import { handlers } from '../../../__mocks__/character'
+import { setupServer } from 'msw/node'
+import { rest } from 'msw'
+import CharactersContainer from '../CharactersContainer'
+
+class ResizeObserver {
+  observe() {}
+  unobserve() {}
+}
+
+const server = setupServer(...handlers)
+
+// Establish API mocking before all tests.
+beforeAll(() => server.listen())
+
+// Reset any request handlers that we may add during the tests,
+// so they don't affect other tests.
+afterEach(() => server.resetHandlers())
+
+// Clean up after the tests are finished.
+afterAll(() => server.close())
+
+it('shows user characters', async () => {
+  window.ResizeObserver = ResizeObserver
+  render(<CharactersContainer />)
+})
+*/
+
 describe('render-component', () => {
   const initialState = {}
   const mockStore = configureStore()
@@ -91,6 +122,7 @@ describe('render-component', () => {
   })
 
   // it('render-basic-head', () => {
+  //   // Cannot read properties of undefined (reading 'auth') -> const user = useSelector((state:any)=>state.main.auth.user)
   //   let ctx = () => {
   //     return {
   //       model: {
@@ -105,34 +137,55 @@ describe('render-component', () => {
   //   }
   //   let spec = { frame: 'frame' }
 
-  //   renderWithProviders(<BasicHead ctx={ctx} spec={spec} />, {
-  //     wrapper: BrowserRouter,
-  //     // initialState: {
-  //     //   dataready: true, // pass data for selector
-  //     // },
-  //   })
+  //   store = mockStore(initialState)
+  //   render(
+  //     <Provider store={store}>
+  //       <BasicHead ctx={ctx} spec={spec} />
+  //     </Provider>,
+  //     { wrapper: BrowserRouter }
+  //   )
+
+  //   // renderWithProviders(<BasicHead ctx={ctx} spec={spec} />, {
+  //   //   wrapper: BrowserRouter,
+  //   //   // initialState: {
+  //   //   //   dataready: true, // pass data for selector
+  //   //   // },
+  //   // })
   // })
 
   // it('render-basic-led', () => {
-  //   // Could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+  //   // Cannot read properties of undefined (reading 'vxg') -> const vxgState = useSelector((state: any) => state.main.vxg)
+  //   store = mockStore(initialState)
   //   let ctx = () => {
   //     return { model: 'model', seneca: 'seneca', custom: 'custom' }
   //   }
   //   let spec = {}
-  //   render(<BasicLed ctx={ctx} spec={spec} />)
+  //   render(
+  //     <Provider store={store}>
+  //       <BasicLed ctx={ctx} spec={spec} />
+  //     </Provider>,
+  //     { wrapper: BrowserRouter }
+  //   )
   // })
 
   // it('render-basic-list', () => {
-  //   // Could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+  //   // Cannot read properties of undefined (reading 'vxg') -> const vxg = useSelector((state: any) => state.main.vxg)
+  //   store = mockStore(initialState)
   //   let ctx = () => {
   //     return { model: 'model', seneca: 'seneca', custom: 'custom' }
   //   }
   //   let spec = {}
-  //   render(<BasicList ctx={ctx} spec={spec} />)
+  //   render(
+  //     <Provider store={store}>
+  //       <BasicList ctx={ctx} spec={spec} />
+  //     </Provider>,
+  //     { wrapper: BrowserRouter }
+  //   )
   // })
 
   // it('render-basic-main', () => {
-  //   // Could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+  //   // Cannot read properties of undefined (reading 'vxg') -> const sideOpen = useSelector((state: any) => state.main.vxg.cmp.BasicSi…
+  //   store = mockStore(initialState)
   //   let ctx = () => {
   //     return {
   //       model: {
@@ -149,15 +202,26 @@ describe('render-component', () => {
   //     }
   //   }
   //   let spec = { frame: 'frame' }
-  //   render(<BasicMain ctx={ctx} spec={spec} />)
+  //   render(
+  //     <Provider store={store}>
+  //       <BasicMain ctx={ctx} spec={spec} />
+  //     </Provider>,
+  //     { wrapper: BrowserRouter }
+  //   )
   // })
 
   // it('render-basic-side', () => {
-  //   // Could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+  //   // Cannot read properties of undefined (reading 'vxg') -> const vxgState = useSelector((state: any) => state.main.vxg)
+  //   store = mockStore(initialState)
   //   let ctx = () => {
   //     return { model: 'model', seneca: 'senca' }
   //   }
   //   let spec = {}
-  //   render(<BasicSide ctx={ctx} spec={spec} />)
+  //   render(
+  //     <Provider store={store}>
+  //       <BasicSide ctx={ctx} spec={spec} />
+  //     </Provider>,
+  //     { wrapper: BrowserRouter }
+  //   )
   // })
 })
