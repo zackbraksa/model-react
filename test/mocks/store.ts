@@ -1,11 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import type { PreloadedState } from '@reduxjs/toolkit'
 
-import userReducer from './usersSlice'
+import mainReducer from './mainSlice'
 
 // Create the root reducer separately so we can extract the RootState type
 const rootReducer = combineReducers({
-  user: userReducer,
+  main: mainReducer,
 })
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
