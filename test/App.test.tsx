@@ -106,20 +106,13 @@ describe('render-component', () => {
   //   }
   //   let spec = { frame: 'frame' }
 
-  //   store = mockStore(initialState)
-  //   render(
-  //     <Provider store={store}>
-  //       <BasicHead ctx={ctx} spec={spec} />
-  //     </Provider>,
-  //     { wrapper: BrowserRouter }
-  //   )
-
-  //   // renderWithProviders(<BasicHead ctx={ctx} spec={spec} />, {
-  //   //   wrapper: BrowserRouter,
-  //   //   // initialState: {
-  //   //   //   dataready: true, // pass data for selector
-  //   //   // },
-  //   // })
+  //   // Could not find react-redux context value (this is useSelector()); please ensure the component is wrapped in a <Provider>
+  //   renderWithProviders(<BasicHead ctx={ctx} spec={spec} />, {
+  //     wrapper: BrowserRouter,
+  //     preloadedState: {
+  //       main: { name: 'main', status: 'idle' }, // <-- Pass data for selector
+  //     },
+  //   })
   // })
 
   // it('render-basic-led', () => {
