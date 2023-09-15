@@ -1,9 +1,7 @@
 import { describe, it } from 'vitest'
 import * as React from 'react'
-import { render } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
 
-import { renderWithProviders } from './mocks/test-utils'
+import { customRender } from './mocks/test-utils'
 import { BasicHead } from '../src/lib/index'
 
 describe('BasicHead', () => {
@@ -21,12 +19,12 @@ describe('BasicHead', () => {
       }
     }
     let spec = { frame: 'frame' }
+    let initialState = {
+      main: { auth: {} },
+    }
 
-    renderWithProviders(<BasicHead ctx={ctx} spec={spec} />, {
-      wrapper: BrowserRouter,
-      preloadedState: {
-        main: { auth: { user: 'user' } },
-      },
+    customRender(<BasicHead ctx={ctx} spec={spec} />, {
+      mockInitialState: initialState,
     })
   })
 })

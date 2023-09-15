@@ -1,32 +1,44 @@
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import { render } from '@testing-library/react'
-import type { RenderOptions } from '@testing-library/react'
-import type { PreloadedState } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+import thunk from 'redux-thunk'
+import configureStore from 'redux-mock-store'
 
-import { setupStore } from './store'
-import type { AppStore, RootState } from './store'
+import type { RenderOptions } from '@testing-library/react'
 
-// This type interface extends the default options for render from RTL, as well
-// as allows the user to specify other things such as initialState, store.
-interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
-  preloadedState?: PreloadedState<RootState>
-  store?: AppStore
+interface IExtendedRenderOptions extends RenderOptions {
+  withRouter?: boolean
+  withRedux?: boolean
+  mockInitialState?: any
 }
 
-export function renderWithProviders(
-  ui: React.ReactElement,
-  {
-    preloadedState = {},
-    // Automatically create a store instance if no store was passed in
-    store = setupStore(preloadedState),
-    ...renderOptions
-  }: ExtendedRenderOptions = {}
-) {
-  function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
-    return <Provider store={store}>{children}</Provider>
-  }
+const wrapInRouter = (componentTree: JSX.Element) => (
+  <BrowserRouter>{componentTree}</BrowserRouter>
+)
 
-  // Return an object with the store and all of RTL's query functions
-  return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) }
+const wrapInRedux = (
+  componentTree: JSX.Element,
+  { mockInitialState }: IExtendedRenderOptions
+) => {
+  const storeMock = configureStore([thunk])(mockInitialState)
+  return <Provider store={storeMock}>{componentTree}</Provider>
+}
+
+const setupComponent = (
+  ui: JSX.Element,
+  renderOptions?: IExtendedRenderOptions
+) => {
+  let componentTree = <>{ui}</>
+  componentTree = wrapInRouter(componentTree)
+  componentTree = wrapInRedux(componentTree, renderOptions)
+  return componentTree
+}
+
+export function customRender(
+  ui: JSX.Element,
+  renderOptions?: IExtendedRenderOptions
+) {
+  const componentTree = setupComponent(ui, renderOptions)
+  return render(componentTree)
 }
