@@ -1,8 +1,7 @@
 import { describe, it } from 'vitest'
 import * as React from 'react'
-import { render } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
 
+import { customRender } from './mocks/test-utils'
 import { BasicAdmin } from '../src/lib/index'
 
 describe('BasicAdmin', () => {
@@ -16,6 +15,9 @@ describe('BasicAdmin', () => {
                 frame: {
                   part: { foot: 'foot', head: { tool: { def: {} } } },
                 },
+                private: {
+                  view: { undefined: { content: { def: { add: {} } } } },
+                },
               },
             },
           },
@@ -23,11 +25,18 @@ describe('BasicAdmin', () => {
       }
     }
     let spec = { frame: 'frame' }
+    let initialState = {
+      main: {
+        auth: { user: { name: 'name' } },
+        vxg: {
+          cmp: { BasicSide: { show: {} } },
+          trigger: { led: { add: {} } },
+        },
+      },
+    }
 
-    render(
-      <BrowserRouter>
-        <BasicAdmin ctx={ctx} spec={spec} />
-      </BrowserRouter>
-    )
+    customRender(<BasicAdmin ctx={ctx} spec={spec} />, {
+      mockInitialState: initialState,
+    })
   })
 })
