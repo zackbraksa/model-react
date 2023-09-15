@@ -11,7 +11,12 @@ describe('BasicHead', () => {
         model: {
           app: {
             web: {
-              frame: { frame: { part: { head: { tool: { def: {} } } } } },
+              frame: {
+                frame: { part: { head: { tool: { def: {} } } } },
+                private: {
+                  view: { undefined: { content: { def: { add: {} } } } },
+                },
+              },
             },
           },
         },
@@ -20,7 +25,13 @@ describe('BasicHead', () => {
     }
     let spec = { frame: 'frame' }
     let initialState = {
-      main: { auth: {} },
+      main: {
+        auth: { user: { name: 'name' } },
+        vxg: {
+          cmp: { BasicSide: { show: {} } },
+          trigger: { led: { add: {} } },
+        },
+      },
     }
 
     customRender(<BasicHead ctx={ctx} spec={spec} />, {
