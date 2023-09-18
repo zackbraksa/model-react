@@ -13,7 +13,12 @@ describe('BasicAdmin', () => {
             web: {
               frame: {
                 frame: {
-                  part: { foot: 'foot', head: { tool: { def: {} } } },
+                  part: {
+                    foot: 'foot',
+                    head: { tool: { def: {} } },
+                    side: { logo: { img: {} } },
+                  },
+                  view: { view1: {}, view2: {} },
                 },
                 private: {
                   view: { undefined: { content: { def: { add: {} } } } },
