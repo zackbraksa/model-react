@@ -13,7 +13,9 @@ describe('BasicMain', () => {
             web: {
               frame: {
                 frame: { part: { foot: 'foot' } },
-                private: { view: [{ name: 'view1' }] },
+                private: {
+                  view: {},
+                },
               },
             },
           },

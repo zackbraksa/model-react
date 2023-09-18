@@ -18,10 +18,12 @@ describe('BasicAdmin', () => {
                     head: { tool: { def: {} } },
                     side: { logo: { img: {} } },
                   },
-                  view: { view1: {}, view2: {} },
+                  view: {},
                 },
                 private: {
-                  view: { undefined: { content: { def: { add: {} } } } },
+                  view: {
+                    undefined: { content: { def: { add: {} } } },
+                  },
                 },
               },
             },
