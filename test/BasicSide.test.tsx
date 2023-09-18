@@ -6,15 +6,16 @@ import { BasicSide } from '../src/lib/index'
 
 describe('BasicSide', () => {
   it('happy', () => {
-    // Cannot read properties of undefined (reading 'vxg') -> const vxgState = useSelector((state: any) => state.main.vxg)
     let ctx = () => {
       return {
         model: {
           app: {
             web: {
               frame: {
-                frame: { part: { side: {} } },
-                view: { view1: 'view1', view2: 'view2' },
+                frame: {
+                  part: { side: { logo: { img: {} } } },
+                  view: { view1: {}, view2: {} },
+                },
               },
             },
           },
