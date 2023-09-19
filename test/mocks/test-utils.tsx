@@ -42,3 +42,53 @@ export function customRender(
   const componentTree = setupComponent(ui, renderOptions)
   return render(componentTree)
 }
+
+export const ctx = () => {
+  return {
+    model: {
+      app: {
+        web: {
+          frame: {
+            frame: {
+              part: {
+                foot: {},
+                head: { tool: { def: {} } },
+                side: { logo: { img: {} } },
+              },
+              view: {},
+            },
+            private: {
+              view: {
+                undefined: { content: { def: { add: {} } }, name: 'view' },
+              },
+            },
+          },
+        },
+      },
+    },
+    content: {},
+    seneca: {},
+    custom: {},
+  }
+}
+
+export const spec = {
+  frame: 'frame',
+  img: { logo: {} },
+  handle: { signin: () => {} },
+  content: { def: { ent: { canon: 'canon' } } },
+}
+
+export const initialState = {
+  main: {
+    auth: { user: { name: 'name' } },
+    vxg: {
+      cmp: { BasicSide: { show: {} } },
+      trigger: { led: { add: {} } },
+      ent: {
+        meta: { main: { canon: { state: {} } } },
+        list: { main: { canon: {} } },
+      },
+    },
+  },
+}

@@ -3,12 +3,10 @@ import * as React from 'react'
 import { render } from '@testing-library/react'
 
 import { BasicAuth } from '../src/lib/index'
+import { ctx, spec } from './mocks/test-utils'
 
 describe('BasicAuth', () => {
   it('happy', () => {
-    let ctx = () => {}
-    let spec = { img: { logo: 'logo' }, handle: { signin: () => {} } }
-
     render(<BasicAuth ctx={ctx} spec={spec} />)
   })
 })
