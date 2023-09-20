@@ -1,7 +1,8 @@
-import react from '@vitejs/plugin-react';
-import path from 'node:path';
-import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
+/// <reference types="vitest" />
+import react from '@vitejs/plugin-react'
+import path from 'node:path'
+import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   plugins: [
@@ -35,7 +36,7 @@ export default defineConfig({
         '@mdi/react',
         '@mui/icons-material',
         '@mui/material',
-        '@mui/x-data-grid'
+        '@mui/x-data-grid',
       ],
       output: {
         globals: {
@@ -46,6 +47,9 @@ export default defineConfig({
       },
     },
   },
-});
-
-
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './test/setup.ts',
+  },
+})
