@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
@@ -40,7 +40,18 @@ export function customRender(
   renderOptions?: IExtendedRenderOptions
 ) {
   const componentTree = setupComponent(ui, renderOptions)
-  return render(componentTree)
+
+  const { debug: originalDebug, ...rest } = render(componentTree)
+
+  const debug = () => {
+    originalDebug()
+  }
+
+  return {
+    debug,
+    screen,
+    ...rest
+  }
 }
 
 export const ctx = () => {
@@ -53,22 +64,22 @@ export const ctx = () => {
               part: {
                 foot: {},
                 head: { tool: { def: {} } },
-                side: { logo: { img: {} } },
+                side: { logo: { img: {} } }
               },
-              view: {},
+              view: {}
             },
             private: {
               view: {
-                undefined: { content: { def: { add: {} } }, name: 'view' },
-              },
-            },
-          },
-        },
-      },
+                undefined: { content: { def: { add: {} } }, name: 'view' }
+              }
+            }
+          }
+        }
+      }
     },
     content: {},
     seneca: {},
-    custom: {},
+    custom: {}
   }
 }
 
@@ -76,7 +87,7 @@ export const spec = {
   frame: 'frame',
   img: { logo: {} },
   handle: { signin: () => {} },
-  content: { def: { ent: { canon: 'canon' } } },
+  content: { def: { ent: { canon: 'canon' } } }
 }
 
 export const initialState = {
@@ -87,8 +98,8 @@ export const initialState = {
       trigger: { led: { add: {} } },
       ent: {
         meta: { main: { canon: { state: {} } } },
-        list: { main: { canon: {} } },
-      },
-    },
-  },
+        list: { main: { canon: {} } }
+      }
+    }
+  }
 }
