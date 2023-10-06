@@ -95,7 +95,8 @@ function BasicLed(props: any) {
     // a workaround to prevent 
     // 'useEffect' to trigger when re-rendered
     if(triggerLed >= 2) {
-      setItem( { entity$: '-/' + def.ent } )
+      // setItem( { entity$: '-/' + def.ent } )
+      setItem( { entity$: '-/' + def.ent.canon } )
     }
 
     setTriggerLed(++triggerLed)
@@ -113,7 +114,7 @@ function BasicLed(props: any) {
           columns={ columns }
           onRowClick = { (event: any, item: any) => {
             // console.log('item: ', item)
-	    setItem(item)
+	          setItem(item)
           } }
         /> : 
         <BasicEdit
