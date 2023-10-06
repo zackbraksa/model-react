@@ -194,28 +194,28 @@ var __async = (__this, __arguments, generator) => {
           return null;
         }
         var ReactSharedInternals = React$1.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-        function error(format) {
+        function error(format2) {
           {
             {
               for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
                 args[_key2 - 1] = arguments[_key2];
               }
-              printWarning("error", format, args);
+              printWarning("error", format2, args);
             }
           }
         }
-        function printWarning(level, format, args) {
+        function printWarning(level, format2, args) {
           {
             var ReactDebugCurrentFrame2 = ReactSharedInternals.ReactDebugCurrentFrame;
             var stack = ReactDebugCurrentFrame2.getStackAddendum();
             if (stack !== "") {
-              format += "%s";
+              format2 += "%s";
               args = args.concat([stack]);
             }
             var argsWithFormat = args.map(function(item) {
               return String(item);
             });
-            argsWithFormat.unshift("Warning: " + format);
+            argsWithFormat.unshift("Warning: " + format2);
             Function.prototype.apply.call(console[level], console, argsWithFormat);
           }
         }
@@ -1037,15 +1037,521 @@ var __async = (__this, __arguments, generator) => {
     }
     return reactJsxRuntime_development;
   }
-  var jsxRuntime = jsxRuntime$2.exports;
-  "use strict";
-  if (process.env.NODE_ENV === "production") {
-    jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
-  } else {
-    jsxRuntime$2.exports = requireReactJsxRuntime_development();
+  var jsxRuntime$1 = jsxRuntime$2.exports;
+  var hasRequiredJsxRuntime;
+  function requireJsxRuntime() {
+    if (hasRequiredJsxRuntime)
+      return jsxRuntime$2.exports;
+    hasRequiredJsxRuntime = 1;
+    "use strict";
+    if (process.env.NODE_ENV === "production") {
+      jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
+    } else {
+      jsxRuntime$2.exports = requireReactJsxRuntime_development();
+    }
+    return jsxRuntime$2.exports;
   }
-  var jsxRuntimeExports = jsxRuntime$2.exports;
-  const jsxRuntime$1 = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
+  var jsxRuntimeExports = requireJsxRuntime();
+  const jsxRuntime = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
+  var gubu_min$2 = { exports: {} };
+  var gubu_min = gubu_min$2.exports;
+  (function(module2, exports3) {
+    !function(e) {
+      if (true)
+        module2.exports = e();
+      else if (false)
+        (void 0)([], e);
+      else {
+        ("undefined" != typeof window ? window : "undefined" != typeof commonjsGlobal ? commonjsGlobal : "undefined" != typeof self ? self : this).Gubu = e();
+      }
+    }(function() {
+      var e = {}, t = {};
+      Object.defineProperty(t, "__esModule", { value: true }), t.Gubu = void 0;
+      const n = Symbol.for("gubu$"), l = { gubu$: n, v$: "5.0.1" }, r2 = Symbol.for("gubu$nil"), i = /^[A-Z]/, o = "", u = "gubu", s = "name", a = "nan", f = "never", h = "number", p = "required", c = "array", d = "function", v = "object", g = "string", y = "undefined", b = "any", m = "list", $ = "instance", I = "null", x = "type", k = "Object", w = "Array", G = "Above", S = "After", N = "All", V = "Any", R = "Before", A = "Below", O = "Check", D = "Child", j = "Closed", C = "Define", E = "Default", B = "Empty", M = "Exact", L = "Func", T = "Key", q = "Max", F = "Min", P = "Never", W = "Len", J = "One", K = "Open", z = "Optional", H = "Refer", U = "Rename", _2 = "Required", Z = "Skip", Q = "Some", X = "Value", Y = " for property ", ee = '"$PATH"', te = '"$VALUE"', ne = (e2) => Object.keys(e2), le = (e2, t2, n2) => Object.defineProperty(e2, t2, n2), re = (e2) => Array.isArray(e2), ie = (e2) => JSON.parse(e2), oe = (e2, t2) => JSON.stringify(e2, t2);
+      class ue {
+        constructor(e2, t2, n2, l2) {
+          this.match = false, this.dI = 0, this.nI = 2, this.cI = -1, this.pI = 0, this.sI = -1, this.valType = f, this.isRoot = false, this.key = o, this.type = f, this.stop = true, this.nextSibling = true, this.fromDefault = false, this.ignoreVal = void 0, this.err = [], this.parents = [], this.keys = [], this.path = [], this.root = e2, this.vals = [e2, -1], this.node = t2, this.nodes = [t2, -1], this.ctx = n2 || {}, this.match = !!l2;
+        }
+        next() {
+          this.stop = false, this.fromDefault = false, this.ignoreVal = void 0, this.isRoot = 0 === this.pI;
+          let e2 = this.nodes[this.pI];
+          for (; +e2; )
+            this.dI--, this.ctx.log && -1 < this.dI && this.ctx.log("e" + (Array.isArray(this.parents[this.pI]) ? "a" : "o"), this), this.pI = +e2, e2 = this.nodes[this.pI];
+          e2 ? (this.node = e2, this.updateVal(this.vals[this.pI]), this.key = this.keys[this.pI], this.cI = this.pI, this.sI = this.pI + 1, this.parent = this.parents[this.pI], this.nextSibling = true, this.type = this.node.t, this.path[this.dI] = this.key, this.oval = this.val) : this.stop = true;
+        }
+        updateVal(e2) {
+          this.val = e2, this.valType = typeof this.val, h === this.valType && isNaN(this.val) && (this.valType = a), this.isRoot && !this.match && (this.root = this.val);
+        }
+        printStacks() {
+          var e2;
+          console.log("\nNODE", "d=" + this.dI, "c=" + this.cI, "p=" + this.pI, "n=" + this.nI, +this.node, this.node.t, this.path, this.err.length);
+          for (let t2 = 0; t2 < this.nodes.length || t2 < this.vals.length || t2 < this.parents.length; t2++)
+            console.log(t2, "	", isNaN(+this.nodes[t2]) ? this.keys[t2] + ":" + (null === (e2 = this.nodes[t2]) || void 0 === e2 ? void 0 : e2.t) : +this.nodes[t2], "	", _e(this.vals[t2]), "	", _e(this.parents[t2]));
+        }
+      }
+      class se extends TypeError {
+        constructor(e2, t2, n2) {
+          super(t2.map((e3) => e3.t).join("\n")), this.gubu = true, this.name = "GubuError", this.code = e2, this.desc = () => ({ name: "GubuError", code: e2, err: t2, ctx: n2 });
+        }
+        toJSON() {
+          return __spreadProps(__spreadValues({}, this), { err: this.desc().err, name: this.name, message: this.message });
+        }
+      }
+      const ae = { String: true, Number: true, Boolean: true, Object: true, Array: true, Function: true, Symbol: true, BigInt: true }, fe = { string: o, number: 0, boolean: false, object: {}, array: [], symbol: Symbol(o), bigint: BigInt(0), null: null };
+      function he(e2, t2, u2) {
+        var s2, f2, p2, m2;
+        if (pe === e2)
+          e2 = void 0;
+        else if (null != e2 && (null === (s2 = e2.$) || void 0 === s2 ? void 0 : s2.gubu$)) {
+          if (n === e2.$.gubu$)
+            return e2.d = null == t2 ? e2.d : t2, e2;
+          if (true === e2.$.gubu$) {
+            let l2 = __spreadValues({}, e2);
+            return l2.$ = __spreadProps(__spreadValues({ v$: "5.0.1" }, l2.$), { gubu$: n }), l2.v = null != l2.v && v === typeof l2.v ? __spreadValues({}, l2.v) : l2.v, l2.t = l2.t || typeof l2.v, d === l2.t && ae[l2.v.name] && (l2.t = l2.v.name.toLowerCase(), l2.v = Ze(fe[l2.t]), l2.f = l2.v), l2.r = !!l2.r, l2.p = !!l2.p, l2.d = null == t2 ? null == l2.d ? -1 : l2.d : t2, l2.b = l2.b || [], l2.a = l2.a || [], l2.u = l2.u || {}, l2.m = l2.m || u2, l2;
+          }
+        }
+        let x2 = null === e2 ? I : typeof e2;
+        x2 = y === x2 ? b : x2;
+        let w2 = e2, G2 = w2, S2 = r2, N2 = false, V2 = {}, R2 = [], A2 = [];
+        if (v === x2)
+          G2 = void 0, re(w2) ? (x2 = c, 1 === w2.length && (S2 = w2[0], w2 = [])) : null != w2 && Function !== w2.constructor && Object !== w2.constructor && null != w2.constructor ? (x2 = $, V2.n = w2.constructor.name, V2.i = w2.constructor, G2 = w2) : 0 === ne(w2).length && (S2 = Ie());
+        else if (d === x2)
+          if (ae[e2.name])
+            x2 = e2.name.toLowerCase(), N2 = true, w2 = Ze(fe[x2]), G2 = w2, k === e2.name && (S2 = Ie());
+          else if (w2.gubu === l || true === (null === (f2 = w2.$) || void 0 === f2 ? void 0 : f2.gubu)) {
+            let e3 = w2.node ? w2.node() : w2;
+            x2 = e3.t, w2 = e3.v, G2 = w2, N2 = e3.r, V2 = __spreadValues({}, e3.u), R2 = [...e3.a], A2 = [...e3.b];
+          } else
+            "Function" === w2.constructor.name && i.test(w2.name) && (x2 = $, N2 = true, V2.n = null === (m2 = null === (p2 = w2.prototype) || void 0 === p2 ? void 0 : p2.constructor) || void 0 === m2 ? void 0 : m2.name, V2.i = w2);
+        else
+          h === x2 && isNaN(w2) ? x2 = a : g === x2 && o === w2 && (V2.empty = true);
+        let O2 = null == w2 || v !== x2 && c !== x2 ? w2 : __spreadValues({}, w2);
+        return { $: l, t: x2, v: O2, f: G2, n: null != O2 && v === typeof O2 ? ne(O2).length : 0, c: S2, r: N2, p: false, d: null == t2 ? -1 : t2, u: V2, a: R2, b: A2, m: u2 };
+      }
+      function pe(t2, i2) {
+        const u2 = null == i2 ? {} : i2;
+        u2.name = null == u2.name ? "G" + (o + Math.random()).substring(2, 8) : o + u2.name;
+        let s2 = he(t2, 0);
+        function a2(e2, t3, n2) {
+          let l2 = new ue(e2, s2, t3, n2);
+          for (; l2.next(), !l2.stop; ) {
+            let t4 = l2.node, n3 = false;
+            if (0 < t4.b.length)
+              for (let e3 = 0; e3 < t4.b.length; e3++) {
+                let r3 = ce(t4.b[e3], l2);
+                t4 = l2.node, void 0 !== r3.done && (n3 = r3.done);
+              }
+            if (!n3) {
+              let n4 = true, i4 = void 0 === l2.val;
+              if (f === l2.type)
+                l2.err.push(He(f, l2, 1070));
+              else if (v === l2.type) {
+                let e3;
+                if (t4.r && i4 ? (l2.ignoreVal = true, l2.err.push(He(p, l2, 1010))) : i4 || null !== l2.val && v === l2.valType && !re(l2.val) ? !t4.p && i4 && void 0 !== t4.f ? (l2.updateVal(t4.f), l2.fromDefault = true, e3 = l2.val, n4 = false) : t4.p && i4 || (l2.updateVal(l2.val || (l2.fromDefault = true, {})), e3 = l2.val) : (l2.err.push(He(x, l2, 1020)), e3 = re(l2.val) ? l2.val : {}), n4 && (e3 = null == e3 && false === l2.ctx.err ? {} : e3, null != e3)) {
+                  l2.ctx.log && l2.ctx.log("so", l2);
+                  let n5 = false, i5 = ne(t4.v), o2 = l2.nI;
+                  if (0 < i5.length) {
+                    n5 = true, l2.pI = o2;
+                    for (let n6 = 0; n6 < i5.length; n6++) {
+                      let r3, o3 = i5[n6];
+                      if (o3.endsWith("$$")) {
+                        if (r3 = { short: "" }, "string" == typeof t4.v[o3] ? r3.short = t4.v[o3] : r3 = __spreadValues(__spreadValues({}, r3), t4.v[o3]), n6++, i5.length <= n6)
+                          break;
+                        if (i5[n6] !== o3.substring(0, o3.length - 2))
+                          throw new Error("Invalid meta key: " + o3);
+                        o3 = i5[n6];
+                      }
+                      let u4 = t4.v[o3] = he(t4.v[o3], 1 + l2.dI, r3);
+                      l2.nodes[l2.nI] = u4, l2.vals[l2.nI] = e3[o3], l2.parents[l2.nI] = e3, l2.keys[l2.nI] = o3, l2.nI++;
+                    }
+                  }
+                  let u3 = ne(e3).filter((e4) => void 0 === t4.v[e4]);
+                  if (0 < u3.length)
+                    if (r2 === t4.c)
+                      l2.ignoreVal = true, l2.err.push(He("closed", l2, 1100, void 0, { k: u3 }));
+                    else {
+                      n5 = true, l2.pI = o2;
+                      for (let n6 of u3) {
+                        let r3 = t4.c = he(t4.c, 1 + l2.dI);
+                        l2.nodes[l2.nI] = r3, l2.vals[l2.nI] = e3[n6], l2.parents[l2.nI] = e3, l2.keys[l2.nI] = n6, l2.nI++;
+                      }
+                    }
+                  n5 ? (l2.dI++, l2.nodes[l2.nI] = l2.sI, l2.parents[l2.nI] = e3, l2.nextSibling = false, l2.nI++) : l2.ctx.log && l2.ctx.log("eo", l2);
+                }
+              } else if (c === l2.type)
+                if (t4.r && i4)
+                  l2.ignoreVal = true, l2.err.push(He(p, l2, 1030));
+                else if (i4 || re(l2.val)) {
+                  if (!t4.p && i4 && void 0 !== t4.f)
+                    l2.updateVal(t4.f), l2.fromDefault = true;
+                  else if (!t4.p || null != l2.val) {
+                    l2.updateVal(l2.val || (l2.fromDefault = true, []));
+                    let n5 = r2 !== t4.c, i5 = 0 < l2.val.length, u3 = ne(t4.v).filter((e3) => !isNaN(+e3)), s3 = 0 < u3.length;
+                    if (l2.ctx.log && l2.ctx.log("sa", l2), i5 || s3) {
+                      l2.pI = l2.nI;
+                      let e3 = 0;
+                      if (s3)
+                        if (u3.length < l2.val.length && !n5)
+                          l2.ignoreVal = true, l2.err.push(He("closed", l2, 1090, void 0, { k: u3.length }));
+                        else
+                          for (; e3 < u3.length; e3++) {
+                            let n6 = t4.v[e3] = he(t4.v[e3], 1 + l2.dI);
+                            l2.nodes[l2.nI] = n6, l2.vals[l2.nI] = l2.val[e3], l2.parents[l2.nI] = l2.val, l2.keys[l2.nI] = o + e3, l2.nI++;
+                          }
+                      if (n5 && i5) {
+                        let n6 = t4.c = he(t4.c, 1 + l2.dI);
+                        for (; e3 < l2.val.length; e3++)
+                          l2.nodes[l2.nI] = n6, l2.vals[l2.nI] = l2.val[e3], l2.parents[l2.nI] = l2.val, l2.keys[l2.nI] = o + e3, l2.nI++;
+                      }
+                      l2.ignoreVal || (l2.dI++, l2.nodes[l2.nI] = l2.sI, l2.parents[l2.nI] = l2.val, l2.nextSibling = false, l2.nI++);
+                    } else
+                      l2.ctx.log && n5 && null == e2 && l2.ctx.log("kv", __spreadProps(__spreadValues({}, l2), { key: 0, val: t4.c })), l2.ctx.log && l2.ctx.log("ea", l2);
+                  }
+                } else
+                  l2.err.push(He(x, l2, 1040));
+              else if (b === l2.type || m === l2.type || void 0 === l2.val || l2.type === l2.valType || $ === l2.type && t4.u.i && l2.val instanceof t4.u.i || I === l2.type && null === l2.val)
+                if (void 0 === l2.val) {
+                  let e3 = l2.path[l2.dI];
+                  !t4.r || y === l2.type && l2.parent.hasOwnProperty(e3) ? void 0 !== t4.f && !t4.p || y === l2.type ? (l2.updateVal(t4.f), l2.fromDefault = true) : b === l2.type && (l2.ignoreVal = void 0 === l2.ignoreVal || l2.ignoreVal) : (l2.ignoreVal = true, l2.err.push(He(p, l2, 1060))), l2.ctx.log && l2.ctx.log("kv", l2);
+                } else
+                  g !== l2.type || o !== l2.val || t4.u.empty || l2.err.push(He(p, l2, 1080)), l2.ctx.log && l2.ctx.log("kv", l2);
+              else
+                l2.err.push(He(x, l2, 1050));
+            }
+            if (0 < t4.a.length)
+              for (let e3 = 0; e3 < t4.a.length; e3++) {
+                let r3 = ce(t4.a[e3], l2);
+                t4 = l2.node, void 0 !== r3.done && (n3 = r3.done);
+              }
+            let i3 = l2.node.p ? false !== l2.ignoreVal : !!l2.ignoreVal;
+            !l2.match && null != l2.parent && !n3 && !i3 && (l2.parent[l2.key] = l2.val), l2.nextSibling && (l2.pI = l2.sI);
+          }
+          if (0 < l2.err.length) {
+            if (re(l2.ctx.err))
+              l2.ctx.err.push(...l2.err);
+            else if (!l2.match && false !== l2.ctx.err)
+              throw new se("shape", l2.err, l2.ctx);
+          }
+          return l2.match ? 0 === l2.err.length : l2.root;
+        }
+        function h2(e2, t3) {
+          return a2(e2, t3, false);
+        }
+        h2.valid = function(e2, t3) {
+          let n2 = t3 || {};
+          return n2.err = n2.err || [], a2(e2, n2, false), 0 === n2.err.length;
+        }, h2.match = (e2, t3) => a2(e2, t3 = t3 || {}, true), h2.error = (e2, t3) => {
+          let n2 = t3 || {};
+          return n2.err = n2.err || [], a2(e2, n2, false), n2.err;
+        }, h2.spec = () => (h2(void 0, { err: false }), ie(_e(s2, (e2, t3) => n === t3 || t3, false, true))), h2.node = () => (h2.spec(), s2);
+        let d2 = o;
+        return h2.toString = () => (d2 = Me(o === d2 ? _e(s2 && s2.$ && (n === s2.$.gubu$ || true === s2.$.gubu$) ? s2.v : s2) : d2), `[Gubu ${u2.name} ${d2}]`), e.inspect && e.inspect.custom && (h2[e.inspect.custom] = h2.toString), h2.gubu = l, h2;
+      }
+      function ce(e2, t2) {
+        var n2;
+        let l2, r3 = {}, i2 = false;
+        try {
+          i2 = !(void 0 !== t2.val || !(null === (n2 = e2.gubu$) || void 0 === n2 ? void 0 : n2.Check)) || e2(t2.val, r3, t2);
+        } catch (s2) {
+          l2 = s2;
+        }
+        let u2 = re(r3.err) ? 0 < r3.err.length : null != r3.err;
+        if (!i2 || u2) {
+          if (void 0 === t2.val && (t2.node.p || !t2.node.r) && true !== r3.done)
+            return delete r3.err, r3;
+          let n3 = r3.why || "check", i3 = de(t2);
+          if (g === typeof r3.err)
+            t2.err.push(ze(t2, r3.err));
+          else if (v === typeof r3.err)
+            t2.err.push(...[r3.err].flat().map((e3) => (e3.p = null == e3.p ? i3 : e3.p, e3.m = null == e3.m ? 2010 : e3.m, e3)));
+          else {
+            let r4 = e2.name;
+            null != r4 && o != r4 || (r4 = Me(e2.toString().replace(/[ \t\r\n]+/g, " "))), t2.err.push(He(n3, t2, 1045, void 0, { thrown: l2 }, r4));
+          }
+          r3.done = null == r3.done || r3.done;
+        }
+        return r3.hasOwnProperty("uval") ? (t2.updateVal(r3.uval), t2.ignoreVal = false) : void 0 === r3.val || Number.isNaN(r3.val) || (t2.updateVal(r3.val), t2.ignoreVal = false), void 0 !== r3.node && (t2.node = r3.node), void 0 !== r3.type && (t2.type = r3.type), r3;
+      }
+      function de(e2) {
+        return e2.path.slice(1, e2.dI + 1).filter((e3) => null != e3).join(".");
+      }
+      const ve = function(e2) {
+        let t2 = Ke(this, e2);
+        return t2.r = true, t2.p = false, void 0 === e2 && 1 === arguments.length && (t2.t = y, t2.v = void 0), t2;
+      }, ge = function(e2) {
+        let t2 = Ke(this, e2);
+        return t2.r = false, void 0 === e2 && 1 === arguments.length && (t2.t = y, t2.v = void 0), t2;
+      }, ye = function(e2) {
+        let t2 = Ke(this, e2);
+        return t2.r = false, t2.p = true, t2;
+      }, be = function(e2) {
+        let t2 = Ke(this);
+        return t2.t = d, t2.v = e2, t2.f = e2, t2;
+      }, me = function(e2, t2) {
+        let n2 = Ke(this, void 0 === t2 ? e2 : t2);
+        return n2.r = false, n2.f = e2, d === typeof e2 && ae[e2.name] && (n2.t = e2.name.toLowerCase(), n2.f = Ze(fe[n2.t])), n2.p = false, n2;
+      }, $e = function(e2) {
+        let t2 = Ke(this, e2);
+        return t2.u.empty = true, t2;
+      }, Ie = function(e2) {
+        let t2 = Ke(this, e2);
+        return t2.t = b, void 0 !== e2 && (t2.v = e2, t2.f = e2), t2;
+      }, xe = function(e2) {
+        let t2 = Ke(this, e2);
+        return t2.t = f, t2;
+      }, ke = function(e2, t2) {
+        let n2 = Ke(this), l2 = "number" == typeof e2;
+        n2.t = g, l2 && null == t2 && (n2 = he([]));
+        let r3 = null;
+        return "function" == typeof e2 && (r3 = e2, n2 = Ie()), n2.b.push(function(n3, i2, o2) {
+          if (r3)
+            i2.val = r3(o2.path, o2);
+          else if (l2) {
+            let n4 = e2;
+            i2.val = o2.path.slice(o2.path.length - 1 - (0 <= n4 ? n4 : 0), o2.path.length - 1 + (0 <= n4 ? 0 : 1)), "string" == typeof t2 && (i2.val = i2.val.join(t2));
+          } else
+            null == e2 && (i2.val = o2.path[o2.path.length - 2]);
+          return true;
+        }), n2;
+      }, we = function(...e2) {
+        let t2 = Ke();
+        t2.t = m, t2.r = true;
+        let n2 = e2.map((e3) => Xe(e3));
+        return t2.u.list = e2, t2.b.push(function(t3, l2, r3) {
+          let i2 = true;
+          for (let e3 of n2) {
+            let n3 = __spreadProps(__spreadValues({}, r3.ctx), { err: [] });
+            e3(t3, n3), 0 < n3.err.length && (i2 = false);
+          }
+          return i2 || (l2.why = N, l2.err = [ze(r3, X + " " + te + Y + ee + " does not satisfy all of: " + e2.map((e3) => _e(e3, null, true)).join(", "))]), i2;
+        }), t2;
+      }, Ge = function(...e2) {
+        let t2 = Ke();
+        t2.t = m, t2.r = true;
+        let n2 = e2.map((e3) => Xe(e3));
+        return t2.u.list = e2, t2.b.push(function(t3, l2, r3) {
+          let i2 = false;
+          for (let e3 of n2) {
+            let n3 = __spreadProps(__spreadValues({}, r3.ctx), { err: [] }), o2 = e3.match(t3, n3);
+            o2 && (l2.val = e3(t3, n3)), i2 || (i2 = o2);
+          }
+          return i2 || (l2.why = Q, l2.err = [ze(r3, X + " " + te + Y + ee + " does not satisfy any of: " + e2.map((e3) => _e(e3, null, true)).join(", "))]), i2;
+        }), t2;
+      }, Se = function(...e2) {
+        let t2 = Ke();
+        t2.t = m, t2.r = true;
+        let n2 = e2.map((e3) => Xe(e3));
+        return t2.u.list = e2, t2.b.push(function(t3, l2, r3) {
+          let i2 = 0;
+          for (let e3 of n2) {
+            let n3 = __spreadProps(__spreadValues({}, r3.ctx), { err: [] });
+            if (e3.match(t3, n3)) {
+              i2++, l2.val = e3(t3, n3);
+              break;
+            }
+          }
+          return 1 !== i2 && (l2.why = J, l2.err = [ze(r3, X + " " + te + Y + ee + " does not satisfy one of: " + e2.map((e3) => _e(e3, null, true)).join(", "))]), true;
+        }), t2;
+      }, Ne = function(...e2) {
+        let t2 = Ke();
+        return t2.b.push(function(t3, n2, l2) {
+          for (let r3 = 0; r3 < e2.length; r3++)
+            if (t3 === e2[r3])
+              return true;
+          return n2.err = ze(l2, X + " " + te + Y + ee + " must be exactly one of: " + l2.node.s + "."), n2.done = true, false;
+        }), t2.s = e2.map((e3) => _e(e3, null, true)).join(", "), t2;
+      }, Ve = function(e2, t2) {
+        let n2 = Ke(this, t2);
+        return n2.b.push(e2), n2;
+      }, Re = function(e2, t2) {
+        let n2 = Ke(this, t2);
+        return n2.a.push(e2), n2;
+      }, Ae = function(e2, t2) {
+        let n2 = Ke(this, t2);
+        if (d === typeof e2) {
+          let t3 = e2;
+          t3.gubu$ = t3.gubu$ || {}, t3.gubu$.Check = true, n2.b.push(e2), n2.s = (null == n2.s ? o : n2.s + ";") + _e(e2, null, true), n2.r = true;
+        } else if (v === typeof e2) {
+          if (Object.prototype.toString.call(e2).includes("RegExp")) {
+            let t3 = (t4) => null != t4 && !Number.isNaN(t4) && !!String(t4).match(e2);
+            le(t3, s, { value: String(e2) }), le(t3, "gubu$", { value: { Check: true } }), n2.b.push(t3), n2.s = _e(e2), n2.r = true;
+          }
+        } else
+          g === typeof e2 && (n2.t = e2, n2.r = true);
+        return n2;
+      }, Oe = function(e2) {
+        let t2 = Ke(this, e2);
+        return t2.c = Ie(), t2;
+      }, De = function(e2) {
+        let t2 = Ke(this, e2);
+        return c === t2.t && r2 !== t2.c && 0 === t2.n ? (t2.v = [t2.c], t2.c = r2) : t2.c = r2, t2;
+      }, je = function(e2, t2) {
+        let n2 = Ke(this, t2), l2 = g === typeof e2 ? e2 : (v === typeof e2 && e2 || {}).name;
+        return null != l2 && o != l2 && n2.b.push(function(e3, t3, n3) {
+          return (n3.ctx.ref = n3.ctx.ref || {})[l2] = n3.node, true;
+        }), n2;
+      }, Ce = function(e2, t2) {
+        let n2 = Ke(this, t2), l2 = v === typeof e2 && e2 || {}, r3 = g === typeof e2 ? e2 : l2.name, i2 = !!l2.fill;
+        return null != r3 && o != r3 && n2.b.push(function(e3, t3, n3) {
+          if (void 0 !== e3 || i2) {
+            let e4 = n3.ctx.ref = n3.ctx.ref || {};
+            if (void 0 !== e4[r3]) {
+              let n4 = __spreadValues({}, e4[r3]);
+              n4.t = n4.t || f, t3.node = n4, t3.type = n4.t;
+            }
+          }
+          return true;
+        }), n2;
+      }, Ee = function(e2, t2) {
+        let n2 = Ke(this, t2), l2 = v === typeof e2 && e2 || {}, r3 = g === typeof e2 ? e2 : l2.name, i2 = "boolean" == typeof l2.keep ? l2.keep : void 0, u2 = re(l2.claim) ? l2.claim : [];
+        if (null != r3 && o != r3) {
+          let e3 = (e4, t4, n3) => {
+            if (void 0 === e4 && 0 < u2.length) {
+              n3.ctx.Rename = n3.ctx.Rename || {}, n3.ctx.Rename.fromDefault = n3.ctx.Rename.fromDefault || {};
+              for (let e5 of u2) {
+                let l3 = n3.ctx.Rename.fromDefault[e5] || {};
+                if (void 0 !== n3.parent[e5] && !l3.yes) {
+                  t4.val = n3.parent[e5], n3.match || (n3.parent[r3] = t4.val), t4.node = l3.node;
+                  for (let e6 = 0; e6 < n3.err.length; e6++)
+                    n3.err[e6].k === l3.key && (n3.err.splice(e6, 1), e6--);
+                  if (i2) {
+                    let t5 = n3.cI + 1;
+                    n3.nodes.splice(t5, 0, he(l3.dval)), n3.vals.splice(t5, 0, void 0), n3.parents.splice(t5, 0, n3.parent), n3.keys.splice(t5, 0, e5), n3.nI++, n3.pI++;
+                  } else
+                    delete n3.parent[e5];
+                  break;
+                }
+              }
+              void 0 === t4.val && (t4.val = n3.node.v);
+            }
+            return true;
+          };
+          le(e3, s, { value: "Rename:" + r3 }), n2.b.push(e3);
+          let t3 = (e4, t4, n3) => (n3.parent[r3] = e4, n3.match || i2 || n3.key === r3 || re(n3.parent) && false !== i2 || (delete n3.parent[n3.key], t4.done = true), n3.ctx.Rename = n3.ctx.Rename || {}, n3.ctx.Rename.fromDefault = n3.ctx.Rename.fromDefault || {}, n3.ctx.Rename.fromDefault[r3] = { yes: n3.fromDefault, key: n3.key, dval: n3.node.v, node: n3.node }, true);
+          le(t3, s, { value: "Rename:" + r3 }), n2.a.push(t3);
+        }
+        return n2;
+      };
+      function Be(e2) {
+        return h === typeof e2 ? e2 : h === typeof (null == e2 ? void 0 : e2.length) ? e2.length : null != e2 && v === typeof e2 ? ne(e2).length : NaN;
+      }
+      function Me(e2, t2) {
+        let n2 = String(e2), l2 = null == t2 || isNaN(t2) ? 30 : t2 < 0 ? 0 : ~~t2, r3 = null == e2 ? 0 : n2.length, i2 = null == e2 ? o : n2.substring(0, r3);
+        return i2 = l2 < r3 ? i2.substring(0, l2 - 3) + "..." : i2, i2.substring(0, l2);
+      }
+      const Le = function(e2, t2) {
+        let n2 = Ke(this, t2);
+        return n2.b.push(function(t3, n3, l2) {
+          let r3 = Be(t3);
+          if (e2 <= r3)
+            return true;
+          let i2 = h === typeof t3 ? o : "length ";
+          return n3.err = ze(l2, X + " " + te + Y + ee + ` must be a minimum ${i2}of ${e2} (was ${r3}).`), false;
+        }), n2.s = F + "(" + e2 + (null == t2 ? o : "," + _e(t2)) + ")", n2;
+      }, Te = function(e2, t2) {
+        let n2 = Ke(this, t2);
+        return n2.b.push(function(t3, n3, l2) {
+          let r3 = Be(t3);
+          if (r3 <= e2)
+            return true;
+          let i2 = h === typeof t3 ? o : "length ";
+          return n3.err = ze(l2, X + " " + te + Y + ee + ` must be a maximum ${i2}of ${e2} (was ${r3}).`), false;
+        }), n2.s = q + "(" + e2 + (null == t2 ? o : "," + _e(t2)) + ")", n2;
+      }, qe = function(e2, t2) {
+        let n2 = Ke(this, t2);
+        return n2.b.push(function(t3, n3, l2) {
+          let r3 = Be(t3);
+          if (e2 < r3)
+            return true;
+          let i2 = h === typeof t3 ? "be" : "have length";
+          return n3.err = ze(l2, X + " " + te + Y + ee + ` must ${i2} above ${e2} (was ${r3}).`), false;
+        }), n2.s = G + "(" + e2 + (null == t2 ? o : "," + _e(t2)) + ")", n2;
+      }, Fe = function(e2, t2) {
+        let n2 = Ke(this, t2);
+        return n2.b.push(function(t3, n3, l2) {
+          let r3 = Be(t3);
+          if (r3 < e2)
+            return true;
+          let i2 = h === typeof t3 ? "be" : "have length";
+          return n3.err = ze(l2, X + " " + te + Y + ee + ` must ${i2} below ${e2} (was ${r3}).`), false;
+        }), n2.s = A + "(" + e2 + (null == t2 ? o : "," + _e(t2)) + ")", n2;
+      }, Pe = function(e2, t2) {
+        let n2 = Ke(this, t2 || Ie());
+        return n2.b.push(function(t3, n3, l2) {
+          let r3 = Be(t3);
+          if (e2 === r3)
+            return true;
+          let i2 = h === typeof t3 ? o : " in length";
+          return n3.err = ze(l2, X + " " + te + Y + ee + ` must be exactly ${e2}${i2} (was ${r3}).`), false;
+        }), n2.s = W + "(" + e2 + (null == t2 ? o : "," + _e(t2)) + ")", n2;
+      }, We = function(e2, t2) {
+        let n2 = Ke(null == t2 ? this : t2), l2 = he(e2);
+        return n2.c = l2, n2;
+      }, Je = function(e2) {
+        let t2 = Ke(this, {});
+        return t2.c = he(e2), t2;
+      };
+      function Ke(e2, t2) {
+        let n2 = he(null == e2 || e2.window === e2 || e2.global === e2 ? t2 : e2);
+        return Object.assign(n2, { Above: qe, After: Re, Any: Ie, Before: Ve, Below: Fe, Check: Ae, Child: Je, Closed: De, Open: Oe, Define: je, Empty: $e, Exact: Ne, Max: Te, Min: Le, Never: xe, Len: Pe, Refer: Ce, Rename: Ee, Required: ve, Skip: ye, Value: We });
+      }
+      function ze(e2, t2, n2, l2) {
+        return He(n2 || "check", e2, 4e3, t2, l2);
+      }
+      function He(e2, t2, n2, l2, r3, i2) {
+        let u2 = { k: t2.key, n: t2.node, v: t2.val, p: de(t2), w: e2, m: n2, t: o, u: r3 || {} }, s2 = Me((void 0 === t2.val ? o : _e(t2.val)).replace(/"/g, o));
+        if (null == l2 || o === l2) {
+          let n3 = s2.startsWith("[") ? c : s2.startsWith("{") ? v : "value", l3 = s2.startsWith("[") || re(t2.parents[t2.pI]) ? "index" : "property", a2 = "is", h2 = null == r3 ? void 0 : r3.k;
+          h2 = re(h2) ? (l3 = 1 < h2.length ? (a2 = "are", "properties") : l3, h2.join(", ")) : h2, u2.t = "Validation failed for " + (0 < u2.p.length ? `${l3} "${u2.p}" with ` : o) + `${n3} "${s2}" because ` + (x === e2 ? $ === t2.node.t ? `the ${n3} is not an instance of ${t2.node.u.n} ` : `the ${n3} is not of type ${t2.node.t}` : p === e2 ? o === t2.val ? "an empty string is not allowed" : `the ${n3} is required` : "closed" === e2 ? `the ${l3} "${h2}" ${a2} not allowed` : f === e2 ? "no value is allowed" : `check "${null == i2 ? e2 : i2}" failed`) + (u2.u.thrown ? " (threw: " + u2.u.thrown.message + ")" : ".");
+        } else
+          u2.t = l2.replace(/\$VALUE/g, s2).replace(/\$PATH/g, u2.p);
+        return u2;
+      }
+      function Ue(e2) {
+        return null != e2.s && o !== e2.s ? e2.s : e2.r || void 0 === e2.v ? e2.t : e2.v;
+      }
+      function _e(e2, t2, l2, r3) {
+        let i2;
+        r3 || !e2 || !e2.$ || n !== e2.$.gubu$ && true !== e2.$.gubu$ || (e2 = Ue(e2));
+        try {
+          i2 = oe(e2, (e3, l3) => {
+            var i3, u2;
+            if (t2 && (l3 = t2(e3, l3)), null != l3 && v === typeof l3 && l3.constructor && k !== l3.constructor.name && w !== l3.constructor.name)
+              l3 = d === typeof l3.toString ? l3.toString() : l3.constructor.name;
+            else if (d === typeof l3)
+              l3 = d === typeof pe[l3.name] && isNaN(+e3) ? void 0 : null != l3.name && o !== l3.name ? l3.name : Me(l3.toString().replace(/[ \t\r\n]+/g, " "));
+            else if ("bigint" == typeof l3)
+              l3 = String(l3.toString());
+            else {
+              if (Number.isNaN(l3))
+                return "NaN";
+              true === r3 || true !== (null === (i3 = null == l3 ? void 0 : l3.$) || void 0 === i3 ? void 0 : i3.gubu$) && n !== (null === (u2 = null == l3 ? void 0 : l3.$) || void 0 === u2 ? void 0 : u2.gubu$) || (l3 = Ue(l3));
+            }
+            return l3;
+          }), i2 = String(i2);
+        } catch (u2) {
+          i2 = oe(String(e2));
+        }
+        return true === l2 && (i2 = i2.replace(/^"/, o).replace(/"$/, o)), i2;
+      }
+      function Ze(e2) {
+        return null == e2 || v !== typeof e2 ? e2 : ie(oe(e2));
+      }
+      const Qe = (e2) => he(__spreadProps(__spreadValues({}, e2), { $: { gubu$: true } }));
+      if (y !== typeof window) {
+        let e2 = [{ b: qe, n: G }, { b: Re, n: S }, { b: we, n: N }, { b: Ie, n: V }, { b: Ve, n: R }, { b: Fe, n: A }, { b: Ae, n: O }, { b: Je, n: D }, { b: De, n: j }, { b: je, n: C }, { b: me, n: E }, { b: $e, n: B }, { b: Ne, n: M }, { b: be, n: L }, { b: ke, n: T }, { b: Te, n: q }, { b: Le, n: F }, { b: xe, n: P }, { b: Pe, n: W }, { b: Se, n: J }, { b: Oe, n: K }, { b: ge, n: z }, { b: Ce, n: H }, { b: Ee, n: U }, { b: ve, n: _2 }, { b: ye, n: Z }, { b: Ge, n: Q }, { b: We, n: X }];
+        for (let t2 of e2)
+          le(t2.b, s, { value: t2.n });
+      }
+      Object.assign(pe, { Gubu: pe, Above: qe, After: Re, All: we, Any: Ie, Before: Ve, Below: Fe, Check: Ae, Child: Je, Closed: De, Define: je, Default: me, Empty: $e, Exact: Ne, Func: be, Key: ke, Max: Te, Min: Le, Never: xe, Len: Pe, One: Se, Open: Oe, Optional: ge, Refer: Ce, Rename: Ee, Required: ve, Skip: ye, Some: Ge, Value: We, GAbove: qe, GAfter: Re, GAll: we, GAny: Ie, GBefore: Ve, GBelow: Fe, GCheck: Ae, GChild: Je, GClosed: De, GDefine: je, GDefault: me, GEmpty: $e, GExact: Ne, GFunc: be, GKey: ke, GMax: Te, GMin: Le, GNever: xe, GLen: Pe, GOne: Se, GOpen: Oe, GOptional: ge, GRefer: Ce, GRename: Ee, GRequired: ve, GSkip: ye, GSome: Ge, GValue: We, G$: Qe, buildize: Ke, makeErr: ze, stringify: _e, truncate: Me, nodize: he, isShape: (e2) => e2 && l === e2.gubu }), le(pe, s, { value: u });
+      const Xe = pe;
+      t.Gubu = Xe;
+      const { Gubu: Ye } = t;
+      return Ye;
+    });
+  })(gubu_min$2, gubu_min$2.exports);
+  var gubu_minExports = gubu_min$2.exports;
+  const gubu_min$1 = /* @__PURE__ */ getDefaultExportFromCjs(gubu_minExports);
   var ChevronRight = {};
   var interopRequireDefault$2 = { exports: {} };
   var interopRequireDefault = interopRequireDefault$2.exports;
@@ -2560,7 +3066,13 @@ var __async = (__this, __arguments, generator) => {
     };
   }
   function isMuiElement(element, muiNames) {
-    return /* @__PURE__ */ React__namespace.isValidElement(element) && muiNames.indexOf(element.type.muiName) !== -1;
+    var _muiName, _element$type;
+    return /* @__PURE__ */ React__namespace.isValidElement(element) && muiNames.indexOf(
+      // For server components `muiName` is avaialble in element.type._payload.value.muiName
+      // relevant info - https://github.com/facebook/react/blob/2807d781a08db8e9873687fccc25c0f12b4fb3d4/packages/react/src/ReactLazy.js#L45
+      // eslint-disable-next-line no-underscore-dangle
+      (_muiName = element.type.muiName) != null ? _muiName : (_element$type = element.type) == null || (_element$type = _element$type._payload) == null || (_element$type = _element$type.value) == null ? void 0 : _element$type.muiName
+    ) !== -1;
   }
   function ownerDocument(node2) {
     return node2 && node2.ownerDocument || document;
@@ -2986,11 +3498,12 @@ var __async = (__this, __arguments, generator) => {
     checked: "checked",
     completed: "completed",
     disabled: "disabled",
-    readOnly: "readOnly",
     error: "error",
     expanded: "expanded",
     focused: "focused",
     focusVisible: "focusVisible",
+    open: "open",
+    readOnly: "readOnly",
     required: "required",
     selected: "selected"
   };
@@ -6343,7 +6856,7 @@ var __async = (__this, __arguments, generator) => {
   var round$2 = Math.round;
   function getUAString() {
     var uaData = navigator.userAgentData;
-    if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
+    if (uaData != null && uaData.brands) {
       return uaData.brands.map(function(item) {
         return item.brand + "/" + item.version;
       }).join(" ");
@@ -6557,7 +7070,15 @@ var __async = (__this, __arguments, generator) => {
         return;
       }
     }
+    if (process.env.NODE_ENV !== "production") {
+      if (!isHTMLElement$2(arrowElement)) {
+        console.error(['Popper: "arrow" element must be an HTMLElement (not an SVGElement).', "To use an SVG arrow, wrap it in an HTMLElement that will be used as", "the arrow."].join(" "));
+      }
+    }
     if (!contains$1(state.elements.popper, arrowElement)) {
+      if (process.env.NODE_ENV !== "production") {
+        console.error(['Popper: "arrow" modifier\'s `element` must be a child of the popper', "element."].join(" "));
+      }
       return;
     }
     state.elements.arrow = arrowElement;
@@ -6580,8 +7101,9 @@ var __async = (__this, __arguments, generator) => {
     bottom: "auto",
     left: "auto"
   };
-  function roundOffsetsByDPR(_ref, win) {
+  function roundOffsetsByDPR(_ref) {
     var x = _ref.x, y = _ref.y;
+    var win = window;
     var dpr = win.devicePixelRatio || 1;
     return {
       x: round$2(x * dpr) / dpr || 0,
@@ -6643,7 +7165,7 @@ var __async = (__this, __arguments, generator) => {
     var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
       x,
       y
-    }, getWindow(popper2)) : {
+    }) : {
       x,
       y
     };
@@ -6658,6 +7180,14 @@ var __async = (__this, __arguments, generator) => {
   function computeStyles(_ref5) {
     var state = _ref5.state, options = _ref5.options;
     var _options$gpuAccelerat = options.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
+    if (process.env.NODE_ENV !== "production") {
+      var transitionProperty = getComputedStyle(state.elements.popper).transitionProperty || "";
+      if (adaptive && ["transform", "top", "right", "bottom", "left"].some(function(property) {
+        return transitionProperty.indexOf(property) >= 0;
+      })) {
+        console.warn(["Popper: Detected CSS transitions on at least one of the following", 'CSS properties: "transform", "top", "right", "bottom", "left".', "\n\n", 'Disable the "computeStyles" modifier\'s `adaptive` option to allow', "for smooth transitions, or remove these properties from the CSS", "transition declaration on the popper element if only transitioning", "opacity or background-color for example.", "\n\n", "We recommend using the popper element as a wrapper around an inner", "element that can have any CSS property transitioned for animations."].join(" "));
+      }
+    }
     var commonStyles = {
       placement: getBasePlacement(state.placement),
       variation: getVariation(state.placement),
@@ -6987,6 +7517,9 @@ var __async = (__this, __arguments, generator) => {
     });
     if (allowedPlacements.length === 0) {
       allowedPlacements = placements$1;
+      if (process.env.NODE_ENV !== "production") {
+        console.error(["Popper: The `allowedAutoPlacements` option did not allow any", "placements. Ensure the `placement` option matches the variation", "of the allowed placements.", 'For example, "auto" cannot be used to allow "bottom-start".', 'Use "auto-start" instead.'].join(" "));
+      }
     }
     var overflows = allowedPlacements.reduce(function(acc, placement2) {
       acc[placement2] = detectOverflow(state, {
@@ -7408,6 +7941,86 @@ var __async = (__this, __arguments, generator) => {
       return pending;
     };
   }
+  function format(str) {
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+    return [].concat(args).reduce(function(p, c) {
+      return p.replace(/%s/, c);
+    }, str);
+  }
+  var INVALID_MODIFIER_ERROR = 'Popper: modifier "%s" provided an invalid %s property, expected %s but got %s';
+  var MISSING_DEPENDENCY_ERROR = 'Popper: modifier "%s" requires "%s", but "%s" modifier is not available';
+  var VALID_PROPERTIES = ["name", "enabled", "phase", "fn", "effect", "requires", "options"];
+  function validateModifiers(modifiers) {
+    modifiers.forEach(function(modifier) {
+      [].concat(Object.keys(modifier), VALID_PROPERTIES).filter(function(value, index2, self2) {
+        return self2.indexOf(value) === index2;
+      }).forEach(function(key) {
+        switch (key) {
+          case "name":
+            if (typeof modifier.name !== "string") {
+              console.error(format(INVALID_MODIFIER_ERROR, String(modifier.name), '"name"', '"string"', '"' + String(modifier.name) + '"'));
+            }
+            break;
+          case "enabled":
+            if (typeof modifier.enabled !== "boolean") {
+              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"enabled"', '"boolean"', '"' + String(modifier.enabled) + '"'));
+            }
+            break;
+          case "phase":
+            if (modifierPhases.indexOf(modifier.phase) < 0) {
+              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"phase"', "either " + modifierPhases.join(", "), '"' + String(modifier.phase) + '"'));
+            }
+            break;
+          case "fn":
+            if (typeof modifier.fn !== "function") {
+              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"fn"', '"function"', '"' + String(modifier.fn) + '"'));
+            }
+            break;
+          case "effect":
+            if (modifier.effect != null && typeof modifier.effect !== "function") {
+              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"effect"', '"function"', '"' + String(modifier.fn) + '"'));
+            }
+            break;
+          case "requires":
+            if (modifier.requires != null && !Array.isArray(modifier.requires)) {
+              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"requires"', '"array"', '"' + String(modifier.requires) + '"'));
+            }
+            break;
+          case "requiresIfExists":
+            if (!Array.isArray(modifier.requiresIfExists)) {
+              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"requiresIfExists"', '"array"', '"' + String(modifier.requiresIfExists) + '"'));
+            }
+            break;
+          case "options":
+          case "data":
+            break;
+          default:
+            console.error('PopperJS: an invalid property has been provided to the "' + modifier.name + '" modifier, valid properties are ' + VALID_PROPERTIES.map(function(s) {
+              return '"' + s + '"';
+            }).join(", ") + '; but "' + key + '" was provided.');
+        }
+        modifier.requires && modifier.requires.forEach(function(requirement) {
+          if (modifiers.find(function(mod) {
+            return mod.name === requirement;
+          }) == null) {
+            console.error(format(MISSING_DEPENDENCY_ERROR, String(modifier.name), requirement, requirement));
+          }
+        });
+      });
+    });
+  }
+  function uniqueBy(arr, fn) {
+    var identifiers = /* @__PURE__ */ new Set();
+    return arr.filter(function(item) {
+      var identifier2 = fn(item);
+      if (!identifiers.has(identifier2)) {
+        identifiers.add(identifier2);
+        return true;
+      }
+    });
+  }
   function mergeByName(modifiers) {
     var merged = modifiers.reduce(function(merged2, current) {
       var existing = merged2[current.name];
@@ -7421,6 +8034,8 @@ var __async = (__this, __arguments, generator) => {
       return merged[key];
     });
   }
+  var INVALID_ELEMENT_ERROR = "Popper: Invalid reference or popper argument provided. They must be either a DOM element or virtual element.";
+  var INFINITE_LOOP_ERROR = "Popper: An infinite loop in the modifiers cycle has been detected! The cycle has been interrupted to prevent a browser crash.";
   var DEFAULT_OPTIONS = {
     placement: "bottom",
     modifiers: [],
@@ -7471,6 +8086,28 @@ var __async = (__this, __arguments, generator) => {
           state.orderedModifiers = orderedModifiers.filter(function(m) {
             return m.enabled;
           });
+          if (process.env.NODE_ENV !== "production") {
+            var modifiers = uniqueBy([].concat(orderedModifiers, state.options.modifiers), function(_ref) {
+              var name = _ref.name;
+              return name;
+            });
+            validateModifiers(modifiers);
+            if (getBasePlacement(state.options.placement) === auto) {
+              var flipModifier = state.orderedModifiers.find(function(_ref2) {
+                var name = _ref2.name;
+                return name === "flip";
+              });
+              if (!flipModifier) {
+                console.error(['Popper: "auto" placements require the "flip" modifier be', "present and enabled to work."].join(" "));
+              }
+            }
+            var _getComputedStyle = getComputedStyle(popper2), marginTop = _getComputedStyle.marginTop, marginRight = _getComputedStyle.marginRight, marginBottom = _getComputedStyle.marginBottom, marginLeft = _getComputedStyle.marginLeft;
+            if ([marginTop, marginRight, marginBottom, marginLeft].some(function(margin2) {
+              return parseFloat(margin2);
+            })) {
+              console.warn(['Popper: CSS "margin" styles cannot be used to apply padding', "between the popper and its reference element or boundary.", "To replicate margin, use the `offset` modifier, as well as", "the `padding` option in the `preventOverflow` and `flip`", "modifiers."].join(" "));
+            }
+          }
           runModifierEffects();
           return instance.update();
         },
@@ -7485,6 +8122,9 @@ var __async = (__this, __arguments, generator) => {
           }
           var _state$elements = state.elements, reference3 = _state$elements.reference, popper3 = _state$elements.popper;
           if (!areValidElements(reference3, popper3)) {
+            if (process.env.NODE_ENV !== "production") {
+              console.error(INVALID_ELEMENT_ERROR);
+            }
             return;
           }
           state.rects = {
@@ -7496,7 +8136,15 @@ var __async = (__this, __arguments, generator) => {
           state.orderedModifiers.forEach(function(modifier) {
             return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
           });
+          var __debug_loops__ = 0;
           for (var index2 = 0; index2 < state.orderedModifiers.length; index2++) {
+            if (process.env.NODE_ENV !== "production") {
+              __debug_loops__ += 1;
+              if (__debug_loops__ > 100) {
+                console.error(INFINITE_LOOP_ERROR);
+                break;
+              }
+            }
             if (state.reset === true) {
               state.reset = false;
               index2 = -1;
@@ -7527,6 +8175,9 @@ var __async = (__this, __arguments, generator) => {
         }
       };
       if (!areValidElements(reference2, popper2)) {
+        if (process.env.NODE_ENV !== "production") {
+          console.error(INVALID_ELEMENT_ERROR);
+        }
         return instance;
       }
       instance.setOptions(options).then(function(state2) {
@@ -7535,8 +8186,8 @@ var __async = (__this, __arguments, generator) => {
         }
       });
       function runModifierEffects() {
-        state.orderedModifiers.forEach(function(_ref) {
-          var name = _ref.name, _ref$options = _ref.options, options2 = _ref$options === void 0 ? {} : _ref$options, effect2 = _ref.effect;
+        state.orderedModifiers.forEach(function(_ref3) {
+          var name = _ref3.name, _ref3$options = _ref3.options, options2 = _ref3$options === void 0 ? {} : _ref3$options, effect2 = _ref3.effect;
           if (typeof effect2 === "function") {
             var cleanupFn = effect2({
               state,
@@ -13944,6 +14595,7 @@ var __async = (__this, __arguments, generator) => {
     cache2.sheet.hydrate(nodesToHydrate);
     return cache2;
   };
+  "use client";
   let cache;
   if (typeof document === "object") {
     cache = createCache({
@@ -13973,6 +14625,8 @@ var __async = (__this, __arguments, generator) => {
      */
     injectFirst: PropTypes.bool
   } : void 0;
+  "use client";
+  "use client";
   function isEmpty$3(obj) {
     return obj === void 0 || obj === null || Object.keys(obj).length === 0;
   }
@@ -13990,13 +14644,15 @@ var __async = (__this, __arguments, generator) => {
     defaultTheme: PropTypes.object,
     styles: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.object, PropTypes.func])
   } : void 0;
+  "use client";
   /**
-   * @mui/styled-engine v5.13.2
+   * @mui/styled-engine v5.14.11
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
    * LICENSE file in the root directory of this source tree.
    */
+  "use client";
   function styled$2(tag, options) {
     const stylesFactory = emStyled(tag, options);
     if (process.env.NODE_ENV !== "production") {
@@ -14659,10 +15315,20 @@ var __async = (__this, __arguments, generator) => {
   const maxWidth = (props) => {
     if (props.maxWidth !== void 0 && props.maxWidth !== null) {
       const styleFromPropValue = (propValue) => {
-        var _props$theme;
+        var _props$theme, _props$theme2;
         const breakpoint = ((_props$theme = props.theme) == null || (_props$theme = _props$theme.breakpoints) == null || (_props$theme = _props$theme.values) == null ? void 0 : _props$theme[propValue]) || values$1[propValue];
+        if (!breakpoint) {
+          return {
+            maxWidth: sizingTransform(propValue)
+          };
+        }
+        if (((_props$theme2 = props.theme) == null || (_props$theme2 = _props$theme2.breakpoints) == null ? void 0 : _props$theme2.unit) !== "px") {
+          return {
+            maxWidth: `${breakpoint}${props.theme.breakpoints.unit}`
+          };
+        }
         return {
-          maxWidth: breakpoint || sizingTransform(propValue)
+          maxWidth: breakpoint
         };
       };
       return handleBreakpoints(props, props.maxWidth, styleFromPropValue);
@@ -15974,7 +16640,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
   }
   /**
-   * @mui/private-theming v5.14.5
+   * @mui/private-theming v5.14.11
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -16061,31 +16727,29 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     return /* @__PURE__ */ jsxRuntimeExports.jsx("script", {
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML: {
-        __html: `(function() { try {
-        var mode = localStorage.getItem('${modeStorageKey}') || '${defaultMode}';
-        var cssColorScheme = mode;
-        var colorScheme = '';
-        if (mode === 'system') {
-          // handle system mode
-          var mql = window.matchMedia('(prefers-color-scheme: dark)');
-          if (mql.matches) {
-            cssColorScheme = 'dark';
-            colorScheme = localStorage.getItem('${colorSchemeStorageKey}-dark') || '${defaultDarkColorScheme}';
-          } else {
-            cssColorScheme = 'light';
-            colorScheme = localStorage.getItem('${colorSchemeStorageKey}-light') || '${defaultLightColorScheme}';
-          }
-        }
-        if (mode === 'light') {
-          colorScheme = localStorage.getItem('${colorSchemeStorageKey}-light') || '${defaultLightColorScheme}';
-        }
-        if (mode === 'dark') {
-          colorScheme = localStorage.getItem('${colorSchemeStorageKey}-dark') || '${defaultDarkColorScheme}';
-        }
-        if (colorScheme) {
-          ${colorSchemeNode}.setAttribute('${attribute}', colorScheme);
-        }
-      } catch (e) {} })();`
+        __html: `(function() {
+try {
+  var mode = localStorage.getItem('${modeStorageKey}') || '${defaultMode}';
+  var colorScheme = '';
+  if (mode === 'system') {
+    // handle system mode
+    var mql = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mql.matches) {
+      colorScheme = localStorage.getItem('${colorSchemeStorageKey}-dark') || '${defaultDarkColorScheme}';
+    } else {
+      colorScheme = localStorage.getItem('${colorSchemeStorageKey}-light') || '${defaultLightColorScheme}';
+    }
+  }
+  if (mode === 'light') {
+    colorScheme = localStorage.getItem('${colorSchemeStorageKey}-light') || '${defaultLightColorScheme}';
+  }
+  if (mode === 'dark') {
+    colorScheme = localStorage.getItem('${colorSchemeStorageKey}-dark') || '${defaultDarkColorScheme}';
+  }
+  if (colorScheme) {
+    ${colorSchemeNode}.setAttribute('${attribute}', colorScheme);
+  }
+} catch(e){}})();`
       }
     }, "mui-color-scheme-init");
   }
@@ -16551,11 +17215,11 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
        */
       disableStyleSheetGeneration: PropTypes.bool,
       /**
-       * Disable CSS transitions when switching between modes or color schemes
+       * Disable CSS transitions when switching between modes or color schemes.
        */
       disableTransitionOnChange: PropTypes.bool,
       /**
-       * The document to attach the attribute to
+       * The document to attach the attribute to.
        */
       documentNode: PropTypes.any,
       /**
@@ -16563,7 +17227,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
        */
       modeStorageKey: PropTypes.string,
       /**
-       * The window that attaches the 'storage' event listener
+       * The window that attaches the 'storage' event listener.
        * @default window
        */
       storageWindow: PropTypes.any,
@@ -18625,7 +19289,7 @@ Please use another name.` : formatMuiErrorMessage(18));
   });
   var default_1$s = ChevronRight.default = void 0;
   var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-  var _jsxRuntime$s = jsxRuntimeExports;
+  var _jsxRuntime$s = requireJsxRuntime();
   var _default$s = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
     d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
   }), "ChevronRight");
@@ -19507,6 +20171,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       frame
     } = spec;
+    const shape2 = gubu_minExports.Gubu({
+      head: {
+        logo: { img: String },
+        tool: { def: [] }
+      },
+      view: []
+    });
+    shape2(spec);
     const navigate = reactRouterDom.useNavigate();
     const location = reactRouterDom.useLocation();
     const part = model.app.web.frame[frame].part.head;
@@ -22314,7 +22986,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (opts.key && opts.debug)
         resultTime = Date.now();
       result = fn(...newDeps);
-      opts == null ? void 0 : opts.onChange == null ? void 0 : opts.onChange(result);
+      opts == null || opts.onChange == null || opts.onChange(result);
       if (opts.key && opts.debug) {
         if (opts != null && opts.debug()) {
           const depEndTime = Math.round((Date.now() - depTime) * 100) / 100;
@@ -22400,9 +23072,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
       })
     };
-    column2 = table._features.reduce((obj, feature) => {
-      return Object.assign(obj, feature.createColumn == null ? void 0 : feature.createColumn(column2, table));
-    }, column2);
+    for (const feature of table._features) {
+      feature.createColumn == null || feature.createColumn(column2, table);
+    }
     return column2;
   }
   function createHeader(table, column2, options) {
@@ -22437,192 +23109,186 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       })
     };
     table._features.forEach((feature) => {
-      Object.assign(header, feature.createHeader == null ? void 0 : feature.createHeader(header, table));
+      feature.createHeader == null || feature.createHeader(header, table);
     });
     return header;
   }
   const Headers = {
     createTable: (table) => {
-      return {
-        // Header Groups
-        getHeaderGroups: memo$1(() => [table.getAllColumns(), table.getVisibleLeafColumns(), table.getState().columnPinning.left, table.getState().columnPinning.right], (allColumns, leafColumns, left2, right2) => {
-          var _left$map$filter, _right$map$filter;
-          const leftColumns = (_left$map$filter = left2 == null ? void 0 : left2.map((columnId) => leafColumns.find((d) => d.id === columnId)).filter(Boolean)) != null ? _left$map$filter : [];
-          const rightColumns = (_right$map$filter = right2 == null ? void 0 : right2.map((columnId) => leafColumns.find((d) => d.id === columnId)).filter(Boolean)) != null ? _right$map$filter : [];
-          const centerColumns = leafColumns.filter((column2) => !(left2 != null && left2.includes(column2.id)) && !(right2 != null && right2.includes(column2.id)));
-          const headerGroups = buildHeaderGroups(allColumns, [...leftColumns, ...centerColumns, ...rightColumns], table);
-          return headerGroups;
-        }, {
-          key: process.env.NODE_ENV === "development" && "getHeaderGroups",
-          debug: () => {
-            var _table$options$debugA;
-            return (_table$options$debugA = table.options.debugAll) != null ? _table$options$debugA : table.options.debugHeaders;
-          }
-        }),
-        getCenterHeaderGroups: memo$1(() => [table.getAllColumns(), table.getVisibleLeafColumns(), table.getState().columnPinning.left, table.getState().columnPinning.right], (allColumns, leafColumns, left2, right2) => {
-          leafColumns = leafColumns.filter((column2) => !(left2 != null && left2.includes(column2.id)) && !(right2 != null && right2.includes(column2.id)));
-          return buildHeaderGroups(allColumns, leafColumns, table, "center");
-        }, {
-          key: process.env.NODE_ENV === "development" && "getCenterHeaderGroups",
-          debug: () => {
-            var _table$options$debugA2;
-            return (_table$options$debugA2 = table.options.debugAll) != null ? _table$options$debugA2 : table.options.debugHeaders;
-          }
-        }),
-        getLeftHeaderGroups: memo$1(() => [table.getAllColumns(), table.getVisibleLeafColumns(), table.getState().columnPinning.left], (allColumns, leafColumns, left2) => {
-          var _left$map$filter2;
-          const orderedLeafColumns = (_left$map$filter2 = left2 == null ? void 0 : left2.map((columnId) => leafColumns.find((d) => d.id === columnId)).filter(Boolean)) != null ? _left$map$filter2 : [];
-          return buildHeaderGroups(allColumns, orderedLeafColumns, table, "left");
-        }, {
-          key: process.env.NODE_ENV === "development" && "getLeftHeaderGroups",
-          debug: () => {
-            var _table$options$debugA3;
-            return (_table$options$debugA3 = table.options.debugAll) != null ? _table$options$debugA3 : table.options.debugHeaders;
-          }
-        }),
-        getRightHeaderGroups: memo$1(() => [table.getAllColumns(), table.getVisibleLeafColumns(), table.getState().columnPinning.right], (allColumns, leafColumns, right2) => {
-          var _right$map$filter2;
-          const orderedLeafColumns = (_right$map$filter2 = right2 == null ? void 0 : right2.map((columnId) => leafColumns.find((d) => d.id === columnId)).filter(Boolean)) != null ? _right$map$filter2 : [];
-          return buildHeaderGroups(allColumns, orderedLeafColumns, table, "right");
-        }, {
-          key: process.env.NODE_ENV === "development" && "getRightHeaderGroups",
-          debug: () => {
-            var _table$options$debugA4;
-            return (_table$options$debugA4 = table.options.debugAll) != null ? _table$options$debugA4 : table.options.debugHeaders;
-          }
-        }),
-        // Footer Groups
-        getFooterGroups: memo$1(() => [table.getHeaderGroups()], (headerGroups) => {
-          return [...headerGroups].reverse();
-        }, {
-          key: process.env.NODE_ENV === "development" && "getFooterGroups",
-          debug: () => {
-            var _table$options$debugA5;
-            return (_table$options$debugA5 = table.options.debugAll) != null ? _table$options$debugA5 : table.options.debugHeaders;
-          }
-        }),
-        getLeftFooterGroups: memo$1(() => [table.getLeftHeaderGroups()], (headerGroups) => {
-          return [...headerGroups].reverse();
-        }, {
-          key: process.env.NODE_ENV === "development" && "getLeftFooterGroups",
-          debug: () => {
-            var _table$options$debugA6;
-            return (_table$options$debugA6 = table.options.debugAll) != null ? _table$options$debugA6 : table.options.debugHeaders;
-          }
-        }),
-        getCenterFooterGroups: memo$1(() => [table.getCenterHeaderGroups()], (headerGroups) => {
-          return [...headerGroups].reverse();
-        }, {
-          key: process.env.NODE_ENV === "development" && "getCenterFooterGroups",
-          debug: () => {
-            var _table$options$debugA7;
-            return (_table$options$debugA7 = table.options.debugAll) != null ? _table$options$debugA7 : table.options.debugHeaders;
-          }
-        }),
-        getRightFooterGroups: memo$1(() => [table.getRightHeaderGroups()], (headerGroups) => {
-          return [...headerGroups].reverse();
-        }, {
-          key: process.env.NODE_ENV === "development" && "getRightFooterGroups",
-          debug: () => {
-            var _table$options$debugA8;
-            return (_table$options$debugA8 = table.options.debugAll) != null ? _table$options$debugA8 : table.options.debugHeaders;
-          }
-        }),
-        // Flat Headers
-        getFlatHeaders: memo$1(() => [table.getHeaderGroups()], (headerGroups) => {
-          return headerGroups.map((headerGroup) => {
-            return headerGroup.headers;
-          }).flat();
-        }, {
-          key: process.env.NODE_ENV === "development" && "getFlatHeaders",
-          debug: () => {
-            var _table$options$debugA9;
-            return (_table$options$debugA9 = table.options.debugAll) != null ? _table$options$debugA9 : table.options.debugHeaders;
-          }
-        }),
-        getLeftFlatHeaders: memo$1(() => [table.getLeftHeaderGroups()], (left2) => {
-          return left2.map((headerGroup) => {
-            return headerGroup.headers;
-          }).flat();
-        }, {
-          key: process.env.NODE_ENV === "development" && "getLeftFlatHeaders",
-          debug: () => {
-            var _table$options$debugA10;
-            return (_table$options$debugA10 = table.options.debugAll) != null ? _table$options$debugA10 : table.options.debugHeaders;
-          }
-        }),
-        getCenterFlatHeaders: memo$1(() => [table.getCenterHeaderGroups()], (left2) => {
-          return left2.map((headerGroup) => {
-            return headerGroup.headers;
-          }).flat();
-        }, {
-          key: process.env.NODE_ENV === "development" && "getCenterFlatHeaders",
-          debug: () => {
-            var _table$options$debugA11;
-            return (_table$options$debugA11 = table.options.debugAll) != null ? _table$options$debugA11 : table.options.debugHeaders;
-          }
-        }),
-        getRightFlatHeaders: memo$1(() => [table.getRightHeaderGroups()], (left2) => {
-          return left2.map((headerGroup) => {
-            return headerGroup.headers;
-          }).flat();
-        }, {
-          key: process.env.NODE_ENV === "development" && "getRightFlatHeaders",
-          debug: () => {
-            var _table$options$debugA12;
-            return (_table$options$debugA12 = table.options.debugAll) != null ? _table$options$debugA12 : table.options.debugHeaders;
-          }
-        }),
-        // Leaf Headers
-        getCenterLeafHeaders: memo$1(() => [table.getCenterFlatHeaders()], (flatHeaders) => {
-          return flatHeaders.filter((header) => {
-            var _header$subHeaders;
-            return !((_header$subHeaders = header.subHeaders) != null && _header$subHeaders.length);
-          });
-        }, {
-          key: process.env.NODE_ENV === "development" && "getCenterLeafHeaders",
-          debug: () => {
-            var _table$options$debugA13;
-            return (_table$options$debugA13 = table.options.debugAll) != null ? _table$options$debugA13 : table.options.debugHeaders;
-          }
-        }),
-        getLeftLeafHeaders: memo$1(() => [table.getLeftFlatHeaders()], (flatHeaders) => {
-          return flatHeaders.filter((header) => {
-            var _header$subHeaders2;
-            return !((_header$subHeaders2 = header.subHeaders) != null && _header$subHeaders2.length);
-          });
-        }, {
-          key: process.env.NODE_ENV === "development" && "getLeftLeafHeaders",
-          debug: () => {
-            var _table$options$debugA14;
-            return (_table$options$debugA14 = table.options.debugAll) != null ? _table$options$debugA14 : table.options.debugHeaders;
-          }
-        }),
-        getRightLeafHeaders: memo$1(() => [table.getRightFlatHeaders()], (flatHeaders) => {
-          return flatHeaders.filter((header) => {
-            var _header$subHeaders3;
-            return !((_header$subHeaders3 = header.subHeaders) != null && _header$subHeaders3.length);
-          });
-        }, {
-          key: process.env.NODE_ENV === "development" && "getRightLeafHeaders",
-          debug: () => {
-            var _table$options$debugA15;
-            return (_table$options$debugA15 = table.options.debugAll) != null ? _table$options$debugA15 : table.options.debugHeaders;
-          }
-        }),
-        getLeafHeaders: memo$1(() => [table.getLeftHeaderGroups(), table.getCenterHeaderGroups(), table.getRightHeaderGroups()], (left2, center, right2) => {
-          var _left$0$headers, _left$, _center$0$headers, _center$, _right$0$headers, _right$;
-          return [...(_left$0$headers = (_left$ = left2[0]) == null ? void 0 : _left$.headers) != null ? _left$0$headers : [], ...(_center$0$headers = (_center$ = center[0]) == null ? void 0 : _center$.headers) != null ? _center$0$headers : [], ...(_right$0$headers = (_right$ = right2[0]) == null ? void 0 : _right$.headers) != null ? _right$0$headers : []].map((header) => {
-            return header.getLeafHeaders();
-          }).flat();
-        }, {
-          key: process.env.NODE_ENV === "development" && "getLeafHeaders",
-          debug: () => {
-            var _table$options$debugA16;
-            return (_table$options$debugA16 = table.options.debugAll) != null ? _table$options$debugA16 : table.options.debugHeaders;
-          }
-        })
-      };
+      table.getHeaderGroups = memo$1(() => [table.getAllColumns(), table.getVisibleLeafColumns(), table.getState().columnPinning.left, table.getState().columnPinning.right], (allColumns, leafColumns, left2, right2) => {
+        var _left$map$filter, _right$map$filter;
+        const leftColumns = (_left$map$filter = left2 == null ? void 0 : left2.map((columnId) => leafColumns.find((d) => d.id === columnId)).filter(Boolean)) != null ? _left$map$filter : [];
+        const rightColumns = (_right$map$filter = right2 == null ? void 0 : right2.map((columnId) => leafColumns.find((d) => d.id === columnId)).filter(Boolean)) != null ? _right$map$filter : [];
+        const centerColumns = leafColumns.filter((column2) => !(left2 != null && left2.includes(column2.id)) && !(right2 != null && right2.includes(column2.id)));
+        const headerGroups = buildHeaderGroups(allColumns, [...leftColumns, ...centerColumns, ...rightColumns], table);
+        return headerGroups;
+      }, {
+        key: process.env.NODE_ENV === "development" && "getHeaderGroups",
+        debug: () => {
+          var _table$options$debugA;
+          return (_table$options$debugA = table.options.debugAll) != null ? _table$options$debugA : table.options.debugHeaders;
+        }
+      });
+      table.getCenterHeaderGroups = memo$1(() => [table.getAllColumns(), table.getVisibleLeafColumns(), table.getState().columnPinning.left, table.getState().columnPinning.right], (allColumns, leafColumns, left2, right2) => {
+        leafColumns = leafColumns.filter((column2) => !(left2 != null && left2.includes(column2.id)) && !(right2 != null && right2.includes(column2.id)));
+        return buildHeaderGroups(allColumns, leafColumns, table, "center");
+      }, {
+        key: process.env.NODE_ENV === "development" && "getCenterHeaderGroups",
+        debug: () => {
+          var _table$options$debugA2;
+          return (_table$options$debugA2 = table.options.debugAll) != null ? _table$options$debugA2 : table.options.debugHeaders;
+        }
+      });
+      table.getLeftHeaderGroups = memo$1(() => [table.getAllColumns(), table.getVisibleLeafColumns(), table.getState().columnPinning.left], (allColumns, leafColumns, left2) => {
+        var _left$map$filter2;
+        const orderedLeafColumns = (_left$map$filter2 = left2 == null ? void 0 : left2.map((columnId) => leafColumns.find((d) => d.id === columnId)).filter(Boolean)) != null ? _left$map$filter2 : [];
+        return buildHeaderGroups(allColumns, orderedLeafColumns, table, "left");
+      }, {
+        key: process.env.NODE_ENV === "development" && "getLeftHeaderGroups",
+        debug: () => {
+          var _table$options$debugA3;
+          return (_table$options$debugA3 = table.options.debugAll) != null ? _table$options$debugA3 : table.options.debugHeaders;
+        }
+      });
+      table.getRightHeaderGroups = memo$1(() => [table.getAllColumns(), table.getVisibleLeafColumns(), table.getState().columnPinning.right], (allColumns, leafColumns, right2) => {
+        var _right$map$filter2;
+        const orderedLeafColumns = (_right$map$filter2 = right2 == null ? void 0 : right2.map((columnId) => leafColumns.find((d) => d.id === columnId)).filter(Boolean)) != null ? _right$map$filter2 : [];
+        return buildHeaderGroups(allColumns, orderedLeafColumns, table, "right");
+      }, {
+        key: process.env.NODE_ENV === "development" && "getRightHeaderGroups",
+        debug: () => {
+          var _table$options$debugA4;
+          return (_table$options$debugA4 = table.options.debugAll) != null ? _table$options$debugA4 : table.options.debugHeaders;
+        }
+      });
+      table.getFooterGroups = memo$1(() => [table.getHeaderGroups()], (headerGroups) => {
+        return [...headerGroups].reverse();
+      }, {
+        key: process.env.NODE_ENV === "development" && "getFooterGroups",
+        debug: () => {
+          var _table$options$debugA5;
+          return (_table$options$debugA5 = table.options.debugAll) != null ? _table$options$debugA5 : table.options.debugHeaders;
+        }
+      });
+      table.getLeftFooterGroups = memo$1(() => [table.getLeftHeaderGroups()], (headerGroups) => {
+        return [...headerGroups].reverse();
+      }, {
+        key: process.env.NODE_ENV === "development" && "getLeftFooterGroups",
+        debug: () => {
+          var _table$options$debugA6;
+          return (_table$options$debugA6 = table.options.debugAll) != null ? _table$options$debugA6 : table.options.debugHeaders;
+        }
+      });
+      table.getCenterFooterGroups = memo$1(() => [table.getCenterHeaderGroups()], (headerGroups) => {
+        return [...headerGroups].reverse();
+      }, {
+        key: process.env.NODE_ENV === "development" && "getCenterFooterGroups",
+        debug: () => {
+          var _table$options$debugA7;
+          return (_table$options$debugA7 = table.options.debugAll) != null ? _table$options$debugA7 : table.options.debugHeaders;
+        }
+      });
+      table.getRightFooterGroups = memo$1(() => [table.getRightHeaderGroups()], (headerGroups) => {
+        return [...headerGroups].reverse();
+      }, {
+        key: process.env.NODE_ENV === "development" && "getRightFooterGroups",
+        debug: () => {
+          var _table$options$debugA8;
+          return (_table$options$debugA8 = table.options.debugAll) != null ? _table$options$debugA8 : table.options.debugHeaders;
+        }
+      });
+      table.getFlatHeaders = memo$1(() => [table.getHeaderGroups()], (headerGroups) => {
+        return headerGroups.map((headerGroup) => {
+          return headerGroup.headers;
+        }).flat();
+      }, {
+        key: process.env.NODE_ENV === "development" && "getFlatHeaders",
+        debug: () => {
+          var _table$options$debugA9;
+          return (_table$options$debugA9 = table.options.debugAll) != null ? _table$options$debugA9 : table.options.debugHeaders;
+        }
+      });
+      table.getLeftFlatHeaders = memo$1(() => [table.getLeftHeaderGroups()], (left2) => {
+        return left2.map((headerGroup) => {
+          return headerGroup.headers;
+        }).flat();
+      }, {
+        key: process.env.NODE_ENV === "development" && "getLeftFlatHeaders",
+        debug: () => {
+          var _table$options$debugA10;
+          return (_table$options$debugA10 = table.options.debugAll) != null ? _table$options$debugA10 : table.options.debugHeaders;
+        }
+      });
+      table.getCenterFlatHeaders = memo$1(() => [table.getCenterHeaderGroups()], (left2) => {
+        return left2.map((headerGroup) => {
+          return headerGroup.headers;
+        }).flat();
+      }, {
+        key: process.env.NODE_ENV === "development" && "getCenterFlatHeaders",
+        debug: () => {
+          var _table$options$debugA11;
+          return (_table$options$debugA11 = table.options.debugAll) != null ? _table$options$debugA11 : table.options.debugHeaders;
+        }
+      });
+      table.getRightFlatHeaders = memo$1(() => [table.getRightHeaderGroups()], (left2) => {
+        return left2.map((headerGroup) => {
+          return headerGroup.headers;
+        }).flat();
+      }, {
+        key: process.env.NODE_ENV === "development" && "getRightFlatHeaders",
+        debug: () => {
+          var _table$options$debugA12;
+          return (_table$options$debugA12 = table.options.debugAll) != null ? _table$options$debugA12 : table.options.debugHeaders;
+        }
+      });
+      table.getCenterLeafHeaders = memo$1(() => [table.getCenterFlatHeaders()], (flatHeaders) => {
+        return flatHeaders.filter((header) => {
+          var _header$subHeaders;
+          return !((_header$subHeaders = header.subHeaders) != null && _header$subHeaders.length);
+        });
+      }, {
+        key: process.env.NODE_ENV === "development" && "getCenterLeafHeaders",
+        debug: () => {
+          var _table$options$debugA13;
+          return (_table$options$debugA13 = table.options.debugAll) != null ? _table$options$debugA13 : table.options.debugHeaders;
+        }
+      });
+      table.getLeftLeafHeaders = memo$1(() => [table.getLeftFlatHeaders()], (flatHeaders) => {
+        return flatHeaders.filter((header) => {
+          var _header$subHeaders2;
+          return !((_header$subHeaders2 = header.subHeaders) != null && _header$subHeaders2.length);
+        });
+      }, {
+        key: process.env.NODE_ENV === "development" && "getLeftLeafHeaders",
+        debug: () => {
+          var _table$options$debugA14;
+          return (_table$options$debugA14 = table.options.debugAll) != null ? _table$options$debugA14 : table.options.debugHeaders;
+        }
+      });
+      table.getRightLeafHeaders = memo$1(() => [table.getRightFlatHeaders()], (flatHeaders) => {
+        return flatHeaders.filter((header) => {
+          var _header$subHeaders3;
+          return !((_header$subHeaders3 = header.subHeaders) != null && _header$subHeaders3.length);
+        });
+      }, {
+        key: process.env.NODE_ENV === "development" && "getRightLeafHeaders",
+        debug: () => {
+          var _table$options$debugA15;
+          return (_table$options$debugA15 = table.options.debugAll) != null ? _table$options$debugA15 : table.options.debugHeaders;
+        }
+      });
+      table.getLeafHeaders = memo$1(() => [table.getLeftHeaderGroups(), table.getCenterHeaderGroups(), table.getRightHeaderGroups()], (left2, center, right2) => {
+        var _left$0$headers, _left$, _center$0$headers, _center$, _right$0$headers, _right$;
+        return [...(_left$0$headers = (_left$ = left2[0]) == null ? void 0 : _left$.headers) != null ? _left$0$headers : [], ...(_center$0$headers = (_center$ = center[0]) == null ? void 0 : _center$.headers) != null ? _center$0$headers : [], ...(_right$0$headers = (_right$ = right2[0]) == null ? void 0 : _right$.headers) != null ? _right$0$headers : []].map((header) => {
+          return header.getLeafHeaders();
+        }).flat();
+      }, {
+        key: process.env.NODE_ENV === "development" && "getLeafHeaders",
+        debug: () => {
+          var _table$options$debugA16;
+          return (_table$options$debugA16 = table.options.debugAll) != null ? _table$options$debugA16 : table.options.debugHeaders;
+        }
+      });
     }
   };
   function buildHeaderGroups(allColumns, columnsToGroup, table, headerFamily) {
@@ -22750,199 +23416,193 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     },
     createColumn: (column2, table) => {
-      return {
-        getSize: () => {
-          var _column$columnDef$min, _ref, _column$columnDef$max;
-          const columnSize = table.getState().columnSizing[column2.id];
-          return Math.min(Math.max((_column$columnDef$min = column2.columnDef.minSize) != null ? _column$columnDef$min : defaultColumnSizing.minSize, (_ref = columnSize != null ? columnSize : column2.columnDef.size) != null ? _ref : defaultColumnSizing.size), (_column$columnDef$max = column2.columnDef.maxSize) != null ? _column$columnDef$max : defaultColumnSizing.maxSize);
-        },
-        getStart: (position2) => {
-          const columns = !position2 ? table.getVisibleLeafColumns() : position2 === "left" ? table.getLeftVisibleLeafColumns() : table.getRightVisibleLeafColumns();
-          const index2 = columns.findIndex((d) => d.id === column2.id);
-          if (index2 > 0) {
-            const prevSiblingColumn = columns[index2 - 1];
-            return prevSiblingColumn.getStart(position2) + prevSiblingColumn.getSize();
-          }
-          return 0;
-        },
-        resetSize: () => {
-          table.setColumnSizing((_ref2) => {
-            var _a;
-            let _b = _ref2, {
-              [_a = column2.id]: _2
-            } = _b, rest = __objRest(_b, [
-              __restKey(_a)
-            ]);
-            return rest;
-          });
-        },
-        getCanResize: () => {
-          var _column$columnDef$ena, _table$options$enable;
-          return ((_column$columnDef$ena = column2.columnDef.enableResizing) != null ? _column$columnDef$ena : true) && ((_table$options$enable = table.options.enableColumnResizing) != null ? _table$options$enable : true);
-        },
-        getIsResizing: () => {
-          return table.getState().columnSizingInfo.isResizingColumn === column2.id;
+      column2.getSize = () => {
+        var _column$columnDef$min, _ref, _column$columnDef$max;
+        const columnSize = table.getState().columnSizing[column2.id];
+        return Math.min(Math.max((_column$columnDef$min = column2.columnDef.minSize) != null ? _column$columnDef$min : defaultColumnSizing.minSize, (_ref = columnSize != null ? columnSize : column2.columnDef.size) != null ? _ref : defaultColumnSizing.size), (_column$columnDef$max = column2.columnDef.maxSize) != null ? _column$columnDef$max : defaultColumnSizing.maxSize);
+      };
+      column2.getStart = (position2) => {
+        const columns = !position2 ? table.getVisibleLeafColumns() : position2 === "left" ? table.getLeftVisibleLeafColumns() : table.getRightVisibleLeafColumns();
+        const index2 = columns.findIndex((d) => d.id === column2.id);
+        if (index2 > 0) {
+          const prevSiblingColumn = columns[index2 - 1];
+          return prevSiblingColumn.getStart(position2) + prevSiblingColumn.getSize();
         }
+        return 0;
+      };
+      column2.resetSize = () => {
+        table.setColumnSizing((_ref2) => {
+          var _a;
+          let _b = _ref2, {
+            [_a = column2.id]: _2
+          } = _b, rest = __objRest(_b, [
+            __restKey(_a)
+          ]);
+          return rest;
+        });
+      };
+      column2.getCanResize = () => {
+        var _column$columnDef$ena, _table$options$enable;
+        return ((_column$columnDef$ena = column2.columnDef.enableResizing) != null ? _column$columnDef$ena : true) && ((_table$options$enable = table.options.enableColumnResizing) != null ? _table$options$enable : true);
+      };
+      column2.getIsResizing = () => {
+        return table.getState().columnSizingInfo.isResizingColumn === column2.id;
       };
     },
     createHeader: (header, table) => {
-      return {
-        getSize: () => {
-          let sum2 = 0;
-          const recurse = (header2) => {
-            if (header2.subHeaders.length) {
-              header2.subHeaders.forEach(recurse);
-            } else {
-              var _header$column$getSiz;
-              sum2 += (_header$column$getSiz = header2.column.getSize()) != null ? _header$column$getSiz : 0;
-            }
-          };
-          recurse(header);
-          return sum2;
-        },
-        getStart: () => {
-          if (header.index > 0) {
-            const prevSiblingHeader = header.headerGroup.headers[header.index - 1];
-            return prevSiblingHeader.getStart() + prevSiblingHeader.getSize();
+      header.getSize = () => {
+        let sum2 = 0;
+        const recurse = (header2) => {
+          if (header2.subHeaders.length) {
+            header2.subHeaders.forEach(recurse);
+          } else {
+            var _header$column$getSiz;
+            sum2 += (_header$column$getSiz = header2.column.getSize()) != null ? _header$column$getSiz : 0;
           }
-          return 0;
-        },
-        getResizeHandler: () => {
-          const column2 = table.getColumn(header.column.id);
-          const canResize = column2 == null ? void 0 : column2.getCanResize();
-          return (e) => {
-            if (!column2 || !canResize) {
+        };
+        recurse(header);
+        return sum2;
+      };
+      header.getStart = () => {
+        if (header.index > 0) {
+          const prevSiblingHeader = header.headerGroup.headers[header.index - 1];
+          return prevSiblingHeader.getStart() + prevSiblingHeader.getSize();
+        }
+        return 0;
+      };
+      header.getResizeHandler = () => {
+        const column2 = table.getColumn(header.column.id);
+        const canResize = column2 == null ? void 0 : column2.getCanResize();
+        return (e) => {
+          if (!column2 || !canResize) {
+            return;
+          }
+          e.persist == null || e.persist();
+          if (isTouchStartEvent(e)) {
+            if (e.touches && e.touches.length > 1) {
               return;
             }
-            e.persist == null ? void 0 : e.persist();
-            if (isTouchStartEvent(e)) {
-              if (e.touches && e.touches.length > 1) {
-                return;
-              }
+          }
+          const startSize = header.getSize();
+          const columnSizingStart = header ? header.getLeafHeaders().map((d) => [d.column.id, d.column.getSize()]) : [[column2.id, column2.getSize()]];
+          const clientX = isTouchStartEvent(e) ? Math.round(e.touches[0].clientX) : e.clientX;
+          const newColumnSizing = {};
+          const updateOffset = (eventType, clientXPos) => {
+            if (typeof clientXPos !== "number") {
+              return;
             }
-            const startSize = header.getSize();
-            const columnSizingStart = header ? header.getLeafHeaders().map((d) => [d.column.id, d.column.getSize()]) : [[column2.id, column2.getSize()]];
-            const clientX = isTouchStartEvent(e) ? Math.round(e.touches[0].clientX) : e.clientX;
-            const newColumnSizing = {};
-            const updateOffset = (eventType, clientXPos) => {
-              if (typeof clientXPos !== "number") {
-                return;
-              }
-              table.setColumnSizingInfo((old) => {
-                var _old$startOffset, _old$startSize;
-                const deltaOffset = clientXPos - ((_old$startOffset = old == null ? void 0 : old.startOffset) != null ? _old$startOffset : 0);
-                const deltaPercentage = Math.max(deltaOffset / ((_old$startSize = old == null ? void 0 : old.startSize) != null ? _old$startSize : 0), -0.999999);
-                old.columnSizingStart.forEach((_ref3) => {
-                  let [columnId, headerSize] = _ref3;
-                  newColumnSizing[columnId] = Math.round(Math.max(headerSize + headerSize * deltaPercentage, 0) * 100) / 100;
-                });
-                return __spreadProps(__spreadValues({}, old), {
-                  deltaOffset,
-                  deltaPercentage
-                });
+            table.setColumnSizingInfo((old) => {
+              var _old$startOffset, _old$startSize;
+              const deltaOffset = clientXPos - ((_old$startOffset = old == null ? void 0 : old.startOffset) != null ? _old$startOffset : 0);
+              const deltaPercentage = Math.max(deltaOffset / ((_old$startSize = old == null ? void 0 : old.startSize) != null ? _old$startSize : 0), -0.999999);
+              old.columnSizingStart.forEach((_ref3) => {
+                let [columnId, headerSize] = _ref3;
+                newColumnSizing[columnId] = Math.round(Math.max(headerSize + headerSize * deltaPercentage, 0) * 100) / 100;
               });
-              if (table.options.columnResizeMode === "onChange" || eventType === "end") {
-                table.setColumnSizing((old) => __spreadValues(__spreadValues({}, old), newColumnSizing));
-              }
-            };
-            const onMove = (clientXPos) => updateOffset("move", clientXPos);
-            const onEnd = (clientXPos) => {
-              updateOffset("end", clientXPos);
-              table.setColumnSizingInfo((old) => __spreadProps(__spreadValues({}, old), {
-                isResizingColumn: false,
-                startOffset: null,
-                startSize: null,
-                deltaOffset: null,
-                deltaPercentage: null,
-                columnSizingStart: []
-              }));
-            };
-            const mouseEvents = {
-              moveHandler: (e2) => onMove(e2.clientX),
-              upHandler: (e2) => {
-                document.removeEventListener("mousemove", mouseEvents.moveHandler);
-                document.removeEventListener("mouseup", mouseEvents.upHandler);
-                onEnd(e2.clientX);
-              }
-            };
-            const touchEvents = {
-              moveHandler: (e2) => {
-                if (e2.cancelable) {
-                  e2.preventDefault();
-                  e2.stopPropagation();
-                }
-                onMove(e2.touches[0].clientX);
-                return false;
-              },
-              upHandler: (e2) => {
-                var _e$touches$;
-                document.removeEventListener("touchmove", touchEvents.moveHandler);
-                document.removeEventListener("touchend", touchEvents.upHandler);
-                if (e2.cancelable) {
-                  e2.preventDefault();
-                  e2.stopPropagation();
-                }
-                onEnd((_e$touches$ = e2.touches[0]) == null ? void 0 : _e$touches$.clientX);
-              }
-            };
-            const passiveIfSupported = passiveEventSupported() ? {
-              passive: false
-            } : false;
-            if (isTouchStartEvent(e)) {
-              document.addEventListener("touchmove", touchEvents.moveHandler, passiveIfSupported);
-              document.addEventListener("touchend", touchEvents.upHandler, passiveIfSupported);
-            } else {
-              document.addEventListener("mousemove", mouseEvents.moveHandler, passiveIfSupported);
-              document.addEventListener("mouseup", mouseEvents.upHandler, passiveIfSupported);
+              return __spreadProps(__spreadValues({}, old), {
+                deltaOffset,
+                deltaPercentage
+              });
+            });
+            if (table.options.columnResizeMode === "onChange" || eventType === "end") {
+              table.setColumnSizing((old) => __spreadValues(__spreadValues({}, old), newColumnSizing));
             }
+          };
+          const onMove = (clientXPos) => updateOffset("move", clientXPos);
+          const onEnd = (clientXPos) => {
+            updateOffset("end", clientXPos);
             table.setColumnSizingInfo((old) => __spreadProps(__spreadValues({}, old), {
-              startOffset: clientX,
-              startSize,
-              deltaOffset: 0,
-              deltaPercentage: 0,
-              columnSizingStart,
-              isResizingColumn: column2.id
+              isResizingColumn: false,
+              startOffset: null,
+              startSize: null,
+              deltaOffset: null,
+              deltaPercentage: null,
+              columnSizingStart: []
             }));
           };
-        }
+          const mouseEvents = {
+            moveHandler: (e2) => onMove(e2.clientX),
+            upHandler: (e2) => {
+              document.removeEventListener("mousemove", mouseEvents.moveHandler);
+              document.removeEventListener("mouseup", mouseEvents.upHandler);
+              onEnd(e2.clientX);
+            }
+          };
+          const touchEvents = {
+            moveHandler: (e2) => {
+              if (e2.cancelable) {
+                e2.preventDefault();
+                e2.stopPropagation();
+              }
+              onMove(e2.touches[0].clientX);
+              return false;
+            },
+            upHandler: (e2) => {
+              var _e$touches$;
+              document.removeEventListener("touchmove", touchEvents.moveHandler);
+              document.removeEventListener("touchend", touchEvents.upHandler);
+              if (e2.cancelable) {
+                e2.preventDefault();
+                e2.stopPropagation();
+              }
+              onEnd((_e$touches$ = e2.touches[0]) == null ? void 0 : _e$touches$.clientX);
+            }
+          };
+          const passiveIfSupported = passiveEventSupported() ? {
+            passive: false
+          } : false;
+          if (isTouchStartEvent(e)) {
+            document.addEventListener("touchmove", touchEvents.moveHandler, passiveIfSupported);
+            document.addEventListener("touchend", touchEvents.upHandler, passiveIfSupported);
+          } else {
+            document.addEventListener("mousemove", mouseEvents.moveHandler, passiveIfSupported);
+            document.addEventListener("mouseup", mouseEvents.upHandler, passiveIfSupported);
+          }
+          table.setColumnSizingInfo((old) => __spreadProps(__spreadValues({}, old), {
+            startOffset: clientX,
+            startSize,
+            deltaOffset: 0,
+            deltaPercentage: 0,
+            columnSizingStart,
+            isResizingColumn: column2.id
+          }));
+        };
       };
     },
     createTable: (table) => {
-      return {
-        setColumnSizing: (updater) => table.options.onColumnSizingChange == null ? void 0 : table.options.onColumnSizingChange(updater),
-        setColumnSizingInfo: (updater) => table.options.onColumnSizingInfoChange == null ? void 0 : table.options.onColumnSizingInfoChange(updater),
-        resetColumnSizing: (defaultState) => {
-          var _table$initialState$c;
-          table.setColumnSizing(defaultState ? {} : (_table$initialState$c = table.initialState.columnSizing) != null ? _table$initialState$c : {});
-        },
-        resetHeaderSizeInfo: (defaultState) => {
-          var _table$initialState$c2;
-          table.setColumnSizingInfo(defaultState ? getDefaultColumnSizingInfoState() : (_table$initialState$c2 = table.initialState.columnSizingInfo) != null ? _table$initialState$c2 : getDefaultColumnSizingInfoState());
-        },
-        getTotalSize: () => {
-          var _table$getHeaderGroup, _table$getHeaderGroup2;
-          return (_table$getHeaderGroup = (_table$getHeaderGroup2 = table.getHeaderGroups()[0]) == null ? void 0 : _table$getHeaderGroup2.headers.reduce((sum2, header) => {
-            return sum2 + header.getSize();
-          }, 0)) != null ? _table$getHeaderGroup : 0;
-        },
-        getLeftTotalSize: () => {
-          var _table$getLeftHeaderG, _table$getLeftHeaderG2;
-          return (_table$getLeftHeaderG = (_table$getLeftHeaderG2 = table.getLeftHeaderGroups()[0]) == null ? void 0 : _table$getLeftHeaderG2.headers.reduce((sum2, header) => {
-            return sum2 + header.getSize();
-          }, 0)) != null ? _table$getLeftHeaderG : 0;
-        },
-        getCenterTotalSize: () => {
-          var _table$getCenterHeade, _table$getCenterHeade2;
-          return (_table$getCenterHeade = (_table$getCenterHeade2 = table.getCenterHeaderGroups()[0]) == null ? void 0 : _table$getCenterHeade2.headers.reduce((sum2, header) => {
-            return sum2 + header.getSize();
-          }, 0)) != null ? _table$getCenterHeade : 0;
-        },
-        getRightTotalSize: () => {
-          var _table$getRightHeader, _table$getRightHeader2;
-          return (_table$getRightHeader = (_table$getRightHeader2 = table.getRightHeaderGroups()[0]) == null ? void 0 : _table$getRightHeader2.headers.reduce((sum2, header) => {
-            return sum2 + header.getSize();
-          }, 0)) != null ? _table$getRightHeader : 0;
-        }
+      table.setColumnSizing = (updater) => table.options.onColumnSizingChange == null ? void 0 : table.options.onColumnSizingChange(updater);
+      table.setColumnSizingInfo = (updater) => table.options.onColumnSizingInfoChange == null ? void 0 : table.options.onColumnSizingInfoChange(updater);
+      table.resetColumnSizing = (defaultState) => {
+        var _table$initialState$c;
+        table.setColumnSizing(defaultState ? {} : (_table$initialState$c = table.initialState.columnSizing) != null ? _table$initialState$c : {});
+      };
+      table.resetHeaderSizeInfo = (defaultState) => {
+        var _table$initialState$c2;
+        table.setColumnSizingInfo(defaultState ? getDefaultColumnSizingInfoState() : (_table$initialState$c2 = table.initialState.columnSizingInfo) != null ? _table$initialState$c2 : getDefaultColumnSizingInfoState());
+      };
+      table.getTotalSize = () => {
+        var _table$getHeaderGroup, _table$getHeaderGroup2;
+        return (_table$getHeaderGroup = (_table$getHeaderGroup2 = table.getHeaderGroups()[0]) == null ? void 0 : _table$getHeaderGroup2.headers.reduce((sum2, header) => {
+          return sum2 + header.getSize();
+        }, 0)) != null ? _table$getHeaderGroup : 0;
+      };
+      table.getLeftTotalSize = () => {
+        var _table$getLeftHeaderG, _table$getLeftHeaderG2;
+        return (_table$getLeftHeaderG = (_table$getLeftHeaderG2 = table.getLeftHeaderGroups()[0]) == null ? void 0 : _table$getLeftHeaderG2.headers.reduce((sum2, header) => {
+          return sum2 + header.getSize();
+        }, 0)) != null ? _table$getLeftHeaderG : 0;
+      };
+      table.getCenterTotalSize = () => {
+        var _table$getCenterHeade, _table$getCenterHeade2;
+        return (_table$getCenterHeade = (_table$getCenterHeade2 = table.getCenterHeaderGroups()[0]) == null ? void 0 : _table$getCenterHeade2.headers.reduce((sum2, header) => {
+          return sum2 + header.getSize();
+        }, 0)) != null ? _table$getCenterHeade : 0;
+      };
+      table.getRightTotalSize = () => {
+        var _table$getRightHeader, _table$getRightHeader2;
+        return (_table$getRightHeader = (_table$getRightHeader2 = table.getRightHeaderGroups()[0]) == null ? void 0 : _table$getRightHeader2.headers.reduce((sum2, header) => {
+          return sum2 + header.getSize();
+        }, 0)) != null ? _table$getRightHeader : 0;
       };
     }
   };
@@ -22986,150 +23646,155 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     createTable: (table) => {
       let registered = false;
       let queued = false;
-      return {
-        _autoResetExpanded: () => {
-          var _ref, _table$options$autoRe;
-          if (!registered) {
-            table._queue(() => {
-              registered = true;
-            });
-            return;
-          }
-          if ((_ref = (_table$options$autoRe = table.options.autoResetAll) != null ? _table$options$autoRe : table.options.autoResetExpanded) != null ? _ref : !table.options.manualExpanding) {
-            if (queued)
-              return;
-            queued = true;
-            table._queue(() => {
-              table.resetExpanded();
-              queued = false;
-            });
-          }
-        },
-        setExpanded: (updater) => table.options.onExpandedChange == null ? void 0 : table.options.onExpandedChange(updater),
-        toggleAllRowsExpanded: (expanded) => {
-          if (expanded != null ? expanded : !table.getIsAllRowsExpanded()) {
-            table.setExpanded(true);
-          } else {
-            table.setExpanded({});
-          }
-        },
-        resetExpanded: (defaultState) => {
-          var _table$initialState$e, _table$initialState;
-          table.setExpanded(defaultState ? {} : (_table$initialState$e = (_table$initialState = table.initialState) == null ? void 0 : _table$initialState.expanded) != null ? _table$initialState$e : {});
-        },
-        getCanSomeRowsExpand: () => {
-          return table.getPrePaginationRowModel().flatRows.some((row) => row.getCanExpand());
-        },
-        getToggleAllRowsExpandedHandler: () => {
-          return (e) => {
-            e.persist == null ? void 0 : e.persist();
-            table.toggleAllRowsExpanded();
-          };
-        },
-        getIsSomeRowsExpanded: () => {
-          const expanded = table.getState().expanded;
-          return expanded === true || Object.values(expanded).some(Boolean);
-        },
-        getIsAllRowsExpanded: () => {
-          const expanded = table.getState().expanded;
-          if (typeof expanded === "boolean") {
-            return expanded === true;
-          }
-          if (!Object.keys(expanded).length) {
-            return false;
-          }
-          if (table.getRowModel().flatRows.some((row) => !row.getIsExpanded())) {
-            return false;
-          }
-          return true;
-        },
-        getExpandedDepth: () => {
-          let maxDepth = 0;
-          const rowIds = table.getState().expanded === true ? Object.keys(table.getRowModel().rowsById) : Object.keys(table.getState().expanded);
-          rowIds.forEach((id) => {
-            const splitId = id.split(".");
-            maxDepth = Math.max(maxDepth, splitId.length);
+      table._autoResetExpanded = () => {
+        var _ref, _table$options$autoRe;
+        if (!registered) {
+          table._queue(() => {
+            registered = true;
           });
-          return maxDepth;
-        },
-        getPreExpandedRowModel: () => table.getSortedRowModel(),
-        getExpandedRowModel: () => {
-          if (!table._getExpandedRowModel && table.options.getExpandedRowModel) {
-            table._getExpandedRowModel = table.options.getExpandedRowModel(table);
-          }
-          if (table.options.manualExpanding || !table._getExpandedRowModel) {
-            return table.getPreExpandedRowModel();
-          }
-          return table._getExpandedRowModel();
+          return;
         }
+        if ((_ref = (_table$options$autoRe = table.options.autoResetAll) != null ? _table$options$autoRe : table.options.autoResetExpanded) != null ? _ref : !table.options.manualExpanding) {
+          if (queued)
+            return;
+          queued = true;
+          table._queue(() => {
+            table.resetExpanded();
+            queued = false;
+          });
+        }
+      };
+      table.setExpanded = (updater) => table.options.onExpandedChange == null ? void 0 : table.options.onExpandedChange(updater);
+      table.toggleAllRowsExpanded = (expanded) => {
+        if (expanded != null ? expanded : !table.getIsAllRowsExpanded()) {
+          table.setExpanded(true);
+        } else {
+          table.setExpanded({});
+        }
+      };
+      table.resetExpanded = (defaultState) => {
+        var _table$initialState$e, _table$initialState;
+        table.setExpanded(defaultState ? {} : (_table$initialState$e = (_table$initialState = table.initialState) == null ? void 0 : _table$initialState.expanded) != null ? _table$initialState$e : {});
+      };
+      table.getCanSomeRowsExpand = () => {
+        return table.getPrePaginationRowModel().flatRows.some((row) => row.getCanExpand());
+      };
+      table.getToggleAllRowsExpandedHandler = () => {
+        return (e) => {
+          e.persist == null || e.persist();
+          table.toggleAllRowsExpanded();
+        };
+      };
+      table.getIsSomeRowsExpanded = () => {
+        const expanded = table.getState().expanded;
+        return expanded === true || Object.values(expanded).some(Boolean);
+      };
+      table.getIsAllRowsExpanded = () => {
+        const expanded = table.getState().expanded;
+        if (typeof expanded === "boolean") {
+          return expanded === true;
+        }
+        if (!Object.keys(expanded).length) {
+          return false;
+        }
+        if (table.getRowModel().flatRows.some((row) => !row.getIsExpanded())) {
+          return false;
+        }
+        return true;
+      };
+      table.getExpandedDepth = () => {
+        let maxDepth = 0;
+        const rowIds = table.getState().expanded === true ? Object.keys(table.getRowModel().rowsById) : Object.keys(table.getState().expanded);
+        rowIds.forEach((id) => {
+          const splitId = id.split(".");
+          maxDepth = Math.max(maxDepth, splitId.length);
+        });
+        return maxDepth;
+      };
+      table.getPreExpandedRowModel = () => table.getSortedRowModel();
+      table.getExpandedRowModel = () => {
+        if (!table._getExpandedRowModel && table.options.getExpandedRowModel) {
+          table._getExpandedRowModel = table.options.getExpandedRowModel(table);
+        }
+        if (table.options.manualExpanding || !table._getExpandedRowModel) {
+          return table.getPreExpandedRowModel();
+        }
+        return table._getExpandedRowModel();
       };
     },
     createRow: (row, table) => {
-      return {
-        toggleExpanded: (expanded) => {
-          table.setExpanded((old) => {
-            var _a;
-            var _expanded;
-            const exists = old === true ? true : !!(old != null && old[row.id]);
-            let oldExpanded = {};
-            if (old === true) {
-              Object.keys(table.getRowModel().rowsById).forEach((rowId) => {
-                oldExpanded[rowId] = true;
-              });
-            } else {
-              oldExpanded = old;
-            }
-            expanded = (_expanded = expanded) != null ? _expanded : !exists;
-            if (!exists && expanded) {
-              return __spreadProps(__spreadValues({}, oldExpanded), {
-                [row.id]: true
-              });
-            }
-            if (exists && !expanded) {
-              const _b = oldExpanded, {
-                [_a = row.id]: _2
-              } = _b, rest = __objRest(_b, [
-                __restKey(_a)
-              ]);
-              return rest;
-            }
-            return old;
-          });
-        },
-        getIsExpanded: () => {
-          var _table$options$getIsR;
-          const expanded = table.getState().expanded;
-          return !!((_table$options$getIsR = table.options.getIsRowExpanded == null ? void 0 : table.options.getIsRowExpanded(row)) != null ? _table$options$getIsR : expanded === true || (expanded == null ? void 0 : expanded[row.id]));
-        },
-        getCanExpand: () => {
-          var _table$options$getRow, _table$options$enable, _row$subRows;
-          return (_table$options$getRow = table.options.getRowCanExpand == null ? void 0 : table.options.getRowCanExpand(row)) != null ? _table$options$getRow : ((_table$options$enable = table.options.enableExpanding) != null ? _table$options$enable : true) && !!((_row$subRows = row.subRows) != null && _row$subRows.length);
-        },
-        getToggleExpandedHandler: () => {
-          const canExpand = row.getCanExpand();
-          return () => {
-            if (!canExpand)
-              return;
-            row.toggleExpanded();
-          };
+      row.toggleExpanded = (expanded) => {
+        table.setExpanded((old) => {
+          var _a;
+          var _expanded;
+          const exists = old === true ? true : !!(old != null && old[row.id]);
+          let oldExpanded = {};
+          if (old === true) {
+            Object.keys(table.getRowModel().rowsById).forEach((rowId) => {
+              oldExpanded[rowId] = true;
+            });
+          } else {
+            oldExpanded = old;
+          }
+          expanded = (_expanded = expanded) != null ? _expanded : !exists;
+          if (!exists && expanded) {
+            return __spreadProps(__spreadValues({}, oldExpanded), {
+              [row.id]: true
+            });
+          }
+          if (exists && !expanded) {
+            const _b = oldExpanded, {
+              [_a = row.id]: _2
+            } = _b, rest = __objRest(_b, [
+              __restKey(_a)
+            ]);
+            return rest;
+          }
+          return old;
+        });
+      };
+      row.getIsExpanded = () => {
+        var _table$options$getIsR;
+        const expanded = table.getState().expanded;
+        return !!((_table$options$getIsR = table.options.getIsRowExpanded == null ? void 0 : table.options.getIsRowExpanded(row)) != null ? _table$options$getIsR : expanded === true || (expanded == null ? void 0 : expanded[row.id]));
+      };
+      row.getCanExpand = () => {
+        var _table$options$getRow, _table$options$enable, _row$subRows;
+        return (_table$options$getRow = table.options.getRowCanExpand == null ? void 0 : table.options.getRowCanExpand(row)) != null ? _table$options$getRow : ((_table$options$enable = table.options.enableExpanding) != null ? _table$options$enable : true) && !!((_row$subRows = row.subRows) != null && _row$subRows.length);
+      };
+      row.getIsAllParentsExpanded = () => {
+        let isFullyExpanded = true;
+        let currentRow = row;
+        while (isFullyExpanded && currentRow.parentId) {
+          currentRow = table.getRow(currentRow.parentId, true);
+          isFullyExpanded = currentRow.getIsExpanded();
         }
+        return isFullyExpanded;
+      };
+      row.getToggleExpandedHandler = () => {
+        const canExpand = row.getCanExpand();
+        return () => {
+          if (!canExpand)
+            return;
+          row.toggleExpanded();
+        };
       };
     }
   };
   const includesString = (row, columnId, filterValue) => {
-    var _row$getValue, _row$getValue$toStrin, _row$getValue$toStrin2;
+    var _row$getValue;
     const search = filterValue.toLowerCase();
-    return Boolean((_row$getValue = row.getValue(columnId)) == null ? void 0 : (_row$getValue$toStrin = _row$getValue.toString()) == null ? void 0 : (_row$getValue$toStrin2 = _row$getValue$toStrin.toLowerCase()) == null ? void 0 : _row$getValue$toStrin2.includes(search));
+    return Boolean((_row$getValue = row.getValue(columnId)) == null || (_row$getValue = _row$getValue.toString()) == null || (_row$getValue = _row$getValue.toLowerCase()) == null ? void 0 : _row$getValue.includes(search));
   };
   includesString.autoRemove = (val) => testFalsey(val);
   const includesStringSensitive = (row, columnId, filterValue) => {
-    var _row$getValue2, _row$getValue2$toStri;
-    return Boolean((_row$getValue2 = row.getValue(columnId)) == null ? void 0 : (_row$getValue2$toStri = _row$getValue2.toString()) == null ? void 0 : _row$getValue2$toStri.includes(filterValue));
+    var _row$getValue2;
+    return Boolean((_row$getValue2 = row.getValue(columnId)) == null || (_row$getValue2 = _row$getValue2.toString()) == null ? void 0 : _row$getValue2.includes(filterValue));
   };
   includesStringSensitive.autoRemove = (val) => testFalsey(val);
   const equalsString = (row, columnId, filterValue) => {
-    var _row$getValue3, _row$getValue3$toStri;
-    return ((_row$getValue3 = row.getValue(columnId)) == null ? void 0 : (_row$getValue3$toStri = _row$getValue3.toString()) == null ? void 0 : _row$getValue3$toStri.toLowerCase()) === (filterValue == null ? void 0 : filterValue.toLowerCase());
+    var _row$getValue3;
+    return ((_row$getValue3 = row.getValue(columnId)) == null || (_row$getValue3 = _row$getValue3.toString()) == null ? void 0 : _row$getValue3.toLowerCase()) === (filterValue == null ? void 0 : filterValue.toLowerCase());
   };
   equalsString.autoRemove = (val) => testFalsey(val);
   const arrIncludes = (row, columnId, filterValue) => {
@@ -23212,184 +23877,182 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         maxLeafRowFilterDepth: 100,
         globalFilterFn: "auto",
         getColumnCanGlobalFilter: (column2) => {
-          var _table$getCoreRowMode, _table$getCoreRowMode2;
-          const value = (_table$getCoreRowMode = table.getCoreRowModel().flatRows[0]) == null ? void 0 : (_table$getCoreRowMode2 = _table$getCoreRowMode._getAllCellsByColumnId()[column2.id]) == null ? void 0 : _table$getCoreRowMode2.getValue();
+          var _table$getCoreRowMode;
+          const value = (_table$getCoreRowMode = table.getCoreRowModel().flatRows[0]) == null || (_table$getCoreRowMode = _table$getCoreRowMode._getAllCellsByColumnId()[column2.id]) == null ? void 0 : _table$getCoreRowMode.getValue();
           return typeof value === "string" || typeof value === "number";
         }
       };
     },
     createColumn: (column2, table) => {
-      return {
-        getAutoFilterFn: () => {
-          const firstRow = table.getCoreRowModel().flatRows[0];
-          const value = firstRow == null ? void 0 : firstRow.getValue(column2.id);
-          if (typeof value === "string") {
-            return filterFns.includesString;
-          }
-          if (typeof value === "number") {
-            return filterFns.inNumberRange;
-          }
-          if (typeof value === "boolean") {
-            return filterFns.equals;
-          }
-          if (value !== null && typeof value === "object") {
-            return filterFns.equals;
-          }
-          if (Array.isArray(value)) {
-            return filterFns.arrIncludes;
-          }
-          return filterFns.weakEquals;
-        },
-        getFilterFn: () => {
-          var _table$options$filter, _table$options$filter2;
-          return isFunction$1(column2.columnDef.filterFn) ? column2.columnDef.filterFn : column2.columnDef.filterFn === "auto" ? column2.getAutoFilterFn() : (_table$options$filter = (_table$options$filter2 = table.options.filterFns) == null ? void 0 : _table$options$filter2[column2.columnDef.filterFn]) != null ? _table$options$filter : filterFns[column2.columnDef.filterFn];
-        },
-        getCanFilter: () => {
-          var _column$columnDef$ena, _table$options$enable, _table$options$enable2;
-          return ((_column$columnDef$ena = column2.columnDef.enableColumnFilter) != null ? _column$columnDef$ena : true) && ((_table$options$enable = table.options.enableColumnFilters) != null ? _table$options$enable : true) && ((_table$options$enable2 = table.options.enableFilters) != null ? _table$options$enable2 : true) && !!column2.accessorFn;
-        },
-        getCanGlobalFilter: () => {
-          var _column$columnDef$ena2, _table$options$enable3, _table$options$enable4, _table$options$getCol;
-          return ((_column$columnDef$ena2 = column2.columnDef.enableGlobalFilter) != null ? _column$columnDef$ena2 : true) && ((_table$options$enable3 = table.options.enableGlobalFilter) != null ? _table$options$enable3 : true) && ((_table$options$enable4 = table.options.enableFilters) != null ? _table$options$enable4 : true) && ((_table$options$getCol = table.options.getColumnCanGlobalFilter == null ? void 0 : table.options.getColumnCanGlobalFilter(column2)) != null ? _table$options$getCol : true) && !!column2.accessorFn;
-        },
-        getIsFiltered: () => column2.getFilterIndex() > -1,
-        getFilterValue: () => {
-          var _table$getState$colum, _table$getState$colum2;
-          return (_table$getState$colum = table.getState().columnFilters) == null ? void 0 : (_table$getState$colum2 = _table$getState$colum.find((d) => d.id === column2.id)) == null ? void 0 : _table$getState$colum2.value;
-        },
-        getFilterIndex: () => {
-          var _table$getState$colum3, _table$getState$colum4;
-          return (_table$getState$colum3 = (_table$getState$colum4 = table.getState().columnFilters) == null ? void 0 : _table$getState$colum4.findIndex((d) => d.id === column2.id)) != null ? _table$getState$colum3 : -1;
-        },
-        setFilterValue: (value) => {
-          table.setColumnFilters((old) => {
-            const filterFn = column2.getFilterFn();
-            const previousfilter = old == null ? void 0 : old.find((d) => d.id === column2.id);
-            const newFilter = functionalUpdate(value, previousfilter ? previousfilter.value : void 0);
-            if (shouldAutoRemoveFilter(filterFn, newFilter, column2)) {
-              var _old$filter;
-              return (_old$filter = old == null ? void 0 : old.filter((d) => d.id !== column2.id)) != null ? _old$filter : [];
-            }
-            const newFilterObj = {
-              id: column2.id,
-              value: newFilter
-            };
-            if (previousfilter) {
-              var _old$map;
-              return (_old$map = old == null ? void 0 : old.map((d) => {
-                if (d.id === column2.id) {
-                  return newFilterObj;
-                }
-                return d;
-              })) != null ? _old$map : [];
-            }
-            if (old != null && old.length) {
-              return [...old, newFilterObj];
-            }
-            return [newFilterObj];
-          });
-        },
-        _getFacetedRowModel: table.options.getFacetedRowModel && table.options.getFacetedRowModel(table, column2.id),
-        getFacetedRowModel: () => {
-          if (!column2._getFacetedRowModel) {
-            return table.getPreFilteredRowModel();
-          }
-          return column2._getFacetedRowModel();
-        },
-        _getFacetedUniqueValues: table.options.getFacetedUniqueValues && table.options.getFacetedUniqueValues(table, column2.id),
-        getFacetedUniqueValues: () => {
-          if (!column2._getFacetedUniqueValues) {
-            return /* @__PURE__ */ new Map();
-          }
-          return column2._getFacetedUniqueValues();
-        },
-        _getFacetedMinMaxValues: table.options.getFacetedMinMaxValues && table.options.getFacetedMinMaxValues(table, column2.id),
-        getFacetedMinMaxValues: () => {
-          if (!column2._getFacetedMinMaxValues) {
-            return void 0;
-          }
-          return column2._getFacetedMinMaxValues();
+      column2.getAutoFilterFn = () => {
+        const firstRow = table.getCoreRowModel().flatRows[0];
+        const value = firstRow == null ? void 0 : firstRow.getValue(column2.id);
+        if (typeof value === "string") {
+          return filterFns.includesString;
         }
-        // () => [column.getFacetedRowModel()],
-        // facetedRowModel => getRowModelMinMaxValues(facetedRowModel, column.id),
+        if (typeof value === "number") {
+          return filterFns.inNumberRange;
+        }
+        if (typeof value === "boolean") {
+          return filterFns.equals;
+        }
+        if (value !== null && typeof value === "object") {
+          return filterFns.equals;
+        }
+        if (Array.isArray(value)) {
+          return filterFns.arrIncludes;
+        }
+        return filterFns.weakEquals;
+      };
+      column2.getFilterFn = () => {
+        var _table$options$filter, _table$options$filter2;
+        return isFunction$1(column2.columnDef.filterFn) ? column2.columnDef.filterFn : column2.columnDef.filterFn === "auto" ? column2.getAutoFilterFn() : (
+          // @ts-ignore
+          (_table$options$filter = (_table$options$filter2 = table.options.filterFns) == null ? void 0 : _table$options$filter2[column2.columnDef.filterFn]) != null ? _table$options$filter : filterFns[column2.columnDef.filterFn]
+        );
+      };
+      column2.getCanFilter = () => {
+        var _column$columnDef$ena, _table$options$enable, _table$options$enable2;
+        return ((_column$columnDef$ena = column2.columnDef.enableColumnFilter) != null ? _column$columnDef$ena : true) && ((_table$options$enable = table.options.enableColumnFilters) != null ? _table$options$enable : true) && ((_table$options$enable2 = table.options.enableFilters) != null ? _table$options$enable2 : true) && !!column2.accessorFn;
+      };
+      column2.getCanGlobalFilter = () => {
+        var _column$columnDef$ena2, _table$options$enable3, _table$options$enable4, _table$options$getCol;
+        return ((_column$columnDef$ena2 = column2.columnDef.enableGlobalFilter) != null ? _column$columnDef$ena2 : true) && ((_table$options$enable3 = table.options.enableGlobalFilter) != null ? _table$options$enable3 : true) && ((_table$options$enable4 = table.options.enableFilters) != null ? _table$options$enable4 : true) && ((_table$options$getCol = table.options.getColumnCanGlobalFilter == null ? void 0 : table.options.getColumnCanGlobalFilter(column2)) != null ? _table$options$getCol : true) && !!column2.accessorFn;
+      };
+      column2.getIsFiltered = () => column2.getFilterIndex() > -1;
+      column2.getFilterValue = () => {
+        var _table$getState$colum;
+        return (_table$getState$colum = table.getState().columnFilters) == null || (_table$getState$colum = _table$getState$colum.find((d) => d.id === column2.id)) == null ? void 0 : _table$getState$colum.value;
+      };
+      column2.getFilterIndex = () => {
+        var _table$getState$colum2, _table$getState$colum3;
+        return (_table$getState$colum2 = (_table$getState$colum3 = table.getState().columnFilters) == null ? void 0 : _table$getState$colum3.findIndex((d) => d.id === column2.id)) != null ? _table$getState$colum2 : -1;
+      };
+      column2.setFilterValue = (value) => {
+        table.setColumnFilters((old) => {
+          const filterFn = column2.getFilterFn();
+          const previousfilter = old == null ? void 0 : old.find((d) => d.id === column2.id);
+          const newFilter = functionalUpdate(value, previousfilter ? previousfilter.value : void 0);
+          if (shouldAutoRemoveFilter(filterFn, newFilter, column2)) {
+            var _old$filter;
+            return (_old$filter = old == null ? void 0 : old.filter((d) => d.id !== column2.id)) != null ? _old$filter : [];
+          }
+          const newFilterObj = {
+            id: column2.id,
+            value: newFilter
+          };
+          if (previousfilter) {
+            var _old$map;
+            return (_old$map = old == null ? void 0 : old.map((d) => {
+              if (d.id === column2.id) {
+                return newFilterObj;
+              }
+              return d;
+            })) != null ? _old$map : [];
+          }
+          if (old != null && old.length) {
+            return [...old, newFilterObj];
+          }
+          return [newFilterObj];
+        });
+      };
+      column2._getFacetedRowModel = table.options.getFacetedRowModel && table.options.getFacetedRowModel(table, column2.id);
+      column2.getFacetedRowModel = () => {
+        if (!column2._getFacetedRowModel) {
+          return table.getPreFilteredRowModel();
+        }
+        return column2._getFacetedRowModel();
+      };
+      column2._getFacetedUniqueValues = table.options.getFacetedUniqueValues && table.options.getFacetedUniqueValues(table, column2.id);
+      column2.getFacetedUniqueValues = () => {
+        if (!column2._getFacetedUniqueValues) {
+          return /* @__PURE__ */ new Map();
+        }
+        return column2._getFacetedUniqueValues();
+      };
+      column2._getFacetedMinMaxValues = table.options.getFacetedMinMaxValues && table.options.getFacetedMinMaxValues(table, column2.id);
+      column2.getFacetedMinMaxValues = () => {
+        if (!column2._getFacetedMinMaxValues) {
+          return void 0;
+        }
+        return column2._getFacetedMinMaxValues();
       };
     },
     createRow: (row, table) => {
-      return {
-        columnFilters: {},
-        columnFiltersMeta: {}
-      };
+      row.columnFilters = {};
+      row.columnFiltersMeta = {};
     },
     createTable: (table) => {
-      return {
-        getGlobalAutoFilterFn: () => {
-          return filterFns.includesString;
-        },
-        getGlobalFilterFn: () => {
-          var _table$options$filter3, _table$options$filter4;
-          const {
-            globalFilterFn
-          } = table.options;
-          return isFunction$1(globalFilterFn) ? globalFilterFn : globalFilterFn === "auto" ? table.getGlobalAutoFilterFn() : (_table$options$filter3 = (_table$options$filter4 = table.options.filterFns) == null ? void 0 : _table$options$filter4[globalFilterFn]) != null ? _table$options$filter3 : filterFns[globalFilterFn];
-        },
-        setColumnFilters: (updater) => {
-          const leafColumns = table.getAllLeafColumns();
-          const updateFn = (old) => {
-            var _functionalUpdate;
-            return (_functionalUpdate = functionalUpdate(updater, old)) == null ? void 0 : _functionalUpdate.filter((filter2) => {
-              const column2 = leafColumns.find((d) => d.id === filter2.id);
-              if (column2) {
-                const filterFn = column2.getFilterFn();
-                if (shouldAutoRemoveFilter(filterFn, filter2.value, column2)) {
-                  return false;
-                }
+      table.getGlobalAutoFilterFn = () => {
+        return filterFns.includesString;
+      };
+      table.getGlobalFilterFn = () => {
+        var _table$options$filter3, _table$options$filter4;
+        const {
+          globalFilterFn
+        } = table.options;
+        return isFunction$1(globalFilterFn) ? globalFilterFn : globalFilterFn === "auto" ? table.getGlobalAutoFilterFn() : (
+          // @ts-ignore
+          (_table$options$filter3 = (_table$options$filter4 = table.options.filterFns) == null ? void 0 : _table$options$filter4[globalFilterFn]) != null ? _table$options$filter3 : filterFns[globalFilterFn]
+        );
+      };
+      table.setColumnFilters = (updater) => {
+        const leafColumns = table.getAllLeafColumns();
+        const updateFn = (old) => {
+          var _functionalUpdate;
+          return (_functionalUpdate = functionalUpdate(updater, old)) == null ? void 0 : _functionalUpdate.filter((filter2) => {
+            const column2 = leafColumns.find((d) => d.id === filter2.id);
+            if (column2) {
+              const filterFn = column2.getFilterFn();
+              if (shouldAutoRemoveFilter(filterFn, filter2.value, column2)) {
+                return false;
               }
-              return true;
-            });
-          };
-          table.options.onColumnFiltersChange == null ? void 0 : table.options.onColumnFiltersChange(updateFn);
-        },
-        setGlobalFilter: (updater) => {
-          table.options.onGlobalFilterChange == null ? void 0 : table.options.onGlobalFilterChange(updater);
-        },
-        resetGlobalFilter: (defaultState) => {
-          table.setGlobalFilter(defaultState ? void 0 : table.initialState.globalFilter);
-        },
-        resetColumnFilters: (defaultState) => {
-          var _table$initialState$c, _table$initialState;
-          table.setColumnFilters(defaultState ? [] : (_table$initialState$c = (_table$initialState = table.initialState) == null ? void 0 : _table$initialState.columnFilters) != null ? _table$initialState$c : []);
-        },
-        getPreFilteredRowModel: () => table.getCoreRowModel(),
-        getFilteredRowModel: () => {
-          if (!table._getFilteredRowModel && table.options.getFilteredRowModel) {
-            table._getFilteredRowModel = table.options.getFilteredRowModel(table);
-          }
-          if (table.options.manualFiltering || !table._getFilteredRowModel) {
-            return table.getPreFilteredRowModel();
-          }
-          return table._getFilteredRowModel();
-        },
-        _getGlobalFacetedRowModel: table.options.getFacetedRowModel && table.options.getFacetedRowModel(table, "__global__"),
-        getGlobalFacetedRowModel: () => {
-          if (table.options.manualFiltering || !table._getGlobalFacetedRowModel) {
-            return table.getPreFilteredRowModel();
-          }
-          return table._getGlobalFacetedRowModel();
-        },
-        _getGlobalFacetedUniqueValues: table.options.getFacetedUniqueValues && table.options.getFacetedUniqueValues(table, "__global__"),
-        getGlobalFacetedUniqueValues: () => {
-          if (!table._getGlobalFacetedUniqueValues) {
-            return /* @__PURE__ */ new Map();
-          }
-          return table._getGlobalFacetedUniqueValues();
-        },
-        _getGlobalFacetedMinMaxValues: table.options.getFacetedMinMaxValues && table.options.getFacetedMinMaxValues(table, "__global__"),
-        getGlobalFacetedMinMaxValues: () => {
-          if (!table._getGlobalFacetedMinMaxValues) {
-            return;
-          }
-          return table._getGlobalFacetedMinMaxValues();
+            }
+            return true;
+          });
+        };
+        table.options.onColumnFiltersChange == null || table.options.onColumnFiltersChange(updateFn);
+      };
+      table.setGlobalFilter = (updater) => {
+        table.options.onGlobalFilterChange == null || table.options.onGlobalFilterChange(updater);
+      };
+      table.resetGlobalFilter = (defaultState) => {
+        table.setGlobalFilter(defaultState ? void 0 : table.initialState.globalFilter);
+      };
+      table.resetColumnFilters = (defaultState) => {
+        var _table$initialState$c, _table$initialState;
+        table.setColumnFilters(defaultState ? [] : (_table$initialState$c = (_table$initialState = table.initialState) == null ? void 0 : _table$initialState.columnFilters) != null ? _table$initialState$c : []);
+      };
+      table.getPreFilteredRowModel = () => table.getCoreRowModel();
+      table.getFilteredRowModel = () => {
+        if (!table._getFilteredRowModel && table.options.getFilteredRowModel) {
+          table._getFilteredRowModel = table.options.getFilteredRowModel(table);
         }
+        if (table.options.manualFiltering || !table._getFilteredRowModel) {
+          return table.getPreFilteredRowModel();
+        }
+        return table._getFilteredRowModel();
+      };
+      table._getGlobalFacetedRowModel = table.options.getFacetedRowModel && table.options.getFacetedRowModel(table, "__global__");
+      table.getGlobalFacetedRowModel = () => {
+        if (table.options.manualFiltering || !table._getGlobalFacetedRowModel) {
+          return table.getPreFilteredRowModel();
+        }
+        return table._getGlobalFacetedRowModel();
+      };
+      table._getGlobalFacetedUniqueValues = table.options.getFacetedUniqueValues && table.options.getFacetedUniqueValues(table, "__global__");
+      table.getGlobalFacetedUniqueValues = () => {
+        if (!table._getGlobalFacetedUniqueValues) {
+          return /* @__PURE__ */ new Map();
+        }
+        return table._getGlobalFacetedUniqueValues();
+      };
+      table._getGlobalFacetedMinMaxValues = table.options.getFacetedMinMaxValues && table.options.getFacetedMinMaxValues(table, "__global__");
+      table.getGlobalFacetedMinMaxValues = () => {
+        if (!table._getGlobalFacetedMinMaxValues) {
+          return;
+        }
+        return table._getGlobalFacetedMinMaxValues();
       };
     }
   };
@@ -23494,7 +24157,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return {
         aggregatedCell: (props) => {
           var _toString, _props$getValue;
-          return (_toString = (_props$getValue = props.getValue()) == null ? void 0 : _props$getValue.toString == null ? void 0 : _props$getValue.toString()) != null ? _toString : null;
+          return (_toString = (_props$getValue = props.getValue()) == null || _props$getValue.toString == null ? void 0 : _props$getValue.toString()) != null ? _toString : null;
         },
         aggregationFn: "auto"
       };
@@ -23511,98 +24174,90 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     },
     createColumn: (column2, table) => {
-      return {
-        toggleGrouping: () => {
-          table.setGrouping((old) => {
-            if (old != null && old.includes(column2.id)) {
-              return old.filter((d) => d !== column2.id);
-            }
-            return [...old != null ? old : [], column2.id];
-          });
-        },
-        getCanGroup: () => {
-          var _ref, _ref2, _ref3, _column$columnDef$ena;
-          return (_ref = (_ref2 = (_ref3 = (_column$columnDef$ena = column2.columnDef.enableGrouping) != null ? _column$columnDef$ena : true) != null ? _ref3 : table.options.enableGrouping) != null ? _ref2 : true) != null ? _ref : !!column2.accessorFn;
-        },
-        getIsGrouped: () => {
-          var _table$getState$group;
-          return (_table$getState$group = table.getState().grouping) == null ? void 0 : _table$getState$group.includes(column2.id);
-        },
-        getGroupedIndex: () => {
-          var _table$getState$group2;
-          return (_table$getState$group2 = table.getState().grouping) == null ? void 0 : _table$getState$group2.indexOf(column2.id);
-        },
-        getToggleGroupingHandler: () => {
-          const canGroup = column2.getCanGroup();
-          return () => {
-            if (!canGroup)
-              return;
-            column2.toggleGrouping();
-          };
-        },
-        getAutoAggregationFn: () => {
-          const firstRow = table.getCoreRowModel().flatRows[0];
-          const value = firstRow == null ? void 0 : firstRow.getValue(column2.id);
-          if (typeof value === "number") {
-            return aggregationFns.sum;
+      column2.toggleGrouping = () => {
+        table.setGrouping((old) => {
+          if (old != null && old.includes(column2.id)) {
+            return old.filter((d) => d !== column2.id);
           }
-          if (Object.prototype.toString.call(value) === "[object Date]") {
-            return aggregationFns.extent;
-          }
-        },
-        getAggregationFn: () => {
-          var _table$options$aggreg, _table$options$aggreg2;
-          if (!column2) {
-            throw new Error();
-          }
-          return isFunction$1(column2.columnDef.aggregationFn) ? column2.columnDef.aggregationFn : column2.columnDef.aggregationFn === "auto" ? column2.getAutoAggregationFn() : (_table$options$aggreg = (_table$options$aggreg2 = table.options.aggregationFns) == null ? void 0 : _table$options$aggreg2[column2.columnDef.aggregationFn]) != null ? _table$options$aggreg : aggregationFns[column2.columnDef.aggregationFn];
+          return [...old != null ? old : [], column2.id];
+        });
+      };
+      column2.getCanGroup = () => {
+        var _ref, _ref2, _ref3, _column$columnDef$ena;
+        return (_ref = (_ref2 = (_ref3 = (_column$columnDef$ena = column2.columnDef.enableGrouping) != null ? _column$columnDef$ena : true) != null ? _ref3 : table.options.enableGrouping) != null ? _ref2 : true) != null ? _ref : !!column2.accessorFn;
+      };
+      column2.getIsGrouped = () => {
+        var _table$getState$group;
+        return (_table$getState$group = table.getState().grouping) == null ? void 0 : _table$getState$group.includes(column2.id);
+      };
+      column2.getGroupedIndex = () => {
+        var _table$getState$group2;
+        return (_table$getState$group2 = table.getState().grouping) == null ? void 0 : _table$getState$group2.indexOf(column2.id);
+      };
+      column2.getToggleGroupingHandler = () => {
+        const canGroup = column2.getCanGroup();
+        return () => {
+          if (!canGroup)
+            return;
+          column2.toggleGrouping();
+        };
+      };
+      column2.getAutoAggregationFn = () => {
+        const firstRow = table.getCoreRowModel().flatRows[0];
+        const value = firstRow == null ? void 0 : firstRow.getValue(column2.id);
+        if (typeof value === "number") {
+          return aggregationFns.sum;
         }
+        if (Object.prototype.toString.call(value) === "[object Date]") {
+          return aggregationFns.extent;
+        }
+      };
+      column2.getAggregationFn = () => {
+        var _table$options$aggreg, _table$options$aggreg2;
+        if (!column2) {
+          throw new Error();
+        }
+        return isFunction$1(column2.columnDef.aggregationFn) ? column2.columnDef.aggregationFn : column2.columnDef.aggregationFn === "auto" ? column2.getAutoAggregationFn() : (_table$options$aggreg = (_table$options$aggreg2 = table.options.aggregationFns) == null ? void 0 : _table$options$aggreg2[column2.columnDef.aggregationFn]) != null ? _table$options$aggreg : aggregationFns[column2.columnDef.aggregationFn];
       };
     },
     createTable: (table) => {
-      return {
-        setGrouping: (updater) => table.options.onGroupingChange == null ? void 0 : table.options.onGroupingChange(updater),
-        resetGrouping: (defaultState) => {
-          var _table$initialState$g, _table$initialState;
-          table.setGrouping(defaultState ? [] : (_table$initialState$g = (_table$initialState = table.initialState) == null ? void 0 : _table$initialState.grouping) != null ? _table$initialState$g : []);
-        },
-        getPreGroupedRowModel: () => table.getFilteredRowModel(),
-        getGroupedRowModel: () => {
-          if (!table._getGroupedRowModel && table.options.getGroupedRowModel) {
-            table._getGroupedRowModel = table.options.getGroupedRowModel(table);
-          }
-          if (table.options.manualGrouping || !table._getGroupedRowModel) {
-            return table.getPreGroupedRowModel();
-          }
-          return table._getGroupedRowModel();
+      table.setGrouping = (updater) => table.options.onGroupingChange == null ? void 0 : table.options.onGroupingChange(updater);
+      table.resetGrouping = (defaultState) => {
+        var _table$initialState$g, _table$initialState;
+        table.setGrouping(defaultState ? [] : (_table$initialState$g = (_table$initialState = table.initialState) == null ? void 0 : _table$initialState.grouping) != null ? _table$initialState$g : []);
+      };
+      table.getPreGroupedRowModel = () => table.getFilteredRowModel();
+      table.getGroupedRowModel = () => {
+        if (!table._getGroupedRowModel && table.options.getGroupedRowModel) {
+          table._getGroupedRowModel = table.options.getGroupedRowModel(table);
         }
+        if (table.options.manualGrouping || !table._getGroupedRowModel) {
+          return table.getPreGroupedRowModel();
+        }
+        return table._getGroupedRowModel();
       };
     },
     createRow: (row, table) => {
-      return {
-        getIsGrouped: () => !!row.groupingColumnId,
-        getGroupingValue: (columnId) => {
-          if (row._groupingValuesCache.hasOwnProperty(columnId)) {
-            return row._groupingValuesCache[columnId];
-          }
-          const column2 = table.getColumn(columnId);
-          if (!(column2 != null && column2.columnDef.getGroupingValue)) {
-            return row.getValue(columnId);
-          }
-          row._groupingValuesCache[columnId] = column2.columnDef.getGroupingValue(row.original);
+      row.getIsGrouped = () => !!row.groupingColumnId;
+      row.getGroupingValue = (columnId) => {
+        if (row._groupingValuesCache.hasOwnProperty(columnId)) {
           return row._groupingValuesCache[columnId];
-        },
-        _groupingValuesCache: {}
+        }
+        const column2 = table.getColumn(columnId);
+        if (!(column2 != null && column2.columnDef.getGroupingValue)) {
+          return row.getValue(columnId);
+        }
+        row._groupingValuesCache[columnId] = column2.columnDef.getGroupingValue(row.original);
+        return row._groupingValuesCache[columnId];
       };
+      row._groupingValuesCache = {};
     },
     createCell: (cell, column2, row, table) => {
-      return {
-        getIsGrouped: () => column2.getIsGrouped() && column2.id === row.groupingColumnId,
-        getIsPlaceholder: () => !cell.getIsGrouped() && column2.getIsGrouped(),
-        getIsAggregated: () => {
-          var _row$subRows;
-          return !cell.getIsGrouped() && !cell.getIsPlaceholder() && !!((_row$subRows = row.subRows) != null && _row$subRows.length);
-        }
+      cell.getIsGrouped = () => column2.getIsGrouped() && column2.id === row.groupingColumnId;
+      cell.getIsPlaceholder = () => !cell.getIsGrouped() && column2.getIsGrouped();
+      cell.getIsAggregated = () => {
+        var _row$subRows;
+        return !cell.getIsGrouped() && !cell.getIsPlaceholder() && !!((_row$subRows = row.subRows) != null && _row$subRows.length);
       };
     }
   };
@@ -23629,34 +24284,32 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     },
     createTable: (table) => {
-      return {
-        setColumnOrder: (updater) => table.options.onColumnOrderChange == null ? void 0 : table.options.onColumnOrderChange(updater),
-        resetColumnOrder: (defaultState) => {
-          var _table$initialState$c;
-          table.setColumnOrder(defaultState ? [] : (_table$initialState$c = table.initialState.columnOrder) != null ? _table$initialState$c : []);
-        },
-        _getOrderColumnsFn: memo$1(() => [table.getState().columnOrder, table.getState().grouping, table.options.groupedColumnMode], (columnOrder, grouping, groupedColumnMode) => (columns) => {
-          let orderedColumns = [];
-          if (!(columnOrder != null && columnOrder.length)) {
-            orderedColumns = columns;
-          } else {
-            const columnOrderCopy = [...columnOrder];
-            const columnsCopy = [...columns];
-            while (columnsCopy.length && columnOrderCopy.length) {
-              const targetColumnId = columnOrderCopy.shift();
-              const foundIndex = columnsCopy.findIndex((d) => d.id === targetColumnId);
-              if (foundIndex > -1) {
-                orderedColumns.push(columnsCopy.splice(foundIndex, 1)[0]);
-              }
-            }
-            orderedColumns = [...orderedColumns, ...columnsCopy];
-          }
-          return orderColumns(orderedColumns, grouping, groupedColumnMode);
-        }, {
-          key: process.env.NODE_ENV === "development" && "getOrderColumnsFn"
-          // debug: () => table.options.debugAll ?? table.options.debugTable,
-        })
+      table.setColumnOrder = (updater) => table.options.onColumnOrderChange == null ? void 0 : table.options.onColumnOrderChange(updater);
+      table.resetColumnOrder = (defaultState) => {
+        var _table$initialState$c;
+        table.setColumnOrder(defaultState ? [] : (_table$initialState$c = table.initialState.columnOrder) != null ? _table$initialState$c : []);
       };
+      table._getOrderColumnsFn = memo$1(() => [table.getState().columnOrder, table.getState().grouping, table.options.groupedColumnMode], (columnOrder, grouping, groupedColumnMode) => (columns) => {
+        let orderedColumns = [];
+        if (!(columnOrder != null && columnOrder.length)) {
+          orderedColumns = columns;
+        } else {
+          const columnOrderCopy = [...columnOrder];
+          const columnsCopy = [...columns];
+          while (columnsCopy.length && columnOrderCopy.length) {
+            const targetColumnId = columnOrderCopy.shift();
+            const foundIndex = columnsCopy.findIndex((d) => d.id === targetColumnId);
+            if (foundIndex > -1) {
+              orderedColumns.push(columnsCopy.splice(foundIndex, 1)[0]);
+            }
+          }
+          orderedColumns = [...orderedColumns, ...columnsCopy];
+        }
+        return orderColumns(orderedColumns, grouping, groupedColumnMode);
+      }, {
+        key: process.env.NODE_ENV === "development" && "getOrderColumnsFn"
+        // debug: () => table.options.debugAll ?? table.options.debugTable,
+      });
     }
   };
   const defaultPageIndex = 0;
@@ -23679,275 +24332,392 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     createTable: (table) => {
       let registered = false;
       let queued = false;
-      return {
-        _autoResetPageIndex: () => {
-          var _ref, _table$options$autoRe;
-          if (!registered) {
-            table._queue(() => {
-              registered = true;
-            });
-            return;
-          }
-          if ((_ref = (_table$options$autoRe = table.options.autoResetAll) != null ? _table$options$autoRe : table.options.autoResetPageIndex) != null ? _ref : !table.options.manualPagination) {
-            if (queued)
-              return;
-            queued = true;
-            table._queue(() => {
-              table.resetPageIndex();
-              queued = false;
-            });
-          }
-        },
-        setPagination: (updater) => {
-          const safeUpdater = (old) => {
-            let newState = functionalUpdate(updater, old);
-            return newState;
-          };
-          return table.options.onPaginationChange == null ? void 0 : table.options.onPaginationChange(safeUpdater);
-        },
-        resetPagination: (defaultState) => {
-          var _table$initialState$p;
-          table.setPagination(defaultState ? getDefaultPaginationState() : (_table$initialState$p = table.initialState.pagination) != null ? _table$initialState$p : getDefaultPaginationState());
-        },
-        setPageIndex: (updater) => {
-          table.setPagination((old) => {
-            let pageIndex = functionalUpdate(updater, old.pageIndex);
-            const maxPageIndex = typeof table.options.pageCount === "undefined" || table.options.pageCount === -1 ? Number.MAX_SAFE_INTEGER : table.options.pageCount - 1;
-            pageIndex = Math.max(0, Math.min(pageIndex, maxPageIndex));
-            return __spreadProps(__spreadValues({}, old), {
-              pageIndex
-            });
+      table._autoResetPageIndex = () => {
+        var _ref, _table$options$autoRe;
+        if (!registered) {
+          table._queue(() => {
+            registered = true;
           });
-        },
-        resetPageIndex: (defaultState) => {
-          var _table$initialState$p2, _table$initialState, _table$initialState$p3;
-          table.setPageIndex(defaultState ? defaultPageIndex : (_table$initialState$p2 = (_table$initialState = table.initialState) == null ? void 0 : (_table$initialState$p3 = _table$initialState.pagination) == null ? void 0 : _table$initialState$p3.pageIndex) != null ? _table$initialState$p2 : defaultPageIndex);
-        },
-        resetPageSize: (defaultState) => {
-          var _table$initialState$p4, _table$initialState2, _table$initialState2$;
-          table.setPageSize(defaultState ? defaultPageSize : (_table$initialState$p4 = (_table$initialState2 = table.initialState) == null ? void 0 : (_table$initialState2$ = _table$initialState2.pagination) == null ? void 0 : _table$initialState2$.pageSize) != null ? _table$initialState$p4 : defaultPageSize);
-        },
-        setPageSize: (updater) => {
-          table.setPagination((old) => {
-            const pageSize2 = Math.max(1, functionalUpdate(updater, old.pageSize));
-            const topRowIndex = old.pageSize * old.pageIndex;
-            const pageIndex = Math.floor(topRowIndex / pageSize2);
-            return __spreadProps(__spreadValues({}, old), {
-              pageIndex,
-              pageSize: pageSize2
-            });
-          });
-        },
-        setPageCount: (updater) => table.setPagination((old) => {
-          var _table$options$pageCo;
-          let newPageCount = functionalUpdate(updater, (_table$options$pageCo = table.options.pageCount) != null ? _table$options$pageCo : -1);
-          if (typeof newPageCount === "number") {
-            newPageCount = Math.max(-1, newPageCount);
-          }
-          return __spreadProps(__spreadValues({}, old), {
-            pageCount: newPageCount
-          });
-        }),
-        getPageOptions: memo$1(() => [table.getPageCount()], (pageCount) => {
-          let pageOptions = [];
-          if (pageCount && pageCount > 0) {
-            pageOptions = [...new Array(pageCount)].fill(null).map((_2, i) => i);
-          }
-          return pageOptions;
-        }, {
-          key: process.env.NODE_ENV === "development" && "getPageOptions",
-          debug: () => {
-            var _table$options$debugA;
-            return (_table$options$debugA = table.options.debugAll) != null ? _table$options$debugA : table.options.debugTable;
-          }
-        }),
-        getCanPreviousPage: () => table.getState().pagination.pageIndex > 0,
-        getCanNextPage: () => {
-          const {
-            pageIndex
-          } = table.getState().pagination;
-          const pageCount = table.getPageCount();
-          if (pageCount === -1) {
-            return true;
-          }
-          if (pageCount === 0) {
-            return false;
-          }
-          return pageIndex < pageCount - 1;
-        },
-        previousPage: () => {
-          return table.setPageIndex((old) => old - 1);
-        },
-        nextPage: () => {
-          return table.setPageIndex((old) => {
-            return old + 1;
-          });
-        },
-        getPrePaginationRowModel: () => table.getExpandedRowModel(),
-        getPaginationRowModel: () => {
-          if (!table._getPaginationRowModel && table.options.getPaginationRowModel) {
-            table._getPaginationRowModel = table.options.getPaginationRowModel(table);
-          }
-          if (table.options.manualPagination || !table._getPaginationRowModel) {
-            return table.getPrePaginationRowModel();
-          }
-          return table._getPaginationRowModel();
-        },
-        getPageCount: () => {
-          var _table$options$pageCo2;
-          return (_table$options$pageCo2 = table.options.pageCount) != null ? _table$options$pageCo2 : Math.ceil(table.getPrePaginationRowModel().rows.length / table.getState().pagination.pageSize);
+          return;
         }
+        if ((_ref = (_table$options$autoRe = table.options.autoResetAll) != null ? _table$options$autoRe : table.options.autoResetPageIndex) != null ? _ref : !table.options.manualPagination) {
+          if (queued)
+            return;
+          queued = true;
+          table._queue(() => {
+            table.resetPageIndex();
+            queued = false;
+          });
+        }
+      };
+      table.setPagination = (updater) => {
+        const safeUpdater = (old) => {
+          let newState = functionalUpdate(updater, old);
+          return newState;
+        };
+        return table.options.onPaginationChange == null ? void 0 : table.options.onPaginationChange(safeUpdater);
+      };
+      table.resetPagination = (defaultState) => {
+        var _table$initialState$p;
+        table.setPagination(defaultState ? getDefaultPaginationState() : (_table$initialState$p = table.initialState.pagination) != null ? _table$initialState$p : getDefaultPaginationState());
+      };
+      table.setPageIndex = (updater) => {
+        table.setPagination((old) => {
+          let pageIndex = functionalUpdate(updater, old.pageIndex);
+          const maxPageIndex = typeof table.options.pageCount === "undefined" || table.options.pageCount === -1 ? Number.MAX_SAFE_INTEGER : table.options.pageCount - 1;
+          pageIndex = Math.max(0, Math.min(pageIndex, maxPageIndex));
+          return __spreadProps(__spreadValues({}, old), {
+            pageIndex
+          });
+        });
+      };
+      table.resetPageIndex = (defaultState) => {
+        var _table$initialState$p2, _table$initialState;
+        table.setPageIndex(defaultState ? defaultPageIndex : (_table$initialState$p2 = (_table$initialState = table.initialState) == null || (_table$initialState = _table$initialState.pagination) == null ? void 0 : _table$initialState.pageIndex) != null ? _table$initialState$p2 : defaultPageIndex);
+      };
+      table.resetPageSize = (defaultState) => {
+        var _table$initialState$p3, _table$initialState2;
+        table.setPageSize(defaultState ? defaultPageSize : (_table$initialState$p3 = (_table$initialState2 = table.initialState) == null || (_table$initialState2 = _table$initialState2.pagination) == null ? void 0 : _table$initialState2.pageSize) != null ? _table$initialState$p3 : defaultPageSize);
+      };
+      table.setPageSize = (updater) => {
+        table.setPagination((old) => {
+          const pageSize2 = Math.max(1, functionalUpdate(updater, old.pageSize));
+          const topRowIndex = old.pageSize * old.pageIndex;
+          const pageIndex = Math.floor(topRowIndex / pageSize2);
+          return __spreadProps(__spreadValues({}, old), {
+            pageIndex,
+            pageSize: pageSize2
+          });
+        });
+      };
+      table.setPageCount = (updater) => table.setPagination((old) => {
+        var _table$options$pageCo;
+        let newPageCount = functionalUpdate(updater, (_table$options$pageCo = table.options.pageCount) != null ? _table$options$pageCo : -1);
+        if (typeof newPageCount === "number") {
+          newPageCount = Math.max(-1, newPageCount);
+        }
+        return __spreadProps(__spreadValues({}, old), {
+          pageCount: newPageCount
+        });
+      });
+      table.getPageOptions = memo$1(() => [table.getPageCount()], (pageCount) => {
+        let pageOptions = [];
+        if (pageCount && pageCount > 0) {
+          pageOptions = [...new Array(pageCount)].fill(null).map((_2, i) => i);
+        }
+        return pageOptions;
+      }, {
+        key: process.env.NODE_ENV === "development" && "getPageOptions",
+        debug: () => {
+          var _table$options$debugA;
+          return (_table$options$debugA = table.options.debugAll) != null ? _table$options$debugA : table.options.debugTable;
+        }
+      });
+      table.getCanPreviousPage = () => table.getState().pagination.pageIndex > 0;
+      table.getCanNextPage = () => {
+        const {
+          pageIndex
+        } = table.getState().pagination;
+        const pageCount = table.getPageCount();
+        if (pageCount === -1) {
+          return true;
+        }
+        if (pageCount === 0) {
+          return false;
+        }
+        return pageIndex < pageCount - 1;
+      };
+      table.previousPage = () => {
+        return table.setPageIndex((old) => old - 1);
+      };
+      table.nextPage = () => {
+        return table.setPageIndex((old) => {
+          return old + 1;
+        });
+      };
+      table.getPrePaginationRowModel = () => table.getExpandedRowModel();
+      table.getPaginationRowModel = () => {
+        if (!table._getPaginationRowModel && table.options.getPaginationRowModel) {
+          table._getPaginationRowModel = table.options.getPaginationRowModel(table);
+        }
+        if (table.options.manualPagination || !table._getPaginationRowModel) {
+          return table.getPrePaginationRowModel();
+        }
+        return table._getPaginationRowModel();
+      };
+      table.getPageCount = () => {
+        var _table$options$pageCo2;
+        return (_table$options$pageCo2 = table.options.pageCount) != null ? _table$options$pageCo2 : Math.ceil(table.getPrePaginationRowModel().rows.length / table.getState().pagination.pageSize);
       };
     }
   };
-  const getDefaultPinningState = () => ({
+  const getDefaultColumnPinningState = () => ({
     left: [],
     right: []
+  });
+  const getDefaultRowPinningState = () => ({
+    top: [],
+    bottom: []
   });
   const Pinning = {
     getInitialState: (state) => {
       return __spreadValues({
-        columnPinning: getDefaultPinningState()
+        columnPinning: getDefaultColumnPinningState(),
+        rowPinning: getDefaultRowPinningState()
       }, state);
     },
     getDefaultOptions: (table) => {
       return {
-        onColumnPinningChange: makeStateUpdater("columnPinning", table)
+        onColumnPinningChange: makeStateUpdater("columnPinning", table),
+        onRowPinningChange: makeStateUpdater("rowPinning", table)
       };
     },
     createColumn: (column2, table) => {
-      return {
-        pin: (position2) => {
-          const columnIds = column2.getLeafColumns().map((d) => d.id).filter(Boolean);
-          table.setColumnPinning((old) => {
-            var _old$left3, _old$right3;
-            if (position2 === "right") {
-              var _old$left, _old$right;
-              return {
-                left: ((_old$left = old == null ? void 0 : old.left) != null ? _old$left : []).filter((d) => !(columnIds != null && columnIds.includes(d))),
-                right: [...((_old$right = old == null ? void 0 : old.right) != null ? _old$right : []).filter((d) => !(columnIds != null && columnIds.includes(d))), ...columnIds]
-              };
-            }
-            if (position2 === "left") {
-              var _old$left2, _old$right2;
-              return {
-                left: [...((_old$left2 = old == null ? void 0 : old.left) != null ? _old$left2 : []).filter((d) => !(columnIds != null && columnIds.includes(d))), ...columnIds],
-                right: ((_old$right2 = old == null ? void 0 : old.right) != null ? _old$right2 : []).filter((d) => !(columnIds != null && columnIds.includes(d)))
-              };
-            }
+      column2.pin = (position2) => {
+        const columnIds = column2.getLeafColumns().map((d) => d.id).filter(Boolean);
+        table.setColumnPinning((old) => {
+          var _old$left3, _old$right3;
+          if (position2 === "right") {
+            var _old$left, _old$right;
             return {
-              left: ((_old$left3 = old == null ? void 0 : old.left) != null ? _old$left3 : []).filter((d) => !(columnIds != null && columnIds.includes(d))),
-              right: ((_old$right3 = old == null ? void 0 : old.right) != null ? _old$right3 : []).filter((d) => !(columnIds != null && columnIds.includes(d)))
+              left: ((_old$left = old == null ? void 0 : old.left) != null ? _old$left : []).filter((d) => !(columnIds != null && columnIds.includes(d))),
+              right: [...((_old$right = old == null ? void 0 : old.right) != null ? _old$right : []).filter((d) => !(columnIds != null && columnIds.includes(d))), ...columnIds]
             };
-          });
-        },
-        getCanPin: () => {
-          const leafColumns = column2.getLeafColumns();
-          return leafColumns.some((d) => {
-            var _d$columnDef$enablePi, _table$options$enable;
-            return ((_d$columnDef$enablePi = d.columnDef.enablePinning) != null ? _d$columnDef$enablePi : true) && ((_table$options$enable = table.options.enablePinning) != null ? _table$options$enable : true);
-          });
-        },
-        getIsPinned: () => {
-          const leafColumnIds = column2.getLeafColumns().map((d) => d.id);
-          const {
-            left: left2,
-            right: right2
-          } = table.getState().columnPinning;
-          const isLeft = leafColumnIds.some((d) => left2 == null ? void 0 : left2.includes(d));
-          const isRight = leafColumnIds.some((d) => right2 == null ? void 0 : right2.includes(d));
-          return isLeft ? "left" : isRight ? "right" : false;
-        },
-        getPinnedIndex: () => {
-          var _table$getState$colum, _table$getState$colum2, _table$getState$colum3;
-          const position2 = column2.getIsPinned();
-          return position2 ? (_table$getState$colum = (_table$getState$colum2 = table.getState().columnPinning) == null ? void 0 : (_table$getState$colum3 = _table$getState$colum2[position2]) == null ? void 0 : _table$getState$colum3.indexOf(column2.id)) != null ? _table$getState$colum : -1 : 0;
-        }
+          }
+          if (position2 === "left") {
+            var _old$left2, _old$right2;
+            return {
+              left: [...((_old$left2 = old == null ? void 0 : old.left) != null ? _old$left2 : []).filter((d) => !(columnIds != null && columnIds.includes(d))), ...columnIds],
+              right: ((_old$right2 = old == null ? void 0 : old.right) != null ? _old$right2 : []).filter((d) => !(columnIds != null && columnIds.includes(d)))
+            };
+          }
+          return {
+            left: ((_old$left3 = old == null ? void 0 : old.left) != null ? _old$left3 : []).filter((d) => !(columnIds != null && columnIds.includes(d))),
+            right: ((_old$right3 = old == null ? void 0 : old.right) != null ? _old$right3 : []).filter((d) => !(columnIds != null && columnIds.includes(d)))
+          };
+        });
+      };
+      column2.getCanPin = () => {
+        const leafColumns = column2.getLeafColumns();
+        return leafColumns.some((d) => {
+          var _d$columnDef$enablePi, _ref, _table$options$enable;
+          return ((_d$columnDef$enablePi = d.columnDef.enablePinning) != null ? _d$columnDef$enablePi : true) && ((_ref = (_table$options$enable = table.options.enableColumnPinning) != null ? _table$options$enable : table.options.enablePinning) != null ? _ref : true);
+        });
+      };
+      column2.getIsPinned = () => {
+        const leafColumnIds = column2.getLeafColumns().map((d) => d.id);
+        const {
+          left: left2,
+          right: right2
+        } = table.getState().columnPinning;
+        const isLeft = leafColumnIds.some((d) => left2 == null ? void 0 : left2.includes(d));
+        const isRight = leafColumnIds.some((d) => right2 == null ? void 0 : right2.includes(d));
+        return isLeft ? "left" : isRight ? "right" : false;
+      };
+      column2.getPinnedIndex = () => {
+        var _table$getState$colum, _table$getState$colum2;
+        const position2 = column2.getIsPinned();
+        return position2 ? (_table$getState$colum = (_table$getState$colum2 = table.getState().columnPinning) == null || (_table$getState$colum2 = _table$getState$colum2[position2]) == null ? void 0 : _table$getState$colum2.indexOf(column2.id)) != null ? _table$getState$colum : -1 : 0;
       };
     },
     createRow: (row, table) => {
-      return {
-        getCenterVisibleCells: memo$1(() => [row._getAllVisibleCells(), table.getState().columnPinning.left, table.getState().columnPinning.right], (allCells, left2, right2) => {
-          const leftAndRight = [...left2 != null ? left2 : [], ...right2 != null ? right2 : []];
-          return allCells.filter((d) => !leftAndRight.includes(d.column.id));
-        }, {
-          key: process.env.NODE_ENV === "production" && "row.getCenterVisibleCells",
-          debug: () => {
-            var _table$options$debugA;
-            return (_table$options$debugA = table.options.debugAll) != null ? _table$options$debugA : table.options.debugRows;
+      row.pin = (position2, includeLeafRows, includeParentRows) => {
+        const leafRowIds = includeLeafRows ? row.getLeafRows().map((_ref2) => {
+          let {
+            id
+          } = _ref2;
+          return id;
+        }) : [];
+        const parentRowIds = includeParentRows ? row.getParentRows().map((_ref3) => {
+          let {
+            id
+          } = _ref3;
+          return id;
+        }) : [];
+        const rowIds = /* @__PURE__ */ new Set([...parentRowIds, row.id, ...leafRowIds]);
+        table.setRowPinning((old) => {
+          var _old$top3, _old$bottom3;
+          if (position2 === "bottom") {
+            var _old$top, _old$bottom;
+            return {
+              top: ((_old$top = old == null ? void 0 : old.top) != null ? _old$top : []).filter((d) => !(rowIds != null && rowIds.has(d))),
+              bottom: [...((_old$bottom = old == null ? void 0 : old.bottom) != null ? _old$bottom : []).filter((d) => !(rowIds != null && rowIds.has(d))), ...Array.from(rowIds)]
+            };
           }
-        }),
-        getLeftVisibleCells: memo$1(() => [row._getAllVisibleCells(), table.getState().columnPinning.left, ,], (allCells, left2) => {
-          const cells = (left2 != null ? left2 : []).map((columnId) => allCells.find((cell) => cell.column.id === columnId)).filter(Boolean).map((d) => __spreadProps(__spreadValues({}, d), {
-            position: "left"
-          }));
-          return cells;
-        }, {
-          key: process.env.NODE_ENV === "production" && "row.getLeftVisibleCells",
-          debug: () => {
-            var _table$options$debugA2;
-            return (_table$options$debugA2 = table.options.debugAll) != null ? _table$options$debugA2 : table.options.debugRows;
+          if (position2 === "top") {
+            var _old$top2, _old$bottom2;
+            return {
+              top: [...((_old$top2 = old == null ? void 0 : old.top) != null ? _old$top2 : []).filter((d) => !(rowIds != null && rowIds.has(d))), ...Array.from(rowIds)],
+              bottom: ((_old$bottom2 = old == null ? void 0 : old.bottom) != null ? _old$bottom2 : []).filter((d) => !(rowIds != null && rowIds.has(d)))
+            };
           }
-        }),
-        getRightVisibleCells: memo$1(() => [row._getAllVisibleCells(), table.getState().columnPinning.right], (allCells, right2) => {
-          const cells = (right2 != null ? right2 : []).map((columnId) => allCells.find((cell) => cell.column.id === columnId)).filter(Boolean).map((d) => __spreadProps(__spreadValues({}, d), {
-            position: "right"
-          }));
-          return cells;
-        }, {
-          key: process.env.NODE_ENV === "production" && "row.getRightVisibleCells",
-          debug: () => {
-            var _table$options$debugA3;
-            return (_table$options$debugA3 = table.options.debugAll) != null ? _table$options$debugA3 : table.options.debugRows;
-          }
-        })
+          return {
+            top: ((_old$top3 = old == null ? void 0 : old.top) != null ? _old$top3 : []).filter((d) => !(rowIds != null && rowIds.has(d))),
+            bottom: ((_old$bottom3 = old == null ? void 0 : old.bottom) != null ? _old$bottom3 : []).filter((d) => !(rowIds != null && rowIds.has(d)))
+          };
+        });
       };
+      row.getCanPin = () => {
+        var _ref4;
+        const {
+          enableRowPinning,
+          enablePinning
+        } = table.options;
+        if (typeof enableRowPinning === "function") {
+          return enableRowPinning(row);
+        }
+        return (_ref4 = enableRowPinning != null ? enableRowPinning : enablePinning) != null ? _ref4 : true;
+      };
+      row.getIsPinned = () => {
+        const rowIds = [row.id];
+        const {
+          top: top2,
+          bottom: bottom2
+        } = table.getState().rowPinning;
+        const isTop = rowIds.some((d) => top2 == null ? void 0 : top2.includes(d));
+        const isBottom = rowIds.some((d) => bottom2 == null ? void 0 : bottom2.includes(d));
+        return isTop ? "top" : isBottom ? "bottom" : false;
+      };
+      row.getPinnedIndex = () => {
+        var _table$_getPinnedRows, _visiblePinnedRowIds$;
+        const position2 = row.getIsPinned();
+        if (!position2)
+          return -1;
+        const visiblePinnedRowIds = (_table$_getPinnedRows = table._getPinnedRows(position2)) == null ? void 0 : _table$_getPinnedRows.map((_ref5) => {
+          let {
+            id
+          } = _ref5;
+          return id;
+        });
+        return (_visiblePinnedRowIds$ = visiblePinnedRowIds == null ? void 0 : visiblePinnedRowIds.indexOf(row.id)) != null ? _visiblePinnedRowIds$ : -1;
+      };
+      row.getCenterVisibleCells = memo$1(() => [row._getAllVisibleCells(), table.getState().columnPinning.left, table.getState().columnPinning.right], (allCells, left2, right2) => {
+        const leftAndRight = [...left2 != null ? left2 : [], ...right2 != null ? right2 : []];
+        return allCells.filter((d) => !leftAndRight.includes(d.column.id));
+      }, {
+        key: process.env.NODE_ENV === "development" && "row.getCenterVisibleCells",
+        debug: () => {
+          var _table$options$debugA;
+          return (_table$options$debugA = table.options.debugAll) != null ? _table$options$debugA : table.options.debugRows;
+        }
+      });
+      row.getLeftVisibleCells = memo$1(() => [row._getAllVisibleCells(), table.getState().columnPinning.left, ,], (allCells, left2) => {
+        const cells = (left2 != null ? left2 : []).map((columnId) => allCells.find((cell) => cell.column.id === columnId)).filter(Boolean).map((d) => __spreadProps(__spreadValues({}, d), {
+          position: "left"
+        }));
+        return cells;
+      }, {
+        key: process.env.NODE_ENV === "development" && "row.getLeftVisibleCells",
+        debug: () => {
+          var _table$options$debugA2;
+          return (_table$options$debugA2 = table.options.debugAll) != null ? _table$options$debugA2 : table.options.debugRows;
+        }
+      });
+      row.getRightVisibleCells = memo$1(() => [row._getAllVisibleCells(), table.getState().columnPinning.right], (allCells, right2) => {
+        const cells = (right2 != null ? right2 : []).map((columnId) => allCells.find((cell) => cell.column.id === columnId)).filter(Boolean).map((d) => __spreadProps(__spreadValues({}, d), {
+          position: "right"
+        }));
+        return cells;
+      }, {
+        key: process.env.NODE_ENV === "development" && "row.getRightVisibleCells",
+        debug: () => {
+          var _table$options$debugA3;
+          return (_table$options$debugA3 = table.options.debugAll) != null ? _table$options$debugA3 : table.options.debugRows;
+        }
+      });
     },
     createTable: (table) => {
-      return {
-        setColumnPinning: (updater) => table.options.onColumnPinningChange == null ? void 0 : table.options.onColumnPinningChange(updater),
-        resetColumnPinning: (defaultState) => {
-          var _table$initialState$c, _table$initialState;
-          return table.setColumnPinning(defaultState ? getDefaultPinningState() : (_table$initialState$c = (_table$initialState = table.initialState) == null ? void 0 : _table$initialState.columnPinning) != null ? _table$initialState$c : getDefaultPinningState());
-        },
-        getIsSomeColumnsPinned: (position2) => {
-          var _pinningState$positio;
-          const pinningState = table.getState().columnPinning;
-          if (!position2) {
-            var _pinningState$left, _pinningState$right;
-            return Boolean(((_pinningState$left = pinningState.left) == null ? void 0 : _pinningState$left.length) || ((_pinningState$right = pinningState.right) == null ? void 0 : _pinningState$right.length));
-          }
-          return Boolean((_pinningState$positio = pinningState[position2]) == null ? void 0 : _pinningState$positio.length);
-        },
-        getLeftLeafColumns: memo$1(() => [table.getAllLeafColumns(), table.getState().columnPinning.left], (allColumns, left2) => {
-          return (left2 != null ? left2 : []).map((columnId) => allColumns.find((column2) => column2.id === columnId)).filter(Boolean);
-        }, {
-          key: process.env.NODE_ENV === "development" && "getLeftLeafColumns",
-          debug: () => {
-            var _table$options$debugA4;
-            return (_table$options$debugA4 = table.options.debugAll) != null ? _table$options$debugA4 : table.options.debugColumns;
-          }
-        }),
-        getRightLeafColumns: memo$1(() => [table.getAllLeafColumns(), table.getState().columnPinning.right], (allColumns, right2) => {
-          return (right2 != null ? right2 : []).map((columnId) => allColumns.find((column2) => column2.id === columnId)).filter(Boolean);
-        }, {
-          key: process.env.NODE_ENV === "development" && "getRightLeafColumns",
-          debug: () => {
-            var _table$options$debugA5;
-            return (_table$options$debugA5 = table.options.debugAll) != null ? _table$options$debugA5 : table.options.debugColumns;
-          }
-        }),
-        getCenterLeafColumns: memo$1(() => [table.getAllLeafColumns(), table.getState().columnPinning.left, table.getState().columnPinning.right], (allColumns, left2, right2) => {
-          const leftAndRight = [...left2 != null ? left2 : [], ...right2 != null ? right2 : []];
-          return allColumns.filter((d) => !leftAndRight.includes(d.id));
-        }, {
-          key: process.env.NODE_ENV === "development" && "getCenterLeafColumns",
-          debug: () => {
-            var _table$options$debugA6;
-            return (_table$options$debugA6 = table.options.debugAll) != null ? _table$options$debugA6 : table.options.debugColumns;
-          }
-        })
+      table.setColumnPinning = (updater) => table.options.onColumnPinningChange == null ? void 0 : table.options.onColumnPinningChange(updater);
+      table.resetColumnPinning = (defaultState) => {
+        var _table$initialState$c, _table$initialState;
+        return table.setColumnPinning(defaultState ? getDefaultColumnPinningState() : (_table$initialState$c = (_table$initialState = table.initialState) == null ? void 0 : _table$initialState.columnPinning) != null ? _table$initialState$c : getDefaultColumnPinningState());
       };
+      table.getIsSomeColumnsPinned = (position2) => {
+        var _pinningState$positio;
+        const pinningState = table.getState().columnPinning;
+        if (!position2) {
+          var _pinningState$left, _pinningState$right;
+          return Boolean(((_pinningState$left = pinningState.left) == null ? void 0 : _pinningState$left.length) || ((_pinningState$right = pinningState.right) == null ? void 0 : _pinningState$right.length));
+        }
+        return Boolean((_pinningState$positio = pinningState[position2]) == null ? void 0 : _pinningState$positio.length);
+      };
+      table.getLeftLeafColumns = memo$1(() => [table.getAllLeafColumns(), table.getState().columnPinning.left], (allColumns, left2) => {
+        return (left2 != null ? left2 : []).map((columnId) => allColumns.find((column2) => column2.id === columnId)).filter(Boolean);
+      }, {
+        key: process.env.NODE_ENV === "development" && "getLeftLeafColumns",
+        debug: () => {
+          var _table$options$debugA4;
+          return (_table$options$debugA4 = table.options.debugAll) != null ? _table$options$debugA4 : table.options.debugColumns;
+        }
+      });
+      table.getRightLeafColumns = memo$1(() => [table.getAllLeafColumns(), table.getState().columnPinning.right], (allColumns, right2) => {
+        return (right2 != null ? right2 : []).map((columnId) => allColumns.find((column2) => column2.id === columnId)).filter(Boolean);
+      }, {
+        key: process.env.NODE_ENV === "development" && "getRightLeafColumns",
+        debug: () => {
+          var _table$options$debugA5;
+          return (_table$options$debugA5 = table.options.debugAll) != null ? _table$options$debugA5 : table.options.debugColumns;
+        }
+      });
+      table.getCenterLeafColumns = memo$1(() => [table.getAllLeafColumns(), table.getState().columnPinning.left, table.getState().columnPinning.right], (allColumns, left2, right2) => {
+        const leftAndRight = [...left2 != null ? left2 : [], ...right2 != null ? right2 : []];
+        return allColumns.filter((d) => !leftAndRight.includes(d.id));
+      }, {
+        key: process.env.NODE_ENV === "development" && "getCenterLeafColumns",
+        debug: () => {
+          var _table$options$debugA6;
+          return (_table$options$debugA6 = table.options.debugAll) != null ? _table$options$debugA6 : table.options.debugColumns;
+        }
+      });
+      table.setRowPinning = (updater) => table.options.onRowPinningChange == null ? void 0 : table.options.onRowPinningChange(updater);
+      table.resetRowPinning = (defaultState) => {
+        var _table$initialState$r, _table$initialState2;
+        return table.setRowPinning(defaultState ? getDefaultRowPinningState() : (_table$initialState$r = (_table$initialState2 = table.initialState) == null ? void 0 : _table$initialState2.rowPinning) != null ? _table$initialState$r : getDefaultRowPinningState());
+      };
+      table.getIsSomeRowsPinned = (position2) => {
+        var _pinningState$positio2;
+        const pinningState = table.getState().rowPinning;
+        if (!position2) {
+          var _pinningState$top, _pinningState$bottom;
+          return Boolean(((_pinningState$top = pinningState.top) == null ? void 0 : _pinningState$top.length) || ((_pinningState$bottom = pinningState.bottom) == null ? void 0 : _pinningState$bottom.length));
+        }
+        return Boolean((_pinningState$positio2 = pinningState[position2]) == null ? void 0 : _pinningState$positio2.length);
+      };
+      table._getPinnedRows = (position2) => memo$1(() => [table.getRowModel().rows, table.getState().rowPinning[position2]], (visibleRows, pinnedRowIds) => {
+        var _table$options$keepPi;
+        const rows = ((_table$options$keepPi = table.options.keepPinnedRows) != null ? _table$options$keepPi : true) ? (
+          //get all rows that are pinned even if they would not be otherwise visible
+          //account for expanded parent rows, but not pagination or filtering
+          (pinnedRowIds != null ? pinnedRowIds : []).map((rowId) => {
+            const row = table.getRow(rowId, true);
+            return row.getIsAllParentsExpanded() ? row : null;
+          })
+        ) : (
+          //else get only visible rows that are pinned
+          (pinnedRowIds != null ? pinnedRowIds : []).map((rowId) => visibleRows.find((row) => row.id === rowId))
+        );
+        return rows.filter(Boolean).map((d) => __spreadProps(__spreadValues({}, d), {
+          position: position2
+        }));
+      }, {
+        key: process.env.NODE_ENV === "development" && `row.get${position2 === "top" ? "Top" : "Bottom"}Rows`,
+        debug: () => {
+          var _table$options$debugA7;
+          return (_table$options$debugA7 = table.options.debugAll) != null ? _table$options$debugA7 : table.options.debugRows;
+        }
+      })();
+      table.getTopRows = () => table._getPinnedRows("top");
+      table.getBottomRows = () => table._getPinnedRows("bottom");
+      table.getCenterRows = memo$1(() => [table.getRowModel().rows, table.getState().rowPinning.top, table.getState().rowPinning.bottom], (allRows, top2, bottom2) => {
+        const topAndBottom = /* @__PURE__ */ new Set([...top2 != null ? top2 : [], ...bottom2 != null ? bottom2 : []]);
+        return allRows.filter((d) => !topAndBottom.has(d.id));
+      }, {
+        key: process.env.NODE_ENV === "development" && "row.getCenterRows",
+        debug: () => {
+          var _table$options$debugA8;
+          return (_table$options$debugA8 = table.options.debugAll) != null ? _table$options$debugA8 : table.options.debugRows;
+        }
+      });
     }
   };
   const RowSelection = {
@@ -23968,261 +24738,197 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     },
     createTable: (table) => {
-      return {
-        setRowSelection: (updater) => table.options.onRowSelectionChange == null ? void 0 : table.options.onRowSelectionChange(updater),
-        resetRowSelection: (defaultState) => {
-          var _table$initialState$r;
-          return table.setRowSelection(defaultState ? {} : (_table$initialState$r = table.initialState.rowSelection) != null ? _table$initialState$r : {});
-        },
-        toggleAllRowsSelected: (value) => {
-          table.setRowSelection((old) => {
-            value = typeof value !== "undefined" ? value : !table.getIsAllRowsSelected();
-            const rowSelection = __spreadValues({}, old);
-            const preGroupedFlatRows = table.getPreGroupedRowModel().flatRows;
-            if (value) {
-              preGroupedFlatRows.forEach((row) => {
-                if (!row.getCanSelect()) {
-                  return;
-                }
-                rowSelection[row.id] = true;
-              });
-            } else {
-              preGroupedFlatRows.forEach((row) => {
-                delete rowSelection[row.id];
-              });
-            }
-            return rowSelection;
-          });
-        },
-        toggleAllPageRowsSelected: (value) => table.setRowSelection((old) => {
-          const resolvedValue = typeof value !== "undefined" ? value : !table.getIsAllPageRowsSelected();
+      table.setRowSelection = (updater) => table.options.onRowSelectionChange == null ? void 0 : table.options.onRowSelectionChange(updater);
+      table.resetRowSelection = (defaultState) => {
+        var _table$initialState$r;
+        return table.setRowSelection(defaultState ? {} : (_table$initialState$r = table.initialState.rowSelection) != null ? _table$initialState$r : {});
+      };
+      table.toggleAllRowsSelected = (value) => {
+        table.setRowSelection((old) => {
+          value = typeof value !== "undefined" ? value : !table.getIsAllRowsSelected();
           const rowSelection = __spreadValues({}, old);
-          table.getRowModel().rows.forEach((row) => {
-            mutateRowIsSelected(rowSelection, row.id, resolvedValue, table);
-          });
+          const preGroupedFlatRows = table.getPreGroupedRowModel().flatRows;
+          if (value) {
+            preGroupedFlatRows.forEach((row) => {
+              if (!row.getCanSelect()) {
+                return;
+              }
+              rowSelection[row.id] = true;
+            });
+          } else {
+            preGroupedFlatRows.forEach((row) => {
+              delete rowSelection[row.id];
+            });
+          }
           return rowSelection;
-        }),
-        // addRowSelectionRange: rowId => {
-        //   const {
-        //     rows,
-        //     rowsById,
-        //     options: { selectGroupingRows, selectSubRows },
-        //   } = table
-        //   const findSelectedRow = (rows: Row[]) => {
-        //     let found
-        //     rows.find(d => {
-        //       if (d.getIsSelected()) {
-        //         found = d
-        //         return true
-        //       }
-        //       const subFound = findSelectedRow(d.subRows || [])
-        //       if (subFound) {
-        //         found = subFound
-        //         return true
-        //       }
-        //       return false
-        //     })
-        //     return found
-        //   }
-        //   const firstRow = findSelectedRow(rows) || rows[0]
-        //   const lastRow = rowsById[rowId]
-        //   let include = false
-        //   const selectedRowIds = {}
-        //   const addRow = (row: Row) => {
-        //     mutateRowIsSelected(selectedRowIds, row.id, true, {
-        //       rowsById,
-        //       selectGroupingRows: selectGroupingRows!,
-        //       selectSubRows: selectSubRows!,
-        //     })
-        //   }
-        //   table.rows.forEach(row => {
-        //     const isFirstRow = row.id === firstRow.id
-        //     const isLastRow = row.id === lastRow.id
-        //     if (isFirstRow || isLastRow) {
-        //       if (!include) {
-        //         include = true
-        //       } else if (include) {
-        //         addRow(row)
-        //         include = false
-        //       }
-        //     }
-        //     if (include) {
-        //       addRow(row)
-        //     }
-        //   })
-        //   table.setRowSelection(selectedRowIds)
-        // },
-        getPreSelectedRowModel: () => table.getCoreRowModel(),
-        getSelectedRowModel: memo$1(() => [table.getState().rowSelection, table.getCoreRowModel()], (rowSelection, rowModel) => {
-          if (!Object.keys(rowSelection).length) {
-            return {
-              rows: [],
-              flatRows: [],
-              rowsById: {}
-            };
-          }
-          return selectRowsFn(table, rowModel);
-        }, {
-          key: process.env.NODE_ENV === "development" && "getSelectedRowModel",
-          debug: () => {
-            var _table$options$debugA;
-            return (_table$options$debugA = table.options.debugAll) != null ? _table$options$debugA : table.options.debugTable;
-          }
-        }),
-        getFilteredSelectedRowModel: memo$1(() => [table.getState().rowSelection, table.getFilteredRowModel()], (rowSelection, rowModel) => {
-          if (!Object.keys(rowSelection).length) {
-            return {
-              rows: [],
-              flatRows: [],
-              rowsById: {}
-            };
-          }
-          return selectRowsFn(table, rowModel);
-        }, {
-          key: process.env.NODE_ENV === "production" && "getFilteredSelectedRowModel",
-          debug: () => {
-            var _table$options$debugA2;
-            return (_table$options$debugA2 = table.options.debugAll) != null ? _table$options$debugA2 : table.options.debugTable;
-          }
-        }),
-        getGroupedSelectedRowModel: memo$1(() => [table.getState().rowSelection, table.getSortedRowModel()], (rowSelection, rowModel) => {
-          if (!Object.keys(rowSelection).length) {
-            return {
-              rows: [],
-              flatRows: [],
-              rowsById: {}
-            };
-          }
-          return selectRowsFn(table, rowModel);
-        }, {
-          key: process.env.NODE_ENV === "production" && "getGroupedSelectedRowModel",
-          debug: () => {
-            var _table$options$debugA3;
-            return (_table$options$debugA3 = table.options.debugAll) != null ? _table$options$debugA3 : table.options.debugTable;
-          }
-        }),
-        ///
-        // getGroupingRowCanSelect: rowId => {
-        //   const row = table.getRow(rowId)
-        //   if (!row) {
-        //     throw new Error()
-        //   }
-        //   if (typeof table.options.enableGroupingRowSelection === 'function') {
-        //     return table.options.enableGroupingRowSelection(row)
-        //   }
-        //   return table.options.enableGroupingRowSelection ?? false
-        // },
-        getIsAllRowsSelected: () => {
-          const preGroupedFlatRows = table.getFilteredRowModel().flatRows;
-          const {
-            rowSelection
-          } = table.getState();
-          let isAllRowsSelected = Boolean(preGroupedFlatRows.length && Object.keys(rowSelection).length);
-          if (isAllRowsSelected) {
-            if (preGroupedFlatRows.some((row) => row.getCanSelect() && !rowSelection[row.id])) {
-              isAllRowsSelected = false;
-            }
-          }
-          return isAllRowsSelected;
-        },
-        getIsAllPageRowsSelected: () => {
-          const paginationFlatRows = table.getPaginationRowModel().flatRows.filter((row) => row.getCanSelect());
-          const {
-            rowSelection
-          } = table.getState();
-          let isAllPageRowsSelected = !!paginationFlatRows.length;
-          if (isAllPageRowsSelected && paginationFlatRows.some((row) => !rowSelection[row.id])) {
-            isAllPageRowsSelected = false;
-          }
-          return isAllPageRowsSelected;
-        },
-        getIsSomeRowsSelected: () => {
-          var _table$getState$rowSe;
-          const totalSelected = Object.keys((_table$getState$rowSe = table.getState().rowSelection) != null ? _table$getState$rowSe : {}).length;
-          return totalSelected > 0 && totalSelected < table.getFilteredRowModel().flatRows.length;
-        },
-        getIsSomePageRowsSelected: () => {
-          const paginationFlatRows = table.getPaginationRowModel().flatRows;
-          return table.getIsAllPageRowsSelected() ? false : paginationFlatRows.filter((row) => row.getCanSelect()).some((d) => d.getIsSelected() || d.getIsSomeSelected());
-        },
-        getToggleAllRowsSelectedHandler: () => {
-          return (e) => {
-            table.toggleAllRowsSelected(e.target.checked);
-          };
-        },
-        getToggleAllPageRowsSelectedHandler: () => {
-          return (e) => {
-            table.toggleAllPageRowsSelected(e.target.checked);
+        });
+      };
+      table.toggleAllPageRowsSelected = (value) => table.setRowSelection((old) => {
+        const resolvedValue = typeof value !== "undefined" ? value : !table.getIsAllPageRowsSelected();
+        const rowSelection = __spreadValues({}, old);
+        table.getRowModel().rows.forEach((row) => {
+          mutateRowIsSelected(rowSelection, row.id, resolvedValue, true, table);
+        });
+        return rowSelection;
+      });
+      table.getPreSelectedRowModel = () => table.getCoreRowModel();
+      table.getSelectedRowModel = memo$1(() => [table.getState().rowSelection, table.getCoreRowModel()], (rowSelection, rowModel) => {
+        if (!Object.keys(rowSelection).length) {
+          return {
+            rows: [],
+            flatRows: [],
+            rowsById: {}
           };
         }
+        return selectRowsFn(table, rowModel);
+      }, {
+        key: process.env.NODE_ENV === "development" && "getSelectedRowModel",
+        debug: () => {
+          var _table$options$debugA;
+          return (_table$options$debugA = table.options.debugAll) != null ? _table$options$debugA : table.options.debugTable;
+        }
+      });
+      table.getFilteredSelectedRowModel = memo$1(() => [table.getState().rowSelection, table.getFilteredRowModel()], (rowSelection, rowModel) => {
+        if (!Object.keys(rowSelection).length) {
+          return {
+            rows: [],
+            flatRows: [],
+            rowsById: {}
+          };
+        }
+        return selectRowsFn(table, rowModel);
+      }, {
+        key: process.env.NODE_ENV === "production" && "getFilteredSelectedRowModel",
+        debug: () => {
+          var _table$options$debugA2;
+          return (_table$options$debugA2 = table.options.debugAll) != null ? _table$options$debugA2 : table.options.debugTable;
+        }
+      });
+      table.getGroupedSelectedRowModel = memo$1(() => [table.getState().rowSelection, table.getSortedRowModel()], (rowSelection, rowModel) => {
+        if (!Object.keys(rowSelection).length) {
+          return {
+            rows: [],
+            flatRows: [],
+            rowsById: {}
+          };
+        }
+        return selectRowsFn(table, rowModel);
+      }, {
+        key: process.env.NODE_ENV === "production" && "getGroupedSelectedRowModel",
+        debug: () => {
+          var _table$options$debugA3;
+          return (_table$options$debugA3 = table.options.debugAll) != null ? _table$options$debugA3 : table.options.debugTable;
+        }
+      });
+      table.getIsAllRowsSelected = () => {
+        const preGroupedFlatRows = table.getFilteredRowModel().flatRows;
+        const {
+          rowSelection
+        } = table.getState();
+        let isAllRowsSelected = Boolean(preGroupedFlatRows.length && Object.keys(rowSelection).length);
+        if (isAllRowsSelected) {
+          if (preGroupedFlatRows.some((row) => row.getCanSelect() && !rowSelection[row.id])) {
+            isAllRowsSelected = false;
+          }
+        }
+        return isAllRowsSelected;
+      };
+      table.getIsAllPageRowsSelected = () => {
+        const paginationFlatRows = table.getPaginationRowModel().flatRows.filter((row) => row.getCanSelect());
+        const {
+          rowSelection
+        } = table.getState();
+        let isAllPageRowsSelected = !!paginationFlatRows.length;
+        if (isAllPageRowsSelected && paginationFlatRows.some((row) => !rowSelection[row.id])) {
+          isAllPageRowsSelected = false;
+        }
+        return isAllPageRowsSelected;
+      };
+      table.getIsSomeRowsSelected = () => {
+        var _table$getState$rowSe;
+        const totalSelected = Object.keys((_table$getState$rowSe = table.getState().rowSelection) != null ? _table$getState$rowSe : {}).length;
+        return totalSelected > 0 && totalSelected < table.getFilteredRowModel().flatRows.length;
+      };
+      table.getIsSomePageRowsSelected = () => {
+        const paginationFlatRows = table.getPaginationRowModel().flatRows;
+        return table.getIsAllPageRowsSelected() ? false : paginationFlatRows.filter((row) => row.getCanSelect()).some((d) => d.getIsSelected() || d.getIsSomeSelected());
+      };
+      table.getToggleAllRowsSelectedHandler = () => {
+        return (e) => {
+          table.toggleAllRowsSelected(e.target.checked);
+        };
+      };
+      table.getToggleAllPageRowsSelectedHandler = () => {
+        return (e) => {
+          table.toggleAllPageRowsSelected(e.target.checked);
+        };
       };
     },
     createRow: (row, table) => {
-      return {
-        toggleSelected: (value) => {
-          const isSelected = row.getIsSelected();
-          table.setRowSelection((old) => {
-            value = typeof value !== "undefined" ? value : !isSelected;
-            if (isSelected === value) {
-              return old;
-            }
-            const selectedRowIds = __spreadValues({}, old);
-            mutateRowIsSelected(selectedRowIds, row.id, value, table);
-            return selectedRowIds;
-          });
-        },
-        getIsSelected: () => {
-          const {
-            rowSelection
-          } = table.getState();
-          return isRowSelected(row, rowSelection);
-        },
-        getIsSomeSelected: () => {
-          const {
-            rowSelection
-          } = table.getState();
-          return isSubRowSelected(row, rowSelection) === "some";
-        },
-        getIsAllSubRowsSelected: () => {
-          const {
-            rowSelection
-          } = table.getState();
-          return isSubRowSelected(row, rowSelection) === "all";
-        },
-        getCanSelect: () => {
-          var _table$options$enable;
-          if (typeof table.options.enableRowSelection === "function") {
-            return table.options.enableRowSelection(row);
+      row.toggleSelected = (value, opts) => {
+        const isSelected = row.getIsSelected();
+        table.setRowSelection((old) => {
+          var _opts$selectChildren;
+          value = typeof value !== "undefined" ? value : !isSelected;
+          if (row.getCanSelect() && isSelected === value) {
+            return old;
           }
-          return (_table$options$enable = table.options.enableRowSelection) != null ? _table$options$enable : true;
-        },
-        getCanSelectSubRows: () => {
-          var _table$options$enable2;
-          if (typeof table.options.enableSubRowSelection === "function") {
-            return table.options.enableSubRowSelection(row);
-          }
-          return (_table$options$enable2 = table.options.enableSubRowSelection) != null ? _table$options$enable2 : true;
-        },
-        getCanMultiSelect: () => {
-          var _table$options$enable3;
-          if (typeof table.options.enableMultiRowSelection === "function") {
-            return table.options.enableMultiRowSelection(row);
-          }
-          return (_table$options$enable3 = table.options.enableMultiRowSelection) != null ? _table$options$enable3 : true;
-        },
-        getToggleSelectedHandler: () => {
-          const canSelect = row.getCanSelect();
-          return (e) => {
-            var _target;
-            if (!canSelect)
-              return;
-            row.toggleSelected((_target = e.target) == null ? void 0 : _target.checked);
-          };
+          const selectedRowIds = __spreadValues({}, old);
+          mutateRowIsSelected(selectedRowIds, row.id, value, (_opts$selectChildren = opts == null ? void 0 : opts.selectChildren) != null ? _opts$selectChildren : true, table);
+          return selectedRowIds;
+        });
+      };
+      row.getIsSelected = () => {
+        const {
+          rowSelection
+        } = table.getState();
+        return isRowSelected(row, rowSelection);
+      };
+      row.getIsSomeSelected = () => {
+        const {
+          rowSelection
+        } = table.getState();
+        return isSubRowSelected(row, rowSelection) === "some";
+      };
+      row.getIsAllSubRowsSelected = () => {
+        const {
+          rowSelection
+        } = table.getState();
+        return isSubRowSelected(row, rowSelection) === "all";
+      };
+      row.getCanSelect = () => {
+        var _table$options$enable;
+        if (typeof table.options.enableRowSelection === "function") {
+          return table.options.enableRowSelection(row);
         }
+        return (_table$options$enable = table.options.enableRowSelection) != null ? _table$options$enable : true;
+      };
+      row.getCanSelectSubRows = () => {
+        var _table$options$enable2;
+        if (typeof table.options.enableSubRowSelection === "function") {
+          return table.options.enableSubRowSelection(row);
+        }
+        return (_table$options$enable2 = table.options.enableSubRowSelection) != null ? _table$options$enable2 : true;
+      };
+      row.getCanMultiSelect = () => {
+        var _table$options$enable3;
+        if (typeof table.options.enableMultiRowSelection === "function") {
+          return table.options.enableMultiRowSelection(row);
+        }
+        return (_table$options$enable3 = table.options.enableMultiRowSelection) != null ? _table$options$enable3 : true;
+      };
+      row.getToggleSelectedHandler = () => {
+        const canSelect = row.getCanSelect();
+        return (e) => {
+          var _target;
+          if (!canSelect)
+            return;
+          row.toggleSelected((_target = e.target) == null ? void 0 : _target.checked);
+        };
       };
     }
   };
-  const mutateRowIsSelected = (selectedRowIds, id, value, table) => {
+  const mutateRowIsSelected = (selectedRowIds, id, value, includeChildren, table) => {
     var _row$subRows;
     const row = table.getRow(id);
     if (value) {
@@ -24235,8 +24941,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } else {
       delete selectedRowIds[id];
     }
-    if ((_row$subRows = row.subRows) != null && _row$subRows.length && row.getCanSelectSubRows()) {
-      row.subRows.forEach((row2) => mutateRowIsSelected(selectedRowIds, row2.id, value, table));
+    if (includeChildren && (_row$subRows = row.subRows) != null && _row$subRows.length && row.getCanSelectSubRows()) {
+      row.subRows.forEach((row2) => mutateRowIsSelected(selectedRowIds, row2.id, value, includeChildren, table));
     }
   };
   function selectRowsFn(table, rowModel) {
@@ -24272,22 +24978,35 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return (_selection$row$id = selection[row.id]) != null ? _selection$row$id : false;
   }
   function isSubRowSelected(row, selection, table) {
-    if (row.subRows && row.subRows.length) {
-      let allChildrenSelected = true;
-      let someSelected = false;
-      row.subRows.forEach((subRow) => {
-        if (someSelected && !allChildrenSelected) {
-          return;
-        }
+    var _row$subRows3;
+    if (!((_row$subRows3 = row.subRows) != null && _row$subRows3.length))
+      return false;
+    let allChildrenSelected = true;
+    let someSelected = false;
+    row.subRows.forEach((subRow) => {
+      if (someSelected && !allChildrenSelected) {
+        return;
+      }
+      if (subRow.getCanSelect()) {
         if (isRowSelected(subRow, selection)) {
           someSelected = true;
         } else {
           allChildrenSelected = false;
         }
-      });
-      return allChildrenSelected ? "all" : someSelected ? "some" : false;
-    }
-    return false;
+      }
+      if (subRow.subRows && subRow.subRows.length) {
+        const subRowChildrenSelected = isSubRowSelected(subRow, selection);
+        if (subRowChildrenSelected === "all") {
+          someSelected = true;
+        } else if (subRowChildrenSelected === "some") {
+          someSelected = true;
+          allChildrenSelected = false;
+        } else {
+          allChildrenSelected = false;
+        }
+      }
+    });
+    return allChildrenSelected ? "all" : someSelected ? "some" : false;
   }
   const reSplitAlphaNumeric = /([0-9]+)/gm;
   const alphanumeric = (rowA, rowB, columnId) => {
@@ -24371,7 +25090,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     },
     getDefaultColumnDef: () => {
       return {
-        sortingFn: "auto"
+        sortingFn: "auto",
+        sortUndefined: 1
       };
     },
     getDefaultOptions: (table) => {
@@ -24383,166 +25103,162 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     },
     createColumn: (column2, table) => {
-      return {
-        getAutoSortingFn: () => {
-          const firstRows = table.getFilteredRowModel().flatRows.slice(10);
-          let isString2 = false;
-          for (const row of firstRows) {
-            const value = row == null ? void 0 : row.getValue(column2.id);
-            if (Object.prototype.toString.call(value) === "[object Date]") {
-              return sortingFns.datetime;
-            }
-            if (typeof value === "string") {
-              isString2 = true;
-              if (value.split(reSplitAlphaNumeric).length > 1) {
-                return sortingFns.alphanumeric;
-              }
-            }
+      column2.getAutoSortingFn = () => {
+        const firstRows = table.getFilteredRowModel().flatRows.slice(10);
+        let isString2 = false;
+        for (const row of firstRows) {
+          const value = row == null ? void 0 : row.getValue(column2.id);
+          if (Object.prototype.toString.call(value) === "[object Date]") {
+            return sortingFns.datetime;
           }
-          if (isString2) {
-            return sortingFns.text;
-          }
-          return sortingFns.basic;
-        },
-        getAutoSortDir: () => {
-          const firstRow = table.getFilteredRowModel().flatRows[0];
-          const value = firstRow == null ? void 0 : firstRow.getValue(column2.id);
           if (typeof value === "string") {
-            return "asc";
-          }
-          return "desc";
-        },
-        getSortingFn: () => {
-          var _table$options$sortin, _table$options$sortin2;
-          if (!column2) {
-            throw new Error();
-          }
-          return isFunction$1(column2.columnDef.sortingFn) ? column2.columnDef.sortingFn : column2.columnDef.sortingFn === "auto" ? column2.getAutoSortingFn() : (_table$options$sortin = (_table$options$sortin2 = table.options.sortingFns) == null ? void 0 : _table$options$sortin2[column2.columnDef.sortingFn]) != null ? _table$options$sortin : sortingFns[column2.columnDef.sortingFn];
-        },
-        toggleSorting: (desc, multi) => {
-          const nextSortingOrder = column2.getNextSortingOrder();
-          const hasManualValue = typeof desc !== "undefined" && desc !== null;
-          table.setSorting((old) => {
-            const existingSorting = old == null ? void 0 : old.find((d) => d.id === column2.id);
-            const existingIndex = old == null ? void 0 : old.findIndex((d) => d.id === column2.id);
-            let newSorting = [];
-            let sortAction;
-            let nextDesc = hasManualValue ? desc : nextSortingOrder === "desc";
-            if (old != null && old.length && column2.getCanMultiSort() && multi) {
-              if (existingSorting) {
-                sortAction = "toggle";
-              } else {
-                sortAction = "add";
-              }
-            } else {
-              if (old != null && old.length && existingIndex !== old.length - 1) {
-                sortAction = "replace";
-              } else if (existingSorting) {
-                sortAction = "toggle";
-              } else {
-                sortAction = "replace";
-              }
+            isString2 = true;
+            if (value.split(reSplitAlphaNumeric).length > 1) {
+              return sortingFns.alphanumeric;
             }
-            if (sortAction === "toggle") {
-              if (!hasManualValue) {
-                if (!nextSortingOrder) {
-                  sortAction = "remove";
-                }
-              }
-            }
-            if (sortAction === "add") {
-              var _table$options$maxMul;
-              newSorting = [...old, {
-                id: column2.id,
-                desc: nextDesc
-              }];
-              newSorting.splice(0, newSorting.length - ((_table$options$maxMul = table.options.maxMultiSortColCount) != null ? _table$options$maxMul : Number.MAX_SAFE_INTEGER));
-            } else if (sortAction === "toggle") {
-              newSorting = old.map((d) => {
-                if (d.id === column2.id) {
-                  return __spreadProps(__spreadValues({}, d), {
-                    desc: nextDesc
-                  });
-                }
-                return d;
-              });
-            } else if (sortAction === "remove") {
-              newSorting = old.filter((d) => d.id !== column2.id);
-            } else {
-              newSorting = [{
-                id: column2.id,
-                desc: nextDesc
-              }];
-            }
-            return newSorting;
-          });
-        },
-        getFirstSortDir: () => {
-          var _ref, _column$columnDef$sor;
-          const sortDescFirst = (_ref = (_column$columnDef$sor = column2.columnDef.sortDescFirst) != null ? _column$columnDef$sor : table.options.sortDescFirst) != null ? _ref : column2.getAutoSortDir() === "desc";
-          return sortDescFirst ? "desc" : "asc";
-        },
-        getNextSortingOrder: (multi) => {
-          var _table$options$enable, _table$options$enable2;
-          const firstSortDirection = column2.getFirstSortDir();
-          const isSorted = column2.getIsSorted();
-          if (!isSorted) {
-            return firstSortDirection;
           }
-          if (isSorted !== firstSortDirection && ((_table$options$enable = table.options.enableSortingRemoval) != null ? _table$options$enable : true) && // If enableSortRemove, enable in general
-          (multi ? (_table$options$enable2 = table.options.enableMultiRemove) != null ? _table$options$enable2 : true : true)) {
-            return false;
-          }
-          return isSorted === "desc" ? "asc" : "desc";
-        },
-        getCanSort: () => {
-          var _column$columnDef$ena, _table$options$enable3;
-          return ((_column$columnDef$ena = column2.columnDef.enableSorting) != null ? _column$columnDef$ena : true) && ((_table$options$enable3 = table.options.enableSorting) != null ? _table$options$enable3 : true) && !!column2.accessorFn;
-        },
-        getCanMultiSort: () => {
-          var _ref2, _column$columnDef$ena2;
-          return (_ref2 = (_column$columnDef$ena2 = column2.columnDef.enableMultiSort) != null ? _column$columnDef$ena2 : table.options.enableMultiSort) != null ? _ref2 : !!column2.accessorFn;
-        },
-        getIsSorted: () => {
-          var _table$getState$sorti;
-          const columnSort = (_table$getState$sorti = table.getState().sorting) == null ? void 0 : _table$getState$sorti.find((d) => d.id === column2.id);
-          return !columnSort ? false : columnSort.desc ? "desc" : "asc";
-        },
-        getSortIndex: () => {
-          var _table$getState$sorti2, _table$getState$sorti3;
-          return (_table$getState$sorti2 = (_table$getState$sorti3 = table.getState().sorting) == null ? void 0 : _table$getState$sorti3.findIndex((d) => d.id === column2.id)) != null ? _table$getState$sorti2 : -1;
-        },
-        clearSorting: () => {
-          table.setSorting((old) => old != null && old.length ? old.filter((d) => d.id !== column2.id) : []);
-        },
-        getToggleSortingHandler: () => {
-          const canSort = column2.getCanSort();
-          return (e) => {
-            if (!canSort)
-              return;
-            e.persist == null ? void 0 : e.persist();
-            column2.toggleSorting == null ? void 0 : column2.toggleSorting(void 0, column2.getCanMultiSort() ? table.options.isMultiSortEvent == null ? void 0 : table.options.isMultiSortEvent(e) : false);
-          };
         }
+        if (isString2) {
+          return sortingFns.text;
+        }
+        return sortingFns.basic;
+      };
+      column2.getAutoSortDir = () => {
+        const firstRow = table.getFilteredRowModel().flatRows[0];
+        const value = firstRow == null ? void 0 : firstRow.getValue(column2.id);
+        if (typeof value === "string") {
+          return "asc";
+        }
+        return "desc";
+      };
+      column2.getSortingFn = () => {
+        var _table$options$sortin, _table$options$sortin2;
+        if (!column2) {
+          throw new Error();
+        }
+        return isFunction$1(column2.columnDef.sortingFn) ? column2.columnDef.sortingFn : column2.columnDef.sortingFn === "auto" ? column2.getAutoSortingFn() : (_table$options$sortin = (_table$options$sortin2 = table.options.sortingFns) == null ? void 0 : _table$options$sortin2[column2.columnDef.sortingFn]) != null ? _table$options$sortin : sortingFns[column2.columnDef.sortingFn];
+      };
+      column2.toggleSorting = (desc, multi) => {
+        const nextSortingOrder = column2.getNextSortingOrder();
+        const hasManualValue = typeof desc !== "undefined" && desc !== null;
+        table.setSorting((old) => {
+          const existingSorting = old == null ? void 0 : old.find((d) => d.id === column2.id);
+          const existingIndex = old == null ? void 0 : old.findIndex((d) => d.id === column2.id);
+          let newSorting = [];
+          let sortAction;
+          let nextDesc = hasManualValue ? desc : nextSortingOrder === "desc";
+          if (old != null && old.length && column2.getCanMultiSort() && multi) {
+            if (existingSorting) {
+              sortAction = "toggle";
+            } else {
+              sortAction = "add";
+            }
+          } else {
+            if (old != null && old.length && existingIndex !== old.length - 1) {
+              sortAction = "replace";
+            } else if (existingSorting) {
+              sortAction = "toggle";
+            } else {
+              sortAction = "replace";
+            }
+          }
+          if (sortAction === "toggle") {
+            if (!hasManualValue) {
+              if (!nextSortingOrder) {
+                sortAction = "remove";
+              }
+            }
+          }
+          if (sortAction === "add") {
+            var _table$options$maxMul;
+            newSorting = [...old, {
+              id: column2.id,
+              desc: nextDesc
+            }];
+            newSorting.splice(0, newSorting.length - ((_table$options$maxMul = table.options.maxMultiSortColCount) != null ? _table$options$maxMul : Number.MAX_SAFE_INTEGER));
+          } else if (sortAction === "toggle") {
+            newSorting = old.map((d) => {
+              if (d.id === column2.id) {
+                return __spreadProps(__spreadValues({}, d), {
+                  desc: nextDesc
+                });
+              }
+              return d;
+            });
+          } else if (sortAction === "remove") {
+            newSorting = old.filter((d) => d.id !== column2.id);
+          } else {
+            newSorting = [{
+              id: column2.id,
+              desc: nextDesc
+            }];
+          }
+          return newSorting;
+        });
+      };
+      column2.getFirstSortDir = () => {
+        var _ref, _column$columnDef$sor;
+        const sortDescFirst = (_ref = (_column$columnDef$sor = column2.columnDef.sortDescFirst) != null ? _column$columnDef$sor : table.options.sortDescFirst) != null ? _ref : column2.getAutoSortDir() === "desc";
+        return sortDescFirst ? "desc" : "asc";
+      };
+      column2.getNextSortingOrder = (multi) => {
+        var _table$options$enable, _table$options$enable2;
+        const firstSortDirection = column2.getFirstSortDir();
+        const isSorted = column2.getIsSorted();
+        if (!isSorted) {
+          return firstSortDirection;
+        }
+        if (isSorted !== firstSortDirection && ((_table$options$enable = table.options.enableSortingRemoval) != null ? _table$options$enable : true) && // If enableSortRemove, enable in general
+        (multi ? (_table$options$enable2 = table.options.enableMultiRemove) != null ? _table$options$enable2 : true : true)) {
+          return false;
+        }
+        return isSorted === "desc" ? "asc" : "desc";
+      };
+      column2.getCanSort = () => {
+        var _column$columnDef$ena, _table$options$enable3;
+        return ((_column$columnDef$ena = column2.columnDef.enableSorting) != null ? _column$columnDef$ena : true) && ((_table$options$enable3 = table.options.enableSorting) != null ? _table$options$enable3 : true) && !!column2.accessorFn;
+      };
+      column2.getCanMultiSort = () => {
+        var _ref2, _column$columnDef$ena2;
+        return (_ref2 = (_column$columnDef$ena2 = column2.columnDef.enableMultiSort) != null ? _column$columnDef$ena2 : table.options.enableMultiSort) != null ? _ref2 : !!column2.accessorFn;
+      };
+      column2.getIsSorted = () => {
+        var _table$getState$sorti;
+        const columnSort = (_table$getState$sorti = table.getState().sorting) == null ? void 0 : _table$getState$sorti.find((d) => d.id === column2.id);
+        return !columnSort ? false : columnSort.desc ? "desc" : "asc";
+      };
+      column2.getSortIndex = () => {
+        var _table$getState$sorti2, _table$getState$sorti3;
+        return (_table$getState$sorti2 = (_table$getState$sorti3 = table.getState().sorting) == null ? void 0 : _table$getState$sorti3.findIndex((d) => d.id === column2.id)) != null ? _table$getState$sorti2 : -1;
+      };
+      column2.clearSorting = () => {
+        table.setSorting((old) => old != null && old.length ? old.filter((d) => d.id !== column2.id) : []);
+      };
+      column2.getToggleSortingHandler = () => {
+        const canSort = column2.getCanSort();
+        return (e) => {
+          if (!canSort)
+            return;
+          e.persist == null || e.persist();
+          column2.toggleSorting == null || column2.toggleSorting(void 0, column2.getCanMultiSort() ? table.options.isMultiSortEvent == null ? void 0 : table.options.isMultiSortEvent(e) : false);
+        };
       };
     },
     createTable: (table) => {
-      return {
-        setSorting: (updater) => table.options.onSortingChange == null ? void 0 : table.options.onSortingChange(updater),
-        resetSorting: (defaultState) => {
-          var _table$initialState$s, _table$initialState;
-          table.setSorting(defaultState ? [] : (_table$initialState$s = (_table$initialState = table.initialState) == null ? void 0 : _table$initialState.sorting) != null ? _table$initialState$s : []);
-        },
-        getPreSortedRowModel: () => table.getGroupedRowModel(),
-        getSortedRowModel: () => {
-          if (!table._getSortedRowModel && table.options.getSortedRowModel) {
-            table._getSortedRowModel = table.options.getSortedRowModel(table);
-          }
-          if (table.options.manualSorting || !table._getSortedRowModel) {
-            return table.getPreSortedRowModel();
-          }
-          return table._getSortedRowModel();
+      table.setSorting = (updater) => table.options.onSortingChange == null ? void 0 : table.options.onSortingChange(updater);
+      table.resetSorting = (defaultState) => {
+        var _table$initialState$s, _table$initialState;
+        table.setSorting(defaultState ? [] : (_table$initialState$s = (_table$initialState = table.initialState) == null ? void 0 : _table$initialState.sorting) != null ? _table$initialState$s : []);
+      };
+      table.getPreSortedRowModel = () => table.getGroupedRowModel();
+      table.getSortedRowModel = () => {
+        if (!table._getSortedRowModel && table.options.getSortedRowModel) {
+          table._getSortedRowModel = table.options.getSortedRowModel(table);
         }
+        if (table.options.manualSorting || !table._getSortedRowModel) {
+          return table.getPreSortedRowModel();
+        }
+        return table._getSortedRowModel();
       };
     }
   };
@@ -24558,48 +25274,44 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     },
     createColumn: (column2, table) => {
-      return {
-        toggleVisibility: (value) => {
-          if (column2.getCanHide()) {
-            table.setColumnVisibility((old) => __spreadProps(__spreadValues({}, old), {
-              [column2.id]: value != null ? value : !column2.getIsVisible()
-            }));
-          }
-        },
-        getIsVisible: () => {
-          var _table$getState$colum, _table$getState$colum2;
-          return (_table$getState$colum = (_table$getState$colum2 = table.getState().columnVisibility) == null ? void 0 : _table$getState$colum2[column2.id]) != null ? _table$getState$colum : true;
-        },
-        getCanHide: () => {
-          var _column$columnDef$ena, _table$options$enable;
-          return ((_column$columnDef$ena = column2.columnDef.enableHiding) != null ? _column$columnDef$ena : true) && ((_table$options$enable = table.options.enableHiding) != null ? _table$options$enable : true);
-        },
-        getToggleVisibilityHandler: () => {
-          return (e) => {
-            column2.toggleVisibility == null ? void 0 : column2.toggleVisibility(e.target.checked);
-          };
+      column2.toggleVisibility = (value) => {
+        if (column2.getCanHide()) {
+          table.setColumnVisibility((old) => __spreadProps(__spreadValues({}, old), {
+            [column2.id]: value != null ? value : !column2.getIsVisible()
+          }));
         }
+      };
+      column2.getIsVisible = () => {
+        var _table$getState$colum, _table$getState$colum2;
+        return (_table$getState$colum = (_table$getState$colum2 = table.getState().columnVisibility) == null ? void 0 : _table$getState$colum2[column2.id]) != null ? _table$getState$colum : true;
+      };
+      column2.getCanHide = () => {
+        var _column$columnDef$ena, _table$options$enable;
+        return ((_column$columnDef$ena = column2.columnDef.enableHiding) != null ? _column$columnDef$ena : true) && ((_table$options$enable = table.options.enableHiding) != null ? _table$options$enable : true);
+      };
+      column2.getToggleVisibilityHandler = () => {
+        return (e) => {
+          column2.toggleVisibility == null || column2.toggleVisibility(e.target.checked);
+        };
       };
     },
     createRow: (row, table) => {
-      return {
-        _getAllVisibleCells: memo$1(() => [row.getAllCells(), table.getState().columnVisibility], (cells) => {
-          return cells.filter((cell) => cell.column.getIsVisible());
-        }, {
-          key: process.env.NODE_ENV === "production" && "row._getAllVisibleCells",
-          debug: () => {
-            var _table$options$debugA;
-            return (_table$options$debugA = table.options.debugAll) != null ? _table$options$debugA : table.options.debugRows;
-          }
-        }),
-        getVisibleCells: memo$1(() => [row.getLeftVisibleCells(), row.getCenterVisibleCells(), row.getRightVisibleCells()], (left2, center, right2) => [...left2, ...center, ...right2], {
-          key: process.env.NODE_ENV === "development" && "row.getVisibleCells",
-          debug: () => {
-            var _table$options$debugA2;
-            return (_table$options$debugA2 = table.options.debugAll) != null ? _table$options$debugA2 : table.options.debugRows;
-          }
-        })
-      };
+      row._getAllVisibleCells = memo$1(() => [row.getAllCells(), table.getState().columnVisibility], (cells) => {
+        return cells.filter((cell) => cell.column.getIsVisible());
+      }, {
+        key: process.env.NODE_ENV === "production" && "row._getAllVisibleCells",
+        debug: () => {
+          var _table$options$debugA;
+          return (_table$options$debugA = table.options.debugAll) != null ? _table$options$debugA : table.options.debugRows;
+        }
+      });
+      row.getVisibleCells = memo$1(() => [row.getLeftVisibleCells(), row.getCenterVisibleCells(), row.getRightVisibleCells()], (left2, center, right2) => [...left2, ...center, ...right2], {
+        key: process.env.NODE_ENV === "development" && "row.getVisibleCells",
+        debug: () => {
+          var _table$options$debugA2;
+          return (_table$options$debugA2 = table.options.debugAll) != null ? _table$options$debugA2 : table.options.debugRows;
+        }
+      });
     },
     createTable: (table) => {
       const makeVisibleColumnsMethod = (key, getColumns) => {
@@ -24613,32 +25325,30 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           }
         });
       };
-      return {
-        getVisibleFlatColumns: makeVisibleColumnsMethod("getVisibleFlatColumns", () => table.getAllFlatColumns()),
-        getVisibleLeafColumns: makeVisibleColumnsMethod("getVisibleLeafColumns", () => table.getAllLeafColumns()),
-        getLeftVisibleLeafColumns: makeVisibleColumnsMethod("getLeftVisibleLeafColumns", () => table.getLeftLeafColumns()),
-        getRightVisibleLeafColumns: makeVisibleColumnsMethod("getRightVisibleLeafColumns", () => table.getRightLeafColumns()),
-        getCenterVisibleLeafColumns: makeVisibleColumnsMethod("getCenterVisibleLeafColumns", () => table.getCenterLeafColumns()),
-        setColumnVisibility: (updater) => table.options.onColumnVisibilityChange == null ? void 0 : table.options.onColumnVisibilityChange(updater),
-        resetColumnVisibility: (defaultState) => {
-          var _table$initialState$c;
-          table.setColumnVisibility(defaultState ? {} : (_table$initialState$c = table.initialState.columnVisibility) != null ? _table$initialState$c : {});
-        },
-        toggleAllColumnsVisible: (value) => {
-          var _value;
-          value = (_value = value) != null ? _value : !table.getIsAllColumnsVisible();
-          table.setColumnVisibility(table.getAllLeafColumns().reduce((obj, column2) => __spreadProps(__spreadValues({}, obj), {
-            [column2.id]: !value ? !(column2.getCanHide != null && column2.getCanHide()) : value
-          }), {}));
-        },
-        getIsAllColumnsVisible: () => !table.getAllLeafColumns().some((column2) => !(column2.getIsVisible != null && column2.getIsVisible())),
-        getIsSomeColumnsVisible: () => table.getAllLeafColumns().some((column2) => column2.getIsVisible == null ? void 0 : column2.getIsVisible()),
-        getToggleAllColumnsVisibilityHandler: () => {
-          return (e) => {
-            var _target;
-            table.toggleAllColumnsVisible((_target = e.target) == null ? void 0 : _target.checked);
-          };
-        }
+      table.getVisibleFlatColumns = makeVisibleColumnsMethod("getVisibleFlatColumns", () => table.getAllFlatColumns());
+      table.getVisibleLeafColumns = makeVisibleColumnsMethod("getVisibleLeafColumns", () => table.getAllLeafColumns());
+      table.getLeftVisibleLeafColumns = makeVisibleColumnsMethod("getLeftVisibleLeafColumns", () => table.getLeftLeafColumns());
+      table.getRightVisibleLeafColumns = makeVisibleColumnsMethod("getRightVisibleLeafColumns", () => table.getRightLeafColumns());
+      table.getCenterVisibleLeafColumns = makeVisibleColumnsMethod("getCenterVisibleLeafColumns", () => table.getCenterLeafColumns());
+      table.setColumnVisibility = (updater) => table.options.onColumnVisibilityChange == null ? void 0 : table.options.onColumnVisibilityChange(updater);
+      table.resetColumnVisibility = (defaultState) => {
+        var _table$initialState$c;
+        table.setColumnVisibility(defaultState ? {} : (_table$initialState$c = table.initialState.columnVisibility) != null ? _table$initialState$c : {});
+      };
+      table.toggleAllColumnsVisible = (value) => {
+        var _value;
+        value = (_value = value) != null ? _value : !table.getIsAllColumnsVisible();
+        table.setColumnVisibility(table.getAllLeafColumns().reduce((obj, column2) => __spreadProps(__spreadValues({}, obj), {
+          [column2.id]: !value ? !(column2.getCanHide != null && column2.getCanHide()) : value
+        }), {}));
+      };
+      table.getIsAllColumnsVisible = () => !table.getAllLeafColumns().some((column2) => !(column2.getIsVisible != null && column2.getIsVisible()));
+      table.getIsSomeColumnsVisible = () => table.getAllLeafColumns().some((column2) => column2.getIsVisible == null ? void 0 : column2.getIsVisible());
+      table.getToggleAllColumnsVisibilityHandler = () => {
+        return (e) => {
+          var _target;
+          table.toggleAllColumnsVisible((_target = e.target) == null ? void 0 : _target.checked);
+        };
       };
     }
   };
@@ -24697,7 +25407,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return table.options.state;
       },
       setState: (updater) => {
-        table.options.onStateChange == null ? void 0 : table.options.onStateChange(updater);
+        table.options.onStateChange == null || table.options.onStateChange(updater);
       },
       _getRowId: (row, index2, parent) => {
         var _table$options$getRow;
@@ -24714,8 +25424,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       getRowModel: () => {
         return table.getPaginationRowModel();
       },
-      getRow: (id) => {
-        const row = table.getRowModel().rowsById[id];
+      getRow: (id, searchAll) => {
+        const row = (searchAll ? table.getCoreRowModel() : table.getRowModel()).rowsById[id];
         if (!row) {
           if (process.env.NODE_ENV !== "production") {
             throw new Error(`getRow expected an ID, but got ${id}`);
@@ -24741,7 +25451,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           // footer: props => props.header.column.id,
           cell: (props) => {
             var _props$renderValue$to, _props$renderValue;
-            return (_props$renderValue$to = (_props$renderValue = props.renderValue()) == null ? void 0 : _props$renderValue.toString == null ? void 0 : _props$renderValue.toString()) != null ? _props$renderValue$to : null;
+            return (_props$renderValue$to = (_props$renderValue = props.renderValue()) == null || _props$renderValue.toString == null ? void 0 : _props$renderValue.toString()) != null ? _props$renderValue$to : null;
           }
         }, table._features.reduce((obj, feature) => {
           return Object.assign(obj, feature.getDefaultColumnDef == null ? void 0 : feature.getDefaultColumnDef());
@@ -24816,9 +25526,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     };
     Object.assign(table, coreInstance);
-    table._features.forEach((feature) => {
-      return Object.assign(table, feature.createTable == null ? void 0 : feature.createTable(table));
-    });
+    for (let index2 = 0; index2 < table._features.length; index2++) {
+      const feature = table._features[index2];
+      feature == null || feature.createTable == null || feature.createTable(table);
+    }
     return table;
   }
   function createCell(table, row, column2, columnId) {
@@ -24845,7 +25556,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       })
     };
     table._features.forEach((feature) => {
-      Object.assign(cell, feature.createCell == null ? void 0 : feature.createCell(cell, column2, row, table));
+      feature.createCell == null || feature.createCell(cell, column2, row, table);
     }, {});
     return cell;
   }
@@ -24929,7 +25640,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
     for (let i = 0; i < table._features.length; i++) {
       const feature = table._features[i];
-      Object.assign(row, feature == null ? void 0 : feature.createRow == null ? void 0 : feature.createRow(row, table));
+      feature == null || feature.createRow == null || feature.createRow(row, table);
     }
     return row;
   };
@@ -25013,13 +25724,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           if (filterRow(row) && !newRow.subRows.length) {
             rows.push(row);
             newFilteredRowsById[row.id] = row;
-            newFilteredRowsById[i] = row;
+            newFilteredFlatRows.push(row);
             continue;
           }
           if (filterRow(row) || newRow.subRows.length) {
             rows.push(row);
             newFilteredRowsById[row.id] = row;
-            newFilteredRowsById[i] = row;
+            newFilteredFlatRows.push(row);
             continue;
           }
         } else {
@@ -25027,7 +25738,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           if (filterRow(row)) {
             rows.push(row);
             newFilteredRowsById[row.id] = row;
-            newFilteredRowsById[i] = row;
+            newFilteredFlatRows.push(row);
           }
         }
       }
@@ -25287,20 +25998,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             const sortEntry = availableSorting[i];
             const columnInfo = columnInfoById[sortEntry.id];
             const isDesc = (_sortEntry$desc = sortEntry == null ? void 0 : sortEntry.desc) != null ? _sortEntry$desc : false;
+            let sortInt = 0;
             if (columnInfo.sortUndefined) {
               const aValue = rowA.getValue(sortEntry.id);
               const bValue = rowB.getValue(sortEntry.id);
-              const aUndefined = typeof aValue === "undefined";
-              const bUndefined = typeof bValue === "undefined";
+              const aUndefined = aValue === void 0;
+              const bUndefined = bValue === void 0;
               if (aUndefined || bUndefined) {
-                let undefinedSort = aUndefined && bUndefined ? 0 : aUndefined ? columnInfo.sortUndefined : -columnInfo.sortUndefined;
-                if (isDesc && undefinedSort !== 0) {
-                  undefinedSort *= -1;
-                }
-                return undefinedSort;
+                sortInt = aUndefined && bUndefined ? 0 : aUndefined ? columnInfo.sortUndefined : -columnInfo.sortUndefined;
               }
             }
-            let sortInt = columnInfo.sortingFn(rowA, rowB, sortEntry.id);
+            if (sortInt === 0) {
+              sortInt = columnInfo.sortingFn(rowA, rowB, sortEntry.id);
+            }
             if (sortInt !== 0) {
               if (isDesc) {
                 sortInt *= -1;
@@ -25567,7 +26277,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       // state.
       onStateChange: (updater) => {
         setState(updater);
-        options.onStateChange == null ? void 0 : options.onStateChange(updater);
+        options.onStateChange == null || options.onStateChange(updater);
       }
     }));
     return tableRef.current;
@@ -26189,7 +26899,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$r = ArrowDownward.default = void 0;
   var _createSvgIcon$r = _interopRequireDefault$r(requireCreateSvgIcon());
-  var _jsxRuntime$r = jsxRuntimeExports;
+  var _jsxRuntime$r = requireJsxRuntime();
   var _default$r = (0, _createSvgIcon$r.default)(/* @__PURE__ */ (0, _jsxRuntime$r.jsx)("path", {
     d: "m20 12-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
   }), "ArrowDownward");
@@ -26202,7 +26912,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$q = ArrowRight.default = void 0;
   var _createSvgIcon$q = _interopRequireDefault$q(requireCreateSvgIcon());
-  var _jsxRuntime$q = jsxRuntimeExports;
+  var _jsxRuntime$q = requireJsxRuntime();
   var _default$q = (0, _createSvgIcon$q.default)(/* @__PURE__ */ (0, _jsxRuntime$q.jsx)("path", {
     d: "m10 17 5-5-5-5v10z"
   }), "ArrowRight");
@@ -26215,7 +26925,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$p = Cancel.default = void 0;
   var _createSvgIcon$p = _interopRequireDefault$p(requireCreateSvgIcon());
-  var _jsxRuntime$p = jsxRuntimeExports;
+  var _jsxRuntime$p = requireJsxRuntime();
   var _default$p = (0, _createSvgIcon$p.default)(/* @__PURE__ */ (0, _jsxRuntime$p.jsx)("path", {
     d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
   }), "Cancel");
@@ -26228,7 +26938,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$o = ClearAll.default = void 0;
   var _createSvgIcon$o = _interopRequireDefault$o(requireCreateSvgIcon());
-  var _jsxRuntime$o = jsxRuntimeExports;
+  var _jsxRuntime$o = requireJsxRuntime();
   var _default$o = (0, _createSvgIcon$o.default)(/* @__PURE__ */ (0, _jsxRuntime$o.jsx)("path", {
     d: "M5 13h14v-2H5v2zm-2 4h14v-2H3v2zM7 7v2h14V7H7z"
   }), "ClearAll");
@@ -26241,7 +26951,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$n = Close.default = void 0;
   var _createSvgIcon$n = _interopRequireDefault$n(requireCreateSvgIcon());
-  var _jsxRuntime$n = jsxRuntimeExports;
+  var _jsxRuntime$n = requireJsxRuntime();
   var _default$n = (0, _createSvgIcon$n.default)(/* @__PURE__ */ (0, _jsxRuntime$n.jsx)("path", {
     d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
   }), "Close");
@@ -26254,7 +26964,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$m = DensityLarge.default = void 0;
   var _createSvgIcon$m = _interopRequireDefault$m(requireCreateSvgIcon());
-  var _jsxRuntime$m = jsxRuntimeExports;
+  var _jsxRuntime$m = requireJsxRuntime();
   var _default$m = (0, _createSvgIcon$m.default)(/* @__PURE__ */ (0, _jsxRuntime$m.jsx)("path", {
     d: "M3 3h18v2H3zm0 16h18v2H3z"
   }), "DensityLarge");
@@ -26267,7 +26977,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$l = DensityMedium.default = void 0;
   var _createSvgIcon$l = _interopRequireDefault$l(requireCreateSvgIcon());
-  var _jsxRuntime$l = jsxRuntimeExports;
+  var _jsxRuntime$l = requireJsxRuntime();
   var _default$l = (0, _createSvgIcon$l.default)(/* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
     d: "M3 3h18v2H3zm0 16h18v2H3zm0-8h18v2H3z"
   }), "DensityMedium");
@@ -26280,7 +26990,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$k = DensitySmall.default = void 0;
   var _createSvgIcon$k = _interopRequireDefault$k(requireCreateSvgIcon());
-  var _jsxRuntime$k = jsxRuntimeExports;
+  var _jsxRuntime$k = requireJsxRuntime();
   var _default$k = (0, _createSvgIcon$k.default)(/* @__PURE__ */ (0, _jsxRuntime$k.jsx)("path", {
     d: "M3 2h18v2H3zm0 18h18v2H3zm0-6h18v2H3zm0-6h18v2H3z"
   }), "DensitySmall");
@@ -26293,7 +27003,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$j = DragHandle.default = void 0;
   var _createSvgIcon$j = _interopRequireDefault$j(requireCreateSvgIcon());
-  var _jsxRuntime$j = jsxRuntimeExports;
+  var _jsxRuntime$j = requireJsxRuntime();
   var _default$j = (0, _createSvgIcon$j.default)(/* @__PURE__ */ (0, _jsxRuntime$j.jsx)("path", {
     d: "M20 9H4v2h16V9zM4 15h16v-2H4v2z"
   }), "DragHandle");
@@ -26306,7 +27016,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$i = DynamicFeed.default = void 0;
   var _createSvgIcon$i = _interopRequireDefault$i(requireCreateSvgIcon());
-  var _jsxRuntime$i = jsxRuntimeExports;
+  var _jsxRuntime$i = requireJsxRuntime();
   var _default$i = (0, _createSvgIcon$i.default)([/* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
     d: "M8 8H6v7c0 1.1.9 2 2 2h9v-2H8V8z"
   }, "0"), /* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
@@ -26321,7 +27031,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$h = Edit.default = void 0;
   var _createSvgIcon$h = _interopRequireDefault$h(requireCreateSvgIcon());
-  var _jsxRuntime$h = jsxRuntimeExports;
+  var _jsxRuntime$h = requireJsxRuntime();
   var _default$h = (0, _createSvgIcon$h.default)(/* @__PURE__ */ (0, _jsxRuntime$h.jsx)("path", {
     d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
   }), "Edit");
@@ -26334,7 +27044,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$g = ExpandMore.default = void 0;
   var _createSvgIcon$g = _interopRequireDefault$g(requireCreateSvgIcon());
-  var _jsxRuntime$g = jsxRuntimeExports;
+  var _jsxRuntime$g = requireJsxRuntime();
   var _default$g = (0, _createSvgIcon$g.default)(/* @__PURE__ */ (0, _jsxRuntime$g.jsx)("path", {
     d: "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
   }), "ExpandMore");
@@ -26347,7 +27057,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$f = FilterAlt.default = void 0;
   var _createSvgIcon$f = _interopRequireDefault$f(requireCreateSvgIcon());
-  var _jsxRuntime$f = jsxRuntimeExports;
+  var _jsxRuntime$f = requireJsxRuntime();
   var _default$f = (0, _createSvgIcon$f.default)(/* @__PURE__ */ (0, _jsxRuntime$f.jsx)("path", {
     d: "M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61z"
   }), "FilterAlt");
@@ -26360,7 +27070,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$e = FilterList.default = void 0;
   var _createSvgIcon$e = _interopRequireDefault$e(requireCreateSvgIcon());
-  var _jsxRuntime$e = jsxRuntimeExports;
+  var _jsxRuntime$e = requireJsxRuntime();
   var _default$e = (0, _createSvgIcon$e.default)(/* @__PURE__ */ (0, _jsxRuntime$e.jsx)("path", {
     d: "M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
   }), "FilterList");
@@ -26373,7 +27083,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$d = FilterListOff.default = void 0;
   var _createSvgIcon$d = _interopRequireDefault$d(requireCreateSvgIcon());
-  var _jsxRuntime$d = jsxRuntimeExports;
+  var _jsxRuntime$d = requireJsxRuntime();
   var _default$d = (0, _createSvgIcon$d.default)(/* @__PURE__ */ (0, _jsxRuntime$d.jsx)("path", {
     d: "M10.83 8H21V6H8.83l2 2zm5 5H18v-2h-4.17l2 2zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41L14 16.83z"
   }), "FilterListOff");
@@ -26386,7 +27096,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$c = FullscreenExit.default = void 0;
   var _createSvgIcon$c = _interopRequireDefault$c(requireCreateSvgIcon());
-  var _jsxRuntime$c = jsxRuntimeExports;
+  var _jsxRuntime$c = requireJsxRuntime();
   var _default$c = (0, _createSvgIcon$c.default)(/* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
     d: "M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"
   }), "FullscreenExit");
@@ -26399,7 +27109,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$b = Fullscreen.default = void 0;
   var _createSvgIcon$b = _interopRequireDefault$b(requireCreateSvgIcon());
-  var _jsxRuntime$b = jsxRuntimeExports;
+  var _jsxRuntime$b = requireJsxRuntime();
   var _default$b = (0, _createSvgIcon$b.default)(/* @__PURE__ */ (0, _jsxRuntime$b.jsx)("path", {
     d: "M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"
   }), "Fullscreen");
@@ -26412,7 +27122,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$a = KeyboardDoubleArrowDown.default = void 0;
   var _createSvgIcon$a = _interopRequireDefault$a(requireCreateSvgIcon());
-  var _jsxRuntime$a = jsxRuntimeExports;
+  var _jsxRuntime$a = requireJsxRuntime();
   var _default$a = (0, _createSvgIcon$a.default)([/* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
     d: "M18 6.41 16.59 5 12 9.58 7.41 5 6 6.41l6 6z"
   }, "0"), /* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
@@ -26427,7 +27137,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$9 = MoreHoriz.default = void 0;
   var _createSvgIcon$9 = _interopRequireDefault$9(requireCreateSvgIcon());
-  var _jsxRuntime$9 = jsxRuntimeExports;
+  var _jsxRuntime$9 = requireJsxRuntime();
   var _default$9 = (0, _createSvgIcon$9.default)(/* @__PURE__ */ (0, _jsxRuntime$9.jsx)("path", {
     d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
   }), "MoreHoriz");
@@ -26440,7 +27150,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$8 = MoreVert.default = void 0;
   var _createSvgIcon$8 = _interopRequireDefault$8(requireCreateSvgIcon());
-  var _jsxRuntime$8 = jsxRuntimeExports;
+  var _jsxRuntime$8 = requireJsxRuntime();
   var _default$8 = (0, _createSvgIcon$8.default)(/* @__PURE__ */ (0, _jsxRuntime$8.jsx)("path", {
     d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
   }), "MoreVert");
@@ -26453,7 +27163,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$7 = PushPin.default = void 0;
   var _createSvgIcon$7 = _interopRequireDefault$7(requireCreateSvgIcon());
-  var _jsxRuntime$7 = jsxRuntimeExports;
+  var _jsxRuntime$7 = requireJsxRuntime();
   var _default$7 = (0, _createSvgIcon$7.default)(/* @__PURE__ */ (0, _jsxRuntime$7.jsx)("path", {
     fillRule: "evenodd",
     d: "M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"
@@ -26467,7 +27177,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$6 = RestartAlt.default = void 0;
   var _createSvgIcon$6 = _interopRequireDefault$6(requireCreateSvgIcon());
-  var _jsxRuntime$6 = jsxRuntimeExports;
+  var _jsxRuntime$6 = requireJsxRuntime();
   var _default$6 = (0, _createSvgIcon$6.default)(/* @__PURE__ */ (0, _jsxRuntime$6.jsx)("path", {
     d: "M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8zm-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91z"
   }), "RestartAlt");
@@ -26480,7 +27190,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$5 = Save.default = void 0;
   var _createSvgIcon$5 = _interopRequireDefault$5(requireCreateSvgIcon());
-  var _jsxRuntime$5 = jsxRuntimeExports;
+  var _jsxRuntime$5 = requireJsxRuntime();
   var _default$5 = (0, _createSvgIcon$5.default)(/* @__PURE__ */ (0, _jsxRuntime$5.jsx)("path", {
     d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"
   }), "Save");
@@ -26493,7 +27203,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$4 = Search.default = void 0;
   var _createSvgIcon$4 = _interopRequireDefault$4(requireCreateSvgIcon());
-  var _jsxRuntime$4 = jsxRuntimeExports;
+  var _jsxRuntime$4 = requireJsxRuntime();
   var _default$4 = (0, _createSvgIcon$4.default)(/* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
     d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
   }), "Search");
@@ -26506,7 +27216,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$3 = SearchOff.default = void 0;
   var _createSvgIcon$3 = _interopRequireDefault$3(requireCreateSvgIcon());
-  var _jsxRuntime$3 = jsxRuntimeExports;
+  var _jsxRuntime$3 = requireJsxRuntime();
   var _default$3 = (0, _createSvgIcon$3.default)([/* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
     d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3 6.08 3 3.28 5.64 3.03 9h2.02C5.3 6.75 7.18 5 9.5 5 11.99 5 14 7.01 14 9.5S11.99 14 9.5 14c-.17 0-.33-.03-.5-.05v2.02c.17.02.33.03.5.03 1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"
   }, "0"), /* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
@@ -26521,7 +27231,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$2 = Sort.default = void 0;
   var _createSvgIcon$2 = _interopRequireDefault$2(requireCreateSvgIcon());
-  var _jsxRuntime$2 = jsxRuntimeExports;
+  var _jsxRuntime$2 = requireJsxRuntime();
   var _default$2 = (0, _createSvgIcon$2.default)(/* @__PURE__ */ (0, _jsxRuntime$2.jsx)("path", {
     d: "M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"
   }), "Sort");
@@ -26534,7 +27244,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1$1 = ViewColumn.default = void 0;
   var _createSvgIcon$1 = _interopRequireDefault$1(requireCreateSvgIcon());
-  var _jsxRuntime$1 = jsxRuntimeExports;
+  var _jsxRuntime$1 = requireJsxRuntime();
   var _default$1 = (0, _createSvgIcon$1.default)(/* @__PURE__ */ (0, _jsxRuntime$1.jsx)("path", {
     d: "M14.67 5v14H9.33V5h5.34zm1 14H21V5h-5.33v14zm-7.34 0V5H3v14h5.33z"
   }), "ViewColumn");
@@ -26547,7 +27257,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   var default_1 = VisibilityOff.default = void 0;
   var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
-  var _jsxRuntime = jsxRuntimeExports;
+  var _jsxRuntime = requireJsxRuntime();
   var _default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
     d: "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"
   }), "VisibilityOff");
@@ -39478,7 +40188,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   var windowScroll = function windowScroll2(offset2, _ref, instance) {
     var _instance$scrollEleme, _instance$scrollEleme2;
-    var _ref$adjustments = _ref.adjustments, adjustments = _ref$adjustments === void 0 ? 0 : _ref$adjustments, behavior = _ref.behavior;
+    var _ref$adjustments = _ref.adjustments, adjustments = _ref$adjustments === void 0 ? window.scrollY : _ref$adjustments, behavior = _ref.behavior;
     var toOffset = offset2 + adjustments;
     (_instance$scrollEleme = instance.scrollElement) == null ? void 0 : _instance$scrollEleme.scrollTo == null ? void 0 : _instance$scrollEleme.scrollTo((_instance$scrollEleme2 = {}, _instance$scrollEleme2[instance.options.horizontal ? "left" : "top"] = toOffset, _instance$scrollEleme2.behavior = behavior, _instance$scrollEleme2));
   };
@@ -39742,16 +40452,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return parseInt(indexStr, 10);
     };
     this._measureElement = function(node2, entry) {
-      var _this$itemSizeCache$g;
-      var index2 = _this.indexFromElement(node2);
-      var item = _this.measurementsCache[index2];
+      var item = _this.measurementsCache[_this.indexFromElement(node2)];
       if (!item) {
+        _this.measureElementCache.forEach(function(cached, key) {
+          if (cached === node2) {
+            _this.observer.unobserve(node2);
+            _this.measureElementCache["delete"](key);
+          }
+        });
         return;
       }
       var prevNode = _this.measureElementCache.get(item.key);
       if (!node2.isConnected) {
-        _this.observer.unobserve(node2);
-        if (node2 === prevNode) {
+        if (prevNode) {
+          _this.observer.unobserve(prevNode);
           _this.measureElementCache["delete"](item.key);
         }
         return;
@@ -39764,8 +40478,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         _this.measureElementCache.set(item.key, node2);
       }
       var measuredItemSize = _this.options.measureElement(node2, entry, _this);
+      _this.resizeItem(item, measuredItemSize);
+    };
+    this.resizeItem = function(item, size) {
+      var _this$itemSizeCache$g;
       var itemSize = (_this$itemSizeCache$g = _this.itemSizeCache.get(item.key)) != null ? _this$itemSizeCache$g : item.size;
-      var delta = measuredItemSize - itemSize;
+      var delta = size - itemSize;
       if (delta !== 0) {
         if (item.start < _this.scrollOffset) {
           if (process.env.NODE_ENV !== "production" && _this.options.debug) {
@@ -39776,8 +40494,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             behavior: void 0
           });
         }
-        _this.pendingMeasuredCacheIndexes.push(index2);
-        _this.itemSizeCache = new Map(_this.itemSizeCache.set(item.key, measuredItemSize));
+        _this.pendingMeasuredCacheIndexes.push(item.index);
+        _this.itemSizeCache = new Map(_this.itemSizeCache.set(item.key, size));
         _this.notify();
       }
     };
@@ -42692,6 +43410,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     return t;
   }
+  typeof SuppressedError === "function" ? SuppressedError : function(error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+  };
   const MRT_AggregationFns = Object.assign({}, aggregationFns);
   const fuzzy$1 = (row, columnId, filterValue, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), filterValue, {
@@ -44481,7 +45203,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       table,
       theme: theme2,
       tableCellProps
-    })), draggingBorders), children: jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [cell.getIsPlaceholder() ? (_b = (_a = columnDef.PlaceholderCell) === null || _a === void 0 ? void 0 : _a.call(columnDef, { cell, column: column2, row, table })) !== null && _b !== void 0 ? _b : null : isLoading || showSkeletons ? jsxRuntimeExports.jsx(Skeleton, Object.assign({ animation: "wave", height: 20, width: skeletonWidth }, skeletonProps)) : enableRowNumbers && rowNumberMode === "static" && column2.id === "mrt-row-numbers" ? rowIndex + 1 : column2.id === "mrt-row-drag" ? jsxRuntimeExports.jsx(MRT_TableBodyRowGrabHandle, { cell, rowRef, table }) : columnDefType === "display" && (column2.id === "mrt-row-select" || column2.id === "mrt-row-expand" || !row.getIsGrouped()) ? (_c = columnDef.Cell) === null || _c === void 0 ? void 0 : _c.call(columnDef, {
+    })), draggingBorders), children: jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [cell.getIsPlaceholder() ? (_b = (_a = columnDef.PlaceholderCell) === null || _a === void 0 ? void 0 : _a.call(columnDef, { cell, column: column2, row, table })) !== null && _b !== void 0 ? _b : null : (isLoading || showSkeletons) && cell.getValue() === null ? jsxRuntimeExports.jsx(Skeleton, Object.assign({ animation: "wave", height: 20, width: skeletonWidth }, skeletonProps)) : enableRowNumbers && rowNumberMode === "static" && column2.id === "mrt-row-numbers" ? rowIndex + 1 : column2.id === "mrt-row-drag" ? jsxRuntimeExports.jsx(MRT_TableBodyRowGrabHandle, { cell, rowRef, table }) : columnDefType === "display" && (column2.id === "mrt-row-select" || column2.id === "mrt-row-expand" || !row.getIsGrouped()) ? (_c = columnDef.Cell) === null || _c === void 0 ? void 0 : _c.call(columnDef, {
       cell,
       renderedCellValue: cell.renderValue(),
       column: column2,
@@ -45013,6 +45735,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const result = compact(path.split(/[,[\].]+?/)).reduce((result2, key) => isNullOrUndefined(result2) ? result2 : result2[key], obj);
     return isUndefined(result) || result === obj ? isUndefined(obj[path]) ? defaultValue : obj[path] : result;
   };
+  var isBoolean = (value) => typeof value === "boolean";
   const EVENTS = {
     BLUR: "blur",
     FOCUS_OUT: "focusout",
@@ -45065,7 +45788,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return isEmptyObject(formState) || Object.keys(formState).length >= Object.keys(_proxyFormState).length || Object.keys(formState).find((key) => _proxyFormState[key] === (!isRoot || VALIDATION_MODE.all));
   };
   var convertToArrayPayload = (value) => Array.isArray(value) ? value : [value];
-  var shouldSubscribeByName = (name, signalName, exact) => exact && signalName ? name === signalName : !name || !signalName || name === signalName || convertToArrayPayload(name).some((currentName) => currentName && (currentName.startsWith(signalName) || signalName.startsWith(currentName)));
+  var shouldSubscribeByName = (name, signalName, exact) => !name || !signalName || name === signalName || convertToArrayPayload(name).some((currentName) => currentName && (exact ? currentName === signalName : currentName.startsWith(signalName) || signalName.startsWith(currentName)));
   function useSubscribe(props) {
     const _props = React.useRef(props);
     _props.current = props;
@@ -45159,7 +45882,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   function useController(props) {
     const methods = useFormContext();
-    const { name, control = methods.control, shouldUnregister } = props;
+    const { name, disabled, control = methods.control, shouldUnregister } = props;
     const isArrayField = isNameInFieldArray(control._names.array, name);
     const value = useWatch({
       control,
@@ -45195,10 +45918,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         (isArrayField ? _shouldUnregisterField && !control._state.action : _shouldUnregisterField) ? control.unregister(name) : updateMounted(name, false);
       };
     }, [name, control, isArrayField, shouldUnregister]);
+    React.useEffect(() => {
+      if (get(control._fields, name)) {
+        control._updateDisabledField({
+          disabled,
+          fields: control._fields,
+          name
+        });
+      }
+    }, [disabled, name, control]);
     return {
-      field: {
+      field: __spreadProps(__spreadValues({
         name,
-        value,
+        value
+      }, isBoolean(disabled) ? { disabled } : {}), {
         onChange: React.useCallback((event) => _registerProps.current.onChange({
           target: {
             value: getEventValue(event),
@@ -45224,7 +45957,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             };
           }
         }
-      },
+      }),
       formState,
       fieldState: Object.defineProperties({}, {
         invalid: {
@@ -45360,7 +46093,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     set(errors, name, fieldArrayErrors);
     return errors;
   };
-  var isBoolean = (value) => typeof value === "boolean";
   var isFileInput = (element) => element.type === "file";
   var isFunction = (value) => typeof value === "function";
   var isHTMLElement = (value) => {
@@ -46127,7 +46859,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return _options.resolver(_formValues, _options.context, getResolverOptions(name || _names.mount, _fields, _options.criteriaMode, _options.shouldUseNativeValidation));
     });
     const executeSchemaAndUpdateState = (names) => __async(this, null, function* () {
-      const { errors } = yield _executeSchema();
+      const { errors } = yield _executeSchema(names);
       if (names) {
         for (const name of names) {
           const error = get(errors, name);
@@ -46280,7 +47012,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           isValid = isEmptyObject(errors);
         } else {
           error = (yield validateField(field, _formValues, shouldDisplayAllAssociatedErrors, _options.shouldUseNativeValidation))[name];
-          isFieldValueUpdated = isNaN(fieldValue) || fieldValue === get(_formValues, name, fieldValue);
+          isFieldValueUpdated = Number.isNaN(fieldValue) || fieldValue === get(_formValues, name, fieldValue);
           if (isFieldValueUpdated) {
             if (error) {
               isValid = false;
@@ -46370,6 +47102,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       _subjects.state.next(__spreadValues(__spreadValues({}, _formState), !options.keepDirty ? {} : { isDirty: _getDirty() }));
       !options.keepIsValid && _updateValid();
     };
+    const _updateDisabledField = ({ disabled, name, field, fields: fields2 }) => {
+      if (isBoolean(disabled)) {
+        const value = disabled ? void 0 : get(_formValues, name, getFieldValue(field ? field._f : get(fields2, name)._f));
+        set(_formValues, name, value);
+        updateTouchAndDirty(name, value, false, false, true);
+      }
+    };
     const register = (name, options = {}) => {
       let field = get(_fields, name);
       const disabledIsDefined = isBoolean(options.disabled);
@@ -46380,7 +47119,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }), options)
       }));
       _names.mount.add(name);
-      field ? disabledIsDefined && set(_formValues, name, options.disabled ? void 0 : get(_formValues, name, getFieldValue(field._f))) : updateValidAndValue(name, true, options.value);
+      if (field) {
+        _updateDisabledField({
+          field,
+          disabled: options.disabled,
+          name
+        });
+      } else {
+        updateValidAndValue(name, true, options.value);
+      }
       return __spreadProps(__spreadValues(__spreadValues({}, disabledIsDefined ? { disabled: options.disabled } : {}), _options.progressive ? {
         required: !!options.required,
         min: getRuleValue(options.min),
@@ -46484,7 +47231,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     };
     const _reset = (formValues, keepStateOptions = {}) => {
-      const updatedValues = formValues || _defaultValues;
+      const updatedValues = formValues ? cloneObject(formValues) : _defaultValues;
       const cloneUpdatedValues = cloneObject(updatedValues);
       const values2 = formValues && !isEmptyObject(formValues) ? cloneUpdatedValues : _defaultValues;
       if (!keepStateOptions.keepDefaultValues) {
@@ -46539,8 +47286,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         dirtyFields: keepStateOptions.keepDirtyValues ? _formState.dirtyFields : keepStateOptions.keepDefaultValues && formValues ? getDirtyFields(_defaultValues, formValues) : {},
         touchedFields: keepStateOptions.keepTouched ? _formState.touchedFields : {},
         errors: keepStateOptions.keepErrors ? _formState.errors : {},
-        isSubmitting: false,
-        isSubmitSuccessful: false
+        isSubmitSuccessful: keepStateOptions.keepIsSubmitSuccessful ? _formState.isSubmitSuccessful : false,
+        isSubmitting: false
       });
     };
     const reset = (formValues, keepStateOptions) => _reset(isFunction(formValues) ? formValues(_formValues) : formValues, keepStateOptions);
@@ -46577,6 +47324,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         _updateValid,
         _removeUnmounted,
         _updateFieldArray,
+        _updateDisabledField,
         _getFieldArray,
         _reset,
         _resetDefaultValues,

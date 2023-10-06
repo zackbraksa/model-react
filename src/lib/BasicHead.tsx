@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux'
 
 import { useNavigate, useLocation } from 'react-router-dom'
 
+import { Gubu } from 'gubu'
+ 
 import {
   Toolbar,
   TextField,
@@ -63,6 +65,18 @@ function BasicHead(props: any) {
   const {
     frame,
   } = spec
+
+  // spec schema definition with Gubu
+  const shape = Gubu({ 
+    head: {
+      logo: { img: String },
+      tool: { def: [] },
+    }, 
+    view:[]
+  })
+
+  // spec schema validation with Gubu
+  shape(spec)
   
   const navigate = useNavigate()
   const location = useLocation()
