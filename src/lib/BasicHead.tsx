@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import { Gubu } from 'gubu'
+import { Gubu, Exact } from 'gubu'
  
 import {
   Toolbar,
@@ -50,7 +50,6 @@ function addItem(seneca: any, led_add: any) {
     section: 'vxg.trigger.led.add',
     content: ++led_add,
   })
-
 }
 
 function BasicHead(props: any) {
@@ -60,19 +59,21 @@ function BasicHead(props: any) {
     spec
   } = props
   
-  const { model, seneca } = ctx()
+  const { seneca } = ctx()
   
   const {
     frame,
   } = spec
 
+  console.log('BasicHead.spec', spec)
+
   // spec schema definition with Gubu
   const shape = Gubu({ 
     head: {
       logo: { img: String },
-      tool: { def: [] },
+      tool: { def: [{ kind: Exact('addbutton', 'autocomplete'), title: String, options: {}, name: "" }] },
     }, 
-    view:[]
+    view:{}
   })
 
   // spec schema validation with Gubu
@@ -81,8 +82,7 @@ function BasicHead(props: any) {
   const navigate = useNavigate()
   const location = useLocation()
   
-  const part = model.app.web.frame[frame].part.head
-  const tooldefs = Object.entries(part.tool.def)
+  const tooldefs = Object.entries(spec.head.tool.def)
     .map((entry:any)=>(entry[1].name=entry[0],entry[1]))
   
 
@@ -120,7 +120,7 @@ function BasicHead(props: any) {
   let led_add = vxgState.trigger.led.add
   
   const viewPath: any = location.pathname.split('/')[2]
-  let add = model.app.web.frame.private.view[viewPath].content.def.add || { active: false }
+  let add = spec.view[viewPath].content.def.add || { active: false }
   
   
   let drawerwidth = '16rem'
@@ -192,7 +192,7 @@ function BasicHead(props: any) {
            
               onClick={ () => addItem(seneca, led_add) }
             >
-              { tooldef.title + ' ' + model.app.web.frame.private.view[viewPath].name }
+              { tooldef.title + ' ' + spec.view[viewPath].name }
             </BasicButton>
 
           }
