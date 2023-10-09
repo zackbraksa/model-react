@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
-
+import '@testing-library/jest-dom'
 import type { RenderOptions } from '@testing-library/react'
 
 interface IExtendedRenderOptions extends RenderOptions {
@@ -63,7 +63,14 @@ export const ctx = () => {
             frame: {
               part: {
                 foot: {},
-                head: { tool: { def: {} } },
+                head: {
+                  tool: {
+                    def: [
+                      { kind: 'addbutton', title: 'Add', options: { kind: 'ent', label: { field: 'title' }, ent: 'vxg/task' } },
+                      { kind: 'autocomplete', title: 'Autocomplete', options: { kind: 'ent', label: { field: 'title' }, ent: 'vxg/task' } }
+                    ]
+                  }
+                },
                 side: { logo: { img: {} } }
               },
               view: {}
@@ -86,7 +93,7 @@ export const ctx = () => {
 export const spec = {
   frame: 'frame',
   img: { logo: {} },
-  handle: { signin: () => {} },
+  handle: { signin: () => { } },
   content: { def: { ent: { canon: 'canon' } } }
 }
 
@@ -94,7 +101,17 @@ export const initialState = {
   main: {
     auth: { user: { name: 'name' } },
     vxg: {
-      cmp: { BasicSide: { show: {} } },
+      cmp: {
+        BasicHead: {
+          tool: [
+            { selected: true },
+            { selected: false },
+          ]
+        },
+        BasicSide: {
+          show: true
+        }
+      },
       trigger: { led: { add: {} } },
       ent: {
         meta: { main: { canon: { state: {} } } },

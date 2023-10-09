@@ -9,6 +9,6 @@ describe('BasicHead', () => {
       mockInitialState: initialState
     })
 
-    expect(screen.getByText('name')).toBeTruthy()
+    expect(screen.getByText('name')).toBeInTheDocument()
   })
 })
