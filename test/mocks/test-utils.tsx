@@ -101,8 +101,16 @@ export const ctx = () => {
       }
     },
     content: {},
-    seneca: {},
-    custom: {}
+    seneca: {
+      entity: () => ({
+        list$: (q) => Promise.resolve([]), // Mock the list$ function to return an empty array
+      }),
+    },
+    custom: {
+      BasicLed: {
+        query: (view: any, cmpstate: any) => { }
+      }
+    }
   }
 }
 
@@ -130,8 +138,16 @@ export const initialState = {
       },
       trigger: { led: { add: {} } },
       ent: {
-        meta: { main: { canon: { state: {} } } },
-        list: { main: { canon: {} } }
+        list: {
+          main: {
+            'vxg/task': []
+          },
+        },
+        meta: {
+          main: {
+            'vxg/task': { state: 'none' }
+          },
+        },
       }
     }
   }
