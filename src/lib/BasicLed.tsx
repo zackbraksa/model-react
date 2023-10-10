@@ -9,31 +9,29 @@ import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
 
 function fields (spec: any) {
-  
   try {
-    let fds = []
-    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, '').split(/,/)
-    for(let fn of fns) {
+    const fds = []
+    const fns = spec.content.def.edit.layout.order.replace(/\s+/g, '').split(/,/)
+    for (const fn of fns) {
       let fd = { ...spec.content.def.ent.primary.field[fn] } || {}
-      
+
       // fd.title = fd.title ? fd.title : fd.name
       fd.name = fn
       fd.headerName = fd.title
-      fd = { ...fd, ...(spec.content.def.edit.layout.field[fn] || {} ) }
-      
+      fd = { ...fd, ...(spec.content.def.edit.layout.field[fn] || {}) }
+
       fds.push(fd)
     }
-    
+
     return fds
+  } catch (err) {
+    // console.log(err)
   }
-  catch(err) {
-   // console.log(err)
-  }
-  
+
   return []
 }
 
-function BasicLed(props: any) {
+function BasicLed (props: any) {
   const {
     vxg,
     ctx,
@@ -43,97 +41,91 @@ function BasicLed(props: any) {
 
   const vxgState = useSelector((state: any) => state.main.vxg)
 
-  const [item, setItem] = useState( {} as any)
-  
-  
+  const [item, setItem] = useState({} as any)
+
   const def = spec.content.def
   const { ent, cols } = def
-  
+
   const canon = ent.canon
 
-  const cmpstate = useSelector((state:any)=>state.main.vxg.cmp)
-  
-  const entstate = useSelector((state:any)=>state.main.vxg.ent.meta.main[canon].state)
-  const entlist = useSelector((state:any)=>state.main.vxg.ent.list.main[canon])
-  
+  const cmpstate = useSelector((state: any) => state.main.vxg.cmp)
+
+  const entstate = useSelector((state: any) => state.main.vxg.ent.meta.main[canon].state)
+  const entlist = useSelector((state: any) => state.main.vxg.ent.list.main[canon])
+
   const location = useLocation()
 
   // console.log('entlist',entlist)
-  if('none'===entstate) {
-    let q = custom.BasicLed.query(spec,cmpstate)
+  if (entstate === 'none') {
+    const q = custom.BasicLed.query(spec, cmpstate)
     seneca.entity(canon).list$(q)
   }
 
-  
   const rows = entlist
-  
+
   const itemFields: any = fields(spec)
-  
-  
-  const columns = 
-    itemFields.map((field: any) => 
+
+  const columns =
+    itemFields.map((field: any) =>
       ({
-        accessorFn: (row: any) => ( 'status' === field.type ? field.kind[row[field.name]]?.title : row[field.name] ),
+        accessorFn: (row: any) => (field.type === 'status' ? field.kind[row[field.name]]?.title : row[field.name]),
         accessorKey: field.name,
         header: field.headerName,
-        Header: () => <span>{ field.headerName }</span>,
+        Header: () => <span>{field.headerName}</span>,
         // muiTableHeadCellProps: { sx: { color: 'green' } },
-        Cell: ({ cell }: any) => <span>{ cell.getValue() }</span>,
+        Cell: ({ cell }: any) => <span>{cell.getValue()}</span>
       })
     )
-  
-  let data = rows //.slice(0, 10)
-  
+
+  const data = rows // .slice(0, 10)
+
   useEffect(() => {
     setItem({})
-  }, [ location.pathname ])
-  
-  let led_add = vxgState.trigger.led.add
-  let [triggerLed, setTriggerLed] = useState(0)
-  useEffect( ()=> {
+  }, [location.pathname])
 
-    // a workaround to prevent 
+  const led_add = vxgState.trigger.led.add
+  let [triggerLed, setTriggerLed] = useState(0)
+  useEffect(() => {
+    // a workaround to prevent
     // 'useEffect' to trigger when re-rendered
-    if(triggerLed >= 2) {
+    if (triggerLed >= 2) {
       // setItem( { entity$: '-/' + def.ent } )
-      setItem( { entity$: '-/' + def.ent.canon } )
+      setItem({ entity$: '-/' + def.ent.canon })
     }
 
     setTriggerLed(++triggerLed)
-  }, [ led_add ])
-  
-  
+  }, [led_add])
+
   return (
-    <div className="BasicLed">
-    {
-      '-/' + canon !==  item.entity$ ?
-        <BasicList
-          ctx={ ctx }
-          spec={ spec }
-          data={ data }
-          columns={ columns }
-          onRowClick = { (event: any, item: any) => {
+    <div className='BasicLed'>
+      {
+      '-/' + canon !== item.entity$
+        ? <BasicList
+            ctx={ctx}
+            spec={spec}
+            data={data}
+            columns={columns}
+            onRowClick={(event: any, item: any) => {
             // console.log('item: ', item)
 	          setItem(item)
-          } }
-        /> : 
-        <BasicEdit
-          ctx={ ctx }
-          spec={ spec }
-          onClose = { () => {
-            setItem({})
-          } }
-          onSubmit = { async (item: any) => {
-            await seneca.entity(canon).save$(item)
-            setItem({})
-          } }
-          item = { item }
-          itemFields = { itemFields }
-        />
+            }}
+          />
+        : <BasicEdit
+            ctx={ctx}
+            spec={spec}
+            onClose={() => {
+              setItem({})
+            }}
+            onSubmit={async (item: any) => {
+              await seneca.entity(canon).save$(item)
+              setItem({})
+            }}
+            item={item}
+            itemFields={itemFields}
+          />
     }
     </div>
   )
 }
-
 
 export default BasicLed

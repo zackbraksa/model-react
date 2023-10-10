@@ -6,19 +6,18 @@ import BasicSide from './BasicSide'
 import BasicMain from './BasicMain'
 import BasicFoot from './BasicFoot'
 
-
-function BasicAdmin(props: any) {
+function BasicAdmin (props: any) {
   const {
     vxg,
     ctx,
-    spec,
+    spec
   } = props
   const model = ctx().model
 
   const { frame } = spec
-  
+
   const part = model.app.web.frame[frame].part.admin
-  
+
   const headSpec: any = {
     frame
   }
@@ -34,7 +33,7 @@ function BasicAdmin(props: any) {
   const footSpec: any = {
     frame
   }
-  
+
   return (
     <div>
       <BasicHead vxg={vxg} ctx={ctx} spec={headSpec} />
@@ -44,6 +43,5 @@ function BasicAdmin(props: any) {
     </div>
   )
 }
-
 
 export default BasicAdmin

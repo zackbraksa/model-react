@@ -5,42 +5,40 @@ import { MaterialReactTable } from 'material-react-table'
 
 // import { DataGrid } from '@mui/x-data-grid'
 
-function BasicList(props: any) {
-   let {
-     onRowClick = () => {},
-     data,
-     columns,
-     sx = {},
-   } = props
-   
+function BasicList (props: any) {
+  const {
+    onRowClick = () => {},
+    data,
+    columns,
+    sx = {}
+  } = props
+
   const { ctx, spec } = props
   const { model, seneca, custom } = ctx()
-  
+
   const vxg = useSelector((state: any) => state.main.vxg)
 
-  
-  
   return (
-    <div className="BasicList" style = { { ...sx } } >
+    <div className='BasicList' style={{ ...sx }}>
       <MaterialReactTable
         enableColumnActions={false}
         enableColumnFilters={false}
-        enablePagination={true}
+        enablePagination
         enableSorting={false}
-        enableBottomToolbar={true}
+        enableBottomToolbar
         enableTopToolbar={false}
-        columns={columns} 
-	data={data}
+        columns={columns}
+        data={data}
         muiTableBodyRowProps={({ row }) => ({
-          onClick: (event: any)=> {
-            let selitem = { ...data[Number(row.id)] }
+          onClick: (event: any) => {
+            const selitem = { ...data[Number(row.id)] }
             onRowClick(event, selitem)
           },
-	  sx: { cursor: 'pointer' },
-	})}
-	/>
-    </div>)
-    
+	  sx: { cursor: 'pointer' }
+        })}
+      />
+    </div>
+  )
 }
 
 export default BasicList
@@ -53,7 +51,7 @@ export default BasicList
       let selitem = { ...params.row }
       // console.log('item: ', selitem)
       onRowClick({}, selitem)
-      
+
     }}
 
     checkboxSelection={false}
