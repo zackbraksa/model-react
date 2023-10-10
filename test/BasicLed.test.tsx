@@ -4,15 +4,23 @@ import * as React from 'react'
 import { customRender, ctx, spec, initialState, vxg } from './mocks/test-utils'
 import { BasicLed } from '../src/lib/index'
 
-beforeEach(() => {
-  Object.defineProperty(window, 'location', {
-    value: {
-      pathname: '/view/task'
-    }
-  });
-});
-
 describe('BasicLed', () => {
+  const setLocation = (pathname: string) => {
+    Object.defineProperty(window, 'location', {
+      value: {
+        pathname
+      }
+    });
+  }
+
+  beforeEach(() => {
+    setLocation('/view/task');
+  });
+
+  afterEach(() => {
+    setLocation(window.location.pathname);
+  });
+
   it('happy', () => {
 
     const view = {
@@ -31,12 +39,7 @@ describe('BasicLed', () => {
       mockInitialState: initialState,
     })
   })
+
 })
 
-afterEach(() => {
-  Object.defineProperty(window, 'location', {
-    value: {
-      pathname: window.location.pathname // Restore to the original value
-    }
-  });
-});
+
