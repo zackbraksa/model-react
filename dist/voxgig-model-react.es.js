@@ -20148,22 +20148,22 @@ function BasicHead(props) {
     ctx,
     spec
   } = props;
-  const { model, seneca } = ctx();
+  const { seneca } = ctx();
   const {
     frame
   } = spec;
+  console.log("BasicHead.spec", spec);
   const shape2 = gubu_minExports.Gubu({
     head: {
       logo: { img: String },
-      tool: { def: [] }
+      tool: { def: [{ kind: gubu_minExports.Exact("addbutton", "autocomplete"), title: String, options: {}, name: "" }] }
     },
-    view: []
+    view: {}
   });
   shape2(spec);
   const navigate = useNavigate();
   const location = useLocation();
-  const part = model.app.web.frame[frame].part.head;
-  const tooldefs = Object.entries(part.tool.def).map((entry) => (entry[1].name = entry[0], entry[1]));
+  const tooldefs = Object.entries(spec.head.tool.def).map((entry) => (entry[1].name = entry[0], entry[1]));
   const user = useSelector((state) => state.main.auth.user);
   const userName = user.name || user.email;
   let valuemap = {};
@@ -20189,7 +20189,7 @@ function BasicHead(props) {
   const open = vxgState.cmp.BasicSide.show;
   let led_add = vxgState.trigger.led.add;
   const viewPath = location.pathname.split("/")[2];
-  let add = model.app.web.frame.private.view[viewPath].content.def.add || { active: false };
+  let add = spec.view[viewPath].content.def.add || { active: false };
   let drawerwidth = "16rem";
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     BasicAppBar,
@@ -20257,7 +20257,7 @@ function BasicHead(props) {
                   },
                   size: "large",
                   onClick: () => addItem(seneca, led_add),
-                  children: tooldef.title + " " + model.app.web.frame.private.view[viewPath].name
+                  children: tooldef.title + " " + spec.view[viewPath].name
                 },
                 tooldef.name
               );
@@ -47740,10 +47740,12 @@ function BasicAdmin(props) {
   } = props;
   const model = ctx().model;
   const { frame } = spec;
-  const part = model.app.web.frame[frame].part.admin;
+  const frameModel = model.app.web.frame[frame];
   const headSpec = {
-    frame
+    head: frameModel.part.head,
+    view: frameModel.view
   };
+  console.log("BasicAdmin.headSpec", headSpec);
   const sideSpec = {
     frame
   };

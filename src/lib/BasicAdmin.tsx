@@ -17,11 +17,14 @@ function BasicAdmin(props: any) {
 
   const { frame } = spec
   
-  const part = model.app.web.frame[frame].part.admin
-  
+  const frameModel = model.app.web.frame[frame]
+
   const headSpec: any = {
-    frame
+    head: frameModel.part.head,
+    view: frameModel.view,
   }
+
+  console.log('BasicAdmin.headSpec', headSpec)
 
   const sideSpec: any = {
     frame
