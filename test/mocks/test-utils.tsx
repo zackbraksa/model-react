@@ -89,7 +89,7 @@ export const ctx = () => {
             private: {
               part: {
                 foot: {},
-                head: { logo: { img: '' }, tool: { def: [] } },
+                head: { logo: { img: '/logo.png' }, tool: { def: [] } },
                 side: { logo: { img: {} } }
               },
               view: {
