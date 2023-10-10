@@ -54,13 +54,24 @@ export function customRender(
   }
 }
 
+export const vxg = {
+  cmp: {
+    BasicSide: { show: {} }
+  },
+  trigger: { led: { add: {} } },
+  ent: {
+    meta: { main: { canon: { state: {} } } },
+    list: { main: { canon: {} } }
+  }
+}
+
 export const ctx = () => {
   return {
     model: {
       app: {
         web: {
           frame: {
-            frame: {
+            public: {
               part: {
                 foot: {},
                 head: {
@@ -76,6 +87,11 @@ export const ctx = () => {
               view: {}
             },
             private: {
+              part: {
+                foot: {},
+                head: { logo: { img: '' }, tool: { def: [] } },
+                side: { logo: { img: {} } }
+              },
               view: {
                 undefined: { content: { def: { add: {} } }, name: 'view' }
               }
@@ -91,10 +107,10 @@ export const ctx = () => {
 }
 
 export const spec = {
-  frame: 'frame',
-  img: { logo: {} },
-  handle: { signin: () => { } },
-  content: { def: { ent: { canon: 'canon' } } }
+  frame: 'private',
+  // img: { logo: {} },
+  // handle: { signin: () => {} },
+  // content: { def: { ent: { canon: 'canon' } } }
 }
 
 export const initialState = {

@@ -1,0 +1,92 @@
+
+
+part: head: {
+  logo: img: '/voxgig.png'
+  tool: def: [
+    { kind: 'addbutton', title: 'Add', options: { kind: 'ent', label: {field: 'title'}, ent: 'vxg/task'}},
+    { kind: 'autocomplete', title: 'Autocomplete', options: { kind: 'ent', label: {field: 'title'}, ent: 'vxg/task'}}
+  ]
+}
+
+part: side: {
+  logo: img: '/voxgig.png'
+  section: [
+    { kind: "navmenu", view: { task: true, event: true }, button: { icon: 'done', text: 'Default' }}
+  ]
+}
+
+part: main: {}
+
+part: foot: {
+  title: ''
+}
+
+
+view: task: {
+  title: 'Task'
+  icon: 'done'
+  content: {
+    kind: 'led'
+    def: {
+      ent: {
+        primary: {
+          field: {
+            id: { title: 'ID' }
+          }
+        },
+        canon: 'vxg/task'
+      }
+      add: { active: true}
+      edit: { 
+        layout: {
+          order: "id,title,status"
+          field: {
+            title: { type: '', headerName: 'Title', edit: true },
+            status: { type: 'status', headerName: 'Status', edit: true, kind: { open: { title: 'Open'}, closed: { title: 'Closed' } } }
+          }
+        }
+      }
+
+
+      # TODO: should come from unified ent description
+      # cols: [
+      #   { field: 'title', headerName: 'Title', width: 400 },
+      #   { field: 'status', headerName: 'Status', width: 200 },
+      # ]
+    }
+  }
+}
+
+view: event: {
+  title: 'Event'
+  icon: 'done'
+  content: {
+    kind: 'led'
+    def: {
+      ent: {
+        primary: {
+          field: {
+            id: { title: 'ID' }
+          }
+        },
+        canon: 'vxg/event'
+      }
+      add: { active: true}
+      edit: { 
+        layout: {
+          order: "id,title,status"
+          field: {
+            title: { type: '', headerName: 'Title', edit: true },
+            status: { type: 'status', headerName: 'Status', edit: true, kind: { open: { title: 'Open'}, closed: { title: 'Closed' } } }
+          }
+        }
+      }
+
+      # TODO: should come from unified ent description
+      # cols: [
+      #   { field: 'title', headerName: 'Title', width: 400 },
+      #   { field: 'status', headerName: 'Status', width: 200 },
+      # ]
+    }
+  }
+}
