@@ -25,6 +25,7 @@ describe('BasicLed', () => {
 
     const view = {
       content: {
+        kind: 'led',
         def: {
           ent: {
             canon: 'vxg/task'
@@ -32,7 +33,8 @@ describe('BasicLed', () => {
           add: {}
         }
       },
-      name: 'task'
+      title: 'task',
+      icon: 'done'
     }
 
     customRender(<BasicLed vxg={vxg} ctx={ctx} spec={view} />, {

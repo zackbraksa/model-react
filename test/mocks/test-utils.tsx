@@ -100,7 +100,7 @@ export const ctx = () => {
                 }
               },
               view: {
-                undefined: { content: { def: { add: {} } }, name: 'view' }
+                undefined: { content: { kind: 'led', def: { add: {} } }, title: 'Task' }
               }
             }
           }
