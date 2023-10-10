@@ -65,7 +65,7 @@ function BasicHead(props: any) {
     frame,
   } = spec
 
-  console.log('BasicHead.spec', spec)
+  // console.log('BasicHead.spec', spec)
 
   // spec schema definition with Gubu
   const shape = Gubu({

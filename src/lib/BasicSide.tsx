@@ -112,7 +112,7 @@ function BasicSide(props: any) {
     side: {
       logo: { img: "" },
       section: [
-        { kind: "", view: {}, button: { icon: String, text: String } },
+        { name: "", kind: "", view: {}, button: { icon: String, text: String } },
       ]
     },
     view: {}

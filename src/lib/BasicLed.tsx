@@ -43,9 +43,10 @@ function BasicLed(props: any) {
 
   // spec schema definition with Gubu
   const shape = Gubu({
+    name: "",
     title: String,
     icon: String,
-    content: { kind: String, def: { ent: {}, add: {}, edit: {} } },
+    content: { name: "", kind: String, def: { ent: {}, add: {}, edit: {} } },
   })
 
   // spec schema validation with Gubu
@@ -63,7 +64,6 @@ function BasicLed(props: any) {
   const canon = ent.canon
 
   const cmpstate = useSelector((state: any) => state.main.vxg.cmp)
-
   const entstate = useSelector((state: any) => state.main.vxg.ent.meta.main[canon].state)
   const entlist = useSelector((state: any) => state.main.vxg.ent.list.main[canon])
 
@@ -75,11 +75,9 @@ function BasicLed(props: any) {
     seneca.entity(canon).list$(q)
   }
 
-
   const rows = entlist
 
   const itemFields: any = fields(spec)
-
 
   const columns =
     itemFields.map((field: any) =>
