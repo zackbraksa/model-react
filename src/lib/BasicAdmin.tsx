@@ -16,7 +16,7 @@ function BasicAdmin(props: any) {
   const model = ctx().model
 
   const { frame } = spec
-  
+
   const frameModel = model.app.web.frame[frame]
 
   const headSpec: any = {
@@ -24,20 +24,21 @@ function BasicAdmin(props: any) {
     view: frameModel.view,
   }
 
-  console.log('BasicAdmin.headSpec', headSpec)
-
   const sideSpec: any = {
-    frame
+    side: frameModel.part.side,
+    view: frameModel.view,
   }
 
   const mainSpec: any = {
-    frame
+    main: frameModel.part.main,
+    view: frameModel.view,
   }
 
   const footSpec: any = {
-    frame
+    foot: frameModel.part.foot,
+    view: frameModel.view,
   }
-  
+
   return (
     <div>
       <BasicHead vxg={vxg} ctx={ctx} spec={headSpec} />
