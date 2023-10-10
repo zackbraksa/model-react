@@ -51,6 +51,7 @@ import {
   BasicDrawer,
   BasicDrawerHeader
 } from './BasicDrawer'
+import { Exact, Gubu } from 'gubu'
 
 
 
@@ -101,13 +102,24 @@ function BasicSide(props: any) {
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show
 
-
-
   const navigate = useNavigate()
   const location = useLocation()
 
-
   const { frame } = spec
+
+  // spec schema definition with Gubu
+  const shape = Gubu({
+    side: {
+      logo: { img: "" },
+      section: [
+        { kind: "", view: {}, button: { icon: String, text: String } },
+      ]
+    },
+    view: {}
+  })
+
+  // spec schema validation with Gubu
+  shape(spec)
 
   const part = spec.side
 

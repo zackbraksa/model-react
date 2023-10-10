@@ -82,7 +82,9 @@ export const ctx = () => {
                     ]
                   }
                 },
-                side: { logo: { img: {} } }
+                side: {
+                  logo: { img: "/logo.png" }
+                }
               },
               view: {}
             },
@@ -90,7 +92,12 @@ export const ctx = () => {
               part: {
                 foot: {},
                 head: { logo: { img: '/logo.png' }, tool: { def: [] } },
-                side: { logo: { img: {} } }
+                side: {
+                  logo: { img: "/logo.png" },
+                  section: [
+                    { kind: 'navmenu', view: { task: true }, button: { icon: 'done', text: 'Default' } },
+                  ]
+                }
               },
               view: {
                 undefined: { content: { def: { add: {} } }, name: 'view' }
