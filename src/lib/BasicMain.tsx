@@ -10,6 +10,7 @@ import {
 
 
 import BasicLed from './BasicLed'
+import { Gubu } from 'gubu'
 
 
 function makeCmp(view: any, ctx: any) {
@@ -38,6 +39,15 @@ function BasicMain(props: any) {
   const { model, content } = ctx()
 
   const { frame } = spec
+
+  // spec schema definition with Gubu
+  const shape = Gubu({
+    main: {},
+    view: {}
+  })
+
+  // spec schema validation with Gubu
+  shape(spec)
 
   const part = spec.main
 
