@@ -11,10 +11,10 @@ function BasicFoot(props: any) {
     spec
   } = props
   const model = ctx().model
-  
+
   const { frame } = spec
-  
-  const part = model.app.web.frame[frame].part.foot
+
+  const part = spec.foot
 
   return (
     <Box
@@ -24,14 +24,14 @@ function BasicFoot(props: any) {
         paddingTop: "0.5rem",
         paddingBottom: "0.5rem",
         borderTop: '1px solid #CCC',
-        
+
       }}
     >
       <Container maxWidth="lg">
         <Grid container direction="column">
-          <Grid item xs={12} sx={{textAlign:'right'}}>
+          <Grid item xs={12} sx={{ textAlign: 'right' }}>
             <Typography color="#CCC" variant="body2">
-              { part.title }
+              {part.title}
             </Typography>
           </Grid>
           { /*

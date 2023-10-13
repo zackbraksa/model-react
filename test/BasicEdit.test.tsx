@@ -9,6 +9,18 @@ describe('BasicEdit', () => {
   it('happy', () => {
     let itemFields = []
 
-    render(<BasicEdit ctx={ctx} spec={spec} itemFields={itemFields} />)
+    const view = {
+      content: {
+        def: {
+          ent: {
+            canon: 'vxg/task'
+          },
+          add: {}
+        }
+      },
+      name: 'task'
+    }
+
+    render(<BasicEdit ctx={ctx} spec={view} itemFields={itemFields} />)
   })
 })

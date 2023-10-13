@@ -54,13 +54,24 @@ export function customRender(
   }
 }
 
+export const vxg = {
+  cmp: {
+    BasicSide: { show: {} }
+  },
+  trigger: { led: { add: {} } },
+  ent: {
+    meta: { main: { canon: { state: {} } } },
+    list: { main: { canon: {} } }
+  }
+}
+
 export const ctx = () => {
   return {
     model: {
       app: {
         web: {
           frame: {
-            frame: {
+            public: {
               part: {
                 foot: {},
                 head: {
@@ -71,13 +82,25 @@ export const ctx = () => {
                     ]
                   }
                 },
-                side: { logo: { img: {} } }
+                side: {
+                  logo: { img: "/logo.png" }
+                }
               },
               view: {}
             },
             private: {
+              part: {
+                foot: {},
+                head: { logo: { img: '/logo.png' }, tool: { def: [] } },
+                side: {
+                  logo: { img: "/logo.png" },
+                  section: [
+                    { kind: 'navmenu', view: { task: true }, button: { icon: 'done', text: 'Default' } },
+                  ]
+                }
+              },
               view: {
-                undefined: { content: { def: { add: {} } }, name: 'view' }
+                undefined: { content: { kind: 'led', def: { add: {} } }, title: 'Task' }
               }
             }
           }
@@ -85,16 +108,24 @@ export const ctx = () => {
       }
     },
     content: {},
-    seneca: {},
-    custom: {}
+    seneca: {
+      entity: () => ({
+        list$: (q) => Promise.resolve([]), // Mock the list$ function to return an empty array
+      }),
+    },
+    custom: {
+      BasicLed: {
+        query: (view: any, cmpstate: any) => { }
+      }
+    }
   }
 }
 
 export const spec = {
-  frame: 'frame',
-  img: { logo: {} },
-  handle: { signin: () => { } },
-  content: { def: { ent: { canon: 'canon' } } }
+  frame: 'private',
+  // img: { logo: {} },
+  // handle: { signin: () => {} },
+  // content: { def: { ent: { canon: 'canon' } } }
 }
 
 export const initialState = {
@@ -114,8 +145,16 @@ export const initialState = {
       },
       trigger: { led: { add: {} } },
       ent: {
-        meta: { main: { canon: { state: {} } } },
-        list: { main: { canon: {} } }
+        list: {
+          main: {
+            'vxg/task': []
+          },
+        },
+        meta: {
+          main: {
+            'vxg/task': { state: 'none' }
+          },
+        },
       }
     }
   }

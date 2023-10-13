@@ -20167,22 +20167,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ctx,
       spec
     } = props;
-    const { model, seneca } = ctx();
+    const { seneca } = ctx();
     const {
       frame
     } = spec;
     const shape2 = gubu_minExports.Gubu({
       head: {
-        logo: { img: String },
-        tool: { def: [] }
+        logo: { img: "" },
+        tool: { def: [{ kind: gubu_minExports.Exact("addbutton", "autocomplete"), title: String, options: {}, name: "" }] }
       },
-      view: []
+      view: {}
     });
     shape2(spec);
     const navigate = reactRouterDom.useNavigate();
     const location = reactRouterDom.useLocation();
-    const part = model.app.web.frame[frame].part.head;
-    const tooldefs = Object.entries(part.tool.def).map((entry) => (entry[1].name = entry[0], entry[1]));
+    const tooldefs = Object.entries(spec.head.tool.def).map((entry) => (entry[1].name = entry[0], entry[1]));
     const user = reactRedux.useSelector((state) => state.main.auth.user);
     const userName = user.name || user.email;
     let valuemap = {};
@@ -20208,7 +20207,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const open = vxgState.cmp.BasicSide.show;
     let led_add = vxgState.trigger.led.add;
     const viewPath = location.pathname.split("/")[2];
-    let add = model.app.web.frame.private.view[viewPath].content.def.add || { active: false };
+    let add = spec.view[viewPath].content.def.add || { active: false };
     let drawerwidth = "16rem";
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicAppBar,
@@ -20276,7 +20275,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                     },
                     size: "large",
                     onClick: () => addItem(seneca, led_add),
-                    children: tooldef.title + " " + model.app.web.frame.private.view[viewPath].name
+                    children: tooldef.title + " " + spec.view[viewPath].name
                   },
                   tooldef.name
                 );
@@ -22798,8 +22797,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const navigate = reactRouterDom.useNavigate();
     const location = reactRouterDom.useLocation();
     const { frame } = spec;
-    const part = model.app.web.frame[frame].part.side;
-    const viewmap = model.app.web.frame[frame].view;
+    const shape2 = gubu_minExports.Gubu({
+      side: {
+        logo: { img: "" },
+        section: [
+          { name: "", kind: "", view: {}, button: { icon: String, text: String } }
+        ]
+      },
+      view: {}
+    });
+    shape2(spec);
+    const part = spec.side;
+    const viewmap = spec.view;
     const viewdefs = Object.entries(viewmap).map((entry) => (entry[1].name = entry[0], entry[1]));
     const sectiondefs = Object.entries(part.section || []).map((entry) => (entry[1].name = entry[0], entry[1]));
     const viewPath = location.pathname.split("/")[2];
@@ -47597,6 +47606,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ctx,
       spec
     } = props;
+    const shape2 = gubu_minExports.Gubu({
+      name: "",
+      title: String,
+      icon: String,
+      content: { name: "", kind: String, def: { ent: {}, add: {}, edit: {} } }
+    });
+    shape2(spec);
     const { model, seneca, custom } = ctx();
     const vxgState = reactRedux.useSelector((state) => state.main.vxg);
     const [item, setItem] = React.useState({});
@@ -47684,8 +47700,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } = props;
     const { model, content } = ctx();
     const { frame } = spec;
-    const part = model.app.web.frame[frame].part.main;
-    const views = Object.values(model.app.web.frame.private.view);
+    const shape2 = gubu_minExports.Gubu({
+      main: {},
+      view: {}
+    });
+    shape2(spec);
+    const part = spec.main;
+    const views = Object.values(spec.view);
     const sideOpen = reactRedux.useSelector((state) => state.main.vxg.cmp.BasicSide.show);
     const divStyle = {
       "paddingLeft": sideOpen ? "12.0em" : "0em",
@@ -47736,7 +47757,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } = props;
     const model = ctx().model;
     const { frame } = spec;
-    const part = model.app.web.frame[frame].part.foot;
+    const part = spec.foot;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       material.Box,
       {
@@ -47759,18 +47780,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } = props;
     const model = ctx().model;
     const { frame } = spec;
-    const part = model.app.web.frame[frame].part.admin;
+    const shape2 = gubu_minExports.Gubu({
+      frame: String
+    });
+    shape2(spec);
+    const frameModel = model.app.web.frame[frame];
     const headSpec = {
-      frame
+      head: frameModel.part.head,
+      view: frameModel.view
     };
     const sideSpec = {
-      frame
+      side: frameModel.part.side,
+      view: frameModel.view
     };
     const mainSpec = {
-      frame
+      main: frameModel.part.main,
+      view: frameModel.view
     };
     const footSpec = {
-      frame
+      foot: frameModel.part.foot,
+      view: frameModel.view
     };
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHead, { vxg, ctx, spec: headSpec }),

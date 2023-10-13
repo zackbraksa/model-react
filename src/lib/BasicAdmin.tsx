@@ -5,6 +5,7 @@ import BasicHead from './BasicHead'
 import BasicSide from './BasicSide'
 import BasicMain from './BasicMain'
 import BasicFoot from './BasicFoot'
+import { Gubu } from 'gubu'
 
 
 function BasicAdmin(props: any) {
@@ -16,25 +17,37 @@ function BasicAdmin(props: any) {
   const model = ctx().model
 
   const { frame } = spec
-  
-  const part = model.app.web.frame[frame].part.admin
-  
+
+  // spec schema definition with Gubu
+  const shape = Gubu({
+    frame: String
+  })
+
+  // spec schema validation with Gubu
+  shape(spec)
+
+  const frameModel = model.app.web.frame[frame]
+
   const headSpec: any = {
-    frame
+    head: frameModel.part.head,
+    view: frameModel.view,
   }
 
   const sideSpec: any = {
-    frame
+    side: frameModel.part.side,
+    view: frameModel.view,
   }
 
   const mainSpec: any = {
-    frame
+    main: frameModel.part.main,
+    view: frameModel.view,
   }
 
   const footSpec: any = {
-    frame
+    foot: frameModel.part.foot,
+    view: frameModel.view,
   }
-  
+
   return (
     <div>
       <BasicHead vxg={vxg} ctx={ctx} spec={headSpec} />

@@ -7,6 +7,18 @@ import { ctx, spec } from './mocks/test-utils'
 
 describe('BasicAuth', () => {
   it('happy', () => {
-    render(<BasicAuth ctx={ctx} spec={spec} />)
+
+    const specAuth: any = {
+      auth: {
+        frame: 'public',
+        title: 'Sign in',
+        img: {
+          logo: '/voxgig.png'
+        },
+        handle: {}
+      }
+    }
+
+    render(<BasicAuth ctx={ctx} spec={specAuth.auth} />)
   })
 })
