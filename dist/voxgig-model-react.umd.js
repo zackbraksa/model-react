@@ -22756,7 +22756,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       width: `calc(${theme.spacing(8)} + 1px)`
     }
   });
-  const iconmap = {
+  const iconmap$1 = {
     "factory": iconsMaterial.FactoryOutlined,
     "key": iconsMaterial.KeyOutlined,
     "done": iconsMaterial.AssignmentTurnedInOutlined,
@@ -22771,21 +22771,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     "fitscreen": iconsMaterial.FitScreen,
     "dots-square": iconsMaterial.Apps
   };
-  function makeIcon(name) {
-    let Icon = iconmap[name];
+  function makeIcon$1(name) {
+    let Icon = iconmap$1[name];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
   }
-  function onClose(seneca) {
+  function onClose$1(seneca) {
     seneca.act("aim:app,set:state", {
       section: "vxg.cmp.BasicSide.show",
       content: false
     });
   }
-  function allow(vxg, item) {
+  function allow$1(vxg, item) {
     let out = item && item.allow ? vxg.allow(item.allow) : true;
     return out;
   }
-  function BasicSide(props) {
+  function BasicSidebar(props) {
     const {
       vxg,
       ctx,
@@ -22797,7 +22797,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const navigate = reactRouterDom.useNavigate();
     const location = reactRouterDom.useLocation();
     const { frame } = spec;
-    const shape2 = gubu_minExports.Gubu({
+    const shape2 = gubu_minExports.Gubu(gubu_minExports.Open({
       side: {
         logo: { img: "" },
         section: [
@@ -22805,8 +22805,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         ]
       },
       view: {}
-    });
+    }));
     shape2(spec);
+    console.log("spec", spec);
     const part = spec.side;
     const viewmap = spec.view;
     const viewdefs = Object.entries(viewmap).map((entry) => (entry[1].name = entry[0], entry[1]));
@@ -22840,18 +22841,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     }
     const DefaultNavMenu = (props2) => {
-      const { viewdefs: viewdefs2, viewOrder } = props2;
+      const { navItem } = props2;
       return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { overflow: "auto" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         material.ToggleButtonGroup,
         {
           orientation: "vertical",
           "aria-label": "text alignment",
           sx: { width: "100%" },
-          children: sortViews(viewdefs2, viewOrder).map((view) => allow(vxg, view) ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
             material.ToggleButton,
             {
               value: "check",
-              selected: viewPath == view.name,
+              selected: viewPath == navItem.name,
               sx: {
                 width: "100%",
                 display: "flex",
@@ -22865,43 +22866,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               },
               "aria-label": "centered",
               onClick: (event) => {
-                selectView(view)(event);
+                selectView(navItem)(event);
               },
               children: [
-                makeIcon(view.icon),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: view.title }) })
+                makeIcon$1(navItem.icon),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: navItem.title }) })
               ]
             },
-            view.name
-          ) : null)
+            navItem.name
+          )
         }
       ) });
-    };
-    const SectionButtons = (props2) => {
-      const { sections } = props2;
-      if (sections.length === 1) {
-        return null;
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { display: "flex", width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ButtonGroup, { sx: { width: "100%" }, children: sections.map((section, sectionNumber) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        material.ToggleButton,
-        {
-          value: "check",
-          selected: showViewsData[sectionNumber],
-          sx: {
-            padding: "0.5em",
-            width: "100%"
-          },
-          onChange: (event) => {
-            toggle(sectionNumber)(event);
-            selectView(section)(event);
-          },
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-            makeIcon(section.button.icon),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "iconText", children: section.button.text })
-          ] })
-        },
-        section.name
-      )) }) });
     };
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
       BasicDrawer,
@@ -22918,17 +22893,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 style: { width: "11rem" }
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose$1(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(SectionButtons, { sections: sectiondefs }),
-          sectiondefs.map((section, sectionNumber) => {
-            if (viewPath == section.name || section.view && viewPath in section.view) {
-              if ("navmenu" === section.kind) {
-                return /* @__PURE__ */ jsxRuntimeExports.jsx(DefaultNavMenu, { viewOrder: section.view, viewdefs }, section.name);
-              }
-              const Cmp = ctx().cmp[section.cmp];
-              return /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { ctx, spec }, section.name);
-            }
+          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
+          Object.entries(spec.side.menu.sections).map(([key, value]) => {
+            console.log("value", value);
+            return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.List, { children: [
+              Object.entries(value.items).map(([key2, value2]) => {
+                return /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItem, { disablePadding: true, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.MoveToInbox, {}) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: value2.title })
+                ] }) }, key2);
+              }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
+            ] });
           })
         ]
       }
@@ -47803,10 +47781,187 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHead, { vxg, ctx, spec: headSpec }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSide, { vxg, ctx, spec: sideSpec }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSidebar, { vxg, ctx, spec: sideSpec }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicMain, { vxg, ctx, spec: mainSpec }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicFoot, { vxg, ctx, spec: footSpec })
     ] });
+  }
+  const iconmap = {
+    "factory": iconsMaterial.FactoryOutlined,
+    "key": iconsMaterial.KeyOutlined,
+    "done": iconsMaterial.AssignmentTurnedInOutlined,
+    "docs": iconsMaterial.TextSnippetOutlined,
+    "hightlight": iconsMaterial.HighlightAlt,
+    "map": iconsMaterial.Map,
+    "account": iconsMaterial.SupervisorAccount,
+    "tablet": iconsMaterial.Tablet,
+    "update": iconsMaterial.Update,
+    "admin": iconsMaterial.Security,
+    "clipboard": iconsMaterial.ContentPaste,
+    "fitscreen": iconsMaterial.FitScreen,
+    "dots-square": iconsMaterial.Apps
+  };
+  function makeIcon(name) {
+    let Icon = iconmap[name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
+  }
+  function onClose(seneca) {
+    seneca.act("aim:app,set:state", {
+      section: "vxg.cmp.BasicSide.show",
+      content: false
+    });
+  }
+  function allow(vxg, item) {
+    let out = item && item.allow ? vxg.allow(item.allow) : true;
+    return out;
+  }
+  function BasicSide(props) {
+    const {
+      vxg,
+      ctx,
+      spec
+    } = props;
+    const { model, seneca } = ctx();
+    const vxgState = reactRedux.useSelector((state) => state.main.vxg);
+    const open = vxgState.cmp.BasicSide.show;
+    const navigate = reactRouterDom.useNavigate();
+    const location = reactRouterDom.useLocation();
+    const { frame } = spec;
+    const shape2 = gubu_minExports.Gubu(gubu_minExports.Open({
+      side: {
+        logo: { img: "" },
+        section: [
+          { name: "", kind: "", view: {}, button: { icon: String, text: String } }
+        ]
+      },
+      view: {}
+    }));
+    shape2(spec);
+    const part = spec.side;
+    const viewmap = spec.view;
+    const viewdefs = Object.entries(viewmap).map((entry) => (entry[1].name = entry[0], entry[1]));
+    const sectiondefs = Object.entries(part.section || []).map((entry) => (entry[1].name = entry[0], entry[1]));
+    const viewPath = location.pathname.split("/")[2];
+    const [showViewsData, setShowViewsData] = React.useState(sectiondefs.map((section, sectionNumber) => {
+      return viewPath == section.name || section.view && viewPath in section.view;
+    }));
+    const [toogleSelections, setToogleSelections] = React.useState({ [viewPath]: true });
+    const drawerwidth = "16rem";
+    function selectView(view) {
+      return function(_event) {
+        if (view.default) {
+          navigate("/view/" + view.default);
+          return;
+        }
+        navigate("/view/" + view.name);
+      };
+    }
+    function sortViews(viewdefs2, viewOrder) {
+      const orderedViews = Object.keys(viewOrder).map((viewName) => viewdefs2.filter((viewdef) => viewdef.name === viewName)[0]);
+      return orderedViews.filter((view) => view !== void 0);
+    }
+    function toggle(sectionNumber) {
+      return function(_event) {
+        setShowViewsData((showViewsData2) => {
+          const temp = showViewsData2.map((_2) => false);
+          temp[sectionNumber] = true;
+          return temp;
+        });
+      };
+    }
+    const DefaultNavMenu = (props2) => {
+      const { viewdefs: viewdefs2, viewOrder } = props2;
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { overflow: "auto" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        material.ToggleButtonGroup,
+        {
+          orientation: "vertical",
+          "aria-label": "text alignment",
+          sx: { width: "100%" },
+          children: sortViews(viewdefs2, viewOrder).map((view) => allow(vxg, view) ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            material.ToggleButton,
+            {
+              value: "check",
+              selected: viewPath == view.name,
+              sx: {
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-start",
+                marginBottom: "10px",
+                border: 0,
+                "&.MuiToggleButtonGroup-grouped": {
+                  borderRadius: "20px !important"
+                },
+                textTransform: "none"
+              },
+              "aria-label": "centered",
+              onClick: (event) => {
+                selectView(view)(event);
+              },
+              children: [
+                makeIcon(view.icon),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: view.title }) })
+              ]
+            },
+            view.name
+          ) : null)
+        }
+      ) });
+    };
+    const SectionButtons = (props2) => {
+      const { sections } = props2;
+      if (sections.length === 1) {
+        return null;
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { display: "flex", width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ButtonGroup, { sx: { width: "100%" }, children: sections.map((section, sectionNumber) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        material.ToggleButton,
+        {
+          value: "check",
+          selected: showViewsData[sectionNumber],
+          sx: {
+            padding: "0.5em",
+            width: "100%"
+          },
+          onChange: (event) => {
+            toggle(sectionNumber)(event);
+            selectView(section)(event);
+          },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            makeIcon(section.button.icon),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "iconText", children: section.button.text })
+          ] })
+        },
+        section.name
+      )) }) });
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      BasicDrawer,
+      {
+        variant: "permanent",
+        drawerwidth,
+        open,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: part.logo.img,
+                style: { width: "11rem" }
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
+          ] }),
+          sectiondefs.map((section, sectionNumber) => {
+            if (viewPath == section.name || section.view && viewPath in section.view) {
+              if ("navmenu" === section.kind) {
+                return /* @__PURE__ */ jsxRuntimeExports.jsx(DefaultNavMenu, { viewOrder: section.view, viewdefs }, section.name);
+              }
+              const Cmp = ctx().cmp[section.cmp];
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { ctx, spec }, section.name);
+            }
+          })
+        ]
+      }
+    );
   }
   var patrun_min$1 = { exports: {} };
   var patrun_min = patrun_min$1.exports;

@@ -3,6 +3,8 @@ import React from 'react'
 
 import BasicHead from './BasicHead'
 import BasicSide from './BasicSide'
+import BasicSidebar from './Sidebar/BasicSidebar'
+
 import BasicMain from './BasicMain'
 import BasicFoot from './BasicFoot'
 import { Gubu } from 'gubu'
@@ -51,7 +53,7 @@ function BasicAdmin(props: any) {
   return (
     <div>
       <BasicHead vxg={vxg} ctx={ctx} spec={headSpec} />
-      <BasicSide vxg={vxg} ctx={ctx} spec={sideSpec} />
+      <BasicSidebar vxg={vxg} ctx={ctx} spec={sideSpec} />
       <BasicMain vxg={vxg} ctx={ctx} spec={mainSpec} />
       <BasicFoot vxg={vxg} ctx={ctx} spec={footSpec} />
     </div>

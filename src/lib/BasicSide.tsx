@@ -51,9 +51,7 @@ import {
   BasicDrawer,
   BasicDrawerHeader
 } from './BasicDrawer'
-import { Exact, Gubu } from 'gubu'
-
-
+import { Exact, Gubu, Open } from 'gubu'
 
 const iconmap: any = {
   'factory': FactoryOutlined,
@@ -108,7 +106,7 @@ function BasicSide(props: any) {
   const { frame } = spec
 
   // spec schema definition with Gubu
-  const shape = Gubu({
+  const shape = Gubu(Open({
     side: {
       logo: { img: "" },
       section: [
@@ -116,7 +114,7 @@ function BasicSide(props: any) {
       ]
     },
     view: {}
-  })
+  }))
 
   // spec schema validation with Gubu
   shape(spec)
@@ -274,8 +272,6 @@ function BasicSide(props: any) {
         </IconButton>
       </BasicDrawerHeader>
 
-
-      <SectionButtons sections={sectiondefs} />
       {
         sectiondefs.map((section: any, sectionNumber: number) => {
           if (viewPath == section.name || (section.view && viewPath in section.view)) {
