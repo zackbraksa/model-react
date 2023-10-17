@@ -44,6 +44,7 @@ import {
   ContentPaste as ClipBoardIcon,
   FitScreen,
   Apps as DotsSquareIcon,
+  ChatBubble as ChatBubbleIcon,
 
 } from "@mui/icons-material"
 
@@ -69,6 +70,7 @@ const iconmap: any = {
   'clipboard': ClipBoardIcon,
   'fitscreen': FitScreen,
   'dots-square': DotsSquareIcon,
+  'chat-bubble': ChatBubbleIcon,
 }
 
 function makeIcon(name: string) {
@@ -119,7 +121,7 @@ function BasicSide(props: any) {
   })
 
   // spec schema validation with Gubu
-  shape(spec)
+  // shape(spec)
 
   const part = spec.side
 
@@ -274,8 +276,6 @@ function BasicSide(props: any) {
         </IconButton>
       </BasicDrawerHeader>
 
-
-      <SectionButtons sections={sectiondefs} />
       {
         sectiondefs.map((section: any, sectionNumber: number) => {
           if (viewPath == section.name || (section.view && viewPath in section.view)) {
