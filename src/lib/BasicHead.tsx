@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import { Gubu } from 'gubu'
+import { Gubu, Exact } from 'gubu'
 
 import {
   Toolbar,
@@ -21,7 +21,8 @@ import BasicButton from './BasicButton'
 
 import BasicAppBar from './BasicAppBar'
 
-function onOpen (seneca: any) {
+
+function onOpen(seneca: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.cmp.BasicSide.show',
     content: true
@@ -30,11 +31,11 @@ function onOpen (seneca: any) {
 
 const filter = createFilterOptions()
 
-function resolveOptions (tooldef: any, tooldata: any) {
+function resolveOptions(tooldef: any, tooldata: any) {
   let options = []
 
-  if (tooldef.options.kind === 'ent' && tooldata[tooldef.name]) {
-    const ents = tooldata[tooldef.name].ents || []
+  if ('ent' === tooldef.options.kind && tooldata[tooldef.name]) {
+    let ents = tooldata[tooldef.name].ents || []
     options = ents.map((ent: any) => ({
       label: ent[tooldef.options.label.field],
       ent
@@ -44,33 +45,35 @@ function resolveOptions (tooldef: any, tooldata: any) {
   return options
 }
 
-function addItem (seneca: any, led_add: any) {
+function addItem(seneca: any, led_add: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.trigger.led.add',
     content: ++led_add
   })
 }
 
-function BasicHead (props: any) {
+function BasicHead(props: any) {
   const {
     vxg,
     ctx,
     spec
   } = props
 
-  const { model, seneca } = ctx()
+  const { seneca } = ctx()
 
   const {
     frame
   } = spec
 
+  // console.log('BasicHead.spec', spec)
+
   // spec schema definition with Gubu
   const shape = Gubu({
     head: {
-      logo: { img: String },
-      tool: { def: [] }
+      logo: { img: "" },
+      tool: { def: [{ kind: Exact('addbutton', 'autocomplete'), title: String, options: {}, name: "" }] },
     },
-    view: []
+    view: {}
   })
 
   // spec schema validation with Gubu
@@ -79,24 +82,24 @@ function BasicHead (props: any) {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const part = model.app.web.frame[frame].part.head
-  const tooldefs = Object.entries(part.tool.def)
+  const tooldefs = Object.entries(spec.head.tool.def)
     .map((entry: any) => (entry[1].name = entry[0], entry[1]))
+
 
   const user = useSelector((state: any) => state.main.auth.user)
   const userName = user.name || user.email
 
-  const valuemap: any = {}
-  const tooldata: any = {}
+  let valuemap: any = {}
+  let tooldata: any = {}
   tooldefs.forEach(tooldef => {
-    if (tooldef.kind === 'autocomplete') {
-      if (tooldef.options.kind === 'ent') {
-        const canon = tooldef.options.ent
+    if ('autocomplete' === tooldef.kind) {
+      if ('ent' === tooldef.options.kind) {
+        let canon = tooldef.options.ent
         tooldata[tooldef.name] = {
           ents: useSelector((state: any) => state.main.vxg.ent.list.main[canon])
         }
 
-        const selected = useSelector((state: any) =>
+        let selected = useSelector((state: any) =>
           state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected)
 
         if (selected) {
@@ -109,14 +112,17 @@ function BasicHead (props: any) {
     }
   })
 
+
+
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show
-  const led_add = vxgState.trigger.led.add
+  let led_add = vxgState.trigger.led.add
 
   const viewPath: any = location.pathname.split('/')[2]
-  const add = model.app.web.frame.private.view[viewPath].content.def.add || { active: false }
+  let add = spec.view[viewPath].content.def.add || { active: false }
 
-  const drawerwidth = '16rem'
+
+  let drawerwidth = '16rem'
 
   return (
     <BasicAppBar
@@ -131,9 +137,9 @@ function BasicHead (props: any) {
       <Toolbar>
 
         <IconButton
-          aria-label='open drawer'
+          aria-label="open drawer"
           onClick={() => onOpen(seneca)}
-          edge='start'
+          edge="start"
           sx={{
             marginRight: 2,
             ...(open && { display: 'none' })
@@ -142,62 +148,59 @@ function BasicHead (props: any) {
           <ChevronRightIcon />
         </IconButton>
 
-        {tooldefs.map(tooldef => {
-          if (tooldef.kind === 'autocomplete') {
-            return (
-              <Autocomplete
-                freeSolo
-                forcePopupIcon
-                value={valuemap[tooldef.name] || tooldef.defaultvalue || ''}
-                key={tooldef.name}
-                options={resolveOptions(tooldef, tooldata)}
-            // disableClearable={ typeof vxg.cmp.BasicHead.tool[tooldef.name].selected != 'object' }
-                size='small'
-                sx={{
-                  paddingLeft: '1em',
-                  width: '20rem'
-                }}
-                filterOptions={(options: any, params: any) => {
-                  const filtered = filter(options, params)
-                  // const { inputValue } = params
-                  return filtered
-                }}
-                renderInput={(params) => <TextField {...params} label={tooldef.title} />}
-                onChange={(event: any, newval: any) => {
-                  seneca.act('aim:app,set:state', {
-                    section: 'vxg.cmp.BasicHead.tool.' + tooldef.name + '.selected',
-                    content: tooldef.mode == 'search' && typeof newval === 'string'
-                      ? { [tooldef.options.label.field]: newval }
-                      : newval?.ent
-                  })
-                }}
-                isOptionEqualToValue={(opt: any, val: any) =>
-                  (opt === val) || (opt != null && val != null && opt.ent?.id === val.ent?.id)}
-              />
-            )
-          } else if (tooldef.kind === 'addbutton') {
-            return (
-              <BasicButton
-                variant='outlined'
-                key={tooldef.name}
-                sx={{
-                  display: add.active ? null : 'none',
-                  textTransform: 'capitalize'
-                }}
-                size='large'
 
-                onClick={() => addItem(seneca, led_add)}
-              >
-                {tooldef.title + ' ' + model.app.web.frame.private.view[viewPath].name}
-              </BasicButton>
-            )
+
+        {tooldefs.map(tooldef => {
+          if ('autocomplete' === tooldef.kind) {
+            return <Autocomplete
+              freeSolo
+              forcePopupIcon
+              value={valuemap[tooldef.name] || tooldef.defaultvalue || ''}
+              key={tooldef.name}
+              options={resolveOptions(tooldef, tooldata)}
+              // disableClearable={ typeof vxg.cmp.BasicHead.tool[tooldef.name].selected != 'object' }
+              size='small'
+              sx={{
+                paddingLeft: '1em',
+                width: '20rem',
+              }}
+              filterOptions={(options: any, params: any) => {
+                const filtered = filter(options, params)
+                // const { inputValue } = params
+                return filtered
+              }}
+              renderInput={(params) => <TextField {...params} label={tooldef.title} />}
+              onChange={(event: any, newval: any) => {
+                seneca.act('aim:app,set:state', {
+                  section: 'vxg.cmp.BasicHead.tool.' + tooldef.name + '.selected',
+                  content: 'search' == tooldef.mode && typeof newval === 'string' ?
+                    { [tooldef.options.label.field]: newval } : newval?.ent,
+                })
+              }}
+              isOptionEqualToValue={(opt: any, val: any) =>
+                (opt === val) || (null != opt && null != val && opt.ent?.id === val.ent?.id)}
+            />
+          } else if ('addbutton' === tooldef.kind) {
+            return <BasicButton variant="outlined"
+              key={tooldef.name}
+              sx={{
+                display: add.active ? null : 'none',
+                textTransform: 'capitalize',
+              }}
+              size="large"
+
+              onClick={() => addItem(seneca, led_add)}
+            >
+              {tooldef.title + ' ' + model.app.web.frame.private.view[viewPath].name}
+            </BasicButton>
+
           }
         }
         )}
 
-        <div style={{ flexGrow: 1 }} />
+        <div style={{ flexGrow: 1 }}></div>
 
-        <Typography variant='h6'>
+        <Typography variant="h6">
           {userName}
         </Typography>
       </Toolbar>

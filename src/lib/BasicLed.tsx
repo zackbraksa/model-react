@@ -7,12 +7,14 @@ import { MaterialReactTable } from 'material-react-table'
 
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
+import { Gubu } from 'gubu'
 
-function fields (spec: any) {
+function fields(spec: any) {
+
   try {
-    const fds = []
-    const fns = spec.content.def.edit.layout.order.replace(/\s+/g, '').split(/,/)
-    for (const fn of fns) {
+    let fds = []
+    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, '').split(/,/)
+    for (let fn of fns) {
       let fd = { ...spec.content.def.ent.primary.field[fn] } || {}
 
       // fd.title = fd.title ? fd.title : fd.name
@@ -27,16 +29,31 @@ function fields (spec: any) {
   } catch (err) {
     // console.log(err)
   }
+  catch (err) {
+    // console.log(err)
+  }
 
   return []
 }
 
-function BasicLed (props: any) {
+function BasicLed(props: any) {
   const {
     vxg,
     ctx,
     spec
   } = props
+
+  // spec schema definition with Gubu
+  const shape = Gubu({
+    name: "",
+    title: String,
+    icon: String,
+    content: { name: "", kind: String, def: { ent: {}, add: {}, edit: {} } },
+  })
+
+  // spec schema validation with Gubu
+  shape(spec)
+
   const { model, seneca, custom } = ctx()
 
   const vxgState = useSelector((state: any) => state.main.vxg)
@@ -49,15 +66,14 @@ function BasicLed (props: any) {
   const canon = ent.canon
 
   const cmpstate = useSelector((state: any) => state.main.vxg.cmp)
-
   const entstate = useSelector((state: any) => state.main.vxg.ent.meta.main[canon].state)
   const entlist = useSelector((state: any) => state.main.vxg.ent.list.main[canon])
 
   const location = useLocation()
 
   // console.log('entlist',entlist)
-  if (entstate === 'none') {
-    const q = custom.BasicLed.query(spec, cmpstate)
+  if ('none' === entstate) {
+    let q = custom.BasicLed.query(spec, cmpstate)
     seneca.entity(canon).list$(q)
   }
 
@@ -67,17 +83,17 @@ function BasicLed (props: any) {
 
   const columns =
     itemFields.map((field: any) =>
-      ({
-        accessorFn: (row: any) => (field.type === 'status' ? field.kind[row[field.name]]?.title : row[field.name]),
-        accessorKey: field.name,
-        header: field.headerName,
-        Header: () => <span>{field.headerName}</span>,
-        // muiTableHeadCellProps: { sx: { color: 'green' } },
-        Cell: ({ cell }: any) => <span>{cell.getValue()}</span>
-      })
+    ({
+      accessorFn: (row: any) => ('status' === field.type ? field.kind[row[field.name]]?.title : row[field.name]),
+      accessorKey: field.name,
+      header: field.headerName,
+      Header: () => <span>{field.headerName}</span>,
+      // muiTableHeadCellProps: { sx: { color: 'green' } },
+      Cell: ({ cell }: any) => <span>{cell.getValue()}</span>,
+    })
     )
 
-  const data = rows // .slice(0, 10)
+  let data = rows //.slice(0, 10)
 
   useEffect(() => {
     setItem({})
@@ -96,21 +112,22 @@ function BasicLed (props: any) {
     setTriggerLed(++triggerLed)
   }, [led_add])
 
+
   return (
-    <div className='BasicLed'>
+    <div className="BasicLed">
       {
-      '-/' + canon !== item.entity$
-        ? <BasicList
+        '-/' + canon !== item.entity$ ?
+          <BasicList
             ctx={ctx}
             spec={spec}
             data={data}
             columns={columns}
             onRowClick={(event: any, item: any) => {
-            // console.log('item: ', item)
-	          setItem(item)
+              // console.log('item: ', item)
+              setItem(item)
             }}
-          />
-        : <BasicEdit
+          /> :
+          <BasicEdit
             ctx={ctx}
             spec={spec}
             onClose={() => {
@@ -123,7 +140,7 @@ function BasicLed (props: any) {
             item={item}
             itemFields={itemFields}
           />
-    }
+      }
     </div>
   )
 }

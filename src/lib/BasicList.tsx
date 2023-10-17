@@ -5,12 +5,12 @@ import { MaterialReactTable } from 'material-react-table'
 
 // import { DataGrid } from '@mui/x-data-grid'
 
-function BasicList (props: any) {
-  const {
-    onRowClick = () => {},
+function BasicList(props: any) {
+  let {
+    onRowClick = () => { },
     data,
     columns,
-    sx = {}
+    sx = {},
   } = props
 
   const { ctx, spec } = props
@@ -19,7 +19,7 @@ function BasicList (props: any) {
   const vxg = useSelector((state: any) => state.main.vxg)
 
   return (
-    <div className='BasicList' style={{ ...sx }}>
+    <div className="BasicList" style={{ ...sx }} >
       <MaterialReactTable
         enableColumnActions={false}
         enableColumnFilters={false}
@@ -31,14 +31,14 @@ function BasicList (props: any) {
         data={data}
         muiTableBodyRowProps={({ row }) => ({
           onClick: (event: any) => {
-            const selitem = { ...data[Number(row.id)] }
+            let selitem = { ...data[Number(row.id)] }
             onRowClick(event, selitem)
           },
-	  sx: { cursor: 'pointer' }
+          sx: { cursor: 'pointer' },
         })}
       />
-    </div>
-  )
+    </div>)
+
 }
 
 export default BasicList
@@ -51,7 +51,7 @@ export default BasicList
       let selitem = { ...params.row }
       // console.log('item: ', selitem)
       onRowClick({}, selitem)
-
+      
     }}
 
     checkboxSelection={false}

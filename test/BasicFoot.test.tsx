@@ -7,6 +7,22 @@ import { ctx, spec } from './mocks/test-utils'
 
 describe('BasicFoot', () => {
   it('happy', () => {
-    render(<BasicFoot ctx={ctx} spec={spec} />)
+    const footSpec = {
+      foot: {
+        title: 'title'
+      },
+      view: {
+        task: {
+          content: {
+            def: {
+              add: {}
+            }
+          },
+          name: 'task'
+        }
+      }
+    }
+
+    render(<BasicFoot ctx={ctx} spec={footSpec} />)
   })
 })
