@@ -22805,6 +22805,7 @@ function BasicSidebar(props) {
   function handleListItemClick(key, navItem) {
     navigate("/view/" + key);
   }
+  const sections = spec.side.menu.sections;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     BasicDrawer,
     {
@@ -22823,7 +22824,7 @@ function BasicSidebar(props) {
           /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { onClick: () => onClose$1(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { sx: { color: "black" } }) })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {}),
-        Object.entries(spec.side.menu.sections).map(([key, section]) => {
+        Object.entries(sections).map(([key, section]) => {
           console.log("section:", section);
           return /* @__PURE__ */ jsxRuntimeExports.jsxs(List$1, { children: [
             Object.entries(section.items).map(([key2, navItem]) => {
@@ -47627,9 +47628,12 @@ function BasicMain(props) {
     "paddingRight": 0
   };
   const mainDiv = {
-    height: "calc(100vh - 6rem)",
-    width: sideOpen ? "calc(100vw - 19rem)" : "calc(100vw - 4rem)",
-    padding: "84px " + (sideOpen ? "4.5em" : "0") + " 4.5em " + (sideOpen ? "4.5em" : "0.5em")
+    // height: 'calc(100vh - 6rem)',
+    // width: sideOpen ? 'calc(100vw - 19rem)' : 'calc(100vw - 4rem)',
+    // padding: '84px ' + (sideOpen ? '4.5em' : '0') + ' 4.5em ' + (sideOpen ? '4.5em' : '0.5em')
+    width: sideOpen ? "calc(100% - 5rem)" : "100%",
+    paddingLeft: sideOpen ? "5rem" : "1rem",
+    paddingTop: "7rem"
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicMain", style: mainDiv, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: __spreadValues({ width: "100%", height: "100%" }, divStyle), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
     const Cmp = makeCmp(view, ctx);
