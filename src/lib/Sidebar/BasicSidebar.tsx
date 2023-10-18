@@ -44,7 +44,8 @@ import {
     ContentPaste as ClipBoardIcon,
     FitScreen,
     Apps as DotsSquareIcon,
-
+    Event as EventIcon,
+    Logout as LogoutIcon,
 } from "@mui/icons-material"
 
 import {
@@ -67,7 +68,9 @@ const iconmap: any = {
     'clipboard': ClipBoardIcon,
     'fitscreen': FitScreen,
     'dots-square': DotsSquareIcon,
-    'chat-bubble': ChatBubbleIcon
+    'chat-bubble': ChatBubbleIcon,
+    'event': EventIcon,
+    'logout': LogoutIcon,
 }
 
 function makeIcon(name: string) {
@@ -88,7 +91,6 @@ function allow(vxg: any, item: any) {
     let out = (item && item.allow) ? vxg.allow(item.allow) : true
     return out
 }
-
 
 function BasicSidebar(props: any) {
     const {
@@ -147,7 +149,7 @@ function BasicSidebar(props: any) {
         >
             <BasicDrawerHeader>
                 <img src={part.logo.img}
-                    style={{ width: '11rem' }} />
+                    style={{ width: '5rem' }} />
                 <IconButton onClick={() => onClose(seneca)}>
                     <ChevronLeft sx={{ color: 'black' }} />
                 </IconButton>
