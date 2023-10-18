@@ -22770,7 +22770,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     "clipboard": iconsMaterial.ContentPaste,
     "fitscreen": iconsMaterial.FitScreen,
     "dots-square": iconsMaterial.Apps,
-    "chat-bubble": iconsMaterial.ChatBubble
+    "chat-bubble": iconsMaterial.ChatBubble,
+    "event": iconsMaterial.Event,
+    "logout": iconsMaterial.Logout
   };
   function makeIcon$1(name) {
     let Icon = iconmap$1[name];
@@ -22830,7 +22832,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               "img",
               {
                 src: part.logo.img,
-                style: { width: "11rem" }
+                style: { width: "5rem" }
               }
             ),
             /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose$1(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
@@ -45602,7 +45604,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       data,
       columns,
-      sx = {}
+      sx = {
+        "marginRight": "2rem",
+        "marginTop": "2rem",
+        "marginLeft": "2rem"
+      }
     } = props;
     const { ctx, spec } = props;
     const { model, seneca, custom } = ctx();
@@ -47652,18 +47658,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const views = Object.values(spec.view);
     const sideOpen = reactRedux.useSelector((state) => state.main.vxg.cmp.BasicSide.show);
     const divStyle = {
-      "paddingLeft": sideOpen ? "12.0em" : "0em",
-      "paddingRight": 0
+      // 'paddingLeft': sideOpen ? '2em' : '0em',
+      // 'paddingRight': sideOpen ? '2em' : '0em',
+      // 'paddingTop': '3em',
     };
-    const mainDiv = {
+    const basicMain = {
       // height: 'calc(100vh - 6rem)',
       // width: sideOpen ? 'calc(100vw - 19rem)' : 'calc(100vw - 4rem)',
       // padding: '84px ' + (sideOpen ? '4.5em' : '0') + ' 4.5em ' + (sideOpen ? '4.5em' : '0.5em')
-      width: sideOpen ? "calc(100% - 5rem)" : "100%",
-      paddingLeft: sideOpen ? "5rem" : "1rem",
-      paddingTop: "7rem"
+      width: sideOpen ? "calc(100% - 16rem)" : "100%",
+      paddingLeft: sideOpen ? "16rem" : "0rem"
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicMain", style: mainDiv, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: __spreadValues({ width: "100%", height: "100%" }, divStyle), children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Route, { path: "/view", children: views.map((view) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicMain", style: basicMain, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: __spreadValues({ width: "100%", height: "100%" }, divStyle), children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Route, { path: "/view", children: views.map((view) => {
       const Cmp = makeCmp(view, ctx);
       if (view.paramId) {
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(React.Fragment, { children: [

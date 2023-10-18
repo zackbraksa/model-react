@@ -15,7 +15,11 @@ function BasicList(props: any) {
     onEditingRowSave = () => { },
     data,
     columns,
-    sx = {},
+    sx = {
+      'marginRight': '2rem',
+      'marginTop': '2rem',
+      'marginLeft': '2rem'
+    },
   } = props
 
   const { ctx, spec } = props

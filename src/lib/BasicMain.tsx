@@ -56,21 +56,21 @@ function BasicMain(props: any) {
   const sideOpen = useSelector((state: any) => state.main.vxg.cmp.BasicSide.show)
 
   const divStyle = {
-    'paddingLeft': sideOpen ? '12.0em' : '0em',
-    'paddingRight': 0,
+    // 'paddingLeft': sideOpen ? '2em' : '0em',
+    // 'paddingRight': sideOpen ? '2em' : '0em',
+    // 'paddingTop': '3em',
   }
 
-  const mainDiv = {
+  const basicMain = {
     // height: 'calc(100vh - 6rem)',
     // width: sideOpen ? 'calc(100vw - 19rem)' : 'calc(100vw - 4rem)',
     // padding: '84px ' + (sideOpen ? '4.5em' : '0') + ' 4.5em ' + (sideOpen ? '4.5em' : '0.5em')
-    width: sideOpen ? 'calc(100% - 5rem)' : '100%',
-    paddingLeft: sideOpen ? '5rem' : '1rem',
-    paddingTop: '7rem',
+    width: sideOpen ? 'calc(100% - 16rem)' : '100%',
+    paddingLeft: sideOpen ? '16rem' : '0rem',
   }
 
   return (
-    <div className="BasicMain" style={mainDiv}>
+    <div className="BasicMain" style={basicMain}>
       <div style={{ width: '100%', height: '100%', ...divStyle }}>
         <Routes>
           <Route path="/view">

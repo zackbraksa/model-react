@@ -64,7 +64,7 @@ import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
 import { CacheProvider, Global, ThemeContext as ThemeContext$1, keyframes, css } from "@emotion/react";
-import { FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1, SupervisorAccount, Tablet, Update, Security, ContentPaste, FitScreen, Apps, ChatBubble, ChevronLeft } from "@mui/icons-material";
+import { FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1, SupervisorAccount, Tablet, Update, Security, ContentPaste, FitScreen, Apps, ChatBubble, Event, Logout, ChevronLeft } from "@mui/icons-material";
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getDefaultExportFromCjs(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
@@ -22758,7 +22758,9 @@ const iconmap$1 = {
   "clipboard": ContentPaste,
   "fitscreen": FitScreen,
   "dots-square": Apps,
-  "chat-bubble": ChatBubble
+  "chat-bubble": ChatBubble,
+  "event": Event,
+  "logout": Logout
 };
 function makeIcon$1(name) {
   let Icon = iconmap$1[name];
@@ -22818,7 +22820,7 @@ function BasicSidebar(props) {
             "img",
             {
               src: part.logo.img,
-              style: { width: "11rem" }
+              style: { width: "5rem" }
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { onClick: () => onClose$1(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { sx: { color: "black" } }) })
@@ -45590,7 +45592,11 @@ function BasicList(props) {
     },
     data,
     columns,
-    sx = {}
+    sx = {
+      "marginRight": "2rem",
+      "marginTop": "2rem",
+      "marginLeft": "2rem"
+    }
   } = props;
   const { ctx, spec } = props;
   const { model, seneca, custom } = ctx();
@@ -47640,18 +47646,18 @@ function BasicMain(props) {
   const views = Object.values(spec.view);
   const sideOpen = useSelector((state) => state.main.vxg.cmp.BasicSide.show);
   const divStyle = {
-    "paddingLeft": sideOpen ? "12.0em" : "0em",
-    "paddingRight": 0
+    // 'paddingLeft': sideOpen ? '2em' : '0em',
+    // 'paddingRight': sideOpen ? '2em' : '0em',
+    // 'paddingTop': '3em',
   };
-  const mainDiv = {
+  const basicMain = {
     // height: 'calc(100vh - 6rem)',
     // width: sideOpen ? 'calc(100vw - 19rem)' : 'calc(100vw - 4rem)',
     // padding: '84px ' + (sideOpen ? '4.5em' : '0') + ' 4.5em ' + (sideOpen ? '4.5em' : '0.5em')
-    width: sideOpen ? "calc(100% - 5rem)" : "100%",
-    paddingLeft: sideOpen ? "5rem" : "1rem",
-    paddingTop: "7rem"
+    width: sideOpen ? "calc(100% - 16rem)" : "100%",
+    paddingLeft: sideOpen ? "16rem" : "0rem"
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicMain", style: mainDiv, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: __spreadValues({ width: "100%", height: "100%" }, divStyle), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicMain", style: basicMain, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: __spreadValues({ width: "100%", height: "100%" }, divStyle), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
     const Cmp = makeCmp(view, ctx);
     if (view.paramId) {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
