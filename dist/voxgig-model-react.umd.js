@@ -22769,7 +22769,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     "admin": iconsMaterial.Security,
     "clipboard": iconsMaterial.ContentPaste,
     "fitscreen": iconsMaterial.FitScreen,
-    "dots-square": iconsMaterial.Apps
+    "dots-square": iconsMaterial.Apps,
+    "chat-bubble": iconsMaterial.ChatBubble
   };
   function makeIcon$1(name) {
     let Icon = iconmap$1[name];
@@ -22813,76 +22814,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const viewdefs = Object.entries(viewmap).map((entry) => (entry[1].name = entry[0], entry[1]));
     const sectiondefs = Object.entries(part.section || []).map((entry) => (entry[1].name = entry[0], entry[1]));
     const viewPath = location.pathname.split("/")[2];
-    const [showViewsData, setShowViewsData] = React.useState(sectiondefs.map((section, sectionNumber) => {
-      return viewPath == section.name || section.view && viewPath in section.view;
-    }));
-    const [toogleSelections, setToogleSelections] = React.useState({ [viewPath]: true });
-    const drawerwidth = "16rem";
-    function selectView(view) {
-      return function(_event) {
-        if (view.default) {
-          navigate("/view/" + view.default);
-          return;
-        }
-        navigate("/view/" + view.name);
-      };
+    function handleListItemClick(key, navItem) {
+      navigate("/view/" + key);
     }
-    function sortViews(viewdefs2, viewOrder) {
-      const orderedViews = Object.keys(viewOrder).map((viewName) => viewdefs2.filter((viewdef) => viewdef.name === viewName)[0]);
-      return orderedViews.filter((view) => view !== void 0);
-    }
-    function toggle(sectionNumber) {
-      return function(_event) {
-        setShowViewsData((showViewsData2) => {
-          const temp = showViewsData2.map((_2) => false);
-          temp[sectionNumber] = true;
-          return temp;
-        });
-      };
-    }
-    const DefaultNavMenu = (props2) => {
-      const { navItem } = props2;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { overflow: "auto" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        material.ToggleButtonGroup,
-        {
-          orientation: "vertical",
-          "aria-label": "text alignment",
-          sx: { width: "100%" },
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            material.ToggleButton,
-            {
-              value: "check",
-              selected: viewPath == navItem.name,
-              sx: {
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-start",
-                marginBottom: "10px",
-                border: 0,
-                "&.MuiToggleButtonGroup-grouped": {
-                  borderRadius: "20px !important"
-                },
-                textTransform: "none"
-              },
-              "aria-label": "centered",
-              onClick: (event) => {
-                selectView(navItem)(event);
-              },
-              children: [
-                makeIcon$1(navItem.icon),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: navItem.title }) })
-              ]
-            },
-            navItem.name
-          )
-        }
-      ) });
-    };
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
       BasicDrawer,
       {
         variant: "permanent",
-        drawerwidth,
+        drawerwidth: "16rem",
         open,
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
@@ -22896,14 +22835,23 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose$1(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
-          Object.entries(spec.side.menu.sections).map(([key, value]) => {
-            console.log("value", value);
+          Object.entries(spec.side.menu.sections).map(([key, section]) => {
+            console.log("section:", section);
             return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.List, { children: [
-              Object.entries(value.items).map(([key2, value2]) => {
-                return /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItem, { disablePadding: true, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.MoveToInbox, {}) }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: value2.title })
-                ] }) }, key2);
+              Object.entries(section.items).map(([key2, navItem]) => {
+                console.log("navItem", navItem);
+                return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  material.ListItem,
+                  {
+                    disablePadding: true,
+                    onClick: () => handleListItemClick(key2, navItem),
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: viewPath == key2, children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon$1(navItem.icon) }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: navItem.title })
+                    ] })
+                  },
+                  key2
+                );
               }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
             ] });

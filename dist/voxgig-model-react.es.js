@@ -56,15 +56,15 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 import * as React from "react";
-import React__default, { createElement, isValidElement, Children, cloneElement, useState, useMemo, useRef, useCallback, useEffect, Fragment, memo as memo$2, useLayoutEffect } from "react";
+import React__default, { createElement, isValidElement, Children, cloneElement, useMemo, useState, useRef, useCallback, useEffect, Fragment, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
-import { Button as Button$1, createFilterOptions as createFilterOptions$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Autocomplete, TextField as TextField$1, Typography as Typography$1, Box as Box$2, ToggleButtonGroup, ToggleButton, Divider as Divider$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Grid as Grid$1, MenuItem as MenuItem$1, Container as Container$2, ButtonGroup } from "@mui/material";
+import { Button as Button$1, createFilterOptions as createFilterOptions$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Autocomplete, TextField as TextField$1, Typography as Typography$1, Divider as Divider$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Grid as Grid$1, MenuItem as MenuItem$1, Box as Box$2, Container as Container$2, ToggleButtonGroup, ToggleButton, ButtonGroup } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
 import { CacheProvider, Global, ThemeContext as ThemeContext$1, keyframes, css } from "@emotion/react";
-import { FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1, SupervisorAccount, Tablet, Update, Security, ContentPaste, FitScreen, Apps, ChevronLeft, MoveToInbox } from "@mui/icons-material";
+import { FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1, SupervisorAccount, Tablet, Update, Security, ContentPaste, FitScreen, Apps, ChatBubble, ChevronLeft } from "@mui/icons-material";
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getDefaultExportFromCjs(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
@@ -22757,7 +22757,8 @@ const iconmap$1 = {
   "admin": Security,
   "clipboard": ContentPaste,
   "fitscreen": FitScreen,
-  "dots-square": Apps
+  "dots-square": Apps,
+  "chat-bubble": ChatBubble
 };
 function makeIcon$1(name) {
   let Icon = iconmap$1[name];
@@ -22801,76 +22802,14 @@ function BasicSidebar(props) {
   const viewdefs = Object.entries(viewmap).map((entry) => (entry[1].name = entry[0], entry[1]));
   const sectiondefs = Object.entries(part.section || []).map((entry) => (entry[1].name = entry[0], entry[1]));
   const viewPath = location.pathname.split("/")[2];
-  const [showViewsData, setShowViewsData] = useState(sectiondefs.map((section, sectionNumber) => {
-    return viewPath == section.name || section.view && viewPath in section.view;
-  }));
-  const [toogleSelections, setToogleSelections] = useState({ [viewPath]: true });
-  const drawerwidth = "16rem";
-  function selectView(view) {
-    return function(_event) {
-      if (view.default) {
-        navigate("/view/" + view.default);
-        return;
-      }
-      navigate("/view/" + view.name);
-    };
+  function handleListItemClick(key, navItem) {
+    navigate("/view/" + key);
   }
-  function sortViews(viewdefs2, viewOrder) {
-    const orderedViews = Object.keys(viewOrder).map((viewName) => viewdefs2.filter((viewdef) => viewdef.name === viewName)[0]);
-    return orderedViews.filter((view) => view !== void 0);
-  }
-  function toggle(sectionNumber) {
-    return function(_event) {
-      setShowViewsData((showViewsData2) => {
-        const temp = showViewsData2.map((_2) => false);
-        temp[sectionNumber] = true;
-        return temp;
-      });
-    };
-  }
-  const DefaultNavMenu = (props2) => {
-    const { navItem } = props2;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { sx: { overflow: "auto" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ToggleButtonGroup,
-      {
-        orientation: "vertical",
-        "aria-label": "text alignment",
-        sx: { width: "100%" },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          ToggleButton,
-          {
-            value: "check",
-            selected: viewPath == navItem.name,
-            sx: {
-              width: "100%",
-              display: "flex",
-              justifyContent: "flex-start",
-              marginBottom: "10px",
-              border: 0,
-              "&.MuiToggleButtonGroup-grouped": {
-                borderRadius: "20px !important"
-              },
-              textTransform: "none"
-            },
-            "aria-label": "centered",
-            onClick: (event) => {
-              selectView(navItem)(event);
-            },
-            children: [
-              makeIcon$1(navItem.icon),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: navItem.title }) })
-            ]
-          },
-          navItem.name
-        )
-      }
-    ) });
-  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     BasicDrawer,
     {
       variant: "permanent",
-      drawerwidth,
+      drawerwidth: "16rem",
       open,
       children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
@@ -22884,14 +22823,23 @@ function BasicSidebar(props) {
           /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { onClick: () => onClose$1(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { sx: { color: "black" } }) })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {}),
-        Object.entries(spec.side.menu.sections).map(([key, value]) => {
-          console.log("value", value);
+        Object.entries(spec.side.menu.sections).map(([key, section]) => {
+          console.log("section:", section);
           return /* @__PURE__ */ jsxRuntimeExports.jsxs(List$1, { children: [
-            Object.entries(value.items).map(([key2, value2]) => {
-              return /* @__PURE__ */ jsxRuntimeExports.jsx(ListItem, { disablePadding: true, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(ListItemButton, { children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(MoveToInbox, {}) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: value2.title })
-              ] }) }, key2);
+            Object.entries(section.items).map(([key2, navItem]) => {
+              console.log("navItem", navItem);
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ListItem,
+                {
+                  disablePadding: true,
+                  onClick: () => handleListItemClick(key2, navItem),
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsxs(ListItemButton, { selected: viewPath == key2, children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: makeIcon$1(navItem.icon) }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: navItem.title })
+                  ] })
+                },
+                key2
+              );
             }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {})
           ] });

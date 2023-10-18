@@ -30,7 +30,7 @@ import {
     ChevronLeft,
     MoveToInbox as InboxIcon,
     Mail as MailIcon,
-
+    ChatBubble as ChatBubbleIcon,
     FactoryOutlined,
     KeyOutlined,
     AssignmentTurnedInOutlined,
@@ -67,6 +67,7 @@ const iconmap: any = {
     'clipboard': ClipBoardIcon,
     'fitscreen': FitScreen,
     'dots-square': DotsSquareIcon,
+    'chat-bubble': ChatBubbleIcon
 }
 
 function makeIcon(name: string) {
@@ -132,92 +133,16 @@ function BasicSidebar(props: any) {
 
     const viewPath: any = location.pathname.split('/')[2]
 
-    const [showViewsData, setShowViewsData] = useState(sectiondefs.map((section: any, sectionNumber: number) => {
-        return viewPath == section.name || (section.view && viewPath in section.view)
-    }))
-    const [toogleSelections, setToogleSelections] = useState({ [viewPath]: true } as any)
-
-    const drawerwidth = '16rem'
-
-    function selectView(view: any) {
-        return function (_event: any) {
-            // TODO: use named route
-            if (view.default) {
-                navigate('/view/' + view.default)
-                return
-            }
-            navigate('/view/' + view.name)
-        }
+    function handleListItemClick(key: any, navItem: any) {
+        navigate('/view/' + key)
     }
 
-    function sortViews(viewdefs: any, viewOrder: any) {
-        const orderedViews = Object.keys(viewOrder).map((viewName) => (
-            (viewdefs.filter((viewdef: any) => viewdef.name === viewName))[0]
-        ))
-        // remove not prevously valid views
-        return orderedViews.filter((view) => view !== undefined)
-    }
-
-
-    function toggle(sectionNumber: any) {
-        return function (_event: any) {
-            setShowViewsData((showViewsData: any) => {
-                const temp = showViewsData.map((_: Boolean) => false)
-                temp[sectionNumber] = true
-                return temp
-            })
-        }
-    }
-
-
-    const DefaultNavMenu = (props: any) => {
-        const { navItem } = props
-        return (
-            <Box sx={{ overflow: 'auto' }}>
-                <ToggleButtonGroup
-                    orientation="vertical"
-                    aria-label="text alignment"
-                    sx={{ width: '100%' }}
-                >
-                    {
-                        <ToggleButton
-                            value="check"
-                            selected={viewPath == navItem.name}
-                            sx={
-                                {
-                                    width: '100%',
-                                    display: 'flex',
-                                    justifyContent: 'flex-start',
-                                    marginBottom: '10px',
-                                    border: 0,
-                                    '&.MuiToggleButtonGroup-grouped': {
-                                        borderRadius: '20px !important',
-                                    },
-                                    textTransform: 'none'
-                                }
-                            }
-                            key={navItem.name}
-                            aria-label="centered"
-                            onClick={(event: any) => {
-                                selectView(navItem)(event)
-                            }}
-                        >
-
-                            {makeIcon(navItem.icon)}
-                            <div>
-                                <span>{navItem.title}</span>
-                            </div>
-                        </ToggleButton>
-                    }
-                </ToggleButtonGroup>
-            </Box>
-        )
-    }
+    const sections = spec.side.menu.sections
 
     return (
         <BasicDrawer
             variant="permanent"
-            drawerwidth={drawerwidth}
+            drawerwidth='16rem'
             open={open}
         >
             <BasicDrawerHeader>
@@ -229,19 +154,24 @@ function BasicSidebar(props: any) {
             </BasicDrawerHeader>
             <Divider />
             {
-                Object.entries(spec.side.menu.sections).map(([key, value]: [any, any]) => {
-                    console.log('value', value)
+                Object.entries(sections).map(([key, section]: [any, any]) => {
+                    console.log('section:', section)
                     return (
                         <List>
                             {
-                                Object.entries(value.items).map(([key, value]: [any, any]) => {
+                                Object.entries(section.items).map(([key, navItem]: [any, any]) => {
+                                    console.log('navItem', navItem)
                                     return (
-                                        <ListItem key={key} disablePadding>
-                                            <ListItemButton>
+                                        <ListItem
+                                            key={key}
+                                            disablePadding
+                                            onClick={() => handleListItemClick(key, navItem)}
+                                        >
+                                            <ListItemButton selected={viewPath == key}>
                                                 <ListItemIcon>
-                                                    <InboxIcon />
+                                                    {makeIcon(navItem.icon)}
                                                 </ListItemIcon>
-                                                <ListItemText primary={value.title} />
+                                                <ListItemText primary={navItem.title} />
                                             </ListItemButton>
                                         </ListItem>
                                     )
