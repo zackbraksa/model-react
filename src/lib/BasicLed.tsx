@@ -57,6 +57,7 @@ function BasicLed(props: any) {
   const vxgState = useSelector((state: any) => state.main.vxg)
 
   const [item, setItem] = useState({} as any)
+  // console.log('item: ', item)
 
   const def = spec.content.def
   const { ent, cols } = def
@@ -78,20 +79,27 @@ function BasicLed(props: any) {
   const rows = entlist
 
   const itemFields: any = fields(spec)
+  // console.log('itemFields: ', itemFields)
 
   const columns =
     itemFields.map((field: any) =>
     ({
-      accessorFn: (row: any) => ('status' === field.type ? field.kind[row[field.name]]?.title : row[field.name]),
+      // accessorFn: (row: any) => ('status' === field.type ? field.kind[row[field.name]]?.title : row[field.name]),
+      accessorFn: (row: any) => row[field.name],
       accessorKey: field.name,
       header: field.headerName,
+      enableEditing: field.edit,
+      editVariant: ('status' === field.type ? 'select' : 'text'),
+      editSelectOptions: ('status' === field.type ? ['open', 'closed'] : null),
       Header: () => <span>{field.headerName}</span>,
       // muiTableHeadCellProps: { sx: { color: 'green' } },
       Cell: ({ cell }: any) => <span>{cell.getValue()}</span>,
     })
     )
+  // console.log('columns: ', columns)
 
   let data = rows //.slice(0, 10)
+  // console.log('data: ', data)
 
   useEffect(() => {
     setItem({})
@@ -99,17 +107,21 @@ function BasicLed(props: any) {
 
   let led_add = vxgState.trigger.led.add
   let [triggerLed, setTriggerLed] = useState(0)
+
+  // Triggered on add item button
   useEffect(() => {
 
     // a workaround to prevent 
     // 'useEffect' to trigger when re-rendered
     if (triggerLed >= 2) {
       // setItem( { entity$: '-/' + def.ent } )
+      // console.log('led_add: ', led_add)
       setItem({ entity$: '-/' + def.ent.canon })
     }
 
     setTriggerLed(++triggerLed)
   }, [led_add])
+
 
 
   return (
@@ -121,9 +133,18 @@ function BasicLed(props: any) {
             spec={spec}
             data={data}
             columns={columns}
-            onRowClick={(event: any, item: any) => {
-              // console.log('item: ', item)
-              setItem(item)
+            // onRowClick={(event: any, item: any) => {
+            //   console.log('item: ', item)
+            //   setItem(item)
+            // }}
+            onEditingRowSave={async (row: any, values: any) => {
+              let selectedItem = { ...data[row.index] }
+              for (let k in values) {
+                selectedItem[k] = values[k]
+              }
+              console.log('selectedItem: ', selectedItem)
+              await seneca.entity(canon).save$(selectedItem)
+              setItem({})
             }}
           /> :
           <BasicEdit
