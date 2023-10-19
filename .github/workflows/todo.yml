@@ -14,5 +14,5 @@ jobs:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LABEL: "TODO:"
           COMMENT_MARKER: "//"
-          INCLUDE_EXT: ".js,.md"
+          INCLUDE_EXT: ".tsx,.ts,.js,.md"
         id: "todo"
