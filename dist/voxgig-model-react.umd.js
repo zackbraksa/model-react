@@ -20137,17 +20137,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       duration: theme.transitions.duration.enteringScreen
     })
   }));
-  function onOpen(seneca) {
-    seneca.act("aim:app,set:state", {
-      section: "vxg.cmp.BasicSide.show",
-      content: true
-    });
-  }
-  const filter$1 = material.createFilterOptions();
+  const filter$2 = material.createFilterOptions();
   function resolveOptions$1(tooldef, tooldata) {
     let options = [];
-    if ("ent" === tooldef.options.kind && tooldata[tooldef.name]) {
-      let ents = tooldata[tooldef.name].ents || [];
+    if (tooldef.options.kind === "ent" && tooldata[tooldef.name]) {
+      const ents = tooldata[tooldef.name].ents || [];
       options = ents.map((ent) => ({
         label: ent[tooldef.options.label.field],
         ent
@@ -20155,6 +20149,46 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return options;
   }
+  function BasicAutoComplete(props) {
+    const { seneca, tooldef, tooldata, valuemap } = props;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      material.Autocomplete,
+      {
+        freeSolo: true,
+        forcePopupIcon: true,
+        value: valuemap[tooldef.name] || tooldef.defaultvalue || "",
+        options: resolveOptions$1(tooldef, tooldata),
+        size: "small",
+        sx: {
+          paddingLeft: "1em",
+          width: "20rem"
+        },
+        filterOptions: (options, params) => {
+          const filtered = filter$2(options, params);
+          return filtered;
+        },
+        renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
+        onChange: (event, newval) => {
+          seneca.act("aim:app,set:state", {
+            section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
+            content: tooldef.mode == "search" && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
+          });
+        },
+        isOptionEqualToValue: (opt, val) => {
+          var _a, _b;
+          return opt === val || opt != null && val != null && ((_a = opt.ent) == null ? void 0 : _a.id) === ((_b = val.ent) == null ? void 0 : _b.id);
+        }
+      },
+      tooldef.name
+    );
+  }
+  function onOpen(seneca) {
+    seneca.act("aim:app,set:state", {
+      section: "vxg.cmp.BasicSide.show",
+      content: true
+    });
+  }
+  const filter$1 = material.createFilterOptions();
   function addItem(seneca, led_add) {
     seneca.act("aim:app,set:state", {
       section: "vxg.trigger.led.add",
@@ -20171,32 +20205,30 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       frame
     } = spec;
-    const shape2 = gubu_minExports.Gubu({
+    const shape2 = gubu_minExports.Gubu(gubu_minExports.Open({
       head: {
         logo: { img: "" },
         tool: { def: [{ kind: gubu_minExports.Exact("addbutton", "autocomplete"), title: String, options: {}, name: "" }] }
       },
       view: {}
-    });
+    }));
     shape2(spec);
-    const navigate = reactRouterDom.useNavigate();
-    const location = reactRouterDom.useLocation();
-    const tooldefs = Object.entries(spec.head.tool.def).map((entry) => (entry[1].name = entry[0], entry[1]));
+    const actions = Object.entries(spec.head.tool.def).map((entry) => (entry[1].name = entry[0], entry[1]));
     const user = reactRedux.useSelector((state) => state.main.auth.user);
     const userName = user.name || user.email;
-    let valuemap = {};
-    let tooldata = {};
-    tooldefs.forEach((tooldef) => {
-      if ("autocomplete" === tooldef.kind) {
-        if ("ent" === tooldef.options.kind) {
-          let canon = tooldef.options.ent;
-          tooldata[tooldef.name] = {
+    const valuemap = {};
+    const tooldata = {};
+    actions.forEach((action) => {
+      if (action.kind === "autocomplete") {
+        if (action.options.kind === "ent") {
+          const canon = action.options.ent;
+          tooldata[action.name] = {
             ents: reactRedux.useSelector((state) => state.main.vxg.ent.list.main[canon])
           };
-          let selected = reactRedux.useSelector((state) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected);
+          const selected = reactRedux.useSelector((state) => state.main.vxg.cmp.BasicHead.tool[action.name].selected);
           if (selected) {
-            valuemap[tooldef.name] = {
-              label: selected[tooldef.options.label.field],
+            valuemap[action.name] = {
+              label: selected[action.options.label.field],
               ent: selected
             };
           }
@@ -20205,14 +20237,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const vxgState = reactRedux.useSelector((state) => state.main.vxg);
     const open = vxgState.cmp.BasicSide.show;
-    let led_add = vxgState.trigger.led.add;
+    const led_add = vxgState.trigger.led.add;
+    const location = reactRouterDom.useLocation();
     const viewPath = location.pathname.split("/")[2];
-    let add = spec.view[viewPath].content.def.add || { active: false };
-    let drawerwidth = "16rem";
+    const add = spec.view[viewPath].content.def.add || { active: false };
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicAppBar,
       {
-        drawerwidth,
+        drawerwidth: "16rem",
         open,
         sx: {
           color: "black",
@@ -20231,40 +20263,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$s, {})
             }
           ),
-          tooldefs.map(
-            (tooldef) => {
-              if ("autocomplete" === tooldef.kind) {
-                return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  material.Autocomplete,
-                  {
-                    freeSolo: true,
-                    forcePopupIcon: true,
-                    value: valuemap[tooldef.name] || tooldef.defaultvalue || "",
-                    options: resolveOptions$1(tooldef, tooldata),
-                    size: "small",
-                    sx: {
-                      paddingLeft: "1em",
-                      width: "20rem"
-                    },
-                    filterOptions: (options, params) => {
-                      const filtered = filter$1(options, params);
-                      return filtered;
-                    },
-                    renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
-                    onChange: (event, newval) => {
-                      seneca.act("aim:app,set:state", {
-                        section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
-                        content: "search" == tooldef.mode && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
-                      });
-                    },
-                    isOptionEqualToValue: (opt, val) => {
-                      var _a, _b;
-                      return opt === val || null != opt && null != val && ((_a = opt.ent) == null ? void 0 : _a.id) === ((_b = val.ent) == null ? void 0 : _b.id);
-                    }
-                  },
-                  tooldef.name
-                );
-              } else if ("addbutton" === tooldef.kind) {
+          actions.map(
+            (action) => {
+              if (action.kind === "autocomplete") {
+                return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicAutoComplete, { seneca, tooldef: action, tooldata, valuemap });
+              } else if (action.kind === "addbutton") {
                 return /* @__PURE__ */ jsxRuntimeExports.jsx(
                   BasicButton,
                   {
@@ -20275,9 +20278,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                     },
                     size: "large",
                     onClick: () => addItem(seneca, led_add),
-                    children: tooldef.title + " " + spec.view[viewPath].name
+                    children: action.title + " " + spec.view[viewPath].name
                   },
-                  tooldef.name
+                  action.name
                 );
               }
             }
@@ -22757,26 +22760,92 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   });
   const iconmap$1 = {
-    "factory": iconsMaterial.FactoryOutlined,
-    "key": iconsMaterial.KeyOutlined,
-    "done": iconsMaterial.AssignmentTurnedInOutlined,
-    "docs": iconsMaterial.TextSnippetOutlined,
-    "hightlight": iconsMaterial.HighlightAlt,
-    "map": iconsMaterial.Map,
-    "account": iconsMaterial.SupervisorAccount,
-    "tablet": iconsMaterial.Tablet,
-    "update": iconsMaterial.Update,
-    "admin": iconsMaterial.Security,
-    "clipboard": iconsMaterial.ContentPaste,
-    "fitscreen": iconsMaterial.FitScreen,
-    "dots-square": iconsMaterial.Apps,
-    "chat-bubble": iconsMaterial.ChatBubble,
-    "event": iconsMaterial.Event,
-    "logout": iconsMaterial.Logout
+    factory: iconsMaterial.FactoryOutlined,
+    key: iconsMaterial.KeyOutlined,
+    done: iconsMaterial.AssignmentTurnedInOutlined,
+    docs: iconsMaterial.TextSnippetOutlined,
+    hightlight: iconsMaterial.HighlightAlt,
+    map: iconsMaterial.Map,
+    account: iconsMaterial.SupervisorAccount,
+    tablet: iconsMaterial.Tablet,
+    update: iconsMaterial.Update,
+    admin: iconsMaterial.Security,
+    clipboard: iconsMaterial.ContentPaste,
+    fitscreen: iconsMaterial.FitScreen,
+    chatBubble: iconsMaterial.ChatBubble,
+    event: iconsMaterial.Event,
+    logout: iconsMaterial.Logout
   };
   function makeIcon$1(name) {
-    let Icon = iconmap$1[name];
+    const Icon = iconmap$1[name];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
+  }
+  function BasicNavListItem(props) {
+    const { spec, itemKey, onItemSelect, isAuthorized: isAuthorized2 } = props;
+    return (
+      // TODO: load user from redux store
+      isAuthorized2("admin", spec.item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        material.ListItem,
+        {
+          disablePadding: true,
+          onClick: () => onItemSelect(spec.itemKey, spec.item),
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: spec.viewPath == spec.itemKey, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon$1(spec.item.icon) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: spec.item.label })
+          ] })
+        },
+        itemKey
+      )
+    );
+  }
+  function BasicNavList(props) {
+    const { spec, sectionKey, isAuthorized: isAuthorized2, onItemSelect } = props;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.List, { children: [
+      Object.entries(spec.section.items).map(([itemKey, item]) => {
+        const navListItemSpec = {
+          item,
+          viewPath: spec.viewPath
+        };
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicNavListItem, { spec: navListItemSpec, isAuthorized: isAuthorized2, onItemSelect }, itemKey);
+      }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
+    ] }, sectionKey);
+  }
+  function BasicNavMenu(props) {
+    const {
+      isAuthorized: isAuthorized2,
+      onClose: onClose2,
+      onItemSelect,
+      spec
+    } = props;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      BasicDrawer,
+      {
+        variant: "permanent",
+        drawerwidth: "16rem",
+        open: spec.open,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: spec.logo.img,
+                style: { width: "5rem" }
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose2(spec.seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
+          Object.entries(spec.sections).map(([sectionKey, section]) => {
+            const navListSpec = {
+              section,
+              viewPath: spec.viewPath
+            };
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicNavList, { spec: navListSpec, onItemSelect, isAuthorized: isAuthorized2 }, sectionKey);
+          })
+        ]
+      }
+    );
   }
   function onClose$1(seneca) {
     seneca.act("aim:app,set:state", {
@@ -22784,9 +22853,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       content: false
     });
   }
-  function allow$1(vxg, item) {
-    let out = item && item.allow ? vxg.allow(item.allow) : true;
-    return out;
+  const userRole = "admin";
+  function isAuthorized(userRole2, authorizedRoles) {
+    return authorizedRoles.hasOwnProperty(userRole2) && authorizedRoles[userRole2] === true;
   }
   function BasicSidebar(props) {
     const {
@@ -22799,7 +22868,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const open = vxgState.cmp.BasicSide.show;
     const navigate = reactRouterDom.useNavigate();
     const location = reactRouterDom.useLocation();
-    const { frame } = spec;
     const shape2 = gubu_minExports.Gubu(gubu_minExports.Open({
       side: {
         logo: { img: "" },
@@ -22810,58 +22878,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       view: {}
     }));
     shape2(spec);
-    console.log("spec", spec);
-    const part = spec.side;
-    const viewmap = spec.view;
-    const viewdefs = Object.entries(viewmap).map((entry) => (entry[1].name = entry[0], entry[1]));
-    const sectiondefs = Object.entries(part.section || []).map((entry) => (entry[1].name = entry[0], entry[1]));
     const viewPath = location.pathname.split("/")[2];
-    function handleListItemClick(key, navItem) {
-      navigate("/view/" + key);
+    function handleItemSelect(key, item) {
+      navigate(item.path);
     }
-    const sections = spec.side.menu.sections;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      BasicDrawer,
-      {
-        variant: "permanent",
-        drawerwidth: "16rem",
-        open,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "img",
-              {
-                src: part.logo.img,
-                style: { width: "5rem" }
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose$1(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
-          Object.entries(sections).map(([key, section]) => {
-            console.log("section:", section);
-            return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.List, { children: [
-              Object.entries(section.items).map(([key2, navItem]) => {
-                console.log("navItem", navItem);
-                return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  material.ListItem,
-                  {
-                    disablePadding: true,
-                    onClick: () => handleListItemClick(key2, navItem),
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: viewPath == key2, children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon$1(navItem.icon) }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: navItem.title })
-                    ] })
-                  },
-                  key2
-                );
-              }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
-            ] });
-          })
-        ]
-      }
-    );
+    const menuSpec = {
+      logo: spec.side.logo,
+      sections: spec.side.sections,
+      userRole: "admin",
+      viewPath,
+      open,
+      seneca
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicNavMenu, { spec: menuSpec, isAuthorized, onClose: onClose$1, onItemSelect: handleItemSelect });
   }
   /**
    * table-core
@@ -45597,7 +45626,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return jsxRuntimeExports.jsx(MRT_TableRoot, Object.assign({ aggregationFns: _aggregationFns, autoResetExpanded, columnResizeMode, defaultColumn: _defaultColumn, defaultDisplayColumn: _defaultDisplayColumn, editingMode, enableBottomToolbar, enableColumnActions, enableColumnFilters, enableColumnOrdering, enableColumnResizing, enableDensityToggle, enableExpandAll, enableExpanding, enableFilterMatchHighlighting, enableFilters, enableFullScreenToggle, enableGlobalFilter, enableGlobalFilterRankedResults, enableGrouping, enableHiding, enableMultiRowSelection, enableMultiSort, enablePagination, enablePinning, enableRowSelection, enableSelectAll, enableSorting, enableStickyHeader, enableTableFooter, enableTableHead, enableToolbarInternalActions, enableTopToolbar, filterFns: _filterFns, icons: _icons, layoutMode, localization: _localization, manualFiltering, manualGrouping, manualPagination, manualSorting, positionActionsColumn, positionExpandColumn, positionGlobalFilter, positionPagination, positionToolbarAlertBanner, positionToolbarDropZone, rowNumberMode, selectAllMode, sortingFns: _sortingFns }, rest));
   };
   function BasicList(props) {
-    let {
+    const {
       onRowClick = () => {
       },
       onEditingRowSave = () => {
@@ -45605,9 +45634,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       data,
       columns,
       sx = {
-        "marginRight": "2rem",
-        "marginTop": "2rem",
-        "marginLeft": "2rem"
+        marginRight: "2rem",
+        marginTop: "2rem",
+        marginLeft: "2rem"
       }
     } = props;
     const { ctx, spec } = props;
@@ -47389,7 +47418,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function resolveOptions(options) {
   }
   function BasicEdit(props) {
-    let {
+    const {
       item,
       itemFields,
       onClose: onClose2 = () => {
@@ -47403,7 +47432,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const def = spec.content.def;
     const { ent, cols } = def;
     React.useEffect(() => {
-      for (let field of itemFields) {
+      for (const field of itemFields) {
         setValue(field.name, item[field.name] || field.defaultValue || "");
       }
     }, [item]);
@@ -47420,8 +47449,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       {
         className: "vxg-form-field",
         onSubmit: handleSubmit((data) => __async(this, null, function* () {
-          let selitem = __spreadValues({}, item);
-          for (let k in data) {
+          const selitem = __spreadValues({}, item);
+          for (const k in data) {
             selitem[k] = data[k];
           }
           onSubmit(selitem);
@@ -47434,7 +47463,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 name: field.name,
                 control,
                 defaultValue: item[field.name] || "",
-                render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => "selection" === field.type ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => field.type === "selection" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                   material.Autocomplete,
                   {
                     freeSolo: true,
@@ -47444,8 +47473,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                     selectOnFocus: true,
                     onBlur,
                     handleHomeEndKeys: true,
-                    disableClearable: "" == value,
-                    disabled: !!!field.edit,
+                    disableClearable: value == "",
+                    disabled: !field.edit,
                     value,
                     getOptionLabel: (option) => option || "",
                     filterOptions: (options, params) => {
@@ -47468,8 +47497,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                       __spreadProps(__spreadValues({}, params), {
                         label: field.headerName,
                         onBlur,
-                        error: !!error,
-                        helperText: error ? error.message : null
+                        error: !(error == null),
+                        helperText: error != null ? error.message : null
                       })
                     )
                   }
@@ -47478,17 +47507,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                   {
                     label: field.headerName,
                     fullWidth: true,
-                    select: "status" === field.type,
-                    disabled: !!!field.edit,
+                    select: field.type === "status",
+                    disabled: !field.edit,
                     onChange,
                     value,
                     onBlur,
-                    error: !!error,
-                    helperText: error ? error.message : null,
+                    error: !(error == null),
+                    helperText: error != null ? error.message : null,
                     sx: {
                       textAlign: "left"
                     },
-                    children: "status" === field.type ? Object.keys(field.kind).map(
+                    children: field.type === "status" ? Object.keys(field.kind).map(
                       (option) => {
                         var _a;
                         return /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { value: option, children: (_a = field.kind[option]) == null ? void 0 : _a.title }, option);
@@ -47501,7 +47530,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               }
             ) }, index2);
           }),
-          0 != children.length ? /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, xs: 12, children }) : null,
+          children.length != 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, xs: 12, children }) : null,
           /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, xs: 12, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Grid, { container: true, justifyContent: "space-between", alignItems: "center", marginTop: 2, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               BasicButton,
@@ -47528,9 +47557,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   function fields(spec) {
     try {
-      let fds = [];
-      let fns = spec.content.def.edit.layout.order.replace(/\s+/g, "").split(/,/);
-      for (let fn of fns) {
+      const fds = [];
+      const fns = spec.content.def.edit.layout.order.replace(/\s+/g, "").split(/,/);
+      for (const fn of fns) {
         let fd = __spreadValues({}, spec.content.def.ent.primary.field[fn]);
         fd.name = fn;
         fd.headerName = fd.title;
@@ -47565,8 +47594,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const entstate = reactRedux.useSelector((state) => state.main.vxg.ent.meta.main[canon].state);
     const entlist = reactRedux.useSelector((state) => state.main.vxg.ent.list.main[canon]);
     const location = reactRouterDom.useLocation();
-    if ("none" === entstate) {
-      let q = custom.BasicLed.query(spec, cmpstate);
+    if (entstate === "none") {
+      const q = custom.BasicLed.query(spec, cmpstate);
       seneca.entity(canon).list$(q);
     }
     const rows = entlist;
@@ -47578,18 +47607,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         accessorKey: field.name,
         header: field.headerName,
         enableEditing: field.edit,
-        editVariant: "status" === field.type ? "select" : "text",
-        editSelectOptions: "status" === field.type ? ["open", "closed"] : null,
+        editVariant: field.type === "status" ? "select" : "text",
+        editSelectOptions: field.type === "status" ? ["open", "closed"] : null,
         Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: field.headerName }),
         // muiTableHeadCellProps: { sx: { color: 'green' } },
         Cell: ({ cell }) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cell.getValue() })
       })
     );
-    let data = rows;
+    const data = rows;
     React.useEffect(() => {
       setItem({});
     }, [location.pathname]);
-    let led_add = vxgState.trigger.led.add;
+    const led_add = vxgState.trigger.led.add;
     let [triggerLed, setTriggerLed] = React.useState(0);
     React.useEffect(() => {
       if (triggerLed >= 2) {
@@ -47605,8 +47634,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         data,
         columns,
         onEditingRowSave: (row, values2) => __async(this, null, function* () {
-          let selectedItem = __spreadValues({}, data[row.index]);
-          for (let k in values2) {
+          const selectedItem = __spreadValues({}, data[row.index]);
+          for (const k in values2) {
             selectedItem[k] = values2[k];
           }
           console.log("selectedItem: ", selectedItem);
@@ -47634,9 +47663,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function makeCmp(view, ctx) {
     let cmp = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "NONE" });
     const content = view.content || {};
-    if ("custom" === content.kind) {
+    if (content.kind === "custom") {
       cmp = ctx().cmp[content.cmp];
-    } else if ("led" === content.kind) {
+    } else if (content.kind === "led") {
       cmp = BasicLed;
     }
     return cmp;
@@ -47761,22 +47790,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ] });
   }
   const iconmap = {
-    "factory": iconsMaterial.FactoryOutlined,
-    "key": iconsMaterial.KeyOutlined,
-    "done": iconsMaterial.AssignmentTurnedInOutlined,
-    "docs": iconsMaterial.TextSnippetOutlined,
-    "hightlight": iconsMaterial.HighlightAlt,
-    "map": iconsMaterial.Map,
-    "account": iconsMaterial.SupervisorAccount,
-    "tablet": iconsMaterial.Tablet,
-    "update": iconsMaterial.Update,
-    "admin": iconsMaterial.Security,
-    "clipboard": iconsMaterial.ContentPaste,
-    "fitscreen": iconsMaterial.FitScreen,
+    factory: iconsMaterial.FactoryOutlined,
+    key: iconsMaterial.KeyOutlined,
+    done: iconsMaterial.AssignmentTurnedInOutlined,
+    docs: iconsMaterial.TextSnippetOutlined,
+    hightlight: iconsMaterial.HighlightAlt,
+    map: iconsMaterial.Map,
+    account: iconsMaterial.SupervisorAccount,
+    tablet: iconsMaterial.Tablet,
+    update: iconsMaterial.Update,
+    admin: iconsMaterial.Security,
+    clipboard: iconsMaterial.ContentPaste,
+    fitscreen: iconsMaterial.FitScreen,
     "dots-square": iconsMaterial.Apps
   };
   function makeIcon(name) {
-    let Icon = iconmap[name];
+    const Icon = iconmap[name];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
   }
   function onClose(seneca) {
@@ -47786,7 +47815,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   }
   function allow(vxg, item) {
-    let out = item && item.allow ? vxg.allow(item.allow) : true;
+    const out = item && item.allow ? vxg.allow(item.allow) : true;
     return out;
   }
   function BasicSide(props) {
@@ -47926,7 +47955,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           ] }),
           sectiondefs.map((section, sectionNumber) => {
             if (viewPath == section.name || section.view && viewPath in section.view) {
-              if ("navmenu" === section.kind) {
+              if (section.kind === "navmenu") {
                 return /* @__PURE__ */ jsxRuntimeExports.jsx(DefaultNavMenu, { viewOrder: section.view, viewdefs }, section.name);
               }
               const Cmp = ctx().cmp[section.cmp];
@@ -51139,16 +51168,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       this.config.allow = this.config.allow || {};
       this.config.allow.modify = this.config.allow.modify || ((x) => x);
       this.config.allow.match = this.config.allow.match || [];
-      for (let entry of this.config.allow.match) {
+      for (const entry of this.config.allow.match) {
         this.match.allow.add(entry, { allow: true });
       }
     }
     allow(match2) {
-      let mm = Jsonic(match2);
-      let ms = Array.isArray(match2) ? match2 : Object.keys(mm).map((x) => mm[x]);
+      const mm = Jsonic(match2);
+      const ms = Array.isArray(match2) ? match2 : Object.keys(mm).map((x) => mm[x]);
       let found = null;
-      for (let m of ms) {
-        let pat = this.config.allow.modify(__spreadValues({}, m || {}));
+      for (const m of ms) {
+        const pat = this.config.allow.modify(__spreadValues({}, m || {}));
         found = this.match.allow.find(pat);
         if (found) {
           break;

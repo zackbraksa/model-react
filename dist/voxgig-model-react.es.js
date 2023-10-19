@@ -58,13 +58,13 @@ var __async = (__this, __arguments, generator) => {
 import * as React from "react";
 import React__default, { createElement, isValidElement, Children, cloneElement, useMemo, useState, useRef, useCallback, useEffect, Fragment, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
-import { Button as Button$1, createFilterOptions as createFilterOptions$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Autocomplete, TextField as TextField$1, Typography as Typography$1, Divider as Divider$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Grid as Grid$1, MenuItem as MenuItem$1, Box as Box$2, Container as Container$2, ToggleButtonGroup, ToggleButton, ButtonGroup } from "@mui/material";
+import { useLocation, useNavigate, Routes, Route } from "react-router-dom";
+import { Button as Button$1, createFilterOptions as createFilterOptions$1, Autocomplete, TextField as TextField$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Typography as Typography$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, List as List$1, Divider as Divider$1, Grid as Grid$1, MenuItem as MenuItem$1, Box as Box$2, Container as Container$2, ToggleButtonGroup, ToggleButton, ButtonGroup } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
 import { CacheProvider, Global, ThemeContext as ThemeContext$1, keyframes, css } from "@emotion/react";
-import { FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1, SupervisorAccount, Tablet, Update, Security, ContentPaste, FitScreen, Apps, ChatBubble, Event, Logout, ChevronLeft } from "@mui/icons-material";
+import { FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1, SupervisorAccount, Tablet, Update, Security, ContentPaste, FitScreen, ChatBubble, Event, Logout, ChevronLeft, Apps } from "@mui/icons-material";
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getDefaultExportFromCjs(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
@@ -20125,17 +20125,11 @@ const BasicAppBar = styled(AppBar, {
     duration: theme.transitions.duration.enteringScreen
   })
 }));
-function onOpen(seneca) {
-  seneca.act("aim:app,set:state", {
-    section: "vxg.cmp.BasicSide.show",
-    content: true
-  });
-}
-const filter$1 = createFilterOptions$1();
+const filter$2 = createFilterOptions$1();
 function resolveOptions$1(tooldef, tooldata) {
   let options = [];
-  if ("ent" === tooldef.options.kind && tooldata[tooldef.name]) {
-    let ents = tooldata[tooldef.name].ents || [];
+  if (tooldef.options.kind === "ent" && tooldata[tooldef.name]) {
+    const ents = tooldata[tooldef.name].ents || [];
     options = ents.map((ent) => ({
       label: ent[tooldef.options.label.field],
       ent
@@ -20143,6 +20137,46 @@ function resolveOptions$1(tooldef, tooldata) {
   }
   return options;
 }
+function BasicAutoComplete(props) {
+  const { seneca, tooldef, tooldata, valuemap } = props;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Autocomplete,
+    {
+      freeSolo: true,
+      forcePopupIcon: true,
+      value: valuemap[tooldef.name] || tooldef.defaultvalue || "",
+      options: resolveOptions$1(tooldef, tooldata),
+      size: "small",
+      sx: {
+        paddingLeft: "1em",
+        width: "20rem"
+      },
+      filterOptions: (options, params) => {
+        const filtered = filter$2(options, params);
+        return filtered;
+      },
+      renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
+      onChange: (event, newval) => {
+        seneca.act("aim:app,set:state", {
+          section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
+          content: tooldef.mode == "search" && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
+        });
+      },
+      isOptionEqualToValue: (opt, val) => {
+        var _a, _b;
+        return opt === val || opt != null && val != null && ((_a = opt.ent) == null ? void 0 : _a.id) === ((_b = val.ent) == null ? void 0 : _b.id);
+      }
+    },
+    tooldef.name
+  );
+}
+function onOpen(seneca) {
+  seneca.act("aim:app,set:state", {
+    section: "vxg.cmp.BasicSide.show",
+    content: true
+  });
+}
+const filter$1 = createFilterOptions$1();
 function addItem(seneca, led_add) {
   seneca.act("aim:app,set:state", {
     section: "vxg.trigger.led.add",
@@ -20159,32 +20193,30 @@ function BasicHead(props) {
   const {
     frame
   } = spec;
-  const shape2 = gubu_minExports.Gubu({
+  const shape2 = gubu_minExports.Gubu(gubu_minExports.Open({
     head: {
       logo: { img: "" },
       tool: { def: [{ kind: gubu_minExports.Exact("addbutton", "autocomplete"), title: String, options: {}, name: "" }] }
     },
     view: {}
-  });
+  }));
   shape2(spec);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const tooldefs = Object.entries(spec.head.tool.def).map((entry) => (entry[1].name = entry[0], entry[1]));
+  const actions = Object.entries(spec.head.tool.def).map((entry) => (entry[1].name = entry[0], entry[1]));
   const user = useSelector((state) => state.main.auth.user);
   const userName = user.name || user.email;
-  let valuemap = {};
-  let tooldata = {};
-  tooldefs.forEach((tooldef) => {
-    if ("autocomplete" === tooldef.kind) {
-      if ("ent" === tooldef.options.kind) {
-        let canon = tooldef.options.ent;
-        tooldata[tooldef.name] = {
+  const valuemap = {};
+  const tooldata = {};
+  actions.forEach((action) => {
+    if (action.kind === "autocomplete") {
+      if (action.options.kind === "ent") {
+        const canon = action.options.ent;
+        tooldata[action.name] = {
           ents: useSelector((state) => state.main.vxg.ent.list.main[canon])
         };
-        let selected = useSelector((state) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected);
+        const selected = useSelector((state) => state.main.vxg.cmp.BasicHead.tool[action.name].selected);
         if (selected) {
-          valuemap[tooldef.name] = {
-            label: selected[tooldef.options.label.field],
+          valuemap[action.name] = {
+            label: selected[action.options.label.field],
             ent: selected
           };
         }
@@ -20193,14 +20225,14 @@ function BasicHead(props) {
   });
   const vxgState = useSelector((state) => state.main.vxg);
   const open = vxgState.cmp.BasicSide.show;
-  let led_add = vxgState.trigger.led.add;
+  const led_add = vxgState.trigger.led.add;
+  const location = useLocation();
   const viewPath = location.pathname.split("/")[2];
-  let add = spec.view[viewPath].content.def.add || { active: false };
-  let drawerwidth = "16rem";
+  const add = spec.view[viewPath].content.def.add || { active: false };
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     BasicAppBar,
     {
-      drawerwidth,
+      drawerwidth: "16rem",
       open,
       sx: {
         color: "black",
@@ -20219,40 +20251,11 @@ function BasicHead(props) {
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$s, {})
           }
         ),
-        tooldefs.map(
-          (tooldef) => {
-            if ("autocomplete" === tooldef.kind) {
-              return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                Autocomplete,
-                {
-                  freeSolo: true,
-                  forcePopupIcon: true,
-                  value: valuemap[tooldef.name] || tooldef.defaultvalue || "",
-                  options: resolveOptions$1(tooldef, tooldata),
-                  size: "small",
-                  sx: {
-                    paddingLeft: "1em",
-                    width: "20rem"
-                  },
-                  filterOptions: (options, params) => {
-                    const filtered = filter$1(options, params);
-                    return filtered;
-                  },
-                  renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
-                  onChange: (event, newval) => {
-                    seneca.act("aim:app,set:state", {
-                      section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
-                      content: "search" == tooldef.mode && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
-                    });
-                  },
-                  isOptionEqualToValue: (opt, val) => {
-                    var _a, _b;
-                    return opt === val || null != opt && null != val && ((_a = opt.ent) == null ? void 0 : _a.id) === ((_b = val.ent) == null ? void 0 : _b.id);
-                  }
-                },
-                tooldef.name
-              );
-            } else if ("addbutton" === tooldef.kind) {
+        actions.map(
+          (action) => {
+            if (action.kind === "autocomplete") {
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicAutoComplete, { seneca, tooldef: action, tooldata, valuemap });
+            } else if (action.kind === "addbutton") {
               return /* @__PURE__ */ jsxRuntimeExports.jsx(
                 BasicButton,
                 {
@@ -20263,9 +20266,9 @@ function BasicHead(props) {
                   },
                   size: "large",
                   onClick: () => addItem(seneca, led_add),
-                  children: tooldef.title + " " + spec.view[viewPath].name
+                  children: action.title + " " + spec.view[viewPath].name
                 },
-                tooldef.name
+                action.name
               );
             }
           }
@@ -22745,26 +22748,92 @@ const closedMixin = (theme) => ({
   }
 });
 const iconmap$1 = {
-  "factory": FactoryOutlined,
-  "key": KeyOutlined,
-  "done": AssignmentTurnedInOutlined,
-  "docs": TextSnippetOutlined,
-  "hightlight": HighlightAlt,
-  "map": Map$1,
-  "account": SupervisorAccount,
-  "tablet": Tablet,
-  "update": Update,
-  "admin": Security,
-  "clipboard": ContentPaste,
-  "fitscreen": FitScreen,
-  "dots-square": Apps,
-  "chat-bubble": ChatBubble,
-  "event": Event,
-  "logout": Logout
+  factory: FactoryOutlined,
+  key: KeyOutlined,
+  done: AssignmentTurnedInOutlined,
+  docs: TextSnippetOutlined,
+  hightlight: HighlightAlt,
+  map: Map$1,
+  account: SupervisorAccount,
+  tablet: Tablet,
+  update: Update,
+  admin: Security,
+  clipboard: ContentPaste,
+  fitscreen: FitScreen,
+  chatBubble: ChatBubble,
+  event: Event,
+  logout: Logout
 };
 function makeIcon$1(name) {
-  let Icon = iconmap$1[name];
+  const Icon = iconmap$1[name];
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
+}
+function BasicNavListItem(props) {
+  const { spec, itemKey, onItemSelect, isAuthorized: isAuthorized2 } = props;
+  return (
+    // TODO: load user from redux store
+    isAuthorized2("admin", spec.item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ListItem,
+      {
+        disablePadding: true,
+        onClick: () => onItemSelect(spec.itemKey, spec.item),
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs(ListItemButton, { selected: spec.viewPath == spec.itemKey, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: makeIcon$1(spec.item.icon) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: spec.item.label })
+        ] })
+      },
+      itemKey
+    )
+  );
+}
+function BasicNavList(props) {
+  const { spec, sectionKey, isAuthorized: isAuthorized2, onItemSelect } = props;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(List$1, { children: [
+    Object.entries(spec.section.items).map(([itemKey, item]) => {
+      const navListItemSpec = {
+        item,
+        viewPath: spec.viewPath
+      };
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicNavListItem, { spec: navListItemSpec, isAuthorized: isAuthorized2, onItemSelect }, itemKey);
+    }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {})
+  ] }, sectionKey);
+}
+function BasicNavMenu(props) {
+  const {
+    isAuthorized: isAuthorized2,
+    onClose: onClose2,
+    onItemSelect,
+    spec
+  } = props;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    BasicDrawer,
+    {
+      variant: "permanent",
+      drawerwidth: "16rem",
+      open: spec.open,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "img",
+            {
+              src: spec.logo.img,
+              style: { width: "5rem" }
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { onClick: () => onClose2(spec.seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { sx: { color: "black" } }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {}),
+        Object.entries(spec.sections).map(([sectionKey, section]) => {
+          const navListSpec = {
+            section,
+            viewPath: spec.viewPath
+          };
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicNavList, { spec: navListSpec, onItemSelect, isAuthorized: isAuthorized2 }, sectionKey);
+        })
+      ]
+    }
+  );
 }
 function onClose$1(seneca) {
   seneca.act("aim:app,set:state", {
@@ -22772,9 +22841,9 @@ function onClose$1(seneca) {
     content: false
   });
 }
-function allow$1(vxg, item) {
-  let out = item && item.allow ? vxg.allow(item.allow) : true;
-  return out;
+const userRole = "admin";
+function isAuthorized(userRole2, authorizedRoles) {
+  return authorizedRoles.hasOwnProperty(userRole2) && authorizedRoles[userRole2] === true;
 }
 function BasicSidebar(props) {
   const {
@@ -22787,7 +22856,6 @@ function BasicSidebar(props) {
   const open = vxgState.cmp.BasicSide.show;
   const navigate = useNavigate();
   const location = useLocation();
-  const { frame } = spec;
   const shape2 = gubu_minExports.Gubu(gubu_minExports.Open({
     side: {
       logo: { img: "" },
@@ -22798,58 +22866,19 @@ function BasicSidebar(props) {
     view: {}
   }));
   shape2(spec);
-  console.log("spec", spec);
-  const part = spec.side;
-  const viewmap = spec.view;
-  const viewdefs = Object.entries(viewmap).map((entry) => (entry[1].name = entry[0], entry[1]));
-  const sectiondefs = Object.entries(part.section || []).map((entry) => (entry[1].name = entry[0], entry[1]));
   const viewPath = location.pathname.split("/")[2];
-  function handleListItemClick(key, navItem) {
-    navigate("/view/" + key);
+  function handleItemSelect(key, item) {
+    navigate(item.path);
   }
-  const sections = spec.side.menu.sections;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    BasicDrawer,
-    {
-      variant: "permanent",
-      drawerwidth: "16rem",
-      open,
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "img",
-            {
-              src: part.logo.img,
-              style: { width: "5rem" }
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { onClick: () => onClose$1(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { sx: { color: "black" } }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {}),
-        Object.entries(sections).map(([key, section]) => {
-          console.log("section:", section);
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs(List$1, { children: [
-            Object.entries(section.items).map(([key2, navItem]) => {
-              console.log("navItem", navItem);
-              return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                ListItem,
-                {
-                  disablePadding: true,
-                  onClick: () => handleListItemClick(key2, navItem),
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsxs(ListItemButton, { selected: viewPath == key2, children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: makeIcon$1(navItem.icon) }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: navItem.title })
-                  ] })
-                },
-                key2
-              );
-            }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {})
-          ] });
-        })
-      ]
-    }
-  );
+  const menuSpec = {
+    logo: spec.side.logo,
+    sections: spec.side.sections,
+    userRole: "admin",
+    viewPath,
+    open,
+    seneca
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicNavMenu, { spec: menuSpec, isAuthorized, onClose: onClose$1, onItemSelect: handleItemSelect });
 }
 /**
  * table-core
@@ -45585,7 +45614,7 @@ const MaterialReactTable = (_a) => {
   return jsxRuntimeExports.jsx(MRT_TableRoot, Object.assign({ aggregationFns: _aggregationFns, autoResetExpanded, columnResizeMode, defaultColumn: _defaultColumn, defaultDisplayColumn: _defaultDisplayColumn, editingMode, enableBottomToolbar, enableColumnActions, enableColumnFilters, enableColumnOrdering, enableColumnResizing, enableDensityToggle, enableExpandAll, enableExpanding, enableFilterMatchHighlighting, enableFilters, enableFullScreenToggle, enableGlobalFilter, enableGlobalFilterRankedResults, enableGrouping, enableHiding, enableMultiRowSelection, enableMultiSort, enablePagination, enablePinning, enableRowSelection, enableSelectAll, enableSorting, enableStickyHeader, enableTableFooter, enableTableHead, enableToolbarInternalActions, enableTopToolbar, filterFns: _filterFns, icons: _icons, layoutMode, localization: _localization, manualFiltering, manualGrouping, manualPagination, manualSorting, positionActionsColumn, positionExpandColumn, positionGlobalFilter, positionPagination, positionToolbarAlertBanner, positionToolbarDropZone, rowNumberMode, selectAllMode, sortingFns: _sortingFns }, rest));
 };
 function BasicList(props) {
-  let {
+  const {
     onRowClick = () => {
     },
     onEditingRowSave = () => {
@@ -45593,9 +45622,9 @@ function BasicList(props) {
     data,
     columns,
     sx = {
-      "marginRight": "2rem",
-      "marginTop": "2rem",
-      "marginLeft": "2rem"
+      marginRight: "2rem",
+      marginTop: "2rem",
+      marginLeft: "2rem"
     }
   } = props;
   const { ctx, spec } = props;
@@ -47377,7 +47406,7 @@ const filter = createFilterOptions$1();
 function resolveOptions(options) {
 }
 function BasicEdit(props) {
-  let {
+  const {
     item,
     itemFields,
     onClose: onClose2 = () => {
@@ -47391,7 +47420,7 @@ function BasicEdit(props) {
   const def = spec.content.def;
   const { ent, cols } = def;
   useEffect(() => {
-    for (let field of itemFields) {
+    for (const field of itemFields) {
       setValue(field.name, item[field.name] || field.defaultValue || "");
     }
   }, [item]);
@@ -47408,8 +47437,8 @@ function BasicEdit(props) {
     {
       className: "vxg-form-field",
       onSubmit: handleSubmit((data) => __async(this, null, function* () {
-        let selitem = __spreadValues({}, item);
-        for (let k in data) {
+        const selitem = __spreadValues({}, item);
+        for (const k in data) {
           selitem[k] = data[k];
         }
         onSubmit(selitem);
@@ -47422,7 +47451,7 @@ function BasicEdit(props) {
               name: field.name,
               control,
               defaultValue: item[field.name] || "",
-              render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => "selection" === field.type ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => field.type === "selection" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Autocomplete,
                 {
                   freeSolo: true,
@@ -47432,8 +47461,8 @@ function BasicEdit(props) {
                   selectOnFocus: true,
                   onBlur,
                   handleHomeEndKeys: true,
-                  disableClearable: "" == value,
-                  disabled: !!!field.edit,
+                  disableClearable: value == "",
+                  disabled: !field.edit,
                   value,
                   getOptionLabel: (option) => option || "",
                   filterOptions: (options, params) => {
@@ -47456,8 +47485,8 @@ function BasicEdit(props) {
                     __spreadProps(__spreadValues({}, params), {
                       label: field.headerName,
                       onBlur,
-                      error: !!error,
-                      helperText: error ? error.message : null
+                      error: !(error == null),
+                      helperText: error != null ? error.message : null
                     })
                   )
                 }
@@ -47466,17 +47495,17 @@ function BasicEdit(props) {
                 {
                   label: field.headerName,
                   fullWidth: true,
-                  select: "status" === field.type,
-                  disabled: !!!field.edit,
+                  select: field.type === "status",
+                  disabled: !field.edit,
                   onChange,
                   value,
                   onBlur,
-                  error: !!error,
-                  helperText: error ? error.message : null,
+                  error: !(error == null),
+                  helperText: error != null ? error.message : null,
                   sx: {
                     textAlign: "left"
                   },
-                  children: "status" === field.type ? Object.keys(field.kind).map(
+                  children: field.type === "status" ? Object.keys(field.kind).map(
                     (option) => {
                       var _a;
                       return /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: option, children: (_a = field.kind[option]) == null ? void 0 : _a.title }, option);
@@ -47489,7 +47518,7 @@ function BasicEdit(props) {
             }
           ) }, index2);
         }),
-        0 != children2.length ? /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, xs: 12, children: children2 }) : null,
+        children2.length != 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, xs: 12, children: children2 }) : null,
         /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, xs: 12, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Grid$1, { container: true, justifyContent: "space-between", alignItems: "center", marginTop: 2, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             BasicButton,
@@ -47516,9 +47545,9 @@ function BasicEdit(props) {
 }
 function fields(spec) {
   try {
-    let fds = [];
-    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, "").split(/,/);
-    for (let fn2 of fns) {
+    const fds = [];
+    const fns = spec.content.def.edit.layout.order.replace(/\s+/g, "").split(/,/);
+    for (const fn2 of fns) {
       let fd = __spreadValues({}, spec.content.def.ent.primary.field[fn2]);
       fd.name = fn2;
       fd.headerName = fd.title;
@@ -47553,8 +47582,8 @@ function BasicLed(props) {
   const entstate = useSelector((state) => state.main.vxg.ent.meta.main[canon].state);
   const entlist = useSelector((state) => state.main.vxg.ent.list.main[canon]);
   const location = useLocation();
-  if ("none" === entstate) {
-    let q = custom.BasicLed.query(spec, cmpstate);
+  if (entstate === "none") {
+    const q = custom.BasicLed.query(spec, cmpstate);
     seneca.entity(canon).list$(q);
   }
   const rows = entlist;
@@ -47566,18 +47595,18 @@ function BasicLed(props) {
       accessorKey: field.name,
       header: field.headerName,
       enableEditing: field.edit,
-      editVariant: "status" === field.type ? "select" : "text",
-      editSelectOptions: "status" === field.type ? ["open", "closed"] : null,
+      editVariant: field.type === "status" ? "select" : "text",
+      editSelectOptions: field.type === "status" ? ["open", "closed"] : null,
       Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: field.headerName }),
       // muiTableHeadCellProps: { sx: { color: 'green' } },
       Cell: ({ cell }) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cell.getValue() })
     })
   );
-  let data = rows;
+  const data = rows;
   useEffect(() => {
     setItem({});
   }, [location.pathname]);
-  let led_add = vxgState.trigger.led.add;
+  const led_add = vxgState.trigger.led.add;
   let [triggerLed, setTriggerLed] = useState(0);
   useEffect(() => {
     if (triggerLed >= 2) {
@@ -47593,8 +47622,8 @@ function BasicLed(props) {
       data,
       columns,
       onEditingRowSave: (row, values2) => __async(this, null, function* () {
-        let selectedItem = __spreadValues({}, data[row.index]);
-        for (let k in values2) {
+        const selectedItem = __spreadValues({}, data[row.index]);
+        for (const k in values2) {
           selectedItem[k] = values2[k];
         }
         console.log("selectedItem: ", selectedItem);
@@ -47622,9 +47651,9 @@ function BasicLed(props) {
 function makeCmp(view, ctx) {
   let cmp = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "NONE" });
   const content = view.content || {};
-  if ("custom" === content.kind) {
+  if (content.kind === "custom") {
     cmp = ctx().cmp[content.cmp];
-  } else if ("led" === content.kind) {
+  } else if (content.kind === "led") {
     cmp = BasicLed;
   }
   return cmp;
@@ -47749,22 +47778,22 @@ function BasicAdmin(props) {
   ] });
 }
 const iconmap = {
-  "factory": FactoryOutlined,
-  "key": KeyOutlined,
-  "done": AssignmentTurnedInOutlined,
-  "docs": TextSnippetOutlined,
-  "hightlight": HighlightAlt,
-  "map": Map$1,
-  "account": SupervisorAccount,
-  "tablet": Tablet,
-  "update": Update,
-  "admin": Security,
-  "clipboard": ContentPaste,
-  "fitscreen": FitScreen,
+  factory: FactoryOutlined,
+  key: KeyOutlined,
+  done: AssignmentTurnedInOutlined,
+  docs: TextSnippetOutlined,
+  hightlight: HighlightAlt,
+  map: Map$1,
+  account: SupervisorAccount,
+  tablet: Tablet,
+  update: Update,
+  admin: Security,
+  clipboard: ContentPaste,
+  fitscreen: FitScreen,
   "dots-square": Apps
 };
 function makeIcon(name) {
-  let Icon = iconmap[name];
+  const Icon = iconmap[name];
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
 }
 function onClose(seneca) {
@@ -47774,7 +47803,7 @@ function onClose(seneca) {
   });
 }
 function allow(vxg, item) {
-  let out = item && item.allow ? vxg.allow(item.allow) : true;
+  const out = item && item.allow ? vxg.allow(item.allow) : true;
   return out;
 }
 function BasicSide(props) {
@@ -47914,7 +47943,7 @@ function BasicSide(props) {
         ] }),
         sectiondefs.map((section, sectionNumber) => {
           if (viewPath == section.name || section.view && viewPath in section.view) {
-            if ("navmenu" === section.kind) {
+            if (section.kind === "navmenu") {
               return /* @__PURE__ */ jsxRuntimeExports.jsx(DefaultNavMenu, { viewOrder: section.view, viewdefs }, section.name);
             }
             const Cmp = ctx().cmp[section.cmp];
@@ -51127,16 +51156,16 @@ class Vxg {
     this.config.allow = this.config.allow || {};
     this.config.allow.modify = this.config.allow.modify || ((x) => x);
     this.config.allow.match = this.config.allow.match || [];
-    for (let entry of this.config.allow.match) {
+    for (const entry of this.config.allow.match) {
       this.match.allow.add(entry, { allow: true });
     }
   }
   allow(match2) {
-    let mm = Jsonic(match2);
-    let ms = Array.isArray(match2) ? match2 : Object.keys(mm).map((x) => mm[x]);
+    const mm = Jsonic(match2);
+    const ms = Array.isArray(match2) ? match2 : Object.keys(mm).map((x) => mm[x]);
     let found = null;
-    for (let m of ms) {
-      let pat = this.config.allow.modify(__spreadValues({}, m || {}));
+    for (const m of ms) {
+      const pat = this.config.allow.modify(__spreadValues({}, m || {}));
       found = this.match.allow.find(pat);
       if (found) {
         break;
