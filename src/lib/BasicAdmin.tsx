@@ -7,7 +7,6 @@ import BasicMain from './BasicMain'
 import BasicFoot from './BasicFoot'
 import { Gubu } from 'gubu'
 
-// TODO: testing todo.yml github actions
 function BasicAdmin(props: any) {
   const {
     vxg,
@@ -16,7 +15,6 @@ function BasicAdmin(props: any) {
   } = props
   const model = ctx().model
 
-  // TODO: testing another TODO comment
   const { frame } = spec
 
   // spec schema definition with Gubu
@@ -29,6 +27,7 @@ function BasicAdmin(props: any) {
 
   const frameModel = model.app.web.frame[frame]
 
+  // TODO: adding sample todo
   const headSpec: any = {
     head: frameModel.part.head,
     view: frameModel.view,
