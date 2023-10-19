@@ -4,22 +4,22 @@ import { useSelector } from 'react-redux'
 import {
   MaterialReactTable,
   type MaterialReactTableProps,
-  type MRT_ColumnDef,
+  type MRT_ColumnDef
 } from 'material-react-table'
 
 // import { DataGrid } from '@mui/x-data-grid'
 
 function BasicList(props: any) {
-  let {
+  const {
     onRowClick = () => { },
     onEditingRowSave = () => { },
     data,
     columns,
     sx = {
-      'marginRight': '2rem',
-      'marginTop': '2rem',
-      'marginLeft': '2rem'
-    },
+      marginRight: '2rem',
+      marginTop: '2rem',
+      marginLeft: '2rem'
+    }
   } = props
 
   const { ctx, spec } = props
@@ -30,17 +30,17 @@ function BasicList(props: any) {
   const handleSaveRow: MaterialReactTableProps<any>['onEditingRowSave'] =
     async ({ exitEditingMode, row, values }): Promise<void> => {
       onEditingRowSave(row, values)
-      exitEditingMode(); //required to exit editing mode
-    };
+      exitEditingMode() // required to exit editing mode
+    }
 
   return (
-    <div className="BasicList" style={{ ...sx }} >
+    <div className='BasicList' style={{ ...sx }}>
       <MaterialReactTable
         enableColumnActions={false}
         enableColumnFilters={false}
-        enablePagination={true}
+        enablePagination
         enableSorting={false}
-        enableBottomToolbar={true}
+        enableBottomToolbar
         enableTopToolbar={false}
         editingMode='row'
         enableEditing
@@ -55,8 +55,8 @@ function BasicList(props: any) {
           sx: { cursor: 'pointer' }
         })}
       />
-    </div>)
-
+    </div>
+  )
 }
 
 export default BasicList
@@ -69,7 +69,7 @@ export default BasicList
       let selitem = { ...params.row }
       // console.log('item: ', selitem)
       onRowClick({}, selitem)
-      
+
     }}
 
     checkboxSelection={false}

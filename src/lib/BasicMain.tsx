@@ -8,33 +8,28 @@ import {
   Route
 } from 'react-router-dom'
 
-
 import BasicLed from './BasicLed'
 import { Gubu } from 'gubu'
 
-
-function makeCmp(view: any, ctx: any) {
+function makeCmp (view: any, ctx: any) {
   let cmp: any = () => <div>NONE</div>
 
   const content = view.content || {}
 
-  if ('custom' === content.kind) {
+  if (content.kind === 'custom') {
     cmp = ctx().cmp[content.cmp]
-  }
-  else if ('led' === content.kind) {
+  } else if (content.kind === 'led') {
     cmp = BasicLed
   }
 
   return cmp
 }
 
-
-
-function BasicMain(props: any) {
+function BasicMain (props: any) {
   const {
     vxg,
     ctx,
-    spec,
+    spec
   } = props
   const { model, content } = ctx()
 
@@ -66,14 +61,14 @@ function BasicMain(props: any) {
     // width: sideOpen ? 'calc(100vw - 19rem)' : 'calc(100vw - 4rem)',
     // padding: '84px ' + (sideOpen ? '4.5em' : '0') + ' 4.5em ' + (sideOpen ? '4.5em' : '0.5em')
     width: sideOpen ? 'calc(100% - 16rem)' : '100%',
-    paddingLeft: sideOpen ? '16rem' : '0rem',
+    paddingLeft: sideOpen ? '16rem' : '0rem'
   }
 
   return (
-    <div className="BasicMain" style={basicMain}>
+    <div className='BasicMain' style={basicMain}>
       <div style={{ width: '100%', height: '100%', ...divStyle }}>
         <Routes>
-          <Route path="/view">
+          <Route path='/view'>
             {
               views.map((view: any) => {
                 const Cmp: any = makeCmp(view, ctx)
@@ -90,13 +85,16 @@ function BasicMain(props: any) {
                         path={'/view/' + view.name + '/:' + view.paramId}
                         element={<Cmp vxg={vxg} ctx={ctx} spec={view} />}
                       />
-                    </Fragment>)
+                    </Fragment>
+                  )
                 }
-                return <Route
-                  key={view.name}
-                  path={'/view/' + view.name}
-                  element={<Cmp vxg={vxg} ctx={ctx} spec={view} />}
-                />
+                return (
+                  <Route
+                    key={view.name}
+                    path={'/view/' + view.name}
+                    element={<Cmp vxg={vxg} ctx={ctx} spec={view} />}
+                  />
+                )
               })
             }
           </Route>
@@ -105,6 +103,5 @@ function BasicMain(props: any) {
     </div>
   )
 }
-
 
 export default BasicMain

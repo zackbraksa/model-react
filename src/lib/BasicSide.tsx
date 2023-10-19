@@ -22,9 +22,8 @@ import {
   ListItemText,
   Toolbar,
   Typography,
-  IconButton,
-} from "@mui/material"
-
+  IconButton
+} from '@mui/material'
 
 import {
   ChevronLeft,
@@ -43,9 +42,9 @@ import {
   Security as AdminIcon,
   ContentPaste as ClipBoardIcon,
   FitScreen,
-  Apps as DotsSquareIcon,
+  Apps as DotsSquareIcon
 
-} from "@mui/icons-material"
+} from '@mui/icons-material'
 
 import {
   BasicDrawer,
@@ -54,48 +53,45 @@ import {
 import { Exact, Gubu, Open } from 'gubu'
 
 const iconmap: any = {
-  'factory': FactoryOutlined,
-  'key': KeyOutlined,
-  'done': AssignmentTurnedInOutlined,
-  'docs': TextSnippetOutlined,
-  'hightlight': HighlightAlt,
-  'map': MapIcon,
-  'account': AccountIcon,
-  'tablet': TabletIcon,
-  'update': UpdateIcon,
-  'admin': AdminIcon,
-  'clipboard': ClipBoardIcon,
-  'fitscreen': FitScreen,
-  'dots-square': DotsSquareIcon,
+  factory: FactoryOutlined,
+  key: KeyOutlined,
+  done: AssignmentTurnedInOutlined,
+  docs: TextSnippetOutlined,
+  hightlight: HighlightAlt,
+  map: MapIcon,
+  account: AccountIcon,
+  tablet: TabletIcon,
+  update: UpdateIcon,
+  admin: AdminIcon,
+  clipboard: ClipBoardIcon,
+  fitscreen: FitScreen,
+  'dots-square': DotsSquareIcon
 }
 
-function makeIcon(name: string) {
-  let Icon = iconmap[name]
+function makeIcon (name: string) {
+  const Icon = iconmap[name]
   return <Icon />
 }
 
-function onClose(seneca: any) {
-
+function onClose (seneca: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.cmp.BasicSide.show',
     content: false
   })
-
 }
 
-function allow(vxg: any, item: any) {
-  let out = (item && item.allow) ? vxg.allow(item.allow) : true
+function allow (vxg: any, item: any) {
+  const out = (item && item.allow) ? vxg.allow(item.allow) : true
   return out
 }
 
-
-function BasicSide(props: any) {
+function BasicSide (props: any) {
   const {
     vxg,
     ctx,
     spec
   } = props
-  const { model, seneca, } = ctx()
+  const { model, seneca } = ctx()
 
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show
@@ -108,9 +104,9 @@ function BasicSide(props: any) {
   // spec schema definition with Gubu
   const shape = Gubu(Open({
     side: {
-      logo: { img: "" },
+      logo: { img: '' },
       section: [
-        { name: "", kind: "", view: {}, button: { icon: String, text: String } },
+        { name: '', kind: '', view: {}, button: { icon: String, text: String } }
       ]
     },
     view: {}
@@ -137,7 +133,7 @@ function BasicSide(props: any) {
 
   const drawerwidth = '16rem'
 
-  function selectView(view: any) {
+  function selectView (view: any) {
     return function (_event: any) {
       // TODO: use named route
       if (view.default) {
@@ -148,7 +144,7 @@ function BasicSide(props: any) {
     }
   }
 
-  function sortViews(viewdefs: any, viewOrder: any) {
+  function sortViews (viewdefs: any, viewOrder: any) {
     const orderedViews = Object.keys(viewOrder).map((viewName) => (
       (viewdefs.filter((viewdef: any) => viewdef.name === viewName))[0]
     ))
@@ -156,8 +152,7 @@ function BasicSide(props: any) {
     return orderedViews.filter((view) => view !== undefined)
   }
 
-
-  function toggle(sectionNumber: any) {
+  function toggle (sectionNumber: any) {
     return function (_event: any) {
       setShowViewsData((showViewsData: any) => {
         const temp = showViewsData.map((_: Boolean) => false)
@@ -167,20 +162,19 @@ function BasicSide(props: any) {
     }
   }
 
-
   const DefaultNavMenu = (props: any) => {
     const { viewdefs, viewOrder } = props
     return (
       <Box sx={{ overflow: 'auto' }}>
         <ToggleButtonGroup
-          orientation="vertical"
-          aria-label="text alignment"
+          orientation='vertical'
+          aria-label='text alignment'
           sx={{ width: '100%' }}
         >
           {
             sortViews(viewdefs, viewOrder).map((view: any) => (
               allow(vxg, view) ? <ToggleButton
-                value="check"
+                value='check'
                 selected={viewPath == view.name}
                 sx={
                   {
@@ -190,13 +184,13 @@ function BasicSide(props: any) {
                     marginBottom: '10px',
                     border: 0,
                     '&.MuiToggleButtonGroup-grouped': {
-                      borderRadius: '20px !important',
+                      borderRadius: '20px !important'
                     },
                     textTransform: 'none'
                   }
                 }
                 key={view.name}
-                aria-label="centered"
+                aria-label='centered'
                 onClick={(event: any) => {
                   /*
                   setToogleSelections((prev: any)=>{
@@ -209,7 +203,7 @@ function BasicSide(props: any) {
                   */
                   selectView(view)(event)
                 }}
-              >
+                                 >
 
                 {makeIcon(view.icon)}
                 <div>
@@ -231,15 +225,15 @@ function BasicSide(props: any) {
 
     return (
       <Box sx={{ display: 'flex', width: '100%' }}>
-        <ButtonGroup sx={{ width: '100%', }}>
+        <ButtonGroup sx={{ width: '100%' }}>
           {
             sections.map((section: any, sectionNumber: number) => (
               <ToggleButton
-                value="check"
+                value='check'
                 selected={showViewsData[sectionNumber]}
                 sx={{
                   padding: '0.5em',
-                  width: '100%',
+                  width: '100%'
                 }}
                 key={section.name}
                 onChange={(event: any) => {
@@ -249,10 +243,11 @@ function BasicSide(props: any) {
               >
                 <div>
                   {makeIcon(section.button.icon)}
-                  <span className="iconText">{section.button.text}</span>
+                  <span className='iconText'>{section.button.text}</span>
                 </div>
               </ToggleButton>
-            ))}
+            ))
+}
         </ButtonGroup>
       </Box>
     )
@@ -260,13 +255,15 @@ function BasicSide(props: any) {
 
   return (
     <BasicDrawer
-      variant="permanent"
+      variant='permanent'
       drawerwidth={drawerwidth}
       open={open}
     >
       <BasicDrawerHeader>
-        <img src={part.logo.img}
-          style={{ width: '11rem' }} />
+        <img
+          src={part.logo.img}
+          style={{ width: '11rem' }}
+        />
         <IconButton onClick={() => onClose(seneca)}>
           <ChevronLeft sx={{ color: 'black' }} />
         </IconButton>
@@ -275,8 +272,7 @@ function BasicSide(props: any) {
       {
         sectiondefs.map((section: any, sectionNumber: number) => {
           if (viewPath == section.name || (section.view && viewPath in section.view)) {
-
-            if ('navmenu' === section.kind) {
+            if (section.kind === 'navmenu') {
               return (
                 <DefaultNavMenu key={section.name} viewOrder={section.view} viewdefs={viewdefs} />
               )
@@ -292,6 +288,5 @@ function BasicSide(props: any) {
     </BasicDrawer>
   )
 }
-
 
 export default BasicSide
