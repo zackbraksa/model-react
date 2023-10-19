@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import { Gubu, Exact } from 'gubu'
+import { Gubu, Exact, Open } from 'gubu'
 
 import {
   Toolbar,
@@ -12,15 +12,14 @@ import {
   Autocomplete,
   Typography,
   IconButton,
-  createFilterOptions,
-} from "@mui/material"
+  createFilterOptions
+} from '@mui/material'
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 import BasicButton from './BasicButton'
-
 import BasicAppBar from './BasicAppBar'
-
+import BasicAutocomplete from './Header/BasicAutoComplete'
 
 function onOpen(seneca: any) {
   seneca.act('aim:app,set:state', {
@@ -31,24 +30,12 @@ function onOpen(seneca: any) {
 
 const filter = createFilterOptions()
 
-function resolveOptions(tooldef: any, tooldata: any) {
-  let options = []
 
-  if ('ent' === tooldef.options.kind && tooldata[tooldef.name]) {
-    let ents = tooldata[tooldef.name].ents || []
-    options = ents.map((ent: any) => ({
-      label: ent[tooldef.options.label.field],
-      ent
-    }))
-  }
-
-  return options
-}
 
 function addItem(seneca: any, led_add: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.trigger.led.add',
-    content: ++led_add,
+    content: ++led_add
   })
 }
 
@@ -62,146 +49,113 @@ function BasicHead(props: any) {
   const { seneca } = ctx()
 
   const {
-    frame,
+    frame
   } = spec
 
-  // console.log('BasicHead.spec', spec)
-
   // spec schema definition with Gubu
-  const shape = Gubu({
+  const shape = Gubu(Open({
     head: {
-      logo: { img: "" },
-      tool: { def: [{ kind: Exact('addbutton', 'autocomplete'), title: String, options: {}, name: "" }] },
+      logo: { img: '' },
+      tool: { def: [{ kind: Exact('addbutton', 'autocomplete'), title: String, options: {}, name: '' }] }
     },
     view: {}
-  })
+  }))
 
-  // spec schema validation with Gubu
   shape(spec)
 
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  const tooldefs = Object.entries(spec.head.tool.def)
+  const actions = Object.entries(spec.head.tool.def)
     .map((entry: any) => (entry[1].name = entry[0], entry[1]))
-
 
   const user = useSelector((state: any) => state.main.auth.user)
   const userName = user.name || user.email
 
-  let valuemap: any = {}
-  let tooldata: any = {}
-  tooldefs.forEach(tooldef => {
-    if ('autocomplete' === tooldef.kind) {
-      if ('ent' === tooldef.options.kind) {
-        let canon = tooldef.options.ent
-        tooldata[tooldef.name] = {
+  const valuemap: any = {}
+  const tooldata: any = {}
+
+  // Building tooldata and valuemap
+  actions.forEach(action => {
+    if (action.kind === 'autocomplete') {
+      if (action.options.kind === 'ent') {
+        const canon = action.options.ent
+        tooldata[action.name] = {
           ents: useSelector((state: any) => state.main.vxg.ent.list.main[canon])
         }
 
-        let selected = useSelector((state: any) =>
-          state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected)
+        const selected = useSelector((state: any) =>
+          state.main.vxg.cmp.BasicHead.tool[action.name].selected)
 
         if (selected) {
-          valuemap[tooldef.name] = {
-            label: selected[tooldef.options.label.field],
+          valuemap[action.name] = {
+            label: selected[action.options.label.field],
             ent: selected
           }
         }
-
       }
     }
   })
 
-
-
   const vxgState = useSelector((state: any) => state.main.vxg)
+
+  // sidebar open state
   const open = vxgState.cmp.BasicSide.show
-  let led_add = vxgState.trigger.led.add
 
+  // ListEdit add trigger
+  const led_add = vxgState.trigger.led.add
+
+  const location = useLocation()
   const viewPath: any = location.pathname.split('/')[2]
-  let add = spec.view[viewPath].content.def.add || { active: false }
-
-
-  let drawerwidth = '16rem'
+  const add = spec.view[viewPath].content.def.add || { active: false }
 
   return (
     <BasicAppBar
-      //position="fixed"
-      drawerwidth={drawerwidth}
+      // position="fixed"
+      drawerwidth='16rem'
       open={open}
       sx={{
         color: 'black',
-        bgcolor: "white",
+        bgcolor: 'white'
       }}
     >
       <Toolbar>
-
         <IconButton
-          aria-label="open drawer"
+          aria-label='open drawer'
           onClick={() => onOpen(seneca)}
-          edge="start"
+          edge='start'
           sx={{
             marginRight: 2,
-            ...(open && { display: 'none' }),
+            ...(open && { display: 'none' })
           }}
         >
           <ChevronRightIcon />
         </IconButton>
 
-
-
-        {tooldefs.map(tooldef => {
-          if ('autocomplete' === tooldef.kind) {
-            return <Autocomplete
-              freeSolo
-              forcePopupIcon
-              value={valuemap[tooldef.name] || tooldef.defaultvalue || ''}
-              key={tooldef.name}
-              options={resolveOptions(tooldef, tooldata)}
-              // disableClearable={ typeof vxg.cmp.BasicHead.tool[tooldef.name].selected != 'object' }
-              size='small'
-              sx={{
-                paddingLeft: '1em',
-                width: '20rem',
-              }}
-              filterOptions={(options: any, params: any) => {
-                const filtered = filter(options, params)
-                // const { inputValue } = params
-                return filtered
-              }}
-              renderInput={(params) => <TextField {...params} label={tooldef.title} />}
-              onChange={(event: any, newval: any) => {
-                seneca.act('aim:app,set:state', {
-                  section: 'vxg.cmp.BasicHead.tool.' + tooldef.name + '.selected',
-                  content: 'search' == tooldef.mode && typeof newval === 'string' ?
-                    { [tooldef.options.label.field]: newval } : newval?.ent,
-                })
-              }}
-              isOptionEqualToValue={(opt: any, val: any) =>
-                (opt === val) || (null != opt && null != val && opt.ent?.id === val.ent?.id)}
-            />
-          } else if ('addbutton' === tooldef.kind) {
-            return <BasicButton variant="outlined"
-              key={tooldef.name}
-              sx={{
-                display: add.active ? null : 'none',
-                textTransform: 'capitalize',
-              }}
-              size="large"
-
-              onClick={() => addItem(seneca, led_add)}
-            >
-              {tooldef.title + ' ' + spec.view[viewPath].name}
-            </BasicButton>
-
+        {actions.map(action => {
+          if (action.kind === 'autocomplete') {
+            return (
+              <BasicAutocomplete seneca={seneca} tooldef={action} tooldata={tooldata} valuemap={valuemap} />
+            )
+          } else if (action.kind === 'addbutton') {
+            return (
+              <BasicButton
+                variant='outlined'
+                key={action.name}
+                sx={{
+                  display: add.active ? null : 'none',
+                  textTransform: 'capitalize'
+                }}
+                size='large'
+                onClick={() => addItem(seneca, led_add)}
+              >
+                {action.title + ' ' + spec.view[viewPath].name}
+              </BasicButton>
+            )
           }
         }
         )}
 
-        <div style={{ flexGrow: 1 }}></div>
+        <div style={{ flexGrow: 1 }} />
 
-        <Typography variant="h6">
+        <Typography variant='h6'>
           {userName}
         </Typography>
       </Toolbar>
@@ -209,5 +163,5 @@ function BasicHead(props: any) {
   )
 }
 
-
 export default BasicHead
+
